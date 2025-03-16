@@ -1,9 +1,11 @@
 # About us
 
-Display | Name | Github Profile | Portfolio 
---------|:----:|:--------------:|:---------:
-![](https://via.placeholder.com/100.png?text=Photo) | John Doe | [Github](https://github.com/) | [Portfolio](docs/team/johndoe.md)
-![](https://via.placeholder.com/100.png?text=Photo) | Don Joe | [Github](https://github.com/) | [Portfolio](docs/team/johndoe.md)
-![](https://via.placeholder.com/100.png?text=Photo) | Ron John | [Github](https://github.com/) | [Portfolio](docs/team/johndoe.md)
-![](https://via.placeholder.com/100.png?text=Photo) | John Roe | [Github](https://github.com/) | [Portfolio](docs/team/johndoe.md)
-![](https://via.placeholder.com/100.png?text=Photo) | Don Roe | [Github](https://github.com/) | [Portfolio](docs/team/johndoe.md)
+Display |    Name    | Github Profile | Portfolio 
+--------|:------------:|:--------------:|:---------:
+![](https://via.placeholder.com/100.png?text=Photo) | Choy Wayne | [Github](https://github.com/WayneCh0y) | [Portfolio](ok)
+![](https://via.placeholder.com/100.png?text=Photo) | Jermaine Ng | [Github](https://github.com/jenmarieng) | [Portfolio](docs/team/johndoe.md)
+![]() | Deanson Choo | [Github](https://github.com/Deanson-Choo) | [Portfolio]()
+![](https://via.placeholder.com/100.png?text=Photo) |Xavier Lee Jingrui | [Github](https://github.com/Xavierleejrui) | [Portfolio]()
+![](https://via.placeholder.com/100.png?text=Photo) | EthanTang | [Github](https://github.com/) | [Portfolio](docs/team/johndoe.md))
+
+
