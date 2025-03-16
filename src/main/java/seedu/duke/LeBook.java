@@ -6,7 +6,7 @@ import seedu.duke.Ui;
  */
 
 public class LeBook {
-    private final BookManager bookManager
+    private final BookManager bookManager;
     private final Storage storage;
     private final Ui ui;
 
