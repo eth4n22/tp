@@ -2,6 +2,7 @@ package seedu.duke.commands;
 
 import seedu.duke.book.BookManager;
 import seedu.duke.storage.Storage;
+import seedu.duke.ui.Ui;
 
 public class ExitCommand extends Command {
 
