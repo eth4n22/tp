@@ -2,18 +2,13 @@ package seedu.duke;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+
 
 /**
  * Manages a collection of books by adding, deleting, listing, searching, and updating their status.
  */
 public class BookManager {
-    private static final String BORROW_COMMAND = "borrow";
-    private static final String RETURN_COMMAND = "return";
     private static final String DATE_FORMAT = "yyyy-MM-dd";
-
     private final List<Book> books;
 
     /**
@@ -135,6 +130,38 @@ public class BookManager {
                     "List output should contain total book count";
 
             return output.toString();
+        }
+    }
+
+    public String updateBookStatus(String bookDetails) {
+        String[] parts = bookDetails.trim().split(" ");
+
+        if (parts.length < 2) {
+            return "Please specify a book number!";
+        }
+
+        String commandType = parts[0].toUpperCase();
+        try {
+            Commands command = Commands.valueOf(commandType);
+            int bookIndex = Integer.parseInt(parts[1]) - 1;
+
+            if (bookIndex < 0 || bookIndex >= books.size()) {
+                return "There is no such book in the library!";
+            }
+
+            Book book = books.get(bookIndex);
+            switch (command) {
+            case BORROW:
+                book.setStatus(true);
+                return "Borrowed: " + book.getTitle();
+            case RETURN:
+                book.setStatus(false);
+                return "Returned: " + book.getTitle();
+            default:
+                return "Invalid command!";
+            }
+            } catch (NumberFormatException e) {
+            return "Please provide a valid book number!";
         }
     }
 }
