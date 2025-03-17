@@ -2,18 +2,13 @@ package seedu.duke;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+
 
 /**
  * Manages a collection of books by adding, deleting, listing, searching, and updating their status.
  */
 public class BookManager {
-    private static final String BORROW_COMMAND = "borrow";
-    private static final String RETURN_COMMAND = "return";
     private static final String DATE_FORMAT = "yyyy-MM-dd";
-
     private final List<Book> books;
 
     /**
@@ -58,7 +53,7 @@ public class BookManager {
             return "Book author cannot be empty!";
         }
 
-        Book newBook = new Book(title, author);
+        seedu.duke.Book newBook = new Book(title, author);
         books.add(newBook);
 
         return "I've added: " + newBook + "\nNow you have " + books.size() + " books in the library.";
@@ -105,6 +100,38 @@ public class BookManager {
             }
             output.append("Total books: ").append(books.size());
             return output.toString();
+        }
+    }
+
+    public String updateBookStatus(String bookDetails) {
+        String[] parts = bookDetails.trim().split(" ");
+
+        if (parts.length < 2) {
+            return "Please specify a book number!";
+        }
+
+        String commandType = parts[0].toUpperCase();
+        try {
+            Commands command = Commands.valueOf(commandType);
+            int bookIndex = Integer.parseInt(parts[1]) - 1;
+
+            if (bookIndex < 0 || bookIndex >= books.size()) {
+                return "There is no such book in the library!";
+            }
+
+            Book book = books.get(bookIndex);
+            switch (command) {
+            case BORROW:
+                book.setStatus(true);
+                return "Borrowed: " + book.getTitle();
+            case RETURN:
+                book.setStatus(false);
+                return "Returned: " + book.getTitle();
+            default:
+                return "Invalid command!";
+            }
+            } catch (NumberFormatException e) {
+            return "Please provide a valid book number!";
         }
     }
 }
