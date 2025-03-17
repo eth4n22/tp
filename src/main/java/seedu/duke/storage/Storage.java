@@ -1,4 +1,6 @@
-package seedu.duke;
+package seedu.duke.storage;
+
+import seedu.duke.book.BookManager;
 
 import java.io.BufferedWriter;
 import java.io.File;

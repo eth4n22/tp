@@ -1,6 +1,9 @@
-package seedu.duke;
+package seedu.duke.commands;
 
-    public class DeleteCommand extends Command {
+import seedu.duke.book.BookManager;
+import seedu.duke.storage.Storage;
+
+public class DeleteCommand extends Command {
         private String[] bookIndex;
         public DeleteCommand(String bookDetails) {
             this.bookIndex= bookIndex;

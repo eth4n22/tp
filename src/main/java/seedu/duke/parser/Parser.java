@@ -1,12 +1,12 @@
 package seedu.duke.parser;
 
-import seedu.duke.Command;
-import seedu.duke.LeBookException;
-import seedu.duke.AddCommand;
-import seedu.duke.DeleteCommand;
-import seedu.duke.ExitCommand;
-import seedu.duke.ListCommand;
-import seedu.duke.UpdateStatusCommand;
+import seedu.duke.commands.Command;
+import seedu.duke.exception.LeBookException;
+import seedu.duke.commands.AddCommand;
+import seedu.duke.commands.DeleteCommand;
+import seedu.duke.commands.ExitCommand;
+import seedu.duke.commands.ListCommand;
+import seedu.duke.commands.UpdateStatusCommand;
 
 /**
  * Parses user input and returns the corresponding command.
