@@ -1,9 +1,21 @@
 package seedu.duke.ui;
 
+import java.util.Scanner;
+
 /**
  * UI Class
  */
 public class Ui {
+    private final Scanner scanner;
+
+    public Ui() {
+        this.scanner = new Scanner(System.in);
+    }
+
+    public String readCommand() {
+        System.out.print("Enter command: "); //EDIT ACCORDINGLY
+        return scanner.nextLine().trim();
+    }
 
     public void printWelcomeMessage() {
         printSeparator();

@@ -21,6 +21,11 @@ public class Book {
         this.returnDueDate = null;
     }
 
+    public void setStatus(boolean isBorrowed) {
+        this.isBorrowed = isBorrowed;
+    }
+
+
     /**
      * Returns the string representation of the book.
      * @return Formatted string with book details.
