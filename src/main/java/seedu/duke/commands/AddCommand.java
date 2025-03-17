@@ -1,4 +1,7 @@
-package seedu.duke;
+package seedu.duke.commands;
+
+import seedu.duke.book.BookManager;
+import seedu.duke.storage.Storage;
 
 public class AddCommand extends Command {
     private final String bookDetails;

@@ -1,3 +1,5 @@
+package seedu.duke.ui;
+
 /**
  * UI Class
  */

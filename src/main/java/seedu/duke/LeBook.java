@@ -1,6 +1,6 @@
 
-import seedu.duke.Command;
-import seedu.duke.LeBookException;
+import seedu.duke.commands.Command;
+import seedu.duke.exception.LeBookException;
 import seedu.duke.Ui;
 import seedu.duke.parser.Parser;
 
