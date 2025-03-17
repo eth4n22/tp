@@ -31,6 +31,12 @@ public class Ui {
         printSeparator();
     }
 
+    public void printWithSeparator(String message) {
+        printSeparator();
+        System.out.println(message);
+        printSeparator();
+    }
+
     public void printSeparator() {
         System.out.println("========================================");
     }
