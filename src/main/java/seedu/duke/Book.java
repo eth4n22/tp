@@ -11,6 +11,9 @@ public class Book {
 
 
     public Book(String title, String author) {
+        assert title != null && !title.trim().isEmpty() : "Title cannot be empty";
+        assert author != null && !author.trim().isEmpty() : "Author cannot be empty";
+
         this.title = title;
         this.author = author;
         this.isBorrowed = false;
