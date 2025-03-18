@@ -159,7 +159,7 @@ public class BookManager {
             default:
                 return "Invalid command!";
             }
-            } catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return "Please provide a valid book number!";
         }
     }
