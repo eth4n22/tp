@@ -135,7 +135,7 @@ public class BookManager {
     /**
      * Updates the status of a book in the library based on the provided command.
      *
-     * @param bookDetails A string containing the command (BORROW/RETURN) followed by the book number
+     * @param userInput A string containing the command (BORROW/RETURN) followed by the book number
      *                    (e.g., "BORROW 1" or "RETURN 2")
      * @return A message indicating the result of the operation, which can be:
      *         - Confirmation of borrowing or returning a specific book
