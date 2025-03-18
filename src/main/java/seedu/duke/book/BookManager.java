@@ -80,7 +80,7 @@ public class BookManager {
      * @return A message indicating whether the deletion was successful or if there was an error
      */
     public String deleteBook(String[] bookDetails) {
-        assert bookDetails != null : "Book details array cannot be null";
+        //assert bookDetails != null : "Book details array cannot be null";
 
         if (bookDetails.length < 1) {
             return "Please specify a book number!";

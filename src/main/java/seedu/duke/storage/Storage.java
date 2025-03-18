@@ -45,10 +45,9 @@ public class Storage {
                 String details = s.nextLine();
                 String[] specifiers = details.split(SPLIT_REGEX);
 
-                String bookTitle = specifiers[BOOK_TITLE_INDEX];
-                String bookAuthor = specifiers[BOOK_AUTHOR_INDEX];
-                String bookStatus = specifiers[BOOK_STATUS_INDEX];
-
+                String bookTitle = specifiers[BOOK_TITLE_INDEX].trim();
+                String bookAuthor = specifiers[BOOK_AUTHOR_INDEX].trim();
+                String bookStatus = specifiers[BOOK_STATUS_INDEX].trim();
 
                 boolean isBorrowed;
                 isBorrowed = bookStatus.equals("1");
