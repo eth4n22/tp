@@ -6,7 +6,6 @@ import seedu.duke.storage.Storage;
 import seedu.duke.ui.Ui;
 
 
-
 public class ListCommand extends Command {
     @Override
     public void execute(BookManager bookManager, Ui ui, Storage storage) {

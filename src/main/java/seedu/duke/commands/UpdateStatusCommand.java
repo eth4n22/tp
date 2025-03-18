@@ -13,8 +13,9 @@ public class UpdateStatusCommand extends Command {
     public UpdateStatusCommand(String bookDetails) {
         this.bookDetails = bookDetails;
     }
+
     @Override
-    public void execute(BookManager bookManager, Ui ui, Storage storage){
+    public void execute(BookManager bookManager, Ui ui, Storage storage) {
         String response = bookManager.updateBookStatus(bookDetails);
         ui.printWithSeparator(response);
         try {

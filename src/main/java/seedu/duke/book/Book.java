@@ -34,6 +34,7 @@ public class Book {
 
     /**
      * Returns the string representation of the book.
+     *
      * @return Formatted string with book details.
      */
     @Override
@@ -45,7 +46,7 @@ public class Book {
     }
 
     /**
-     *Edit Accordingly depending on how Wayne wants to format this
+     * Edit Accordingly depending on how Wayne wants to format this
      */
     public String toFileFormat() {
         return title + " | " + author + " | " + (isBorrowed ? 1 : 0) +

@@ -15,7 +15,7 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public void execute(BookManager bookManager, Ui ui, Storage storage){
+    public void execute(BookManager bookManager, Ui ui, Storage storage) {
         String response = bookManager.addNewBook(bookDetails);
         ui.printWithSeparator(response);
         try {
