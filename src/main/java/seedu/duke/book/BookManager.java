@@ -131,6 +131,17 @@ public class BookManager {
         }
     }
 
+    /**
+     * Updates the status of a book in the library based on the provided command.
+     *
+     * @param bookDetails A string containing the command (BORROW/RETURN) followed by the book number
+     *                    (e.g., "BORROW 1" or "RETURN 2")
+     * @return A message indicating the result of the operation, which can be:
+     *         - Confirmation of borrowing or returning a specific book
+     *         - An error message if the book number is invalid, missing, or out of range
+     *         - An error message if the command is invalid
+     * @throws NumberFormatException If the book number provided cannot be parsed as an integer
+     */
     public String updateBookStatus(String bookDetails) {
         String[] parts = bookDetails.trim().split(" ");
 
