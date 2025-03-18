@@ -144,6 +144,7 @@ public class BookManager {
      * @throws NumberFormatException If the book number provided cannot be parsed as an integer
      */
     public String updateBookStatus(String bookDetails) {
+        assert bookDetails != null : "Book details should not be null";
         String[] parts = bookDetails.trim().split(" ");
 
         if (parts.length < 2) {
@@ -160,6 +161,7 @@ public class BookManager {
             }
 
             Book book = books.get(bookIndex);
+            assert book != null : "Book object should not be null";
             switch (command) {
             case BORROW:
                 book.setStatus(true);
