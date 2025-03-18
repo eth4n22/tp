@@ -39,7 +39,7 @@ public class Parser {
             case LIST:
                 return new ListCommand();
             case BORROW, RETURN:
-                return new UpdateStatusCommand(bookDetails);
+                return new UpdateStatusCommand(userInput);
             case DELETE:
                 return new DeleteCommand(bookDetails);
             case ADD:

@@ -21,11 +21,10 @@ public class Book {
         this.returnDueDate = null;
     }
 
-    public Book(String title, String author, boolean isBorrowed, LocalDate returnDueDate) {
+    public Book(String title, String author, boolean isBorrowed) {
         this.title = title;
         this.author = author;
-        this.isBorrowed = false;
-        this.returnDueDate = returnDueDate;
+        this.isBorrowed = isBorrowed;
     }
 
     public void setStatus(boolean isBorrowed) {
