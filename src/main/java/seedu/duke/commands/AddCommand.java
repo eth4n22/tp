@@ -4,9 +4,6 @@ import seedu.duke.book.BookManager;
 import seedu.duke.storage.Storage;
 import seedu.duke.ui.Ui;
 
-import java.io.IOException;
-
-
 public class AddCommand extends Command {
     private final String bookDetails;
 
@@ -19,5 +16,5 @@ public class AddCommand extends Command {
         String response = bookManager.addNewBook(bookDetails);
         ui.printWithSeparator(response);
         storage.writeToFile(bookManager.getBooks());
-        }
+    }
 }

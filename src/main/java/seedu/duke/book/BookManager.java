@@ -76,15 +76,15 @@ public class BookManager {
     /**
      * Deletes a book from the books list.
      *
-     * @param bookIndex Array containing the book index information [index]
+     * @param index Array containing the book index information [index]
      * @return A message indicating whether the deletion was successful or if there was an error
      */
 
-    public String deleteBook(String Index) {
-        assert Index != null : "Book Index cannot be null";
+    public String deleteBook(String index) {
+        assert index != null : "Book Index cannot be null";
 
         try {
-            int bookIndex = Integer.parseInt(Index) - 1;
+            int bookIndex = Integer.parseInt(index) - 1;
 
             if (bookIndex < 0 || bookIndex >= books.size()) {
                 return "There is no such book in the library!";
