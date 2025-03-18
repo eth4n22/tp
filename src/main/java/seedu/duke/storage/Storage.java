@@ -3,7 +3,6 @@ package seedu.duke.storage;
 import seedu.duke.book.Book;
 
 import java.io.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +15,6 @@ public class Storage {
     private static final int BOOK_TITLE_INDEX = 0;
     private static final int BOOK_AUTHOR_INDEX = 1;
     private static final int BOOK_STATUS_INDEX = 2;
-    private static final int RETURN_BY_INDEX = 3;
 
 
     private static final String DIRECTORY_NAME = "data";
@@ -50,14 +48,12 @@ public class Storage {
                 String bookTitle = specifiers[BOOK_TITLE_INDEX];
                 String bookAuthor = specifiers[BOOK_AUTHOR_INDEX];
                 String bookStatus = specifiers[BOOK_STATUS_INDEX];
-                String returnBy = specifiers[RETURN_BY_INDEX];
 
-                LocalDate returnByLocalDate = LocalDate.parse(returnBy);
 
                 boolean isBorrowed;
                 isBorrowed = bookStatus.equals("1");
 
-                Book book = new Book(bookTitle, bookAuthor, isBorrowed, returnByLocalDate);
+                Book book = new Book(bookTitle, bookAuthor, isBorrowed);
 
                 bookList.add(book);
             }
