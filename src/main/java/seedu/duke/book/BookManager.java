@@ -143,9 +143,9 @@ public class BookManager {
      *         - An error message if the command is invalid
      * @throws NumberFormatException If the book number provided cannot be parsed as an integer
      */
-    public String updateBookStatus(String bookDetails) {
-        assert bookDetails != null : "Book details should not be null";
-        String[] parts = bookDetails.trim().split(" ");
+    public String updateBookStatus(String userInput) {
+        assert userInput != null : "Input should not be null";
+        String[] parts = userInput.trim().split(" ");
 
         if (parts.length < 2) {
             return "Please specify a book number!";
