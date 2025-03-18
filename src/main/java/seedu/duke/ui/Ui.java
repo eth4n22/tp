@@ -2,9 +2,7 @@ package seedu.duke.ui;
 
 import java.util.Scanner;
 
-/**
- * UI Class
- */
+
 public class Ui {
     private final Scanner scanner;
 
@@ -20,10 +18,6 @@ public class Ui {
     public void printWelcomeMessage() {
         printSeparator();
         System.out.println("Welcome to Lebook, your personal book management system!");
-        /**
-         * possible implementation for v2.0
-         * System.out.println("Type 'help' to see available commands.");
-         */
         printSeparator();
     }
 

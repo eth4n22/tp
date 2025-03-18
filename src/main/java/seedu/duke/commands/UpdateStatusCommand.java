@@ -4,11 +4,10 @@ import seedu.duke.book.BookManager;
 import seedu.duke.storage.Storage;
 import seedu.duke.ui.Ui;
 
-import java.io.IOException;
 
 public class UpdateStatusCommand extends Command {
 
-    private String bookDetails;
+    private final String bookDetails;
 
     public UpdateStatusCommand(String bookDetails) {
         this.bookDetails = bookDetails;
@@ -19,5 +18,5 @@ public class UpdateStatusCommand extends Command {
         String response = bookManager.updateBookStatus(bookDetails);
         ui.printWithSeparator(response);
         storage.writeToFile(bookManager.getBooks());
-        }
+    }
 }

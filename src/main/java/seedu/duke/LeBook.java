@@ -7,7 +7,6 @@ import seedu.duke.parser.Parser;
 import seedu.duke.book.BookManager;
 import seedu.duke.storage.Storage;
 
-import java.io.IOException;
 
 /**
  * Lebook Class represents the main chatbot system
