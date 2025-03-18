@@ -7,6 +7,8 @@ import seedu.duke.parser.Parser;
 import seedu.duke.book.BookManager;
 import seedu.duke.storage.Storage;
 
+import java.io.IOException;
+
 /**
  * Lebook Class represents the main chatbot system
  * Initializes storage, UI, task handling, and command parsing
@@ -53,6 +55,6 @@ public class LeBook {
 
     public static void main(String[] args) {
         assert args != null : "Program arguments should not be null";
-        new LeBook("data/jeff_data.txt").run();
+        new LeBook("data/LeBook_data.txt").run();
     }
 }

@@ -2,10 +2,7 @@ package seedu.duke.storage;
 
 import seedu.duke.book.Book;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,51 +25,57 @@ public class Storage {
         filePath = path;
     }
 
-    public static String toSaveAsString(Book book) {
+    public String toSaveAsString(Book book) {
         assert (filePath != null) && !filePath.trim().isEmpty() : "File path cannot be null or empty";
         return book.toFileFormat();
     }
 
 
-    public static List<Book> loadFileContents() throws IOException {
+    public List<Book> loadFileContents() {
         assert filePath != null : "File path must be initialized before loading";
 
-        List<Book> bookList = new ArrayList<>();
-        File f = new File(filePath);
-        if (!f.exists()) {
+        try {
+            List<Book> bookList = new ArrayList<>();
+            File f = new File(filePath);
+            if (!f.exists()) {
+                return bookList;
+            }
+
+            Scanner s = new Scanner(f);
+
+            while (s.hasNext()) {
+                String details = s.nextLine();
+                String[] specifiers = details.split(SPLIT_REGEX);
+
+                String bookTitle = specifiers[BOOK_TITLE_INDEX];
+                String bookAuthor = specifiers[BOOK_AUTHOR_INDEX];
+                String bookStatus = specifiers[BOOK_STATUS_INDEX];
+                String returnBy = specifiers[RETURN_BY_INDEX];
+
+                LocalDate returnByLocalDate = LocalDate.parse(returnBy);
+
+                boolean isBorrowed;
+                isBorrowed = bookStatus.equals("1");
+
+                Book book = new Book(bookTitle, bookAuthor, isBorrowed, returnByLocalDate);
+
+                bookList.add(book);
+            }
+
+            File file = new File(filePath);
+            if (file.exists()) {
+                file.delete();
+            }
+
             return bookList;
+        } catch (IOException e) {
+            System.out.print("ERROR:" + e.getMessage());
         }
 
-        Scanner s = new Scanner(f);
-
-        while (s.hasNext()) {
-            String details = s.nextLine();
-            String[] specifiers = details.split(SPLIT_REGEX);
-
-            String bookTitle = specifiers[BOOK_TITLE_INDEX];
-            String bookAuthor = specifiers[BOOK_AUTHOR_INDEX];
-            String bookStatus = specifiers[BOOK_STATUS_INDEX];
-            String returnBy = specifiers[RETURN_BY_INDEX];
-
-            LocalDate returnByLocalDate = LocalDate.parse(returnBy);
-
-            boolean isBorrowed;
-            isBorrowed = bookStatus.equals("1");
-
-            Book book = new Book(bookTitle, bookAuthor, isBorrowed, returnByLocalDate);
-
-            bookList.add(book);
-        }
-
-        File file = new File(filePath);
-        if (file.exists()) {
-            file.delete();
-        }
-
-        return bookList;
+        return new ArrayList<>();
     }
 
-    public static void save(List<Book> bookList) throws IOException {
+    public void writeToFile(List<Book> bookList) throws IOException {
         assert bookList != null : "Book list cannot be null";
 
         File directory = new File(DIRECTORY_NAME);

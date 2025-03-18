@@ -21,6 +21,13 @@ public class Book {
         this.returnDueDate = null;
     }
 
+    public Book(String title, String author, boolean isBorrowed, LocalDate returnDueDate) {
+        this.title = title;
+        this.author = author;
+        this.isBorrowed = false;
+        this.returnDueDate = returnDueDate;
+    }
+
     public void setStatus(boolean isBorrowed) {
         this.isBorrowed = isBorrowed;
     }
