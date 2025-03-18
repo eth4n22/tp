@@ -1,7 +1,10 @@
 package seedu.duke.book;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BookTest {
 
@@ -10,7 +13,7 @@ public class BookTest {
         Book book = new Book("Harry Potter", "J.K. Rowling");
         assertEquals("Harry Potter", book.getTitle());
         assertEquals("J.K. Rowling", book.getAuthor());
-        assertFalse(book.isBorrowed());
+        assertFalse(book.isBorrowed()); // Should be false initially
     }
 
     @Test
@@ -28,52 +31,52 @@ public class BookTest {
     }
 
     @Test
-    public void testEmptyTitle_ThrowsAssertionError() {
+    public void testEmptyTitleThrowsAssertionError() {
         assertThrows(AssertionError.class, () -> new Book("", "J.K. Rowling"));
     }
 
     @Test
-    public void testNullTitle_ThrowsAssertionError() {
+    public void testNullTitleThrowsAssertionError() {
         assertThrows(AssertionError.class, () -> new Book(null, "J.K. Rowling"));
     }
 
     @Test
-    public void testEmptyAuthor_ThrowsAssertionError() {
+    public void testEmptyAuthorThrowsAssertionError() {
         assertThrows(AssertionError.class, () -> new Book("Harry Potter", ""));
     }
 
     @Test
-    public void testNullAuthor_ThrowsAssertionError() {
+    public void testNullAuthorThrowsAssertionError() {
         assertThrows(AssertionError.class, () -> new Book("Harry Potter", null));
     }
 
     @Test
-    public void testToFileFormat_BookNotBorrowed() {
-        Book book = new Book("Moby Dick", "Herman Melville");
-        String expected = "Moby Dick | Herman Melville | 0"; // 0 means not borrowed
-        assertEquals(expected, book.toFileFormat());
-    }
-
-    @Test
-    public void testToFileFormat_BookBorrowed() {
-        Book book = new Book("Moby Dick", "Herman Melville");
-        book.setStatus(true);
-        String expected = "Moby Dick | Herman Melville | 1"; // 1 means borrowed
-        assertEquals(expected, book.toFileFormat());
-    }
-
-    @Test
-    public void testToString_BookNotBorrowed() {
+    public void testToStringBookNotBorrowed() {
         Book book = new Book("Moby Dick", "Herman Melville");
         String expected = "[ ] Moby Dick (by Herman Melville) ";
         assertEquals(expected, book.toString());
     }
 
     @Test
-    public void testToString_BookBorrowed() {
+    public void testToStringBookBorrowed() {
         Book book = new Book("Moby Dick", "Herman Melville");
         book.setStatus(true);
         String expected = "[X] Moby Dick (by Herman Melville) ";
         assertEquals(expected, book.toString());
+    }
+
+    @Test
+    public void testToFileFormatBookNotBorrowed() {
+        Book book = new Book("Moby Dick", "Herman Melville");
+        String expected = "Moby Dick | Herman Melville | 0";
+        assertEquals(expected, book.toFileFormat());
+    }
+
+    @Test
+    public void testToFileFormatBookBorrowed() {
+        Book book = new Book("Moby Dick", "Herman Melville");
+        book.setStatus(true);
+        String expected = "Moby Dick | Herman Melville | 1";
+        assertEquals(expected, book.toFileFormat());
     }
 }
