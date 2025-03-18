@@ -79,6 +79,7 @@ public class BookManager {
      * @param bookIndex Array containing the book index information [index]
      * @return A message indicating whether the deletion was successful or if there was an error
      */
+
     public String deleteBook(String Index) {
         assert Index != null : "Book Index cannot be null";
 

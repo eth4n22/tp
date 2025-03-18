@@ -48,7 +48,7 @@ public class Book {
      *Edit Accordingly depending on how Wayne wants to format this
      */
     public String toFileFormat() {
-        return title + " | " + author + " | " + (isBorrowed ? "1" : "0") +
+        return title + " | " + author + " | " + (isBorrowed ? 1 : 0) +
                 (returnDueDate != null ? " | " + returnDueDate.toString() : "");
     }
 
