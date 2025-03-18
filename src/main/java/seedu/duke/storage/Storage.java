@@ -1,11 +1,13 @@
 package seedu.duke.storage;
 
-import seedu.duke.book.BookManager;
+import seedu.duke.book.Book;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,9 +16,11 @@ public class Storage {
 
     private static final String SPLIT_REGEX = "\\|";
 
-    private static final int BOOK_NAME_INDEX = 0;
+    private static final int BOOK_TITLE_INDEX = 0;
+    private static final int BOOK_AUTHOR_INDEX = 1;
+    private static final int BOOK_STATUS_INDEX = 2;
+    private static final int RETURN_BY_INDEX = 3;
 
-    private static final int BOOK_STATUS = 1;
 
     private static final String DIRECTORY_NAME = "data";
 
@@ -25,28 +29,39 @@ public class Storage {
     }
 
     public static String toSaveAsString(Book book) {
-        assert path != null && !path.trim().isEmpty() : "File path cannot be null or empty";
-
-        return book.getBookDescription() + "|" + book.getSaveDescription() + "|" + book.getStatus();
+        assert (filePath != null) && !filePath.trim().isEmpty() : "File path cannot be null or empty";
+        return book.toFileFormat();
     }
 
-    public static BookManager load() throws IOException {
+
+    public static List<Book> loadFileContents() throws IOException {
         assert filePath != null : "File path must be initialized before loading";
 
+        List<Book> bookList = new ArrayList<>();
         File f = new File(filePath);
         if (!f.exists()) {
-            return new BookManager();
+            return bookList;
         }
+
         Scanner s = new Scanner(f);
-        BookManager bookManager = new BookManager();
 
         while (s.hasNext()) {
             String details = s.nextLine();
             String[] specifiers = details.split(SPLIT_REGEX);
-            String bookName = specifiers[BOOK_NAME_INDEX];
 
-            Book book = new Book(bookName, specifiers[BOOK_STATUS]);
-            BookManager.addBook(book);
+            String bookTitle = specifiers[BOOK_TITLE_INDEX];
+            String bookAuthor = specifiers[BOOK_AUTHOR_INDEX];
+            String bookStatus = specifiers[BOOK_STATUS_INDEX];
+            String returnBy = specifiers[RETURN_BY_INDEX];
+
+            LocalDate returnByLocalDate = LocalDate.parse(returnBy);
+
+            boolean isBorrowed;
+            isBorrowed = bookStatus.equals("1");
+
+            Book book = new Book(bookTitle, bookAuthor, isBorrowed, returnByLocalDate);
+
+            bookList.add(book);
         }
 
         File file = new File(filePath);
@@ -54,7 +69,7 @@ public class Storage {
             file.delete();
         }
 
-        return bookManager;
+        return bookList;
     }
 
     public static void save(List<Book> bookList) throws IOException {
