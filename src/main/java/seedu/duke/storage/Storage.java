@@ -70,7 +70,7 @@ public class Storage {
         return new ArrayList<>();
     }
 
-    public void writeToFile(List<Book> bookList) throws IOException {
+    public void writeToFile(List<Book> bookList) {
         assert bookList != null : "Book list cannot be null";
 
         File directory = new File(DIRECTORY_NAME);
@@ -83,6 +83,8 @@ public class Storage {
                 writer.write(toSaveAsString(book));
                 writer.newLine();
             }
+        } catch (IOException e) {
+            System.out.print("ERROR:" + e.getMessage());
         }
     }
 }

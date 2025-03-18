@@ -7,6 +7,7 @@ import seedu.duke.ui.Ui;
 import java.io.IOException;
 
 public class DeleteCommand extends Command {
+
     private String[] bookIndex;
 
     public DeleteCommand(String bookDetails) {

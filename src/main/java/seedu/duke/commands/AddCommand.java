@@ -18,10 +18,6 @@ public class AddCommand extends Command {
     public void execute(BookManager bookManager, Ui ui, Storage storage) {
         String response = bookManager.addNewBook(bookDetails);
         ui.printWithSeparator(response);
-        try {
-            storage.writeToFile(bookManager.getBooks());
-        } catch (IOException e) {
-            ui.printWithSeparator(e.getMessage());
+        storage.writeToFile(bookManager.getBooks());
         }
-    }
 }
