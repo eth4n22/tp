@@ -1,8 +1,11 @@
+package seedu.duke;
 
 import seedu.duke.commands.Command;
 import seedu.duke.exception.LeBookException;
-import seedu.duke.Ui;
+import seedu.duke.ui.Ui;
 import seedu.duke.parser.Parser;
+import seedu.duke.book.BookManager;
+import seedu.duke.storage.Storage;
 
 /**
  * Lebook Class represents the main chatbot system
@@ -28,7 +31,7 @@ public class LeBook {
     }
 
     public void run() {
-        ui.showWelcome();
+        ui.printWelcomeMessage();
         boolean isExit = false;
 
         while (!isExit) {
@@ -42,10 +45,10 @@ public class LeBook {
                 command.execute(bookManager, ui, storage);
                 isExit = command.isExit();
             } catch (LeBookException e) {
-                ui.showError(e.getMessage());
+                ui.printError(e.getMessage());
             }
         }
-        ui.showGoodbye();
+        ui.printExitMessage();
     }
 
     public static void main(String[] args) {
