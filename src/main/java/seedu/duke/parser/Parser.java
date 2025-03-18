@@ -28,6 +28,9 @@ public class Parser {
      * @throws LeBookException If the input is invalid.
      */
     public static Command parse(String userInput) throws LeBookException {
+        assert userInput != null : "User input should not be null";
+        assert !userInput.trim().isEmpty() : "User input should not be empty";
+
         String[] fullInput = userInput.split(" ", 2);
         String commandType = fullInput[0].toLowerCase();
         String bookDetails = (fullInput.length > 1) ? fullInput[1] : "";
