@@ -28,7 +28,7 @@ LeBook is a lightweight command-line application for managing your personal book
 ### Installation
 
 #### Option 1: Download JAR file
-1. Download the latest `tp.jar` from the [releases page](https://github.com/yourusername/lebook/releases)
+1. Download the latest `LeBook.jar` from the [releases page](https://github.com/AY2425S2-CS2113-T13-3/tp/releases)
 2. Place the JAR file in your preferred directory
 
 #### Option 2: Build from source
@@ -43,7 +43,7 @@ LeBook is a lightweight command-line application for managing your personal book
 
 ### Running LeBook
 ```bash
-java -jar tp.jar
+java -jar LeBook.jar
 ```
 
 On first run, LeBook will create a data directory for storing your book collection.
