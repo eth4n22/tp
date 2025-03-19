@@ -47,7 +47,6 @@ public class LeBook {
                 isExit = command.isExit();
             } catch (LeBookException e) {
                 ui.printError(e.getMessage());
-                System.exit(0);
             }
         }
         ui.printExitMessage();
