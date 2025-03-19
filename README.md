@@ -1,66 +1,118 @@
-# LeBook: Book Organization Tool
+# LeBook
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+LeBook is a lightweight command-line application for managing your personal book collection. Keep track of books you own, borrow, and lend out with simple text commands.
 
-## Setting up in Intellij
+## Table of Contents
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Development](#development)
+- [Testing](#testing)
+- [License](#license)
 
-Prerequisites: JDK 17 (use the exact version), update Intellij to the most recent version.
+## Features
 
-1. **Ensure Intellij JDK 17 is defined as an SDK**, as described [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk) -- this step is not needed if you have used JDK 17 in a previous Intellij project.
-1. **Import the project _as a Gradle project_**, as described [here](https://se-education.org/guides/tutorials/intellijImportGradleProject.html).
-1. **Verify the setup**: After the importing is complete, locate the `src/main/java/seedu/duke/Duke.java` file, right-click it, and choose `Run Duke.main()`. If the setup is correct, you should see something like the below:
+- **Book Management**: Add and delete books from your collection
+- **Status Tracking**: Mark books as borrowed or returned
+- **Book Listing**: View all books in your library with status indicators
+- **Persistence**: Your library is automatically saved between sessions
+- **Simple Interface**: Easy-to-remember commands with clear feedback
+
+## Getting Started
+
+### Prerequisites
+- Java Development Kit (JDK) 17 or higher
+- Gradle 7.0+ (for building from source)
+
+### Installation
+
+#### Option 1: Download JAR file
+1. Download the latest `tp.jar` from the [releases page](https://github.com/yourusername/lebook/releases)
+2. Place the JAR file in your preferred directory
+
+#### Option 2: Build from source
+1. Clone the repository
+   ```bash
+   git clone https://github.com/yourusername/lebook.git
    ```
-   > Task :compileJava
-   > Task :processResources NO-SOURCE
-   > Task :classes
-   
-   > Task :Duke.main()
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   
-   What is your name?
+2. Navigate to the project directory
+   ```bash
+   cd tp
    ```
-   Type some word and press enter to let the execution proceed to the end.
 
-**Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+### Running LeBook
+```bash
+java -jar tp.jar
+```
 
-## Build automation using Gradle
+On first run, LeBook will create a data directory for storing your book collection.
 
-* This project uses Gradle for build automation and dependency management. It includes a basic build script as well (i.e. the `build.gradle` file).
-* If you are new to Gradle, refer to the [Gradle Tutorial at se-education.org/guides](https://se-education.org/guides/tutorials/gradle.html).
+## Usage
+
+LeBook supports the following commands:
+
+| Command | Format | Description |
+|---------|--------|-------------|
+| Add Book | `add TITLE / AUTHOR` | Adds a new book to your library |
+| Delete Book | `delete BOOK_NUMBER` | Removes a book from your library |
+| List Books | `list` | Displays all books in your library |
+| Borrow Book | `borrow BOOK_NUMBER` | Marks a book as borrowed |
+| Return Book | `return BOOK_NUMBER` | Marks a book as returned |
+| Exit | `exit` | Exits the application |
+
+For a more detailed guide, please refer to the [User Guide](docs/UserGuide.md).
+
+## Project Structure
+
+```
+seedu/duke/
+├── LeBook.java                 # Main application class
+├── book/                       # Book-related classes
+│   ├── Book.java               # Book entity
+│   └── BookManager.java        # Book collection management
+├── commands/                   # Command classes
+│   ├── AddCommand.java
+│   ├── Command.java            # Base command interface
+│   ├── Commands.java           # Command types enum
+│   ├── DeleteCommand.java
+│   ├── ExitCommand.java
+│   ├── ListCommand.java
+│   └── UpdateStatusCommand.java
+├── exception/
+│   └── LeBookException.java    # Custom exceptions
+├── parser/
+│   └── Parser.java             # Command parser
+├── storage/
+│   └── Storage.java            # File operations
+└── ui/
+    └── Ui.java                 # User interface
+```
+
+## Development
+
+### File Format
+
+The storage file (`data/LeBook_data.txt`) uses a pipe-separated format:
+```
+Title | Author | BorrowedStatus | ReturnDueDate(optional)
+```
+
+Example:
+```
+The Great Gatsby | F. Scott Fitzgerald | 0
+1984 | George Orwell | 1 | 2025-04-15
+```
 
 ## Testing
 
-### I/O redirection tests
+LeBook uses JUnit 5 for testing. To run the tests:
 
-* To run _I/O redirection_ tests (aka _Text UI tests_), navigate to the `text-ui-test` and run the `runtest(.bat/.sh)` script.
+```bash
+./gradlew test
+```
 
-### JUnit tests
-
-* A skeleton JUnit test (`src/test/java/seedu/duke/DukeTest.java`) is provided with this project template. 
-* If you are new to JUnit, refer to the [JUnit Tutorial at se-education.org/guides](https://se-education.org/guides/tutorials/junit.html).
-
-## Checkstyle
-
-* A sample CheckStyle rule configuration is provided in this project.
-* If you are new to Checkstyle, refer to the [Checkstyle Tutorial at se-education.org/guides](https://se-education.org/guides/tutorials/checkstyle.html).
-
-## CI using GitHub Actions
-
-The project uses [GitHub actions](https://github.com/features/actions) for CI. When you push a commit to this repo or PR against it, GitHub actions will run automatically to build and verify the code as updated by the commit/PR.
-
-## Documentation
-
-`/docs` folder contains a skeleton version of the project documentation.
-
-Steps for publishing documentation to the public: 
-1. If you are using this project template for an individual project, go your fork on GitHub.<br>
-   If you are using this project template for a team project, go to the team fork on GitHub.
-1. Click on the `settings` tab.
-1. Scroll down to the `GitHub Pages` section.
-1. Set the `source` as `master branch /docs folder`.
-1. Optionally, use the `choose a theme` button to choose a theme for your documentation.
+The test suite includes unit tests for:
+- `BookManager` operations
+- Command execution
+- File parsing and storage
