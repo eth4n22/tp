@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class    BookManagerTest {
+public class BookManagerTest {
     private BookManager bookManager;
 
     @BeforeEach
@@ -149,5 +149,39 @@ public class    BookManagerTest {
         String result = bookManager.updateBookStatus("BORROW abc");
 
         assertEquals("Please provide a valid book number!", result);
+    }
+
+    @Test
+    void testBorrowBook() {
+        bookManager.addNewBook("Harry Potter / Wayne");
+        bookManager.addNewBook("I Love 2113 / Deanson");
+
+        String result = bookManager.updateBookStatus("BORROW 1");
+
+        assertEquals("Borrowed: Harry Potter", result);
+
+        assertTrue(bookManager.getBooks().get(0).isBorrowed());
+    }
+
+    @Test
+    void testReturnBook() {
+        bookManager.addNewBook("Harry Potter / Wayne");
+        bookManager.addNewBook("I Love 2113 / Deanson");
+        bookManager.updateBookStatus("BORROW 2");
+
+        String result = bookManager.updateBookStatus("RETURN 2");
+
+        assertEquals("Returned: I Love 2113", result);
+
+        assertFalse(bookManager.getBooks().get(0).isBorrowed());
+    }
+
+    @Test
+    void testInvalidBookNumber() {
+        bookManager.addNewBook("Harry Potter / Wayne");
+        bookManager.addNewBook("I Love 2113 / Deanson");
+        String result = bookManager.updateBookStatus("BORROW 100");
+
+        assertEquals("There is no such book in the library!", result);
     }
 }
