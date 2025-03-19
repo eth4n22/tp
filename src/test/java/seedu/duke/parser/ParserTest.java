@@ -58,7 +58,8 @@ public class ParserTest {
     @Test
     void testParseInvalidCommand() {
         Exception exception = assertThrows(LeBookException.class, () -> Parser.parse("invalidCommand"));
-        assertEquals("I don't understand. Try starting with list, add, delete, borrow, return!", exception.getMessage());
+        assertEquals("I don't understand. Try starting with list, add, delete, borrow, return!",
+                exception.getMessage());
     }
 
     @Test
@@ -67,7 +68,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parse_SpacesInput_assertionErrorThrown() {
+    public void parse_spacesInput_assertionErrorThrown() {
         assertThrows(AssertionError.class, () -> Parser.parse("  "));
     }
 
