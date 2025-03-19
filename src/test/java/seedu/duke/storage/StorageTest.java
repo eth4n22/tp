@@ -25,11 +25,6 @@ class StorageTest {
                 Collections.singletonList("The Hobbit | J.R.R. Tolkien | 1"));
     }
 
-    @AfterEach
-    void tearDown() throws IOException {
-        Files.deleteIfExists(Paths.get(TEST_FILE_PATH));
-    }
-
     @Test
     void loadFileContents_validFile_success() {
         Storage storage = new Storage(TEST_FILE_PATH);

@@ -61,9 +61,12 @@ public class Storage {
             }
 
             File file = new File(filePath);
+
             if (file.exists()) {
                 file.delete();
             }
+
+            s.close();
 
             return bookList;
         } catch (IOException e) {
