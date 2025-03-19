@@ -35,23 +35,19 @@ public class Parser {
         String commandType = fullInput[0].toLowerCase();
         String bookDetails = (fullInput.length > 1) ? fullInput[1] : "";
 
-        try {
-            switch (commandType) {
-            case BYE:
-                return new ExitCommand();
-            case LIST:
-                return new ListCommand();
-            case BORROW, RETURN:
-                return new UpdateStatusCommand(userInput);
-            case DELETE:
-                return new DeleteCommand(bookDetails);
-            case ADD:
-                return new AddCommand(bookDetails);
-            default:
-                throw new LeBookException("I don't understand. Try starting with list, add, delete, borrow, return!");
-            }
-        } catch (LeBookException e) {
-            throw new LeBookException(e.getMessage());
+        switch (commandType) {
+        case BYE:
+            return new ExitCommand();
+        case LIST:
+            return new ListCommand();
+        case BORROW, RETURN:
+            return new UpdateStatusCommand(userInput);
+        case DELETE:
+            return new DeleteCommand(bookDetails);
+        case ADD:
+            return new AddCommand(bookDetails);
+        default:
+            throw new LeBookException("I don't understand. Try starting with list, add, delete, borrow, return!");
         }
     }
 }
