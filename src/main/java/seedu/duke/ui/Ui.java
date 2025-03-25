@@ -16,27 +16,19 @@ public class Ui {
     }
 
     public void printWelcomeMessage() {
-        printSeparator();
-        System.out.println("Welcome to Lebook, your personal book management system!");
-        printSeparator();
+        printWithSeparator("Welcome to Lebook, your personal book management system!");
     }
 
     public void printExitMessage() {
-        printSeparator();
-        System.out.println("Goodbye! See you again.");
-        printSeparator();
+        printWithSeparator("Goodbye! See you again.");
     }
 
     public void printSuccess(String message) {
-        printSeparator();
-        System.out.println("[SUCCESS] " + message);
-        printSeparator();
+        printWithSeparator("[SUCCESS] " + message);
     }
 
     public void printError(String message) {
-        printSeparator();
-        System.out.println("[ERROR] " + message);
-        printSeparator();
+        printWithSeparator("[ERROR] " + message);
     }
 
     public void printWithSeparator(String message) {
