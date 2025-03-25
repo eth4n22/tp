@@ -4,13 +4,14 @@ import seedu.duke.commands.Commands;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
 
 /**
  * Manages a collection of books by adding, deleting, listing, searching, and updating their status.
  */
 public class BookManager {
-    private static final String DATE_FORMAT = "yyyy-MM-dd";
+    //private static final String DATE_FORMAT = "yyyy-MM-dd";
     private final List<Book> books;
 
     /**
@@ -21,7 +22,7 @@ public class BookManager {
     public BookManager(List<Book> books) {
         this.books = books != null ? new ArrayList<>(books) : new ArrayList<>();
         // Assert that books is properly initialized
-        assert this.books != null : "Books list should never be null after initialization";
+        //assert this.books != null : "Books list should never be null after initialization";
     }
 
     /**
@@ -31,7 +32,7 @@ public class BookManager {
      */
     public List<Book> getBooks() {
         // Assert that we're returning a non-null list
-        assert books != null : "Book list should never be null";
+        //assert books != null : "Book list should never be null";
         return books;
     }
 
@@ -111,7 +112,7 @@ public class BookManager {
      */
     public String listBooks() {
         // Assert that books is never null when listing
-        assert books != null : "Book list should never be null when listing";
+        //assert books != null : "Book list should never be null when listing";
 
         if (books.isEmpty()) {
             return "No books in the library yet.";
@@ -165,9 +166,11 @@ public class BookManager {
             switch (command) {
             case BORROW:
                 book.setStatus(true);
+                book.setReturnDueDate(LocalDate.now().plusWeeks(2));
                 return "Borrowed: " + book.getTitle();
             case RETURN:
                 book.setStatus(false);
+                book.setReturnDueDate(null);
                 return "Returned: " + book.getTitle();
             default:
                 return "Invalid command!";
@@ -175,5 +178,20 @@ public class BookManager {
         } catch (NumberFormatException e) {
             return "Please provide a valid book number!";
         }
+    }
+
+    public String listOverdueBooks() {
+        StringBuilder output = new StringBuilder("List of Overdue Books:\n");
+        boolean hasOverdue = false;
+
+        for (int i = 0; i < books.size(); i++) {
+            Book book = books.get(i);
+            if (book.isBorrowed() && book.getReturnDueDate() != null && book.getReturnDueDate().isBefore(LocalDate.now())) {
+                output.append(i + 1).append(". ").append(book).append("\n");
+                hasOverdue = true;
+            }
+        }
+
+        return hasOverdue ? output.toString() : "No Overdue Books";
     }
 }

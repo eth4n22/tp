@@ -7,6 +7,7 @@ import seedu.duke.commands.DeleteCommand;
 import seedu.duke.commands.ExitCommand;
 import seedu.duke.commands.ListCommand;
 import seedu.duke.commands.UpdateStatusCommand;
+import seedu.duke.commands.ListOverdueCommand;
 
 /**
  * Parses user input and returns the corresponding command.
@@ -39,6 +40,9 @@ public class Parser {
         case BYE:
             return new ExitCommand();
         case LIST:
+            if (bookDetails.trim().equalsIgnoreCase("overdue")) {
+                return new ListOverdueCommand();
+            }
             return new ListCommand();
         case BORROW, RETURN:
             return new UpdateStatusCommand(userInput);

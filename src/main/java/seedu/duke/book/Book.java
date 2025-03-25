@@ -5,30 +5,32 @@ import java.time.format.DateTimeFormatter;
 
 
 public class Book {
-    private String title;
-    private String author;
+    private final String title;
+    private final String author;
     private boolean isBorrowed;
     private LocalDate returnDueDate;
 
 
-    public Book(String title, String author) {
+    public Book(String title, String author, boolean isBorrowed, LocalDate returnDueDate) {
         assert title != null && !title.trim().isEmpty() : "Title cannot be empty";
         assert author != null && !author.trim().isEmpty() : "Author cannot be empty";
 
         this.title = title;
         this.author = author;
-        this.isBorrowed = false;
-        this.returnDueDate = null;
+        this.isBorrowed = isBorrowed;
+        this.returnDueDate = returnDueDate;
     }
 
-    public Book(String title, String author, boolean isBorrowed) {
-        this.title = title;
-        this.author = author;
-        this.isBorrowed = isBorrowed;
+    public Book(String title, String author) {
+        this(title, author, false, null);
     }
 
     public void setStatus(boolean isBorrowed) {
         this.isBorrowed = isBorrowed;
+    }
+
+    public void setReturnDueDate(LocalDate date) {
+        this.returnDueDate = date;
     }
 
 
@@ -50,7 +52,7 @@ public class Book {
      */
     public String toFileFormat() {
         return title + " | " + author + " | " + (isBorrowed ? 1 : 0) +
-                (returnDueDate != null ? " | " + returnDueDate.toString() : "");
+                (returnDueDate != null ? " | " + returnDueDate : "");
     }
 
     // Getters
