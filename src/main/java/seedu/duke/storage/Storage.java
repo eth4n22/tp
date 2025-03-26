@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.time.LocalDate;
 
 public class Storage {
     private static String filePath;
@@ -18,6 +19,7 @@ public class Storage {
     private static final int BOOK_TITLE_INDEX = 0;
     private static final int BOOK_AUTHOR_INDEX = 1;
     private static final int BOOK_STATUS_INDEX = 2;
+    private static final int BOOK_DUE_DATE_INDEX = 3;
 
 
     private static final String DIRECTORY_NAME = "data";
@@ -55,7 +57,15 @@ public class Storage {
                 boolean isBorrowed;
                 isBorrowed = bookStatus.equals("1");
 
-                Book book = new Book(bookTitle, bookAuthor, isBorrowed);
+                LocalDate returnDueDate = null;
+                if (specifiers.length > BOOK_DUE_DATE_INDEX) {
+                    String dueDateStr = specifiers[BOOK_DUE_DATE_INDEX].trim();
+                    if (!dueDateStr.isEmpty()) {
+                        returnDueDate = LocalDate.parse(dueDateStr);
+                    }
+                }
+
+                Book book = new Book(bookTitle, bookAuthor, isBorrowed, returnDueDate);
 
                 bookList.add(book);
             }
