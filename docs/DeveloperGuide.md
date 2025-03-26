@@ -176,6 +176,19 @@ Exiting the application
 3. Future enhancements
    Potentially add support for multi-lined inputs
 
+### Command Class
+
+1. Command Class Design:
+
+   - All commands extend the Command class, which is abstract and defines the execute() method. 
+   - The execute() method in each command class contains the logic to perform a specific action (e.g., adding a book, deleting a book).
+   - Each command interacts with BookManager (to manage books), Ui (to print messages), and Storage (to save data to a file).
+
+2. Commands Enum (Commands.java):
+
+   - The Commands enum defines all possible commands, like ADD, DELETE, LIST, BORROW, RETURN, etc.
+   - The enum makes it easier to map user input to the correct command type.
+
 ### Handling missing/corrupted data files
 
 To simulate a missing or corrupted data file:
