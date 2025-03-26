@@ -176,6 +176,15 @@ Exiting the application
 3. Future enhancements
    Potentially add support for multi-lined inputs
 
+### Storage Class
+
+1. **Overview**
+   - The `Storage` class in LeBook is responsible for saving the data after the user exits `LeBook`. To load the data when the user launches `LeBook`, it reads data from a file and loads it into a list. When exiting the program, it writes the Books back into the file in a specific format.
+2. **Design**
+   - Each `Book` is stored in structured text using a `|` delimiter.
+   - Each time the user exits the program, the file is overwritten, ensuring that the content is up to date.
+   - If the file to save the data does not exist, an empty list is returned. Exceptions are caught and logged.
+
 ### Command Class
 
 1. Command Class Design:
@@ -188,6 +197,7 @@ Exiting the application
 
    - The Commands enum defines all possible commands, like ADD, DELETE, LIST, BORROW, RETURN, etc.
    - The enum makes it easier to map user input to the correct command type.
+
 
 ### Handling missing/corrupted data files
 
