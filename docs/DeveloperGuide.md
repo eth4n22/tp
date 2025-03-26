@@ -107,6 +107,7 @@ Borrowing a book when it is available
 
 2. Test case: `borrow 1`
    - Expected: Book is marked as borrowed. Status message indicates that the book has been borrowed. Book status changes to `[X]`.
+   - Return due date is set to 2 weeks from the date of borrowing.
 
 3. Test case: `borrow 0`
    - Expected: No book is borrowed. Error details shown in the status message. Book status remains unchanged.
@@ -121,12 +122,24 @@ Returning a borrowed book
 
 2. Test case: `return 1`
    - Expected: Book is marked as returned. Status message indicates that the book has been returned. Book status changes to `[ ]`.
+   - Return due date is reset and set to `null`.
 
 3. Test case: `return 0`
    - Expected: No book is returned. Error details shown in the status message. Book status remains unchanged.
 
 4. Other incorrect return commands to try: `return`, `return x` (where x is larger than the list size or the book is not borrowed)
    - Expected: Similar to previous.
+
+### Listing Overdue books
+Listing books whose return due date has been surpassed by the current date
+
+1. Prerequisites: List all overdue books using the `list overdue` command. Initially, no books are overdue.
+
+2. Test case: `list overdue` (with no overdue books)
+   - Expected: Message indicating that there are currently no overdue books.
+
+3. Test case: `list overdue` (after multiple books have surpassed overdue date)
+   - Expected: List displays all overdue books with their status and details.
 
 ### Exiting the application
 Exiting the application
@@ -140,7 +153,6 @@ Exiting the application
 
 1. Introduction
    Responsible for managing the library's book collection. 
-   
 
 2. Design and Implementation
    Designed following Single Responsibility Principle
@@ -149,6 +161,20 @@ Exiting the application
 
 3. Future enhancements
    A planned enhancement is to add search functionality to the BookManager, allowing users to find books by title, author, or keywords.
+
+### User Interface Class
+
+1. Introduction
+   The `Ui` class in LeBook handles all interactions with the user. It is responsible for reading inputs and printing outputs including welcome messages, command results and error messages.
+   This class abstracts all system input/output logic to maintain separation of concerns in application.
+
+2. Design and Implementation
+   `Ui` class encapsulates a `Scanner` object to read inputs from `System.in`
+   The `readCommand()` method prompts users for inputs and returns trimmed string for parsing.
+   All output messages are standardized using `printWithSeparator(String message)`, which adds visual separators `=====` above and below messages for better readability.
+
+3. Future enhancements
+   Potentially add support for multi-lined inputs
 
 ### Handling missing/corrupted data files
 
