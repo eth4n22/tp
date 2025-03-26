@@ -188,7 +188,6 @@ Exiting the application
 3. Future enhancements
    Potentially add support for multi-lined inputs
 
-
 ### Handling missing/corrupted data files
 
 To simulate a missing or corrupted data file:
