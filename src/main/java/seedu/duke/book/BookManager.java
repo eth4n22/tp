@@ -186,11 +186,19 @@ public class BookManager {
 
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
-            if (book.isBorrowed() && book.getReturnDueDate() != null && book.getReturnDueDate().isBefore(LocalDate.now())) {
-                output.append(i + 1).append(". ").append(book).append("\n");
+            boolean isOverdue = book.isBorrowed()
+                    && book.getReturnDueDate() != null
+                    && book.getReturnDueDate().isBefore(LocalDate.now());
+
+            if (isOverdue) {
+                output.append(i + 1)
+                        .append(". ")
+                        .append(book)
+                        .append("\n");
                 hasOverdue = true;
             }
         }
+
 
         return hasOverdue ? output.toString() : "No Overdue Books";
     }
