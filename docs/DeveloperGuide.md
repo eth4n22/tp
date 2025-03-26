@@ -8,6 +8,17 @@ LeBook uses the following libraries:
 
 ## Design & implementation
 
+### Parser component
+**API:** [`Parser.java`](https://github.com/AY2425S2-CS2113-T13-3/tp/blob/master/src/main/java/seedu/duke/parser/Parser.java)
+The parser component is responsible for interpreting user input and calling the appropriate command object.
+It takes a string input from the user, determines the corresponding command type, and returns an instance of a subclass of Command.
+
+How the parser component works:
+1. Extracts the command keyword from the user input.
+2. Matches the keyword to the relevant commands.
+3. Extracts the remaining arguments (if any).
+4. Returns a corresponding Command object for execution.
+
 ### Command Class
 
 1. Command Class Design:
@@ -49,7 +60,7 @@ to manage inventory and track book availability quickly compared to a typical mo
 | v1.0    | librarian | set due dates for my books                    | so that I can monitor when books will be returned and keep track of books that have yet to been returned. |
 | v1.0    | librarian | save the book details                         | keep track of book statuses when using the system again.                                                  |
 | v1.0    | librarian | enter the command as one long string          | enter the input without caring about different parts of the input.                                        |
-| v1.0    | librarian | see what happens whenever I perform a command | confirm that my inputs have been added correctly                                                          |
+| v1.0    | librarian | see what happens whenever I perform a command | confirm that my inputs have been added correctly.                                                         |
 | v2.0    | librarian | view the list of all available commands       | know what commands are available in the system.                                                           |
 | v2.0    | librarian | know the genre of a book                      | better organise the catalogue.                                                                            |
 | v2.0    | librarian | keep track of what shelf a book is on         | easily locate the book.                                                                                   |
@@ -60,7 +71,7 @@ to manage inventory and track book availability quickly compared to a typical mo
 ## Non-Functional Requirements
 
 1. Should work on any mainstream OS that has installed Java 17 or above.
-2. Built to support only a single user
+2. Built to support only a single user.
 
 ## Glossary
 
@@ -142,7 +153,7 @@ Returning a borrowed book
 4. Other incorrect return commands to try: `return`, `return x` (where x is larger than the list size or the book is not borrowed)
    - Expected: Similar to previous.
 
-### Listing Overdue books
+### Listing overdue books
 Listing books whose return due date has been surpassed by the current date
 
 1. Prerequisites: List all overdue books using the `list overdue` command. Initially, no books are overdue.
