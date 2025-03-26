@@ -136,6 +136,20 @@ Exiting the application
 2. Test case: `exit`
    - Expected: Application closes with a goodbye message.
 
+### BookManager Class
+
+1. Introduction
+   Responsible for managing the library's book collection. 
+   
+
+2. Design and Implementation
+   Designed following Single Responsibility Principle
+   The addNewBook() method allows users to add a new book to the library with a specified title and author. 
+   The method enforces proper formatting and validation rules.
+
+3. Future enhancements
+   A planned enhancement is to add search functionality to the BookManager, allowing users to find books by title, author, or keywords.
+
 ### Handling missing/corrupted data files
 
 To simulate a missing or corrupted data file:
