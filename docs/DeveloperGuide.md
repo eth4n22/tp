@@ -8,6 +8,18 @@ LeBook uses the following libraries:
 
 ## Design & implementation
 
+### Command Class
+
+1. Command Class Design:
+
+   - All commands extend the Command class, which is abstract and defines the execute() method.
+   - The execute() method in each command class contains the logic to perform a specific action.
+   - Each command interacts with BookManager (to manage books), Ui (to print messages), and Storage (to save data to a file).
+
+2. Commands Enum (Commands.java):
+
+   - The Commands enum defines all possible commands, like ADD, DELETE, LIST, BORROW, RETURN, etc.
+   - The enum makes it easier to map user input to the correct command type.
 {Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
 
 ## Appendix
@@ -175,29 +187,6 @@ Exiting the application
 
 3. Future enhancements
    Potentially add support for multi-lined inputs
-
-### Storage Class
-
-1. **Overview**
-   - The `Storage` class in LeBook is responsible for saving the data after the user exits `LeBook`. To load the data when the user launches `LeBook`, it reads data from a file and loads it into a list. When exiting the program, it writes the Books back into the file in a specific format.
-2. **Design**
-   - Each `Book` is stored in structured text using a `|` delimiter.
-   - Each time the user exits the program, the file is overwritten, ensuring that the content is up to date.
-   - If the file to save the data does not exist, an empty list is returned. Exceptions are caught and logged.
-
-### Command Class
-
-1. Command Class Design:
-
-   - All commands extend the Command class, which is abstract and defines the execute() method. 
-   - The execute() method in each command class contains the logic to perform a specific action (e.g., adding a book, deleting a book).
-   - Each command interacts with BookManager (to manage books), Ui (to print messages), and Storage (to save data to a file).
-
-2. Commands Enum (Commands.java):
-
-   - The Commands enum defines all possible commands, like ADD, DELETE, LIST, BORROW, RETURN, etc.
-   - The enum makes it easier to map user input to the correct command type.
-
 
 ### Handling missing/corrupted data files
 
