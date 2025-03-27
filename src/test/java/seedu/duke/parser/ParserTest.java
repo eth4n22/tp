@@ -30,29 +30,9 @@ public class ParserTest {
     }
 
     @Test
-    void testParseValidCommand_borrowCommand() throws LeBookException {
-        Command result = Parser.parse("borrow harry potter");
-        assertNotNull(result);
-        assertInstanceOf(UpdateStatusCommand.class, result);
-    }
-
-    @Test
-    void testParseValidCommand_returnCommand() throws LeBookException {
-        Command result = Parser.parse("return harry potter");
-        assertNotNull(result);
-        assertInstanceOf(UpdateStatusCommand.class, result);
-    }
-
-    @Test
     void testParseExitCommand() throws LeBookException {
         Command result = Parser.parse("bye");
         assertInstanceOf(ExitCommand.class, result);
-    }
-
-    @Test
-    void testParseDeleteCommand() throws LeBookException {
-        Command result = Parser.parse("delete harry potter");
-        assertInstanceOf(DeleteCommand.class, result);
     }
 
     @Test
@@ -75,5 +55,44 @@ public class ParserTest {
     @Test
     public void parse_nullInput_assertionErrorThrown() {
         assertThrows(AssertionError.class, () -> Parser.parse(null));
+    }
+
+    @Test
+    void testParseBorrowCommand_validIndex() throws LeBookException {
+        Command result = Parser.parse("borrow 1");
+        assertNotNull(result);
+        assertInstanceOf(UpdateStatusCommand.class, result);
+    }
+
+    @Test
+    void testParseBorrowCommand_invalidIndex() {
+        Exception exception = assertThrows(LeBookException.class, () -> Parser.parse("borrow abc"));
+        assertEquals("Please provide a book index.", exception.getMessage());
+    }
+
+    @Test
+    void testParseReturnCommand_validIndex() throws LeBookException {
+        Command result = Parser.parse("return 1");
+        assertNotNull(result);
+        assertInstanceOf(UpdateStatusCommand.class, result);
+    }
+
+    @Test
+    void testParseReturnCommand_invalidIndex() {
+        Exception exception = assertThrows(LeBookException.class, () -> Parser.parse("return xyz"));
+        assertEquals("Please provide a book index.", exception.getMessage());
+    }
+
+    @Test
+    void testParseDeleteCommand_validIndex() throws LeBookException {
+        Command result = Parser.parse("delete 1");
+        assertNotNull(result);
+        assertInstanceOf(DeleteCommand.class, result);
+    }
+
+    @Test
+    void testParseDeleteCommand_invalidIndex() {
+        Exception exception = assertThrows(LeBookException.class, () -> Parser.parse("delete abc"));
+        assertEquals("Please provide a book index.", exception.getMessage());
     }
 }

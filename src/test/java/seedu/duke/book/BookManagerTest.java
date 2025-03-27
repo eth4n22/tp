@@ -56,7 +56,7 @@ public class BookManagerTest {
         bookManager.addNewBook("Book to Delete / Author");
         assertEquals(1, bookManager.getBooks().size());
 
-        String result = bookManager.deleteBook("1");
+        String result = bookManager.deleteBook(0); //parser passes in 0-indexed bookIndex
 
         assertEquals(0, bookManager.getBooks().size());
         assertTrue(result.contains("Book deleted:"));
@@ -67,7 +67,7 @@ public class BookManagerTest {
     public void testDeleteBook_invalidIndex() {
         bookManager.addNewBook("Some Book / Author");
 
-        String result = bookManager.deleteBook("2"); // Index out of bounds
+        String result = bookManager.deleteBook(2); // Index out of bounds
 
         assertEquals(1, bookManager.getBooks().size());
         assertEquals("There is no such book in the library!", result);
@@ -75,16 +75,9 @@ public class BookManagerTest {
 
     @Test
     public void testDeleteBook_negativeIndex() {
-        String result = bookManager.deleteBook("-1");
+        String result = bookManager.deleteBook(-1);
 
         assertEquals("There is no such book in the library!", result);
-    }
-
-    @Test
-    public void testDeleteBook_nonNumericIndex() {
-        String result = bookManager.deleteBook("abc");
-
-        assertEquals("Please provide a valid book number!", result);
     }
 
     @Test
@@ -111,7 +104,7 @@ public class BookManagerTest {
     public void testUpdateBookStatus_borrow() {
         bookManager.addNewBook("Test Book / Test Author");
 
-        String result = bookManager.updateBookStatus("BORROW 1");
+        String result = bookManager.updateBookStatus("borrow", 0); //parser passes in 0-indexed bookIndex
 
         assertEquals("Borrowed: Test Book", result);
         assertTrue(bookManager.getBooks().get(0).isBorrowed());
@@ -120,9 +113,9 @@ public class BookManagerTest {
     @Test
     public void testUpdateBookStatus_return() {
         bookManager.addNewBook("Test Book / Test Author");
-        bookManager.updateBookStatus("BORROW 1"); // Borrow first
+        bookManager.updateBookStatus("borrow", 1); // Borrow first
 
-        String result = bookManager.updateBookStatus("RETURN 1");
+        String result = bookManager.updateBookStatus("return", 0); //parser passes in 0-indexed bookIndex
 
         assertEquals("Returned: Test Book", result);
         assertFalse(bookManager.getBooks().get(0).isBorrowed());
@@ -132,23 +125,9 @@ public class BookManagerTest {
     public void testUpdateBookStatus_invalidIndex() {
         bookManager.addNewBook("Test Book / Test Author");
 
-        String result = bookManager.updateBookStatus("BORROW 2"); // Invalid index
+        String result = bookManager.updateBookStatus("borrow", 2); // Invalid index
 
         assertEquals("There is no such book in the library!", result);
-    }
-
-    @Test
-    public void testUpdateBookStatus_missingIndex() {
-        String result = bookManager.updateBookStatus("BORROW");
-
-        assertEquals("Please specify a book number!", result);
-    }
-
-    @Test
-    public void testUpdateBookStatus_nonNumericIndex() {
-        String result = bookManager.updateBookStatus("BORROW abc");
-
-        assertEquals("Please provide a valid book number!", result);
     }
 
     @Test
@@ -156,7 +135,7 @@ public class BookManagerTest {
         bookManager.addNewBook("Harry Potter / Wayne");
         bookManager.addNewBook("I Love 2113 / Deanson");
 
-        String result = bookManager.updateBookStatus("BORROW 1");
+        String result = bookManager.updateBookStatus("borrow", 0); //parser passes in 0-indexed bookIndex
 
         assertEquals("Borrowed: Harry Potter", result);
 
@@ -167,9 +146,9 @@ public class BookManagerTest {
     void testReturnBook() {
         bookManager.addNewBook("Harry Potter / Wayne");
         bookManager.addNewBook("I Love 2113 / Deanson");
-        bookManager.updateBookStatus("BORROW 2");
+        bookManager.updateBookStatus("borrow", 2);
 
-        String result = bookManager.updateBookStatus("RETURN 2");
+        String result = bookManager.updateBookStatus("return", 1); //parser passes in 0-indexed bookIndex
 
         assertEquals("Returned: I Love 2113", result);
 
@@ -180,7 +159,7 @@ public class BookManagerTest {
     void testInvalidBookNumber() {
         bookManager.addNewBook("Harry Potter / Wayne");
         bookManager.addNewBook("I Love 2113 / Deanson");
-        String result = bookManager.updateBookStatus("BORROW 100");
+        String result = bookManager.updateBookStatus("borrow", 100);
 
         assertEquals("There is no such book in the library!", result);
     }
