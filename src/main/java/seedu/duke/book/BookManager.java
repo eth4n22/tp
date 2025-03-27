@@ -1,11 +1,8 @@
 package seedu.duke.book;
 
-import seedu.duke.commands.Commands;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
-
 
 /**
  * Manages a collection of books by adding, deleting, listing, searching, and updating their status.
@@ -13,6 +10,8 @@ import java.time.LocalDate;
 public class BookManager {
     //private static final String DATE_FORMAT = "yyyy-MM-dd";
     private final List<Book> books;
+    private static final String BORROW = "borrow";
+    private static final String RETURN = "return";
 
     /**
      * Constructs a new BookManager with the given books.
@@ -77,32 +76,26 @@ public class BookManager {
     /**
      * Deletes a book from the books list.
      *
-     * @param index Array containing the book index information [index]
+     * @param bookIndex Array containing the book index information [index]
      * @return A message indicating whether the deletion was successful or if there was an error
      */
 
-    public String deleteBook(String index) {
-        assert index != null : "Book Index cannot be null";
+    public String deleteBook(int bookIndex) {
+        //assert index != null : "Book Index cannot be null";
 
-        try {
-            int bookIndex = Integer.parseInt(index) - 1;
-
-            if (bookIndex < 0 || bookIndex >= books.size()) {
-                return "There is no such book in the library!";
-            }
-
-            Book removedBook = books.get(bookIndex);
-            int oldSize = books.size();
-            books.remove(bookIndex);
-
-            // Assert that the book was successfully removed
-            assert books.size() == oldSize - 1 : "Book size should decrease by 1 after deletion";
-            assert !books.contains(removedBook) : "Removed book should not be in the collection";
-
-            return "Book deleted:\n  " + removedBook + "\nNow you have " + books.size() + " books in the library.";
-        } catch (NumberFormatException e) {
-            return "Please provide a valid book number!";
+        if (bookIndex < 0 || bookIndex >= books.size()) {
+            return "There is no such book in the library!";
         }
+
+        Book removedBook = books.get(bookIndex);
+        int oldSize = books.size();
+        books.remove(bookIndex);
+
+        // Assert that the book was successfully removed
+        assert books.size() == oldSize - 1 : "Book size should decrease by 1 after deletion";
+        assert !books.contains(removedBook) : "Removed book should not be in the collection";
+
+        return "Book deleted:\n  " + removedBook + "\nNow you have " + books.size() + " books in the library.";
     }
 
     /**
@@ -136,47 +129,34 @@ public class BookManager {
     /**
      * Updates the status of a book in the library based on the provided command.
      *
-     * @param userInput A string containing the command (BORROW/RETURN) followed by the book number
-     *                    (e.g., "BORROW 1" or "RETURN 2")
+     * @param command   The operation to perform, either BORROW or RETURN.
+     * @param bookIndex The index of the book in the library (0-based).
      * @return A message indicating the result of the operation, which can be:
-     *         - Confirmation of borrowing or returning a specific book
-     *         - An error message if the book number is invalid, missing, or out of range
-     *         - An error message if the command is invalid
+     * - Confirmation of borrowing or returning a specific book
+     * - An error message if the book number is invalid, missing, or out of range
+     * - An error message if the command is invalid
      * @throws NumberFormatException If the book number provided cannot be parsed as an integer
      */
-    public String updateBookStatus(String userInput) {
-        assert userInput != null : "Input should not be null";
-        String[] parts = userInput.trim().split(" ");
+    public String updateBookStatus(String command, int bookIndex) {
+        //assert userInput != null : "Input should not be null";
 
-        if (parts.length < 2) {
-            return "Please specify a book number!";
+        if (bookIndex < 0 || bookIndex >= books.size()) {
+            return "There is no such book in the library!";
         }
 
-        String commandType = parts[0].toUpperCase();
-        try {
-            Commands command = Commands.valueOf(commandType);
-            int bookIndex = Integer.parseInt(parts[1]) - 1;
-
-            if (bookIndex < 0 || bookIndex >= books.size()) {
-                return "There is no such book in the library!";
-            }
-
-            Book book = books.get(bookIndex);
-            assert book != null : "Book object should not be null";
-            switch (command) {
-            case BORROW:
-                book.setStatus(true);
-                book.setReturnDueDate(LocalDate.now().plusWeeks(2));
-                return "Borrowed: " + book.getTitle();
-            case RETURN:
-                book.setStatus(false);
-                book.setReturnDueDate(null);
-                return "Returned: " + book.getTitle();
-            default:
-                return "Invalid command!";
-            }
-        } catch (NumberFormatException e) {
-            return "Please provide a valid book number!";
+        Book book = books.get(bookIndex);
+        assert book != null : "Book object should not be null";
+        switch (command) {
+        case BORROW:
+            book.setStatus(true);
+            book.setReturnDueDate(LocalDate.now().plusWeeks(2));
+            return "Borrowed: " + book.getTitle();
+        case RETURN:
+            book.setStatus(false);
+            book.setReturnDueDate(null);
+            return "Returned: " + book.getTitle();
+        default:
+            return "Invalid command!";
         }
     }
 

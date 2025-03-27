@@ -22,6 +22,23 @@ public class Parser {
     private static final String DELETE = "delete";
 
     /**
+     * Parses the book index from the given string.
+     * The book index is expected to be a 1-based number provided by the user.
+     * This method converts it to a 0-based index for internal processing.
+     *
+     * @param bookDetails The string containing the book index.
+     * @return The parsed book index (0-based).
+     * @throws LeBookException If the input is not a valid number.
+     */
+    private static int parseBookIndex(String bookDetails) throws LeBookException {
+        try {
+            return Integer.parseInt(bookDetails) - 1;
+        } catch (NumberFormatException e) {
+            throw new LeBookException("Please provide a book index.");
+        }
+    }
+
+    /**
      * Parses user input and returns the corresponding command.
      *
      * @param userInput The input string.
@@ -35,6 +52,7 @@ public class Parser {
         String[] fullInput = userInput.split(" ", 2);
         String commandType = fullInput[0].toLowerCase();
         String bookDetails = (fullInput.length > 1) ? fullInput[1] : "";
+        int bookIndex;
 
         switch (commandType) {
         case BYE:
@@ -45,9 +63,11 @@ public class Parser {
             }
             return new ListCommand();
         case BORROW, RETURN:
-            return new UpdateStatusCommand(userInput);
+            bookIndex = parseBookIndex(bookDetails);
+            return new UpdateStatusCommand(commandType, bookIndex);
         case DELETE:
-            return new DeleteCommand(bookDetails);
+            bookIndex = parseBookIndex(bookDetails);
+            return new DeleteCommand(bookIndex);
         case ADD:
             return new AddCommand(bookDetails);
         default:

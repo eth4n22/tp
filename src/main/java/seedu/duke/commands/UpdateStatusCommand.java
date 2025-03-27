@@ -8,9 +8,11 @@ import seedu.duke.ui.Ui;
 public class UpdateStatusCommand extends Command {
 
     private final String bookDetails;
+    private final int bookIndex;
 
-    public UpdateStatusCommand(String bookDetails) {
+    public UpdateStatusCommand(String bookDetails, int bookIndex) {
         this.bookDetails = bookDetails;
+        this.bookIndex = bookIndex;
     }
 
     @Override
@@ -20,7 +22,7 @@ public class UpdateStatusCommand extends Command {
         assert storage != null : "Storage should not be null";
         assert bookDetails != null : "Book details cannot be null";
         
-        String response = bookManager.updateBookStatus(bookDetails);
+        String response = bookManager.updateBookStatus(bookDetails, bookIndex);
         ui.printWithSeparator(response);
         storage.writeToFile(bookManager.getBooks());
     }
