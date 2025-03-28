@@ -4,7 +4,7 @@ import seedu.duke.book.Book;
 import seedu.duke.exception.SectionFullException;
 
 public class Shelves {
-    private final Shelf[] shelves = new Shelf[5];
+    public final Shelf[] shelves = new Shelf[5];
     private boolean isFull = false;
     private final String IDENTIFIER;
 
@@ -35,7 +35,7 @@ public class Shelves {
             }
         }
     }
-    public void deleteBookFromSection(int shelfNum) {
-
+    public String deleteBookFromSection(int shelfNum, int slotNum) {
+        return shelves[shelfNum].deleteBookFromShelf(slotNum) + IDENTIFIER;
     }
 }

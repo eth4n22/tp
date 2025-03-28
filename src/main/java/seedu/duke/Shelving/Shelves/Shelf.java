@@ -1,13 +1,13 @@
 package seedu.duke.Shelving.Shelves;
 
 import seedu.duke.book.Book;
-import seedu.duke.book.BookManager;
+import seedu.duke.book.ShelfBookManager;
 
 public class Shelf {
-    public BookManager bookManager;
+    public ShelfBookManager shelfBookManager;
     boolean checker;
     private int booksCurrentlyOnShelf = 0;
-    private final int MAX_BOOKS_ON_SHELF = 30;
+    private final int MAX_BOOKS_ON_SHELF = 100;
 
     public boolean isFull() {
         return true;
@@ -21,5 +21,9 @@ public class Shelf {
         // Add the book
         //bookManager.addNewBook(book);
         booksCurrentlyOnShelf += 1;
+    }
+
+    public String deleteBookFromShelf(int slotNum) {
+        return shelfBookManager.deleteBook(slotNum);
     }
 }
