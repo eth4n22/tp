@@ -9,7 +9,7 @@ public class Book {
     private final String author;
     private boolean isBorrowed;
     private LocalDate returnDueDate;
-
+    private final String bookID; //IDENTIFIER-ShelfNum-Index
 
     public Book(String title, String author, boolean isBorrowed, LocalDate returnDueDate) {
         assert title != null && !title.trim().isEmpty() : "Title cannot be empty";
@@ -19,6 +19,18 @@ public class Book {
         this.author = author;
         this.isBorrowed = isBorrowed;
         this.returnDueDate = returnDueDate;
+        bookID = "NIL";
+    }
+
+    public Book(String title, String author, boolean isBorrowed, LocalDate returnDueDate, String bookID) {
+        assert title != null && !title.trim().isEmpty() : "Title cannot be empty";
+        assert author != null && !author.trim().isEmpty() : "Author cannot be empty";
+
+        this.title = title;
+        this.author = author;
+        this.isBorrowed = isBorrowed;
+        this.returnDueDate = returnDueDate;
+        this.bookID = bookID;
     }
 
     public Book(String title, String author) {
@@ -70,5 +82,9 @@ public class Book {
 
     public LocalDate getReturnDueDate() {
         return returnDueDate;
+    }
+
+    public String getBookID() {
+        return bookID;
     }
 }

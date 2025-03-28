@@ -95,7 +95,7 @@ public class BookManager {
         assert books.size() == oldSize - 1 : "Book size should decrease by 1 after deletion";
         assert !books.contains(removedBook) : "Removed book should not be in the collection";
 
-        return "Book deleted:\n  " + removedBook + "\nNow you have " + books.size() + " books in the library.";
+        return "Book deleted:\n  " + removedBook + "\nNow you have " + books.size() + " books in the library";
     }
 
     /**
@@ -181,5 +181,10 @@ public class BookManager {
 
 
         return hasOverdue ? output.toString() : "No Overdue Books";
+    }
+
+    public String getBookID(int bookIndex) {
+        Book book = books.get(bookIndex);
+        return book.getBookID();
     }
 }

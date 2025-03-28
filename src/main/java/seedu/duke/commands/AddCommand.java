@@ -1,6 +1,7 @@
 package seedu.duke.commands;
 
 import seedu.duke.book.BookManager;
+import seedu.duke.library.Library;
 import seedu.duke.storage.Storage;
 import seedu.duke.ui.Ui;
 
@@ -12,13 +13,13 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public void execute(BookManager bookManager, Ui ui, Storage storage) {
-        assert bookManager != null : "BookManager should not be null";
+    public void execute(Library library, Ui ui, Storage storage) {
+        assert library != null : "Library should not be null";
         assert ui != null : "Ui should not be null";
         assert storage != null : "Storage should not be null";
         assert bookDetails != null : "Book details cannot be null";
-        String response = bookManager.addNewBook(bookDetails);
+        String response = library.addNewBook(bookDetails);
         ui.printWithSeparator(response);
-        storage.writeToFile(bookManager.getBooks());
+        storage.writeToFile(library.getBooks());
     }
 }

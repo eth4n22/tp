@@ -2,9 +2,9 @@ package seedu.duke;
 
 import seedu.duke.commands.Command;
 import seedu.duke.exception.LeBookException;
+import seedu.duke.library.Library;
 import seedu.duke.ui.Ui;
 import seedu.duke.parser.Parser;
-import seedu.duke.book.BookManager;
 import seedu.duke.storage.Storage;
 
 
@@ -14,7 +14,7 @@ import seedu.duke.storage.Storage;
  */
 
 public class LeBook {
-    private final BookManager bookManager;
+    private final Library library;
     private final Storage storage;
     private final Ui ui;
 
@@ -23,12 +23,12 @@ public class LeBook {
 
         ui = new Ui();
         storage = new Storage(filePath);
-        bookManager = new BookManager(storage.loadFileContents());
+        library = new Library(storage.loadFileContents());
 
         // Assertions to check if critical components are initialized
         assert ui != null : "UI instance should not be null";
         assert storage != null : "Storage instance should not be null";
-        assert bookManager != null : "BookManager instance should not be null";
+        assert library != null : "BookManager instance should not be null";
     }
 
     public void run() {
@@ -43,7 +43,7 @@ public class LeBook {
                 Command command = Parser.parse(userInput);
                 assert command != null : "Parser should return a valid Command object";
 
-                command.execute(bookManager, ui, storage);
+                command.execute(library, ui, storage);
                 isExit = command.isExit();
             } catch (LeBookException e) {
                 ui.printError(e.getMessage());

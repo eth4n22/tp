@@ -1,5 +1,6 @@
 package seedu.duke.library;
 
+import seedu.duke.Shelving.ShelvesManager;
 import seedu.duke.book.Book;
 import seedu.duke.book.BookManager;
 
@@ -7,36 +8,37 @@ import java.util.List;
 
 public class Library {
     private BookManager catelogueManager;
-    private ShelfManager shelfManager;
+    private ShelvesManager shelvesManager;
 
-    public Library(List<Book>allBooks, List<List<Book>> ShelfBooks) {
+    public Library(List<Book>allBooks) {
         catelogueManager = new BookManager(allBooks);
-        shelfManager = new ShelfManager(ShelfBooks);
+        shelvesManager = new ShelvesManager();
     }
 
 
     public List<Book> listBooks() {
-        return catelogueManager.getBooks();
+        catelogueManager.listBooks();
     }
 
 
-    public String addNewBook(String bookDetails) {
-        assert bookDetails != null : "Book details cannot be null";
-        catelogueManager.addNewBook(bookDetails);
-        shelfManager.addBookToShelf(bookDetails);
+    public String addNewBook(String bookDetails, String genre) {
+        return null;
     }
 
-    public String deleteBook(String index) {
-
-        catelogueManager.deleteBook(index);
-        String bookDetails = catelogueManager.returnBookDetails(index);
-        String genre = bookDetails.split(" ")[0];
-        shelfManager.remove(genre, bookDetails);
+    public String deleteBook(int bookIndex) {
+        String bookID = catelogueManager.getBookID(bookIndex);
+        String response1 = catelogueManager.deleteBook(bookIndex);
+        String response2 = shelvesManager.deleteBook(bookID);
+        return response1 + System.lineSeparator() + response2;
     }
 
     public String updateBookStatus(String userInput) {
         //update Book in catelogue
         //update book in shelf
+        return null;
     }
 
+    public List<Book> getBooks() {
+        return null;
+    }
 }
