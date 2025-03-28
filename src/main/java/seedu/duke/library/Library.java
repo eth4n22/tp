@@ -20,6 +20,9 @@ public class Library {
         catelogueManager.listBooks();
     }
 
+    public String listBorrowedBooks() {
+        return catelogueManager.listBorrowedBooks();
+    }
 
     public String addNewBook(String bookDetails, String genre) {
         return null;

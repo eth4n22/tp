@@ -1,6 +1,7 @@
 package seedu.duke.parser;
 
 import seedu.duke.commands.Command;
+import seedu.duke.commands.ListBorrowedCommand;
 import seedu.duke.exception.LeBookException;
 import seedu.duke.commands.AddCommand;
 import seedu.duke.commands.DeleteCommand;
@@ -20,6 +21,8 @@ public class Parser {
     private static final String BORROW = "borrow";
     private static final String RETURN = "return";
     private static final String DELETE = "delete";
+    public static final String LIST_OVERDUE = "overdue";
+    public static final String LIST_BORROWED = "borrowed";
 
     /**
      * Parses the book index from the given string.
@@ -58,8 +61,12 @@ public class Parser {
         case BYE:
             return new ExitCommand();
         case LIST:
-            if (bookDetails.trim().equalsIgnoreCase("overdue")) {
+            String listCommandType = bookDetails.trim().toLowerCase();
+            if (LIST_OVERDUE.equals(listCommandType)) {
                 return new ListOverdueCommand();
+            }
+            if (LIST_BORROWED.equals(listCommandType)) {
+                return new ListBorrowedCommand();
             }
             return new ListCommand();
         case BORROW, RETURN:
