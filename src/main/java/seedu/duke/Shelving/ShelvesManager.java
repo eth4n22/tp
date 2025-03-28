@@ -48,23 +48,23 @@ public class ShelvesManager {
     //if free, add to shelf
     //else throw exception
 
-    public void addBook(Book book, String genre) {
+    public void addBook(String bookDetails, String genre) {
         try {
             switch (genre) {
             case ROMANCE:
-                romanceShelves.addBookToSection(book);
+                romanceShelves.addBookToSection(bookDetails);
             case ADVENTURE:
-                adventureShelves.addBookToSection(book);
+                adventureShelves.addBookToSection(bookDetails);
             case ACTION:
-                actionShelves.addBookToSection(book);
+                actionShelves.addBookToSection(bookDetails);
             case HORROR:
-                horrorShelves.addBookToSection(book);
+                horrorShelves.addBookToSection(bookDetails);
             case MYSTERY:
-                mysteryShelves.addBookToSection(book);
+                mysteryShelves.addBookToSection(bookDetails);
             case NONFICTION:
-                nonFictionShelves.addBookToSection(book);
+                nonFictionShelves.addBookToSection(bookDetails);
             case SCIFI:
-                sciFiShelves.addBookToSection(book);
+                sciFiShelves.addBookToSection(bookDetails);
             }
         } catch (SectionFullException e) {
             System.out.println(e);

@@ -9,7 +9,7 @@ public class Book {
     private final String author;
     private boolean isBorrowed;
     private LocalDate returnDueDate;
-    private final String bookID; //IDENTIFIER-ShelfNum-Index
+    private String bookID; //IDENTIFIER-ShelfNum-Index
 
     public Book(String title, String author, boolean isBorrowed, LocalDate returnDueDate) {
         assert title != null && !title.trim().isEmpty() : "Title cannot be empty";
@@ -86,5 +86,10 @@ public class Book {
 
     public String getBookID() {
         return bookID;
+    }
+
+    // Setters
+    public void setBookID(String bookID) {
+        this.bookID = bookID;
     }
 }
