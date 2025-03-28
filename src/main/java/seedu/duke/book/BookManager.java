@@ -160,6 +160,28 @@ public class BookManager {
         }
     }
 
+    /**
+     * Lists all the books that have been borrowed in the library.
+     *
+     * @return A string representation of the borrowed books. If no books have been borrowed,
+     *         returns a message indicating that no books have been borrowed yet.
+     */
+    public String listBorrowedBooks() {
+        if (books.isEmpty()) {
+            return "No books have been borrowed yet.";
+        } else {
+            StringBuilder borrowedBooks = new StringBuilder("Here are the books that have been borrowed:\n");
+            for (int i = 0; i < books.size(); i++) {
+                Book book = books.get(i);
+                assert book != null : "Book at index " + i + " should not be null";
+                if (book.isBorrowed()) {
+                    borrowedBooks.append(i + 1).append(". ").append(book).append("\n");
+                }
+            }
+            return borrowedBooks.toString();
+        }
+    }
+
     public String listOverdueBooks() {
         StringBuilder output = new StringBuilder("List of Overdue Books:\n");
         boolean hasOverdue = false;
