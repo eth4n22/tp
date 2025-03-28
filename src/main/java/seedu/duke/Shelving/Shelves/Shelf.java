@@ -1,7 +1,6 @@
 package seedu.duke.Shelving.Shelves;
 
 import seedu.duke.book.Book;
-import seedu.duke.book.ShelfBookManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +34,18 @@ public class Shelf {
 
     public int getBooksCurrentlyOnShelf() {
         return booksCurrentlyOnShelf;
+    }
+
+    public static int getMAX_BOOKS_ON_SHELF() {
+        return 100;
+    }
+
+    public List<Book> getShelfBooks() {
+        return shelfBooks;
+    }
+
+    public void listShelf() {
+        // Implement this Wayne
     }
 
     public String addBookToShelf(String bookDetails, int bookIndex) {
