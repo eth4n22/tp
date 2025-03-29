@@ -20,27 +20,27 @@ public class MemberManagerTest {
     }
 
     @Test
-    void testGetMemberByName_NewMember() {
+    void testGetMemberByName_newMember() {
         Member member = memberManager.getMemberByName("Alice");
         assertNotNull(member);
         assertEquals("Alice", member.getName());
     }
 
     @Test
-    void testGetMemberByName_ExistingMember() {
+    void testGetMemberByName_existingMember() {
         Member member1 = memberManager.getMemberByName("Bob");
         Member member2 = memberManager.getMemberByName("Bob");
         assertSame(member1, member2);
     }
 
     @Test
-    void testListMembersWithOverdueBooks_NoOverdue() {
+    void testListMembersWithOverdueBooks_noOverdue() {
         String result = memberManager.listMembersWithOverdueBooks();
         assertEquals("No members have overdue books.", result);
     }
 
     @Test
-    void testListMembersWithOverdueBooks_WithOverdue() {
+    void testListMembersWithOverdueBooks_withOverdue() {
         Member member = memberManager.getMemberByName("Charlie");
         Book book1 = new Book("Harry Potter", "J.K. Rowling");
         Book book2 = new Book("Romeo and Juliet", "Shakespeare");
