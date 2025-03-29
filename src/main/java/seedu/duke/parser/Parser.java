@@ -27,8 +27,8 @@ public class Parser {
     private static final String HELP = "help";
     private static final String LISTSHELF = "shelf";
 
-    public static final String LIST_OVERDUE = "overdue";
-    public static final String LIST_BORROWED = "borrowed";
+    private static final String LIST_OVERDUE = "overdue";
+    private static final String LIST_BORROWED = "borrowed";
 
     /**
      * Parses the book index from the given string.

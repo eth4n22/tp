@@ -144,7 +144,6 @@ public class BookManager {
      * @param command   The operation to perform, either BORROW or RETURN.
      * @param bookIndex The index of the book in the library (0-based).
      * @return A message indicating the result of the operation, which can be:
-     *
      * @throws NumberFormatException If the book number provided cannot be parsed as an integer
      */
     public String updateBookStatus(String command, int bookIndex) {

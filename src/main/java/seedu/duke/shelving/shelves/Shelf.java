@@ -14,9 +14,10 @@ import java.util.stream.Collectors;
 public class Shelf {
     private static final int MAX_BOOKS_ON_SHELF = 100;
 
-    private List<Book> shelfBooks = new ArrayList<>();
     private final int shelfIndex;
     private final String shelfGenre;
+
+    private List<Book> shelfBooks = new ArrayList<>();
 
     private int booksCurrentlyOnShelf = 0;
 
