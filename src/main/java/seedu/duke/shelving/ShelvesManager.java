@@ -1,12 +1,12 @@
-package seedu.duke.Shelving;
+package seedu.duke.shelving;
 
-import seedu.duke.Shelving.Shelves.ActionShelves;
-import seedu.duke.Shelving.Shelves.AdventureShelves;
-import seedu.duke.Shelving.Shelves.HorrorShelves;
-import seedu.duke.Shelving.Shelves.MysteryShelves;
-import seedu.duke.Shelving.Shelves.NonFictionShelves;
-import seedu.duke.Shelving.Shelves.RomanceShelves;
-import seedu.duke.Shelving.Shelves.SciFiShelves;
+import seedu.duke.shelving.shelves.ActionShelves;
+import seedu.duke.shelving.shelves.AdventureShelves;
+import seedu.duke.shelving.shelves.HorrorShelves;
+import seedu.duke.shelving.shelves.MysteryShelves;
+import seedu.duke.shelving.shelves.NonFictionShelves;
+import seedu.duke.shelving.shelves.RomanceShelves;
+import seedu.duke.shelving.shelves.SciFiShelves;
 import seedu.duke.exception.SectionFullException;
 
 public class ShelvesManager {

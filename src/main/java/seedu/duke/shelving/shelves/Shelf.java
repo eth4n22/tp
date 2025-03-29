@@ -1,4 +1,4 @@
-package seedu.duke.Shelving.Shelves;
+package seedu.duke.shelving.shelves;
 
 import seedu.duke.book.Book;
 

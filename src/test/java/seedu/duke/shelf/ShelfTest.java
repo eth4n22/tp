@@ -1,7 +1,7 @@
 package seedu.duke.shelf;
 
-import seedu.duke.Shelving.Shelves.Shelf;
-import seedu.duke.Shelving.ShelvesManager;
+import seedu.duke.shelving.shelves.Shelf;
+import seedu.duke.shelving.ShelvesManager;
 import seedu.duke.book.Book;
 
 import org.junit.jupiter.api.BeforeEach;

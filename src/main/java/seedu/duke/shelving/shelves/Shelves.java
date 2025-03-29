@@ -1,4 +1,4 @@
-package seedu.duke.Shelving.Shelves;
+package seedu.duke.shelving.shelves;
 
 import seedu.duke.exception.SectionFullException;
 
@@ -10,9 +10,9 @@ import seedu.duke.exception.SectionFullException;
 public class Shelves {
     public final Shelf[] shelves;
     private boolean isFull = false;
-    private final String IDENTIFIER;
+    private String identifier;
 
-    private final String NO_SECTION_AVAILABLE = "There is no section available";
+    private static final String NO_SECTION_AVAILABLE = "There is no section available";
 
     //@@author WayneCh0y
     /**
@@ -22,10 +22,10 @@ public class Shelves {
      * @param identifier A unique string ID for this section (e.g., "FIC").
      */
     public Shelves(String identifier) {
-        this.IDENTIFIER = identifier;
+        this.identifier = identifier;
         this.shelves = new Shelf[5];
         for (int shelfIndex = 0; shelfIndex < 5; shelfIndex++) {
-            shelves[shelfIndex] = new Shelf(shelfIndex, IDENTIFIER);
+            shelves[shelfIndex] = new Shelf(shelfIndex, this.identifier);
         }
     }
 
@@ -63,7 +63,7 @@ public class Shelves {
      * @return The formatted shelf number.
      */
     public String getShelfNumber(int index) {
-        return IDENTIFIER + String.valueOf(index);
+        return identifier + String.valueOf(index);
     }
 
 
@@ -92,6 +92,6 @@ public class Shelves {
     }
 
     public String deleteBookFromSection(int shelfNum, int slotNum) {
-        return shelves[shelfNum].deleteBookFromShelf(slotNum) + IDENTIFIER;
+        return shelves[shelfNum].deleteBookFromShelf(slotNum) + identifier;
     }
 }

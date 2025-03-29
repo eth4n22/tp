@@ -2,7 +2,7 @@ package seedu.duke.library;
 
 import seedu.duke.book.Book;
 import seedu.duke.book.BookManager;
-import seedu.duke.Shelving.ShelvesManager;
+import seedu.duke.shelving.ShelvesManager;
 
 import java.util.List;
 
