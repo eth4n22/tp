@@ -28,6 +28,17 @@ public class Shelf {
         this.shelfGenre = shelfGenre;
     }
 
+    private int getSuitableIndex() {
+        int index = 0;
+        for (Book book : shelfBooks) {
+            if (book.getTitle().equals("duMmY")) {
+                return index;
+            }
+            index++;
+        }
+        return booksCurrentlyOnShelf;
+    }
+
     public boolean isFull() {
         return isShelfFull;
     }
@@ -48,7 +59,7 @@ public class Shelf {
         // Implement this Wayne
     }
 
-    public String addBookToShelf(String bookDetails, int bookIndex) {
+    public String addBookToShelf(String bookDetails) {
         if (isShelfFull) {
             return "The shelf is full!";
         }
@@ -73,9 +84,9 @@ public class Shelf {
         }
 
         Book newBook = new Book(title, author);
-        String identifyer = getShelfIdentifier(bookIndex);
-        newBook.setBookID(identifyer)
-        ;
+        int bookIndex = getSuitableIndex();
+        String identifier = getShelfIdentifier(bookIndex);
+        newBook.setBookID(identifier);
         this.shelfBooks.add(newBook);
         booksCurrentlyOnShelf += 1;
 
@@ -83,7 +94,8 @@ public class Shelf {
             setShelfAsFull();
         }
 
-        return "\nNow you have " + booksCurrentlyOnShelf + " books in the Shelf.";
+        return "Added: " + title + " by: " + author + "\nNow you have " + booksCurrentlyOnShelf + " books in the Shelf.";
+
     }
 
     public String deleteBookFromShelf(int slotNum) {
