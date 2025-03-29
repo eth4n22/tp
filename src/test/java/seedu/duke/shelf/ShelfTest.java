@@ -38,7 +38,7 @@ public class ShelfTest {
     @Test
     public void addBookToShelf_shelfFull_returnsErrorMessage() {
         // Fill the shelf to max capacity
-        for (int i = 0; i < Shelf.getMAX_BOOKS_ON_SHELF(); i++) {
+        for (int i = 0; i < 100; i++) {
             shelf.addBookToShelf("Book " + i + " / Author");
         }
 
