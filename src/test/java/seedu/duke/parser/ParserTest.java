@@ -6,6 +6,7 @@ import seedu.duke.commands.Command;
 import seedu.duke.commands.DeleteCommand;
 import seedu.duke.commands.ExitCommand;
 import seedu.duke.commands.ListCommand;
+import seedu.duke.commands.ListOverdueUsersCommand;
 import seedu.duke.commands.UpdateStatusCommand;
 import seedu.duke.exception.LeBookException;
 
@@ -94,5 +95,12 @@ public class ParserTest {
     void testParseDeleteCommand_invalidIndex() {
         Exception exception = assertThrows(LeBookException.class, () -> Parser.parse("delete abc"));
         assertEquals("Please provide a book index.", exception.getMessage());
+    }
+
+    @Test
+    void testParseValidCommand_listOverdueUsersCommand() throws LeBookException {
+        Command result = Parser.parse("list users");
+        assertNotNull(result);
+        assertInstanceOf(ListOverdueUsersCommand.class, result);
     }
 }

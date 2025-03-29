@@ -15,8 +15,9 @@ public class Parser {
     private static final String RETURN = "return";
     private static final String DELETE = "delete";
     private static final String HELP = "help";
-    public static final String LIST_OVERDUE = "overdue";
-    public static final String LIST_BORROWED = "borrowed";
+    private static final String LIST_OVERDUE = "overdue";
+    private static final String LIST_BORROWED = "borrowed";
+    private static final String LIST_OVERDUE_USERS = "users";
 
     /**
      * Parses the book index from the given string.
@@ -62,6 +63,9 @@ public class Parser {
             }
             if (LIST_BORROWED.equals(listCommandType)) {
                 return new ListBorrowedCommand();
+            }
+            if (LIST_OVERDUE_USERS.equals(listCommandType)) {
+                return new ListOverdueUsersCommand();
             }
             return new ListCommand();
         case BORROW, RETURN:

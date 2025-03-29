@@ -2,6 +2,7 @@ package seedu.duke.library;
 
 import seedu.duke.book.Book;
 import seedu.duke.book.BookManager;
+import seedu.duke.member.MemberManager;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class Library {
         return response1 + System.lineSeparator() + response2;
     }
 
-    public String updateBookStatus(String userInput) {
+    public String updateBookStatus(String userInput, int bookIndex, MemberManager memberManager) {
         //update Book in catelogue
         //update book in shelf
         return null;

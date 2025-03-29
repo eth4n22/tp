@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import seedu.duke.member.Member;
+import seedu.duke.member.MemberManager;
 
 public class BookManagerTest {
     private BookManager bookManager;
@@ -103,19 +105,22 @@ public class BookManagerTest {
     @Test
     public void testUpdateBookStatus_borrow() {
         bookManager.addNewBook("Test Book / Test Author");
+        MemberManager memberManager = new MemberManager();
+        Member borrower = memberManager.getMemberByName("John");
 
-        String result = bookManager.updateBookStatus("borrow", 0); //parser passes in 0-indexed bookIndex
+        String result = bookManager.updateBookStatus("borrow", 0, "John", memberManager);
 
-        assertEquals("Borrowed: Test Book", result);
+        assertEquals("John has borrowed: Test Book", result);
         assertTrue(bookManager.getBooks().get(0).isBorrowed());
     }
 
     @Test
     public void testUpdateBookStatus_return() {
         bookManager.addNewBook("Test Book / Test Author");
-        bookManager.updateBookStatus("borrow", 1); // Borrow first
+        MemberManager memberManager = new MemberManager();
+        bookManager.updateBookStatus("borrow", 0, "John", memberManager);
 
-        String result = bookManager.updateBookStatus("return", 0); //parser passes in 0-indexed bookIndex
+        String result = bookManager.updateBookStatus("return", 0, "John", memberManager);
 
         assertEquals("Returned: Test Book", result);
         assertFalse(bookManager.getBooks().get(0).isBorrowed());
@@ -124,8 +129,9 @@ public class BookManagerTest {
     @Test
     public void testUpdateBookStatus_invalidIndex() {
         bookManager.addNewBook("Test Book / Test Author");
+        MemberManager memberManager = new MemberManager();
 
-        String result = bookManager.updateBookStatus("borrow", 2); // Invalid index
+        String result = bookManager.updateBookStatus("borrow", 2, "John", memberManager);
 
         assertEquals("There is no such book in the library!", result);
     }
@@ -134,11 +140,11 @@ public class BookManagerTest {
     void testBorrowBook() {
         bookManager.addNewBook("Harry Potter / Wayne");
         bookManager.addNewBook("I Love 2113 / Deanson");
+        MemberManager memberManager = new MemberManager();
 
-        String result = bookManager.updateBookStatus("borrow", 0); //parser passes in 0-indexed bookIndex
+        String result = bookManager.updateBookStatus("borrow", 0, "John", memberManager); //parser passes in 0-indexed bookIndex
 
-        assertEquals("Borrowed: Harry Potter", result);
-
+        assertEquals("John has borrowed: Harry Potter", result);
         assertTrue(bookManager.getBooks().get(0).isBorrowed());
     }
 
@@ -146,11 +152,12 @@ public class BookManagerTest {
     void testReturnBook() {
         bookManager.addNewBook("Harry Potter / Wayne");
         bookManager.addNewBook("I Love 2113 / Deanson");
-        bookManager.updateBookStatus("borrow", 2);
+        MemberManager memberManager = new MemberManager();
+        bookManager.updateBookStatus("borrow", 0, "John", memberManager);
 
-        String result = bookManager.updateBookStatus("return", 1); //parser passes in 0-indexed bookIndex
+        String result = bookManager.updateBookStatus("return", 0, "John", memberManager);
 
-        assertEquals("Returned: I Love 2113", result);
+        assertEquals("Returned: Harry Potter", result);
 
         assertFalse(bookManager.getBooks().get(0).isBorrowed());
     }
@@ -159,8 +166,30 @@ public class BookManagerTest {
     void testInvalidBookNumber() {
         bookManager.addNewBook("Harry Potter / Wayne");
         bookManager.addNewBook("I Love 2113 / Deanson");
-        String result = bookManager.updateBookStatus("borrow", 100);
+        MemberManager memberManager = new MemberManager();
+        String result = bookManager.updateBookStatus("borrow", 100, "John", memberManager);
 
         assertEquals("There is no such book in the library!", result);
+    }
+
+    @Test
+    void testAlreadyBorrowed() {
+        bookManager.addNewBook("Harry Potter / Wayne");
+        MemberManager memberManager = new MemberManager();
+        bookManager.updateBookStatus("borrow", 0, "John", memberManager);
+
+        String result = bookManager.updateBookStatus("borrow", 0, "Jane", memberManager);
+
+        assertEquals("This book is already borrowed!", result);
+    }
+
+    @Test
+    void testNotBorrowed() {
+        bookManager.addNewBook("Harry Potter / Wayne");
+        MemberManager memberManager = new MemberManager();
+
+        String result = bookManager.updateBookStatus("return", 0, "John", memberManager);
+
+        assertEquals("This book is not borrowed!", result);
     }
 }

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 
+import seedu.duke.member.Member;
+import seedu.duke.member.MemberManager;
+
 /**
  * Manages a collection of books by adding, deleting, listing, searching, and updating their status.
  */
@@ -12,7 +15,6 @@ public class BookManager {
     private final List<Book> books;
     private static final String BORROW = "borrow";
     private static final String RETURN = "return";
-
     /**
      * Constructs a new BookManager with the given books.
      *
@@ -137,7 +139,7 @@ public class BookManager {
      * - An error message if the command is invalid
      * @throws NumberFormatException If the book number provided cannot be parsed as an integer
      */
-    public String updateBookStatus(String command, int bookIndex) {
+    public String updateBookStatus(String command, int bookIndex, String borrowerName, MemberManager memberManager) {
         //assert userInput != null : "Input should not be null";
 
         if (bookIndex < 0 || bookIndex >= books.size()) {
@@ -146,14 +148,25 @@ public class BookManager {
 
         Book book = books.get(bookIndex);
         assert book != null : "Book object should not be null";
+
+        Member borrower = memberManager.getMemberByName(borrowerName);
+
         switch (command) {
         case BORROW:
+            if (book.isBorrowed()) {
+                return "This book is already borrowed!";
+            }
             book.setStatus(true);
             book.setReturnDueDate(LocalDate.now().plusWeeks(2));
-            return "Borrowed: " + book.getTitle();
+            borrower.borrowBook(book);
+            return borrowerName + " has borrowed: " + book.getTitle();
         case RETURN:
+            if (!book.isBorrowed()) {
+                return "This book is not borrowed!";
+            }
             book.setStatus(false);
             book.setReturnDueDate(null);
+            borrower.returnBook(book);
             return "Returned: " + book.getTitle();
         default:
             return "Invalid command!";
@@ -188,9 +201,7 @@ public class BookManager {
 
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
-            boolean isOverdue = book.isBorrowed()
-                    && book.getReturnDueDate() != null
-                    && book.getReturnDueDate().isBefore(LocalDate.now());
+            boolean isOverdue = book.isOverdue();
 
             if (isOverdue) {
                 output.append(i + 1)
