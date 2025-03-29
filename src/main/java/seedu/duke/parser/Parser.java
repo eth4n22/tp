@@ -15,6 +15,7 @@ public class Parser {
     private static final String RETURN = "return";
     private static final String DELETE = "delete";
     private static final String HELP = "help";
+    private static final String LISTSHELF = "shelf";
     public static final String LIST_OVERDUE = "overdue";
     public static final String LIST_BORROWED = "borrowed";
 
@@ -49,7 +50,6 @@ public class Parser {
         String[] fullInput = userInput.split(" ", 2);
         String commandType = fullInput[0].toLowerCase();
         String bookDetails = (fullInput.length > 1) ? fullInput[1] : "";
-        String genre = "Hello Jermaine Can u do this";
         int bookIndex;
 
         switch (commandType) {
@@ -71,9 +71,14 @@ public class Parser {
             bookIndex = parseBookIndex(bookDetails);
             return new DeleteCommand(bookIndex);
         case ADD:
+            String genre = userInput.split("/", 3)[2].trim(); // Jermaine make this nice please
             return new AddCommand(bookDetails, genre);
         case HELP:
             return new HelpCommand();
+        case LISTSHELF:
+            String shelfGenre = userInput.split("/", 3)[1].trim(); // Jermaine make this nice please
+            int index = Integer.parseInt(userInput.split("/", 3)[2].trim());
+            return new ListShelfCommand(shelfGenre, index);
         default:
             throw new LeBookException("I don't understand. Try starting with list, add, delete, borrow, return!");
         }

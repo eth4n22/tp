@@ -3,6 +3,7 @@ package seedu.duke.book;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Manages a collection of books by adding, deleting, listing, searching, and updating their status.
@@ -12,6 +13,12 @@ public class BookManager {
     private final List<Book> books;
     private static final String BORROW = "borrow";
     private static final String RETURN = "return";
+
+    private boolean isAppropriateGenre(String genre) {
+        return (genre.equals("romance")) || (genre.equals("adventure")) || (genre.equals("action") ||
+                (genre.equals("horror")) || (genre.equals("mystery")) || (genre.equals("scifi")) ||
+                (genre.equals("nonfiction")));
+    }
 
     /**
      * Constructs a new BookManager with the given books.
@@ -41,17 +48,18 @@ public class BookManager {
      * @param bookDetails String containing title and author, expected format: "TITLE / AUTHOR"
      * @return A message confirming the book addition or an error message
      */
-    public String addNewBook(String bookDetails) {
+    public String addNewBookToCatalogue(String bookDetails) {
         assert bookDetails != null : "Book details cannot be null";
 
-        String[] parts = bookDetails.split(" / ", 2);
+        String[] parts = bookDetails.split(" / ", 3);
 
-        if (parts.length < 2) {
+        if (parts.length < 3) {
             return "Invalid book format! It should be 'TITLE / AUTHOR'.";
         }
 
         String title = parts[0].trim();
         String author = parts[1].trim();
+        String genre = parts[2].trim();
 
         if (title.isEmpty()) {
             return "Book title cannot be empty!";
@@ -59,6 +67,10 @@ public class BookManager {
 
         if (author.isEmpty()) {
             return "Book author cannot be empty!";
+        }
+
+        if (!isAppropriateGenre(genre)) {
+            return "This Library does not support this Genre!";
         }
 
         Book newBook = new Book(title, author);

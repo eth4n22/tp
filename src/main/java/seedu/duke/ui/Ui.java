@@ -23,18 +23,22 @@ public class Ui {
         String message = """
         Available Commands:
         -------------------
-        1. add TITLE/AUTHOR      - Add a new book to the library.
-        2. delete BOOK_NUMBER    - Remove a book from the library.
-        3. list                  - List all current books.
-        4. borrow BOOK_NUMBER    - Borrow a book from the library.
-        5. return BOOK_NUMBER    - Return a borrowed book.
-        6. bye                   - Exit the program.
-        7. help                  - Show this help menu.
+        1. add TITLE/AUTHOR/GENRE      - Add a new book to the library.
+        2. delete BOOK_NUMBER          - Remove a book from the library.
+        3. list                        - List all current books.
+        4. borrow BOOK_NUMBER          - Borrow a book from the library.
+        5. return BOOK_NUMBER          - Return a borrowed book.
+        6. bye                         - Exit the program.
+        7. help                        - Show this help menu.
         -------------------
-        Examples:
-          > add The Hobbit/J.R.R. Tolkien
-          > delete 2
-          > borrow 3
+        Genres:
+          > romance
+          > adventure
+          > action
+          > horror
+          > mystery
+          > nonfiction
+          > scifi
         """;
         printWithSeparator(message);
     }
@@ -55,6 +59,10 @@ public class Ui {
         printSeparator();
         System.out.println(message);
         printSeparator();
+    }
+
+    public void printShelf() {
+
     }
 
     public void printSeparator() {

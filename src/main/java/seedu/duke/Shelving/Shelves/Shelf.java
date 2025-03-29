@@ -4,6 +4,7 @@ import seedu.duke.book.Book;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Represents a single shelf in a library section, capable of storing up to {@value #MAX_BOOKS_ON_SHELF} books.
@@ -27,6 +28,7 @@ public class Shelf {
         isShelfFull = true;
     }
 
+    //@@author WayneCh0y
     /**
      * Generates a unique identifier for a book on this shelf.
      *
@@ -48,6 +50,7 @@ public class Shelf {
         this.shelfGenre = shelfGenre;
     }
 
+    //@@author WayneCh0y
     /**
      * Finds the next suitable index for adding a book, either by locating a "duMmY" placeholder
      * or using the current book count.
@@ -92,10 +95,16 @@ public class Shelf {
         return shelfBooks;
     }
 
-    public void listShelf() {
-        // Implement this Wayne
+    public String listShelf() {
+        if (shelfBooks.isEmpty()) {
+            return "No books on shelf";
+        }
+        return shelfBooks.stream()
+                .map(Book::toString)
+                .collect(Collectors.joining("\n"));
     }
 
+    //@@author WayneCh0y
     public String addBookToShelf(String bookDetails) {
         if (isShelfFull) {
             return "The shelf is full!";
@@ -131,8 +140,8 @@ public class Shelf {
             setShelfAsFull();
         }
 
-        return "Added: " + title + " by: " + author + "\nNow you have " + booksCurrentlyOnShelf + " books in the Shelf.";
-        // TODO: make it such the it also states which shelf it has been added on (Wayne)
+        return "Added: " + title + " by: " + author + "\nNow you have " + booksCurrentlyOnShelf
+                + " books on the Shelf: " + getShelfIdentifier(bookIndex);
     }
 
     public String deleteBookFromShelf(int slotNum) {

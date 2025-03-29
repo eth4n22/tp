@@ -14,6 +14,7 @@ public class Shelves {
 
     private final String NO_SECTION_AVAILABLE = "There is no section available";
 
+    //@@author WayneCh0y
     /**
      * Constructs a new `Shelves` section with the given genre Identifier.
      * Initializes 5 empty shelves labeled with the identifier and index.
@@ -35,6 +36,7 @@ public class Shelves {
         this.isFull = true;
     }
 
+    //@@author WayneCh0y
     /**
      * Checks if all shelves in this section are full.
      *
@@ -64,11 +66,17 @@ public class Shelves {
         return IDENTIFIER + String.valueOf(index);
     }
 
+
+    public String listShelf(int shelfIndex) {
+        return shelves[shelfIndex].listShelf();
+    }
+
+    //@@author WayneCh0y
     /**
      * Adds a book to the first available shelf in this section.
      *
      * @param bookDetails The book details in "TITLE/AUTHOR" format.
-     * @return The shelf number where the book was added (e.g., "FIC1").
+     * @return The shelf number where the book was added (e.g., "SCIFI1").
      * @throws SectionFullException If no shelves have available slots.
      */
     public String addBookToSection(String bookDetails) {

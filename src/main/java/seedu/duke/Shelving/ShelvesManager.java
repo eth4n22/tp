@@ -10,13 +10,13 @@ import seedu.duke.Shelving.Shelves.SciFiShelves;
 import seedu.duke.exception.SectionFullException;
 
 public class ShelvesManager {
-    private RomanceShelves romanceShelves;
-    private AdventureShelves adventureShelves;
-    private ActionShelves actionShelves;
-    private HorrorShelves horrorShelves;
-    private MysteryShelves mysteryShelves;
-    private NonFictionShelves nonFictionShelves;
-    private SciFiShelves sciFiShelves;
+    private final RomanceShelves romanceShelves;
+    private final AdventureShelves adventureShelves;
+    private final ActionShelves actionShelves;
+    private final HorrorShelves horrorShelves;
+    private final MysteryShelves mysteryShelves;
+    private final NonFictionShelves nonFictionShelves;
+    private final SciFiShelves sciFiShelves;
 
     private static final String ROMANCE = "romance";
     private static final String ADVENTURE = "adventure";
@@ -34,6 +34,7 @@ public class ShelvesManager {
     private static final String NONFICTION_ID = "NF";
     private static final String SCIFI_ID = "SCIF";
 
+    //@@author WayneCh0y
     public ShelvesManager() {
         romanceShelves = new RomanceShelves();
         adventureShelves = new AdventureShelves();
@@ -43,10 +44,33 @@ public class ShelvesManager {
         nonFictionShelves = new NonFictionShelves();
         sciFiShelves = new SciFiShelves();
     }
-    //iterate through shelves by genre
-    //if free, add to shelf
-    //else throw exception
 
+    //@@author WayneCh0y
+    public String listShelf(String shelfGenre, int shelfIndex) {
+        try {
+            switch (shelfGenre) {
+            case ROMANCE:
+                return romanceShelves.listShelf(shelfIndex);
+            case ADVENTURE:
+                return adventureShelves.listShelf(shelfIndex);
+            case ACTION:
+                return actionShelves.listShelf(shelfIndex);
+            case HORROR:
+                return horrorShelves.listShelf(shelfIndex);
+            case MYSTERY:
+                return mysteryShelves.listShelf(shelfIndex);
+            case NONFICTION:
+                return nonFictionShelves.listShelf(shelfIndex);
+            case SCIFI:
+                return sciFiShelves.listShelf(shelfIndex);
+            }
+        } catch (SectionFullException e) {
+            System.out.println(e);
+        }
+        return "";
+    }
+
+    //@@author WayneCh0y
     public String addBook(String bookDetails, String genre) {
         try {
             switch (genre) {
