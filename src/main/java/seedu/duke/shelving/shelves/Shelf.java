@@ -1,4 +1,4 @@
-package seedu.duke.shelving.shelves;
+package seedu.duke.Shelving.Shelves;
 
 import seedu.duke.book.Book;
 
@@ -146,8 +146,10 @@ public class Shelf {
                 + " books on the Shelf: " + getShelfIdentifier(bookIndex);
     }
 
-    public String deleteBookFromShelf(int slotNum) {
-        return "hello fix this deanson";//shelfBookManager.deleteBook(slotNum);
+    public void deleteBookFromShelf(int slotNum) {
+        Book temp = new Book("duMmy", "duMmy");
+        shelfBooks.set(slotNum, temp);
+        booksCurrentlyOnShelf -= 1;
     }
 
 }
