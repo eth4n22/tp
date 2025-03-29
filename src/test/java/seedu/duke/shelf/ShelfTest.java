@@ -53,7 +53,7 @@ public class ShelfTest {
         shelf.addBookToShelf("Dune / Frank Herbert");
         Book addedBook = shelf.getShelfBooks().get(0);
 
-        assertEquals("SCIF-1-0", addedBook.getBookID());
+        assertEquals("R-0-0", addedBook.getBookID());
     }
 
     @Test
@@ -61,7 +61,7 @@ public class ShelfTest {
         shelf.addBookToShelf("1984 / George Orwell");
         Book addedBook = shelf.getShelfBooks().get(0);
 
-        assertEquals("SCIF-1-0", addedBook.getBookID());
+        assertEquals("R-0-0", addedBook.getBookID());
     }
 
     @Test
