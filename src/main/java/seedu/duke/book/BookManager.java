@@ -1,5 +1,7 @@
 package seedu.duke.book;
 
+import seedu.duke.exception.BookNotFoundException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
@@ -205,8 +207,12 @@ public class BookManager {
         return hasOverdue ? output.toString() : "No Overdue Books";
     }
 
-    public String getBookID(int bookIndex) {
-        Book book = books.get(bookIndex);
-        return book.getBookID();
+    public String getBookID(int bookIndex) throws BookNotFoundException {
+        try {
+            Book book = books.get(bookIndex);
+            return book.getBookID();
+        } catch (IndexOutOfBoundsException e) {
+            throw new BookNotFoundException("Book not found!");
+        }
     }
 }

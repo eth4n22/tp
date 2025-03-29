@@ -1,5 +1,7 @@
 package seedu.duke.book;
 
+import seedu.duke.exception.BookNotFoundException;
+
 import java.util.List;
 
 public class ShelfBookManager extends BookManager
@@ -9,7 +11,7 @@ public class ShelfBookManager extends BookManager
     }
 
     @Override
-    public String deleteBook(int bookIndex) {
+    public String deleteBook(int bookIndex){
 
         String result = super.deleteBook(bookIndex);
         result = result.replace("library", "shelf: ");

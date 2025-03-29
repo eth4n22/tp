@@ -135,8 +135,10 @@ public class Shelf {
         // TODO: make it such the it also states which shelf it has been added on (Wayne)
     }
 
-    public String deleteBookFromShelf(int slotNum) {
-        return "hello fix this deanson";//shelfBookManager.deleteBook(slotNum);
+    public void deleteBookFromShelf(int slotNum) {
+        Book temp = new Book("duMmy", "duMmy");
+        shelfBooks.set(slotNum, temp);
+        booksCurrentlyOnShelf -= 1;
     }
 
 }
