@@ -7,7 +7,6 @@ import seedu.duke.book.BookManager;
 import seedu.duke.exception.BookNotFoundException;
 
 import seedu.duke.member.MemberManager;
-import seedu.duke.shelving.ShelvesManager;
 
 
 import java.util.List;
