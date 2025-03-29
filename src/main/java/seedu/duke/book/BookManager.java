@@ -173,7 +173,6 @@ public class BookManager {
      * Lists all the books that have been borrowed in the library.
      *
      * @return A string representation of the borrowed books. If no books have been borrowed,
-     * returns a message indicating that no books have been borrowed yet.
      */
     public String listBorrowedBooks() {
         if (books.isEmpty()) {

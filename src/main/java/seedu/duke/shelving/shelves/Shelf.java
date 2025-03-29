@@ -17,11 +17,10 @@ public class Shelf {
     private final int shelfIndex;
     private final String shelfGenre;
 
-    private List<Book> shelfBooks = new ArrayList<>();
-
     private int booksCurrentlyOnShelf = 0;
-
     private boolean isShelfFull;
+
+    private List<Book> shelfBooks = new ArrayList<>();
 
     /**
      * Marks this shelf as full (when {@code booksCurrentlyOnShelf == MAX_BOOKS_ON_SHELF}).
