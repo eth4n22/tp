@@ -1,4 +1,4 @@
-package seedu.duke.shelf;
+package seedu.duke.shelf.ShelfTest;
 
 import seedu.duke.shelving.shelves.Shelf;
 import seedu.duke.shelving.ShelvesManager;
@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-public class ShelfTest {
+public class AddTests {
     private Shelf shelf;
     private ShelvesManager shelves;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -53,7 +53,7 @@ public class ShelfTest {
         shelf.addBookToShelf("Dune / Frank Herbert");
         Book addedBook = shelf.getShelfBooks().get(0);
 
-        assertEquals("R-0-0", addedBook.getBookID());
+        assertEquals("SCIF-1-0", addedBook.getBookID());
     }
 
     @Test
@@ -61,7 +61,7 @@ public class ShelfTest {
         shelf.addBookToShelf("1984 / George Orwell");
         Book addedBook = shelf.getShelfBooks().get(0);
 
-        assertEquals("R-0-0", addedBook.getBookID());
+        assertEquals("SCIF-1-0", addedBook.getBookID());
     }
 
     @Test
