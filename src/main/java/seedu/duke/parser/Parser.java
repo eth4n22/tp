@@ -1,14 +1,7 @@
 package seedu.duke.parser;
 
-import seedu.duke.commands.Command;
-import seedu.duke.commands.ListBorrowedCommand;
+import seedu.duke.commands.*;
 import seedu.duke.exception.LeBookException;
-import seedu.duke.commands.AddCommand;
-import seedu.duke.commands.DeleteCommand;
-import seedu.duke.commands.ExitCommand;
-import seedu.duke.commands.ListCommand;
-import seedu.duke.commands.UpdateStatusCommand;
-import seedu.duke.commands.ListOverdueCommand;
 
 /**
  * Parses user input and returns the corresponding command.
@@ -21,6 +14,7 @@ public class Parser {
     private static final String BORROW = "borrow";
     private static final String RETURN = "return";
     private static final String DELETE = "delete";
+    private static final String HELP = "help";
     public static final String LIST_OVERDUE = "overdue";
     public static final String LIST_BORROWED = "borrowed";
 
@@ -55,6 +49,7 @@ public class Parser {
         String[] fullInput = userInput.split(" ", 2);
         String commandType = fullInput[0].toLowerCase();
         String bookDetails = (fullInput.length > 1) ? fullInput[1] : "";
+        String genre = "Hello Jermaine Can u do this";
         int bookIndex;
 
         switch (commandType) {
@@ -76,7 +71,9 @@ public class Parser {
             bookIndex = parseBookIndex(bookDetails);
             return new DeleteCommand(bookIndex);
         case ADD:
-            return new AddCommand(bookDetails);
+            return new AddCommand(bookDetails, genre);
+        case HELP:
+            return new HelpCommand();
         default:
             throw new LeBookException("I don't understand. Try starting with list, add, delete, borrow, return!");
         }

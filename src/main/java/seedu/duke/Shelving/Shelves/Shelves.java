@@ -8,6 +8,7 @@ public class Shelves {
     private boolean isFull = false;
     private final String IDENTIFIER;
 
+    private final String NO_SECTION_AVAILABLE = "There is no section available";
 
     public Shelves(String identifier) {
         this.IDENTIFIER = identifier;
@@ -29,15 +30,16 @@ public class Shelves {
         return IDENTIFIER + String.valueOf(index);
     }
 
-    public void addBookToSection(String bookDetails) {
+    public String addBookToSection(String bookDetails) {
         if (isFull) {
             throw new SectionFullException("No more books can be added to this section!");
         }
         for (int index = 0; index < 5; index++) {
             if (!shelves[index].isFull()) {
-                shelves[index].addBookToShelf(bookDetails, index);
+                return shelves[index].addBookToShelf(bookDetails);
             }
         }
+        return NO_SECTION_AVAILABLE;
     }
     public String deleteBookFromSection(int shelfNum, int slotNum) {
         return shelves[shelfNum].deleteBookFromShelf(slotNum) + IDENTIFIER;

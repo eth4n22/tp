@@ -83,6 +83,31 @@ public class UiTest {
         assertEquals("test command", uiWithInput.readCommand());
     }
 
+    @Test
+    public void testHelpCommand() {
+        ui.printHelp();
+        String expected = """
+        ========================================
+        Available Commands:
+        -------------------
+        1. add TITLE/AUTHOR      - Add a new book to the library.
+        2. delete BOOK_NUMBER    - Remove a book from the library.
+        3. list                  - List all current books.
+        4. borrow BOOK_NUMBER    - Borrow a book from the library.
+        5. return BOOK_NUMBER    - Return a borrowed book.
+        6. bye                   - Exit the program.
+        7. help                  - Show this help menu.
+        -------------------
+        Examples:
+          > add The Hobbit/J.R.R. Tolkien
+          > delete 2
+          > borrow 3
+          
+        ========================================
+        """;
+        assertEquals(expected.trim(), normalize(outputStream.toString()));
+    }
+
     // Helper function to normalize line endings and trim spaces
     private String normalize(String output) {
         return output.replaceAll("\r\n", "\n").trim();

@@ -7,7 +7,6 @@ import seedu.duke.Shelving.Shelves.MysteryShelves;
 import seedu.duke.Shelving.Shelves.NonFictionShelves;
 import seedu.duke.Shelving.Shelves.RomanceShelves;
 import seedu.duke.Shelving.Shelves.SciFiShelves;
-import seedu.duke.book.Book;
 import seedu.duke.exception.SectionFullException;
 
 public class ShelvesManager {
@@ -48,27 +47,28 @@ public class ShelvesManager {
     //if free, add to shelf
     //else throw exception
 
-    public void addBook(String bookDetails, String genre) {
+    public String addBook(String bookDetails, String genre) {
         try {
             switch (genre) {
             case ROMANCE:
-                romanceShelves.addBookToSection(bookDetails);
+                return romanceShelves.addBookToSection(bookDetails);
             case ADVENTURE:
-                adventureShelves.addBookToSection(bookDetails);
+                return adventureShelves.addBookToSection(bookDetails);
             case ACTION:
-                actionShelves.addBookToSection(bookDetails);
+                return actionShelves.addBookToSection(bookDetails);
             case HORROR:
-                horrorShelves.addBookToSection(bookDetails);
+                return horrorShelves.addBookToSection(bookDetails);
             case MYSTERY:
-                mysteryShelves.addBookToSection(bookDetails);
+                return mysteryShelves.addBookToSection(bookDetails);
             case NONFICTION:
-                nonFictionShelves.addBookToSection(bookDetails);
+                return nonFictionShelves.addBookToSection(bookDetails);
             case SCIFI:
-                sciFiShelves.addBookToSection(bookDetails);
+                return sciFiShelves.addBookToSection(bookDetails);
             }
         } catch (SectionFullException e) {
             System.out.println(e);
         }
+        return "Added";
     }
 
     public String deleteBook(String bookID) {
