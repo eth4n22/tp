@@ -1,12 +1,12 @@
-package seedu.duke.shelving;
+package seedu.duke.Shelving;
 
-import seedu.duke.shelving.shelves.ActionShelves;
-import seedu.duke.shelving.shelves.AdventureShelves;
-import seedu.duke.shelving.shelves.HorrorShelves;
-import seedu.duke.shelving.shelves.MysteryShelves;
-import seedu.duke.shelving.shelves.NonFictionShelves;
-import seedu.duke.shelving.shelves.RomanceShelves;
-import seedu.duke.shelving.shelves.SciFiShelves;
+import seedu.duke.Shelving.Shelves.ActionShelves;
+import seedu.duke.Shelving.Shelves.AdventureShelves;
+import seedu.duke.Shelving.Shelves.HorrorShelves;
+import seedu.duke.Shelving.Shelves.MysteryShelves;
+import seedu.duke.Shelving.Shelves.NonFictionShelves;
+import seedu.duke.Shelving.Shelves.RomanceShelves;
+import seedu.duke.Shelving.Shelves.SciFiShelves;
 import seedu.duke.exception.SectionFullException;
 
 public class ShelvesManager {
@@ -102,28 +102,35 @@ public class ShelvesManager {
         return "Added";
     }
 
-    public String deleteBook(String bookID) {
+    public void deleteBook(String bookID) {
         String[] parts = bookID.split("-");
         String shelfID = parts[0];
         int shelfNum = Integer.parseInt(parts[1]);
         int slotNum = Integer.parseInt(parts[2]);
         switch (shelfID) {
         case ROMANCE_ID:
-            return romanceShelves.deleteBookFromSection(shelfNum, slotNum) + shelfNum;
+            romanceShelves.deleteBookFromSection(shelfNum, slotNum);
+            break;
         case ADVENTURE_ID:
-            return adventureShelves.deleteBookFromSection(shelfNum, slotNum) + shelfNum;
+            adventureShelves.deleteBookFromSection(shelfNum, slotNum);
+            break;
         case ACTION_ID:
-            return actionShelves.deleteBookFromSection(shelfNum, slotNum) + shelfNum;
+            actionShelves.deleteBookFromSection(shelfNum, slotNum);
+            break;
         case HORROR_ID:
-            return horrorShelves.deleteBookFromSection(shelfNum, slotNum) + shelfNum;
+            horrorShelves.deleteBookFromSection(shelfNum, slotNum);
+            break;
         case MYSTERY_ID:
-            return mysteryShelves.deleteBookFromSection(shelfNum, slotNum) + shelfNum;
+            mysteryShelves.deleteBookFromSection(shelfNum, slotNum);
+            break;
         case NONFICTION_ID:
-            return nonFictionShelves.deleteBookFromSection(shelfNum, slotNum) + shelfNum;
+            nonFictionShelves.deleteBookFromSection(shelfNum, slotNum);
+            break;
         case SCIFI_ID:
-            return sciFiShelves.deleteBookFromSection(shelfNum, slotNum) + shelfNum;
+            sciFiShelves.deleteBookFromSection(shelfNum, slotNum);
+            break;
         default:
-            return "No such book";
+            break;
         }
     }
 

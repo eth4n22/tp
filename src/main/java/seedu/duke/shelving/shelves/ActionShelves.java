@@ -1,4 +1,4 @@
-package seedu.duke.shelving.shelves;
+package seedu.duke.Shelving.Shelves;
 
 public class ActionShelves extends Shelves {
     public ActionShelves() {
