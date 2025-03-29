@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
  * of {@link Book} objects.
  */
 public class Shelf {
+    
+    private static final List<Book> shelfBooks = new ArrayList<>();
     private static final int MAX_BOOKS_ON_SHELF = 100;
 
     private final int shelfIndex;
@@ -20,7 +22,6 @@ public class Shelf {
     private int booksCurrentlyOnShelf = 0;
     private boolean isShelfFull;
 
-    private List<Book> shelfBooks = new ArrayList<>();
 
     /**
      * Marks this shelf as full (when {@code booksCurrentlyOnShelf == MAX_BOOKS_ON_SHELF}).
