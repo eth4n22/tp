@@ -3,7 +3,12 @@ package seedu.duke.library;
 import seedu.duke.Shelving.ShelvesManager;
 import seedu.duke.book.Book;
 import seedu.duke.book.BookManager;
+
 import seedu.duke.exception.BookNotFoundException;
+
+import seedu.duke.member.MemberManager;
+import seedu.duke.shelving.ShelvesManager;
+
 
 import java.util.List;
 
@@ -49,7 +54,7 @@ public class Library {
         }
     }
 
-    public String updateBookStatus(String userInput) {
+    public String updateBookStatus(String userInput, int bookIndex, MemberManager memberManager) {
         //update Book in catelogue
         //update book in shelf
         return null;
