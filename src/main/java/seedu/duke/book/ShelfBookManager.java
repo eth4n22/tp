@@ -2,8 +2,7 @@ package seedu.duke.book;
 
 import java.util.List;
 
-public class ShelfBookManager extends BookManager
-{
+public class ShelfBookManager extends BookManager {
     public ShelfBookManager(List<Book> books) {
         super(books);
     }

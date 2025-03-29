@@ -3,30 +3,37 @@ package seedu.duke.library;
 import seedu.duke.book.Book;
 import seedu.duke.book.BookManager;
 import seedu.duke.member.MemberManager;
+import seedu.duke.shelving.ShelvesManager;
 
 import java.util.List;
 
 public class Library {
     private BookManager catelogueManager;
-    //private ShelvesManager shelvesManager;
+    private ShelvesManager shelvesManager;
 
     public Library(List<Book>allBooks) {
         catelogueManager = new BookManager(allBooks);
-        //shelvesManager = new ShelvesManager();
+        shelvesManager = new ShelvesManager();
     }
 
+    public String listBooks() {
+        return catelogueManager.listBooks();
+    }
 
-    public void listBooks() {
-        //catelogueManager.listBooks();
-
+    public String listShelf(String shelfGenre, int shelfIndex) {
+        return shelvesManager.listShelf(shelfGenre, shelfIndex);
     }
 
     public String listBorrowedBooks() {
         return catelogueManager.listBorrowedBooks();
     }
 
-    public String addNewBook(String bookDetails, String genre) {
-        return null;
+    public String addNewBookToCatalogue(String bookDetails, String genre) {
+        return catelogueManager.addNewBookToCatalogue(bookDetails);
+    }
+
+    public String addNewBookToShelf(String bookDetails, String genre) {
+        return shelvesManager.addBook(bookDetails, genre);
     }
 
     public String deleteBook(int bookIndex) {
