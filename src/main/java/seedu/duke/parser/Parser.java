@@ -1,6 +1,16 @@
 package seedu.duke.parser;
 
-import seedu.duke.commands.*;
+import seedu.duke.commands.Command;
+import seedu.duke.commands.ExitCommand;
+import seedu.duke.commands.AddCommand;
+import seedu.duke.commands.DeleteCommand;
+import seedu.duke.commands.HelpCommand;
+import seedu.duke.commands.ListBorrowedCommand;
+import seedu.duke.commands.ListCommand;
+import seedu.duke.commands.ListOverdueCommand;
+import seedu.duke.commands.UpdateStatusCommand;
+import seedu.duke.commands.ListShelfCommand;
+
 import seedu.duke.exception.LeBookException;
 
 /**
@@ -15,8 +25,10 @@ public class Parser {
     private static final String RETURN = "return";
     private static final String DELETE = "delete";
     private static final String HELP = "help";
-    public static final String LIST_OVERDUE = "overdue";
-    public static final String LIST_BORROWED = "borrowed";
+    private static final String LISTSHELF = "shelf";
+
+    private static final String LIST_OVERDUE = "overdue";
+    private static final String LIST_BORROWED = "borrowed";
 
     /**
      * Parses the book index from the given string.
@@ -49,7 +61,12 @@ public class Parser {
         String[] fullInput = userInput.split(" ", 2);
         String commandType = fullInput[0].toLowerCase();
         String bookDetails = (fullInput.length > 1) ? fullInput[1] : "";
-        String genre = "Hello Jermaine Can u do this";
+
+        String[] inputSplitByRegex = userInput.split("/", 3);
+        if (inputSplitByRegex.length < 3) {
+            commandType = "";
+        }
+
         int bookIndex;
 
         switch (commandType) {
@@ -71,9 +88,14 @@ public class Parser {
             bookIndex = parseBookIndex(bookDetails);
             return new DeleteCommand(bookIndex);
         case ADD:
+            String genre = userInput.split("/", 3)[2].trim(); // Jermaine make this nice please
             return new AddCommand(bookDetails, genre);
         case HELP:
             return new HelpCommand();
+        case LISTSHELF:
+            String shelfGenre = userInput.split("/", 3)[1].trim(); // Jermaine make this nice please
+            int index = Integer.parseInt(userInput.split("/", 3)[2].trim());
+            return new ListShelfCommand(shelfGenre, index);
         default:
             throw new LeBookException("I don't understand. Try starting with list, add, delete, borrow, return!");
         }

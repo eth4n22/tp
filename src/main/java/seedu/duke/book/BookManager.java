@@ -9,9 +9,10 @@ import java.time.LocalDate;
  */
 public class BookManager {
     //private static final String DATE_FORMAT = "yyyy-MM-dd";
-    private final List<Book> books;
     private static final String BORROW = "borrow";
     private static final String RETURN = "return";
+
+    private final List<Book> books;
 
     /**
      * Constructs a new BookManager with the given books.
@@ -22,6 +23,12 @@ public class BookManager {
         this.books = books != null ? new ArrayList<>(books) : new ArrayList<>();
         // Assert that books is properly initialized
         //assert this.books != null : "Books list should never be null after initialization";
+    }
+
+    private boolean isAppropriateGenre(String genre) {
+        return (genre.equals("romance")) || (genre.equals("adventure")) || (genre.equals("action") ||
+                (genre.equals("horror")) || (genre.equals("mystery")) || (genre.equals("scifi")) ||
+                (genre.equals("nonfiction")));
     }
 
     /**
@@ -41,17 +48,18 @@ public class BookManager {
      * @param bookDetails String containing title and author, expected format: "TITLE / AUTHOR"
      * @return A message confirming the book addition or an error message
      */
-    public String addNewBook(String bookDetails) {
+    public String addNewBookToCatalogue(String bookDetails) {
         assert bookDetails != null : "Book details cannot be null";
 
-        String[] parts = bookDetails.split(" / ", 2);
+        String[] parts = bookDetails.split(" / ", 3);
 
-        if (parts.length < 2) {
+        if (parts.length < 3) {
             return "Invalid book format! It should be 'TITLE / AUTHOR'.";
         }
 
         String title = parts[0].trim();
         String author = parts[1].trim();
+        String genre = parts[2].trim();
 
         if (title.isEmpty()) {
             return "Book title cannot be empty!";
@@ -59,6 +67,10 @@ public class BookManager {
 
         if (author.isEmpty()) {
             return "Book author cannot be empty!";
+        }
+
+        if (!isAppropriateGenre(genre)) {
+            return "This Library does not support this Genre!";
         }
 
         Book newBook = new Book(title, author);
@@ -132,9 +144,6 @@ public class BookManager {
      * @param command   The operation to perform, either BORROW or RETURN.
      * @param bookIndex The index of the book in the library (0-based).
      * @return A message indicating the result of the operation, which can be:
-     * - Confirmation of borrowing or returning a specific book
-     * - An error message if the book number is invalid, missing, or out of range
-     * - An error message if the command is invalid
      * @throws NumberFormatException If the book number provided cannot be parsed as an integer
      */
     public String updateBookStatus(String command, int bookIndex) {
@@ -164,7 +173,6 @@ public class BookManager {
      * Lists all the books that have been borrowed in the library.
      *
      * @return A string representation of the borrowed books. If no books have been borrowed,
-     *         returns a message indicating that no books have been borrowed yet.
      */
     public String listBorrowedBooks() {
         if (books.isEmpty()) {

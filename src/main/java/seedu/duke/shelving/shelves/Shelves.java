@@ -1,4 +1,4 @@
-package seedu.duke.Shelving.Shelves;
+package seedu.duke.shelving.shelves;
 
 import seedu.duke.exception.SectionFullException;
 
@@ -8,12 +8,13 @@ import seedu.duke.exception.SectionFullException;
  * operations to add, delete, and check the status of books across these shelves.
  */
 public class Shelves {
-    public final Shelf[] shelves;
+    private static final String NO_SECTION_AVAILABLE = "There is no section available";
+
+    private final Shelf[] shelves;
     private boolean isFull = false;
-    private final String IDENTIFIER;
+    private String identifier;
 
-    private final String NO_SECTION_AVAILABLE = "There is no section available";
-
+    //@@author WayneCh0y
     /**
      * Constructs a new `Shelves` section with the given genre Identifier.
      * Initializes 5 empty shelves labeled with the identifier and index.
@@ -21,10 +22,10 @@ public class Shelves {
      * @param identifier A unique string ID for this section (e.g., "FIC").
      */
     public Shelves(String identifier) {
-        this.IDENTIFIER = identifier;
+        this.identifier = identifier;
         this.shelves = new Shelf[5];
         for (int shelfIndex = 0; shelfIndex < 5; shelfIndex++) {
-            shelves[shelfIndex] = new Shelf(shelfIndex, IDENTIFIER);
+            shelves[shelfIndex] = new Shelf(shelfIndex, this.identifier);
         }
     }
 
@@ -35,6 +36,7 @@ public class Shelves {
         this.isFull = true;
     }
 
+    //@@author WayneCh0y
     /**
      * Checks if all shelves in this section are full.
      *
@@ -61,14 +63,20 @@ public class Shelves {
      * @return The formatted shelf number.
      */
     public String getShelfNumber(int index) {
-        return IDENTIFIER + String.valueOf(index);
+        return identifier + String.valueOf(index);
     }
 
+
+    public String listShelf(int shelfIndex) {
+        return shelves[shelfIndex].listShelf();
+    }
+
+    //@@author WayneCh0y
     /**
      * Adds a book to the first available shelf in this section.
      *
      * @param bookDetails The book details in "TITLE/AUTHOR" format.
-     * @return The shelf number where the book was added (e.g., "FIC1").
+     * @return The shelf number where the book was added (e.g., "SCIFI1").
      * @throws SectionFullException If no shelves have available slots.
      */
     public String addBookToSection(String bookDetails) {
@@ -84,6 +92,6 @@ public class Shelves {
     }
 
     public String deleteBookFromSection(int shelfNum, int slotNum) {
-        return shelves[shelfNum].deleteBookFromShelf(slotNum) + IDENTIFIER;
+        return shelves[shelfNum].deleteBookFromShelf(slotNum) + identifier;
     }
 }
