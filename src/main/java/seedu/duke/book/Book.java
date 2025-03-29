@@ -1,7 +1,5 @@
 package seedu.duke.book;
 
-import seedu.duke.member.Member;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
