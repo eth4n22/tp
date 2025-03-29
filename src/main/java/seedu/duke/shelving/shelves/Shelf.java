@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * of {@link Book} objects.
  */
 public class Shelf {
-    
+
     private static final List<Book> shelfBooks = new ArrayList<>();
     private static final int MAX_BOOKS_ON_SHELF = 100;
 
@@ -22,6 +22,16 @@ public class Shelf {
     private int booksCurrentlyOnShelf = 0;
     private boolean isShelfFull;
 
+    /**
+     * Constructs a new empty shelf with the given index and genre.
+     *
+     * @param shelfIndex The positional index of this shelf.
+     * @param shelfGenre The genre/category identifier (e.g., "FIC").
+     */
+    public Shelf(int shelfIndex, String shelfGenre) {
+        this.shelfIndex = shelfIndex;
+        this.shelfGenre = shelfGenre;
+    }
 
     /**
      * Marks this shelf as full (when {@code booksCurrentlyOnShelf == MAX_BOOKS_ON_SHELF}).
@@ -41,16 +51,6 @@ public class Shelf {
         return shelfGenre + "-" + shelfIndex + "-" + bookIndex;
     }
 
-    /**
-     * Constructs a new empty shelf with the given index and genre.
-     *
-     * @param shelfIndex The positional index of this shelf.
-     * @param shelfGenre The genre/category identifier (e.g., "FIC").
-     */
-    public Shelf(int shelfIndex, String shelfGenre) {
-        this.shelfIndex = shelfIndex;
-        this.shelfGenre = shelfGenre;
-    }
 
     //@@author WayneCh0y
     /**
