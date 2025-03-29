@@ -26,6 +26,7 @@ public class Parser {
     private static final String DELETE = "delete";
     private static final String HELP = "help";
     private static final String LISTSHELF = "shelf";
+
     public static final String LIST_OVERDUE = "overdue";
     public static final String LIST_BORROWED = "borrowed";
 
@@ -60,6 +61,12 @@ public class Parser {
         String[] fullInput = userInput.split(" ", 2);
         String commandType = fullInput[0].toLowerCase();
         String bookDetails = (fullInput.length > 1) ? fullInput[1] : "";
+
+        String[] inputSplitByRegex = userInput.split("/", 3);
+        if (inputSplitByRegex.length < 3) {
+            commandType = "";
+        }
+
         int bookIndex;
 
         switch (commandType) {

@@ -12,12 +12,13 @@ import java.util.stream.Collectors;
  * of {@link Book} objects.
  */
 public class Shelf {
+    private static final int MAX_BOOKS_ON_SHELF = 100;
+
     private List<Book> shelfBooks = new ArrayList<>();
     private final int shelfIndex;
     private final String shelfGenre;
 
     private int booksCurrentlyOnShelf = 0;
-    private final static int MAX_BOOKS_ON_SHELF = 100;
 
     private boolean isShelfFull;
 

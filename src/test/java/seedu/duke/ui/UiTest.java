@@ -24,10 +24,10 @@ public class UiTest {
     public void testPrintWelcomeMessage() {
         ui.printWelcomeMessage();
         String expected = """
-            ========================================
-            Welcome to Lebook, your personal book management system!
-            ========================================
-            """;
+                ========================================
+                Welcome to Lebook, your personal book management system!
+                ========================================
+                """;
         assertEquals(expected.trim(), normalize(outputStream.toString()));
     }
 
@@ -35,10 +35,10 @@ public class UiTest {
     public void testPrintExitMessage() {
         ui.printExitMessage();
         String expected = """
-            ========================================
-            Goodbye! See you again.
-            ========================================
-            """;
+                ========================================
+                Goodbye! See you again.
+                ========================================
+                """;
         assertEquals(expected.trim(), normalize(outputStream.toString()));
     }
 
@@ -46,10 +46,10 @@ public class UiTest {
     public void testPrintSuccessMessage() {
         ui.printSuccess("Book added successfully!");
         String expected = """
-            ========================================
-            [SUCCESS] Book added successfully!
-            ========================================
-            """;
+                ========================================
+                [SUCCESS] Book added successfully!
+                ========================================
+                """;
         assertEquals(expected.trim(), normalize(outputStream.toString()));
     }
 
@@ -57,10 +57,10 @@ public class UiTest {
     public void testPrintErrorMessage() {
         ui.printError("Invalid command.");
         String expected = """
-            ========================================
-            [ERROR] Invalid command.
-            ========================================
-            """;
+                ========================================
+                [ERROR] Invalid command.
+                ========================================
+                """;
         assertEquals(expected.trim(), normalize(outputStream.toString()));
     }
 
@@ -68,10 +68,10 @@ public class UiTest {
     public void testPrintWithSeparator() {
         ui.printWithSeparator("This is a test message.");
         String expected = """
-            ========================================
-            This is a test message.
-            ========================================
-            """;
+                ========================================
+                This is a test message.
+                ========================================
+                """;
         assertEquals(expected.trim(), normalize(outputStream.toString()));
     }
 
@@ -87,24 +87,28 @@ public class UiTest {
     public void testHelpCommand() {
         ui.printHelp();
         String expected = """
-        ========================================
-        Available Commands:
-        -------------------
-        1. add TITLE/AUTHOR      - Add a new book to the library.
-        2. delete BOOK_NUMBER    - Remove a book from the library.
-        3. list                  - List all current books.
-        4. borrow BOOK_NUMBER    - Borrow a book from the library.
-        5. return BOOK_NUMBER    - Return a borrowed book.
-        6. bye                   - Exit the program.
-        7. help                  - Show this help menu.
-        -------------------
-        Examples:
-          > add The Hobbit/J.R.R. Tolkien
-          > delete 2
-          > borrow 3
-          
-        ========================================
-        """;
+                ========================================
+                Available Commands:
+                -------------------
+                1. add TITLE/AUTHOR      - Add a new book to the library.
+                2. delete BOOK_NUMBER    - Remove a book from the library.
+                3. list                  - List all current books.
+                4. borrow BOOK_NUMBER    - Borrow a book from the library.
+                5. return BOOK_NUMBER    - Return a borrowed book.
+                6. bye                   - Exit the program.
+                7. help                  - Show this help menu.
+                -------------------
+                Genres:
+                  > romance
+                  > adventure
+                  > action
+                  > horror
+                  > mystery
+                  > nonfiction
+                  > scifi
+                
+                ========================================
+                """;
         assertEquals(expected.trim(), normalize(outputStream.toString()));
     }
 

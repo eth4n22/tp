@@ -14,12 +14,6 @@ public class BookManager {
 
     private final List<Book> books;
 
-    private boolean isAppropriateGenre(String genre) {
-        return (genre.equals("romance")) || (genre.equals("adventure")) || (genre.equals("action") ||
-                (genre.equals("horror")) || (genre.equals("mystery")) || (genre.equals("scifi")) ||
-                (genre.equals("nonfiction")));
-    }
-
     /**
      * Constructs a new BookManager with the given books.
      *
@@ -29,6 +23,12 @@ public class BookManager {
         this.books = books != null ? new ArrayList<>(books) : new ArrayList<>();
         // Assert that books is properly initialized
         //assert this.books != null : "Books list should never be null after initialization";
+    }
+
+    private boolean isAppropriateGenre(String genre) {
+        return (genre.equals("romance")) || (genre.equals("adventure")) || (genre.equals("action") ||
+                (genre.equals("horror")) || (genre.equals("mystery")) || (genre.equals("scifi")) ||
+                (genre.equals("nonfiction")));
     }
 
     /**
@@ -144,9 +144,7 @@ public class BookManager {
      * @param command   The operation to perform, either BORROW or RETURN.
      * @param bookIndex The index of the book in the library (0-based).
      * @return A message indicating the result of the operation, which can be:
-     * - Confirmation of borrowing or returning a specific book
-     * - An error message if the book number is invalid, missing, or out of range
-     * - An error message if the command is invalid
+     *
      * @throws NumberFormatException If the book number provided cannot be parsed as an integer
      */
     public String updateBookStatus(String command, int bookIndex) {

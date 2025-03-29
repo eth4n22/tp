@@ -22,7 +22,7 @@ public class ShelfTest {
 
     @BeforeEach
     public void setUp() {
-        shelf = new Shelf(1, "Fiction");
+        shelf = new Shelf(1, "scifi");
         shelves = new ShelvesManager();
     }
 
@@ -30,7 +30,7 @@ public class ShelfTest {
     public void addBookToShelf_validInput_addsBookAndUpdatesCount() {
         String result = shelf.addBookToShelf("The Hobbit / J.R.R. Tolkien");
 
-        assertEquals("Added: The Hobbit by: J.R.R. Tolkien\nNow you have 1 books in the Shelf.", result);
+        assertEquals("Added: The Hobbit by: J.R.R. Tolkien\nNow you have 1 books on the Shelf: SCIF-1-0", result);
         assertEquals(1, shelf.getBooksCurrentlyOnShelf());
         assertFalse(shelf.isFull());
     }
@@ -79,7 +79,7 @@ public class ShelfTest {
     public void addBookUsingShelvesManager() {
         String result = shelves.addBook("Romeo and Juliet / William Shakespeare", "romance");
         String newResult = shelves.addBook("The Notebook / Nicholas Sparks", "romance");
-        assertEquals("Added: Romeo and Juliet by: William Shakespeare\nNow you have 1 books in the Shelf.", result);
-        assertEquals("Added: The Notebook by: Nicholas Sparks\nNow you have 2 books in the Shelf.", newResult);
+        assertEquals("Added: Romeo and Juliet by: William Shakespeare\nNow you have 1 books on the Shelf: R-0-0", result);
+        assertEquals("Added: The Notebook by: Nicholas Sparks\nNow you have 2 books in the Shelf: R-0-1", newResult);
     }
 }
