@@ -17,7 +17,7 @@ public class Shelf {
     private final String shelfGenre;
 
     private int booksCurrentlyOnShelf = 0;
-    private static final int MAX_BOOKS_ON_SHELF = 100;
+    private final static int MAX_BOOKS_ON_SHELF = 100;
 
     private boolean isShelfFull;
 

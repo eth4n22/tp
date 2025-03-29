@@ -1,10 +1,8 @@
 package seedu.duke.commands;
 
-import seedu.duke.book.BookManager;
 import seedu.duke.library.Library;
 import seedu.duke.storage.Storage;
 import seedu.duke.ui.Ui;
-
 
 public class UpdateStatusCommand extends Command {
 
@@ -25,6 +23,6 @@ public class UpdateStatusCommand extends Command {
         
         //String response = library.updateBookStatus(bookDetails, bookIndex);
         //ui.printWithSeparator(response);
-       // storage.writeToFile(library.getBooks());
+        //storage.writeToFile(library.getBooks());
     }
 }

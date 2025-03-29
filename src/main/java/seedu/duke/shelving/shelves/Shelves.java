@@ -8,11 +8,11 @@ import seedu.duke.exception.SectionFullException;
  * operations to add, delete, and check the status of books across these shelves.
  */
 public class Shelves {
-    public final Shelf[] shelves;
+    private static final String NO_SECTION_AVAILABLE = "There is no section available";
+
+    private final Shelf[] shelves;
     private boolean isFull = false;
     private String identifier;
-
-    private static final String NO_SECTION_AVAILABLE = "There is no section available";
 
     //@@author WayneCh0y
     /**

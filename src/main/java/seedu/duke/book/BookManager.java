@@ -3,16 +3,16 @@ package seedu.duke.book;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
-import java.util.Objects;
 
 /**
  * Manages a collection of books by adding, deleting, listing, searching, and updating their status.
  */
 public class BookManager {
     //private static final String DATE_FORMAT = "yyyy-MM-dd";
-    private final List<Book> books;
     private static final String BORROW = "borrow";
     private static final String RETURN = "return";
+
+    private final List<Book> books;
 
     private boolean isAppropriateGenre(String genre) {
         return (genre.equals("romance")) || (genre.equals("adventure")) || (genre.equals("action") ||
@@ -176,7 +176,7 @@ public class BookManager {
      * Lists all the books that have been borrowed in the library.
      *
      * @return A string representation of the borrowed books. If no books have been borrowed,
-     *         returns a message indicating that no books have been borrowed yet.
+     * returns a message indicating that no books have been borrowed yet.
      */
     public String listBorrowedBooks() {
         if (books.isEmpty()) {

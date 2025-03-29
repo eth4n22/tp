@@ -10,14 +10,6 @@ import seedu.duke.shelving.shelves.SciFiShelves;
 import seedu.duke.exception.SectionFullException;
 
 public class ShelvesManager {
-    private final RomanceShelves romanceShelves;
-    private final AdventureShelves adventureShelves;
-    private final ActionShelves actionShelves;
-    private final HorrorShelves horrorShelves;
-    private final MysteryShelves mysteryShelves;
-    private final NonFictionShelves nonFictionShelves;
-    private final SciFiShelves sciFiShelves;
-
     private static final String ROMANCE = "romance";
     private static final String ADVENTURE = "adventure";
     private static final String ACTION = "action";
@@ -33,6 +25,16 @@ public class ShelvesManager {
     private static final String MYSTERY_ID = "MY";
     private static final String NONFICTION_ID = "NF";
     private static final String SCIFI_ID = "SCIF";
+
+
+    private final RomanceShelves romanceShelves;
+    private final AdventureShelves adventureShelves;
+    private final ActionShelves actionShelves;
+    private final HorrorShelves horrorShelves;
+    private final MysteryShelves mysteryShelves;
+    private final NonFictionShelves nonFictionShelves;
+    private final SciFiShelves sciFiShelves;
+
 
     //@@author WayneCh0y
     public ShelvesManager() {
@@ -63,7 +65,10 @@ public class ShelvesManager {
                 return nonFictionShelves.listShelf(shelfIndex);
             case SCIFI:
                 return sciFiShelves.listShelf(shelfIndex);
+            default:
+                return "";
             }
+
         } catch (SectionFullException e) {
             System.out.println(e);
         }
@@ -88,6 +93,8 @@ public class ShelvesManager {
                 return nonFictionShelves.addBookToSection(bookDetails);
             case SCIFI:
                 return sciFiShelves.addBookToSection(bookDetails);
+            default:
+                return "";
             }
         } catch (SectionFullException e) {
             System.out.println(e);

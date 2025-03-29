@@ -21,25 +21,25 @@ public class Ui {
 
     public void printHelp() {
         String message = """
-        Available Commands:
-        -------------------
-        1. add TITLE/AUTHOR/GENRE      - Add a new book to the library.
-        2. delete BOOK_NUMBER          - Remove a book from the library.
-        3. list                        - List all current books.
-        4. borrow BOOK_NUMBER          - Borrow a book from the library.
-        5. return BOOK_NUMBER          - Return a borrowed book.
-        6. bye                         - Exit the program.
-        7. help                        - Show this help menu.
-        -------------------
-        Genres:
-          > romance
-          > adventure
-          > action
-          > horror
-          > mystery
-          > nonfiction
-          > scifi
-        """;
+                Available Commands:
+                -------------------
+                1. add TITLE/AUTHOR/GENRE      - Add a new book to the library.
+                2. delete BOOK_NUMBER          - Remove a book from the library.
+                3. list                        - List all current books.
+                4. borrow BOOK_NUMBER          - Borrow a book from the library.
+                5. return BOOK_NUMBER          - Return a borrowed book.
+                6. bye                         - Exit the program.
+                7. help                        - Show this help menu.
+                -------------------
+                Genres:
+                  > romance
+                  > adventure
+                  > action
+                  > horror
+                  > mystery
+                  > nonfiction
+                  > scifi
+                """;
         printWithSeparator(message);
     }
 
