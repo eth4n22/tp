@@ -1,17 +1,19 @@
 package seedu.duke.parser;
 
-import seedu.duke.commands.Command;
-import seedu.duke.commands.ExitCommand;
 import seedu.duke.commands.AddCommand;
-import seedu.duke.commands.DeleteCommand;
+import seedu.duke.commands.Command;
+import seedu.duke.commands.DeleteByIndexCommand;
+import seedu.duke.commands.DeleteByBookCommand;
+import seedu.duke.commands.ExitCommand;
 import seedu.duke.commands.HelpCommand;
-import seedu.duke.commands.ListBorrowedCommand;
 import seedu.duke.commands.ListCommand;
+import seedu.duke.commands.ListBorrowedCommand;
 import seedu.duke.commands.ListOverdueCommand;
-import seedu.duke.commands.ListOverdueUsersCommand;
-import seedu.duke.commands.UpdateStatusCommand;
 import seedu.duke.commands.ListShelfCommand;
+import seedu.duke.commands.UpdateStatusCommand;
+import seedu.duke.commands.ListOverdueUsersCommand;
 import seedu.duke.commands.StatisticsCommand;
+
 
 
 import seedu.duke.exception.LeBookException;
@@ -32,6 +34,8 @@ public class Parser {
     private static final String LIST_BORROWED = "borrowed";
     private static final String LIST_OVERDUE_USERS = "users";
     private static final String LIST_SHELF = "shelf";
+    private static final String DELETE_BY_INDEX = "i";
+    private static final String DELETE_BY_BOOK = "b";
     private static final String STATISTICS = "statistics";
     private static final int SPLIT_INTO_TWO = 2;
     private static final int SPLIT_INTO_THREE = 3;
@@ -130,6 +134,31 @@ public class Parser {
         }
     }
 
+    private static Command parseDeleteCommand(String userInput) throws LeBookException {
+        String[] parts = userInput.split("/", SPLIT_INTO_TWO);
+        if (parts.length < LENGTH_LIMIT_TWO) {
+            throw new LeBookException("Invalid format. It should be: delete b/BOOK_TITLE/AUTHOR_NAME "
+                    + "or delete i/BOOK_INDEX");
+        }
+        String deleteCommandType = parts[0].trim();
+        switch (deleteCommandType) {
+        case DELETE_BY_INDEX:
+            int bookIndex = parseIndex(parts[1].trim()); //throws LeBook Exception
+            return new DeleteByIndexCommand(bookIndex);
+        case DELETE_BY_BOOK:
+            String[] bookDetails = parts[1].split("/", SPLIT_INTO_TWO); //should split into title and author
+            if (bookDetails.length < LENGTH_LIMIT_TWO) {
+                throw new LeBookException("Invalid format. It should be: delete b/BOOK_TITLE/AUTHOR_NAME");
+            }
+            String bookTitle = bookDetails[0].trim();
+            String authorName = bookDetails[1].trim();
+            return new DeleteByBookCommand(bookTitle, authorName);
+        default:
+            throw new LeBookException("Invalid format. It should be: delete b/BOOK_TITLE/AUTHOR_NAME "
+                    + "or delete i/BOOK_INDEX");
+        }
+    }
+
     /**
      * Parses user input and returns the corresponding command.
      *
@@ -161,8 +190,7 @@ public class Parser {
             bookIndex = parseIndex(inputDetails);
             return new UpdateStatusCommand(commandType, bookIndex, null);
         case DELETE:
-            bookIndex = parseIndex(inputDetails);
-            return new DeleteCommand(bookIndex);
+            return parseDeleteCommand(inputDetails);
         case ADD:
             return parseAddCommand(inputDetails);
         case HELP:
