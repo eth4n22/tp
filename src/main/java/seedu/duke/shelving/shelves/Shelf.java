@@ -1,4 +1,4 @@
-package seedu.duke.Shelving.Shelves;
+package seedu.duke.shelving.shelves;
 
 import seedu.duke.book.Book;
 
@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
  */
 public class Shelf {
 
-    private static final List<Book> shelfBooks = new ArrayList<>();
-    private static final int MAX_BOOKS_ON_SHELF = 100;
+    private final List<Book> shelfBooks = new ArrayList<>();
+    private final static int MAX_BOOKS_ON_SHELF = 100;
 
     private final int shelfIndex;
     private final String shelfGenre;
