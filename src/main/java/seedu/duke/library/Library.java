@@ -33,12 +33,12 @@ public class Library {
         return catalogueManager.listBorrowedBooks();
     }
 
-    public String addNewBookToCatalogue(String bookDetails, String genre) {
-        return catalogueManager.addNewBookToCatalogue(bookDetails);
+    public String addNewBookToCatalogue(String title, String author, String genre) {
+        return catalogueManager.addNewBookToCatalogue(title, author, genre);
     }
 
-    public String addNewBookToShelf(String bookDetails, String genre) {
-        return shelvesManager.addBook(bookDetails, genre);
+    public String addNewBookToShelf(String title, String author, String genre) {
+        return shelvesManager.addBook(title, author, genre);
     }
 
     public String deleteBook(int bookIndex){
@@ -53,7 +53,7 @@ public class Library {
         }
     }
 
-    public String updateBookStatus(String userInput, int bookIndex, MemberManager memberManager) {
+    public String updateBookStatus(String userInput, int bookIndex, String borrowerName, MemberManager memberManager) {
         //update Book in catelogue
         //update book in shelf
         return null;

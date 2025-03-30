@@ -7,12 +7,14 @@ import seedu.duke.ui.Ui;
 
 public class UpdateStatusCommand extends Command {
 
-    private final String bookDetails;
+    private final String commandType;
     private final int bookIndex;
+    private final String borrowerName;
 
-    public UpdateStatusCommand(String bookDetails, int bookIndex) {
-        this.bookDetails = bookDetails;
+    public UpdateStatusCommand(String commandType, int bookIndex, String borrowerName) {
+        this.commandType = commandType;
         this.bookIndex = bookIndex;
+        this.borrowerName = borrowerName;
     }
 
     @Override
@@ -20,9 +22,9 @@ public class UpdateStatusCommand extends Command {
         assert library != null : "BookManager should not be null";
         assert ui != null : "Ui should not be null";
         assert storage != null : "Storage should not be null";
-        assert bookDetails != null : "Book details cannot be null";
+        assert commandType != null : "Command type cannot be null";
         
-        String response = library.updateBookStatus(bookDetails, bookIndex, memberManager);
+        String response = library.updateBookStatus(commandType, bookIndex, borrowerName, memberManager);
         ui.printWithSeparator(response);
         storage.writeToFile(library.getBooks());
     }

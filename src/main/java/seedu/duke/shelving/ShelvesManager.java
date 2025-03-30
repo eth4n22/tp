@@ -76,23 +76,23 @@ public class ShelvesManager {
     }
 
     //@@author WayneCh0y
-    public String addBook(String bookDetails, String genre) {
+    public String addBook(String title, String author, String genre) {
         try {
             switch (genre) {
             case ROMANCE:
-                return romanceShelves.addBookToSection(bookDetails);
+                return romanceShelves.addBookToSection(title, author);
             case ADVENTURE:
-                return adventureShelves.addBookToSection(bookDetails);
+                return adventureShelves.addBookToSection(title, author);
             case ACTION:
-                return actionShelves.addBookToSection(bookDetails);
+                return actionShelves.addBookToSection(title, author);
             case HORROR:
-                return horrorShelves.addBookToSection(bookDetails);
+                return horrorShelves.addBookToSection(title, author);
             case MYSTERY:
-                return mysteryShelves.addBookToSection(bookDetails);
+                return mysteryShelves.addBookToSection(title, author);
             case NONFICTION:
-                return nonFictionShelves.addBookToSection(bookDetails);
+                return nonFictionShelves.addBookToSection(title, author);
             case SCIFI:
-                return sciFiShelves.addBookToSection(bookDetails);
+                return sciFiShelves.addBookToSection(title, author);
             default:
                 return "";
             }

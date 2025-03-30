@@ -107,21 +107,12 @@ public class Shelf {
     }
 
     //@@author WayneCh0y
-    public String addBookToShelf(String bookDetails) {
+    public String addBookToShelf(String title, String author) {
         if (isShelfFull) {
             return "The shelf is full!";
         }
 
-        assert bookDetails != null : "Book details cannot be null";
-
-        String[] parts = bookDetails.split(" / ", 2);
-
-        if (parts.length < 2) {
-            return "Invalid book format! It should be 'TITLE / AUTHOR'.";
-        }
-
-        String title = parts[0].trim();
-        String author = parts[1].trim();
+        //assert bookDetails != null : "Book details cannot be null";
 
         if (title.isEmpty()) {
             return "Book title cannot be empty!";
