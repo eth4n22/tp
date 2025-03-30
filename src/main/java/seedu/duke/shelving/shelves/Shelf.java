@@ -212,4 +212,10 @@ public class Shelf {
         return getShelfIdentifier(bookIndex);
     }
 
+    //@@author WayneCh0y
+    public void cleanup() {
+        shelfBooks.clear();
+        booksCurrentlyOnShelf = 0;
+        isShelfFull = false;
+    }
 }

@@ -67,10 +67,6 @@ public class Ui {
         printSeparator();
     }
 
-    public void printShelf() {
-
-    }
-
     public void printSeparator() {
         System.out.println("========================================");
     }
