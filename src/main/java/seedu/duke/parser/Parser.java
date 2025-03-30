@@ -98,12 +98,12 @@ public class Parser {
     private static Command parseListShelfCommand(String bookDetails) throws LeBookException {
         String[] parts = bookDetails.split("/", SPLIT_INTO_TWO);
         if (parts.length < LENGTH_LIMIT_TWO) {
-            throw new LeBookException("Invalid format. It should be: list shelf / GENRE / INDEX");
+            throw new LeBookException("Invalid format. It should be: shelf / GENRE / INDEX");
         }
 
         String[] shelfDetails = parts[1].split("/", SPLIT_INTO_TWO);
         if (shelfDetails.length < LENGTH_LIMIT_TWO) {
-            throw new LeBookException("Invalid format. It should be: list shelf / GENRE / INDEX");
+            throw new LeBookException("Invalid format. It should be: shelf / GENRE / INDEX");
         }
 
         String genre = shelfDetails[0].trim();

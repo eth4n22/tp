@@ -34,8 +34,8 @@ public class Library {
     }
 
     //@@author WayneCh0y
-    public String listShelf(String shelfGenre, int shelfIndex) {
-        return shelvesManager.listShelf(shelfGenre, shelfIndex);
+    public String listShelves(String shelfGenre, int index) {
+        return shelvesManager.listShelf(shelfGenre, index);
     }
 
     public String listBorrowedBooks() {
@@ -54,7 +54,6 @@ public class Library {
     }
 
     //@@author Deanson Choo
-
     /**
      * Deletes a book from the catalogue and the corresponding shelf based on its index in the catalogue.
      * <p>

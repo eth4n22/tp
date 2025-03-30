@@ -37,6 +37,7 @@ public class Shelves {
         this.isFull = true;
     }
 
+
     //@@author WayneCh0y
     /**
      * Checks if all shelves in this section are full.
@@ -69,21 +70,18 @@ public class Shelves {
 
     //@@author WayneCh0y
     /**
-     * Retrieves the list of books from the specified shelf.
+     * Lists all the books on all shelves in the library.
+     * Iterates through the array of shelves and calls {@link Shelf#listShelf()} on each.
+     * Each shelf's books are displayed under a header indicating the shelf number.
      *
-     * <p>This method calls {@code listShelf()} on the shelf at the given index.
-     * If the index is out of bounds, an {@link IndexOutOfBoundsException} is thrown.</p>
-     *
-     * @param shelfIndex The index of the shelf to retrieve books from.
-     * @return A formatted string listing all books on the specified shelf,
-     *         or "No books on shelf" if the shelf is empty.
-     * @throws IndexOutOfBoundsException If the provided index is out of the valid range.
+     * @return A formatted string containing the list of books on each shelf.
+     *         If a shelf is empty, it will indicate "No books on shelf".
      */
-    public String listShelf(int shelfIndex) {
+    public String listShelf(int index) {
         try {
-            return shelves[shelfIndex].listShelf();
-        } catch (IndexOutOfBoundsException e) {
-            throw new NoSuchSectionException("No Such Shelf Index!");
+            return shelves[index].listShelf();
+        } catch (NoSuchSectionException e) {
+            throw new NoSuchSectionException("There is no such section!");
         }
     }
 
