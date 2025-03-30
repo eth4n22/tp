@@ -31,9 +31,10 @@ public class BookManager {
     }
 
     private boolean isAppropriateGenre(String genre) {
-        return (genre.equals("romance")) || (genre.equals("adventure")) || (genre.equals("action") ||
-                (genre.equals("horror")) || (genre.equals("mystery")) || (genre.equals("scifi")) ||
-                (genre.equals("nonfiction")));
+        return genre.equals("romance") || genre.equals("adventure") || genre.equals("action") ||
+                genre.equals("horror") || genre.equals("mystery") || genre.equals("scifi") ||
+                genre.equals("nonfiction");
+
     }
 
     /**
@@ -234,5 +235,28 @@ public class BookManager {
         } catch (IndexOutOfBoundsException e) {
             throw new BookNotFoundException("Book not found!");
         }
+    }
+
+    public String getStatistics() {
+        int totalBooks = books.size();
+        int borrowedBooks = 0;
+        int overdueBooks = 0;
+
+        for (Book book : books) {
+            if (book.isBorrowed()) {
+                borrowedBooks++;
+            }
+            if (book.isOverdue()) {
+                overdueBooks++;
+            }
+        }
+
+        StringBuilder stats = new StringBuilder();
+        stats.append("========== Library Statistics ==========\n");
+        stats.append("Total books: ").append(totalBooks).append("\n");
+        stats.append("Total books borrowed: ").append(borrowedBooks).append("\n");
+        stats.append("Total books overdue: ").append(overdueBooks).append("\n");
+
+        return stats.toString();
     }
 }

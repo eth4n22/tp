@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -204,5 +205,31 @@ public class BookManagerTest {
                 memberManager);
 
         assertEquals("This book is not borrowed!", result);
+    }
+
+    @Test
+    void testListOverdueBooks() {
+        bookManager.addNewBookToCatalogue("Overdue Book","Wayne", "romance", "R-0-0");
+        MemberManager memberManager = new MemberManager();
+        bookManager.updateBookStatus("borrow", 0, "John", memberManager);
+        bookManager.getBooks().get(0).setReturnDueDate(LocalDate.now().minusDays(2));
+
+        String result = bookManager.listOverdueBooks();
+        assertTrue(result.contains("Overdue Book"));
+    }
+
+    @Test
+    void testStatistics() {
+        bookManager.addNewBookToCatalogue("Moby A", "Author A", "romance", "R-0-0");
+        bookManager.addNewBookToCatalogue("Moby B", "Author B", "romance", "R-0-1");
+        MemberManager memberManager = new MemberManager();
+        bookManager.updateBookStatus("borrow", 0, "John", memberManager);
+
+        bookManager.getBooks().get(0).setReturnDueDate(LocalDate.now().minusDays(2));
+
+        String stats = bookManager.getStatistics();
+        assertTrue(stats.contains("Total books: 2"));
+        assertTrue(stats.contains("Total books borrowed: 1"));
+        assertTrue(stats.contains("Total books overdue: 1"));
     }
 }

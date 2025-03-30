@@ -91,4 +91,16 @@ public class Library {
     public List<Book> getBooks() {
         return catalogueManager.getBooks();
     }
+
+    public BookManager getBookManager() {
+        return catalogueManager;
+    }
+
+    public String getStatistics() {
+        return catalogueManager.getStatistics();
+    }
+
+    public String listOverdueBooks() {
+        return catalogueManager.listOverdueBooks();
+    }
 }
