@@ -75,10 +75,8 @@ public class Library {
         }
     }
 
-    public String updateBookStatus(String userInput, int bookIndex, String borrowerName, MemberManager memberManager) {
-        //update Book in catelogue
-        //update book in shelf
-        return null;
+    public String updateBookStatus(String command, int bookIndex, String borrowerName, MemberManager memberManager) {
+        return catalogueManager.updateBookStatus(command, bookIndex, borrowerName, memberManager);
     }
 
     //@@author Deanson Choo

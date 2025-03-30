@@ -84,7 +84,7 @@ public class Parser {
         }
         String title = parts[0].trim();
         String author = parts[1].trim();
-        String genre = parts[2].trim();
+        String genre = parts[2].trim().toLowerCase();
         return new AddCommand(title, author, genre);
     }
 
@@ -106,7 +106,7 @@ public class Parser {
             throw new LeBookException("Invalid format. It should be: shelf / GENRE / INDEX");
         }
 
-        String genre = shelfDetails[0].trim();
+        String genre = shelfDetails[0].trim().toLowerCase();
         String indexString = shelfDetails[1].trim();
         int shelfIndex = parseIndex(indexString);
         return new ListShelfCommand(genre, shelfIndex);
