@@ -30,6 +30,10 @@ public class Parser {
     private static final String LIST_BORROWED = "borrowed";
     private static final String LIST_OVERDUE_USERS = "users";
     private static final String LIST_SHELF = "shelf";
+    public static final int SPLIT_INTO_TWO = 2;
+    public static final int SPLIT_INTO_THREE = 3;
+    public static final int LENGTH_LIMIT_TWO = 2;
+    public static final int LENGTH_LIMIT_THREE = 3;
 
     /**
      * Parses the book index from the given string.
@@ -56,8 +60,8 @@ public class Parser {
      * @throws LeBookException If the input is not in the correct format.
      */
     private static String parseBorrowCommand(String bookDetails) throws LeBookException {
-        String[] parts = bookDetails.split("/", 2);
-        if (parts.length < 2) {
+        String[] parts = bookDetails.split("/", SPLIT_INTO_TWO);
+        if (parts.length < LENGTH_LIMIT_TWO) {
             throw new LeBookException("Invalid format. It should be: borrow BOOK_INDEX / MEMBER_NAME");
         }
         return parts[1].trim();
@@ -71,8 +75,8 @@ public class Parser {
      * @throws LeBookException If the input is not in the correct format.
      */
     private static Command parseAddCommand(String bookDetails) throws LeBookException {
-        String[] parts = bookDetails.split("/", 3);
-        if (parts.length < 3) {
+        String[] parts = bookDetails.split("/", SPLIT_INTO_THREE);
+        if (parts.length < LENGTH_LIMIT_THREE) {
             throw new LeBookException("Invalid format. It should be: add BOOK_TITLE / AUTHOR_NAME / GENRE");
         }
         String title = parts[0].trim();
@@ -89,13 +93,13 @@ public class Parser {
      * @throws LeBookException If the input is not in the correct format.
      */
     private static Command parseListShelfCommand(String bookDetails) throws LeBookException {
-        String[] parts = bookDetails.split("/", 2);
-        if (parts.length < 2) {
+        String[] parts = bookDetails.split("/", SPLIT_INTO_TWO);
+        if (parts.length < LENGTH_LIMIT_TWO) {
             throw new LeBookException("Invalid format. It should be: list shelf / GENRE / INDEX");
         }
 
-        String[] shelfDetails = parts[1].split("/", 2);
-        if (shelfDetails.length < 2) {
+        String[] shelfDetails = parts[1].split("/", SPLIT_INTO_TWO);
+        if (shelfDetails.length < LENGTH_LIMIT_TWO) {
             throw new LeBookException("Invalid format. It should be: list shelf / GENRE / INDEX");
         }
 
@@ -130,7 +134,7 @@ public class Parser {
         assert userInput != null : "User input should not be null";
         assert !userInput.trim().isEmpty() : "User input should not be empty";
 
-        String[] fullInput = userInput.split(" ", 2);
+        String[] fullInput = userInput.split(" ", SPLIT_INTO_TWO);
         String commandType = fullInput[0].toLowerCase();
         String inputDetails = (fullInput.length > 1) ? fullInput[1] : "";
 
