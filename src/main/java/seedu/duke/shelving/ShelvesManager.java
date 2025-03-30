@@ -94,7 +94,7 @@ public class ShelvesManager {
             case SCIFI:
                 return sciFiShelves.addBookToSection(bookDetails);
             default:
-                return "";
+                break;
             }
         } catch (SectionFullException e) {
             System.out.println(e);
@@ -137,4 +137,28 @@ public class ShelvesManager {
             break;
         }
     }
+
+    //@@author WayneCh0y
+    public String getBookId(String genre) {
+        switch (genre) {
+        case ROMANCE:
+            return romanceShelves.getBookID();
+        case ADVENTURE:
+            return adventureShelves.getBookID();
+        case ACTION:
+            return actionShelves.getBookID();
+        case HORROR:
+            return horrorShelves.getBookID();
+        case MYSTERY:
+            return mysteryShelves.getBookID();
+        case NONFICTION:
+            return nonFictionShelves.getBookID();
+        case SCIFI:
+            return sciFiShelves.getBookID();
+        default:
+            break;
+        }
+        return "No Book ID found!";
+    }
+
 }

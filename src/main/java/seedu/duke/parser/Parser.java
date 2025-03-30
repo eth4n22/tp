@@ -64,7 +64,7 @@ public class Parser {
         String bookDetails = (fullInput.length > 1) ? fullInput[1] : "";
 
         String[] inputSplitByRegex = userInput.split("/", 3);
-        if (inputSplitByRegex.length < 3) {
+        if (inputSplitByRegex.length < 3 && commandType.equals(ADD)) {
             commandType = "";
         }
 

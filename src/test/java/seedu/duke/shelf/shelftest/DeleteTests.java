@@ -43,7 +43,7 @@ public class DeleteTests {
         shelf.deleteBookFromShelf(0);
         List<Book> books = shelf.getShelfBooks();
         Book book = books.get(0);
-        assertEquals("duMmy", book.getTitle(), "Book title should be 'duMmy'");
+        assertEquals("duMmY", book.getTitle(), "Book title should be 'duMmY'");
         assertEquals(2, shelf.getBooksCurrentlyOnShelf());
     }
 

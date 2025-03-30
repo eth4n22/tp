@@ -56,14 +56,13 @@ public class Shelves {
         return false;
     }
 
-    /**
-     * Generates the full shelf number (identifier + index).
-     *
-     * @param index The shelf index (0–4).
-     * @return The formatted shelf number.
-     */
-    public String getShelfNumber(int index) {
-        return identifier + String.valueOf(index);
+    public String getBookID() {
+        for (int shelfIndex = 0; shelfIndex < 5; shelfIndex++) {
+            if (!shelves[shelfIndex].isFull()) {
+                return shelves[shelfIndex].getBookId();
+            }
+        }
+        return "All shelves are Full!";
     }
 
 

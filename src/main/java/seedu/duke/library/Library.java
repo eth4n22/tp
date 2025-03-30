@@ -12,19 +12,28 @@ import seedu.duke.member.MemberManager;
 import java.util.List;
 
 public class Library {
+    private static Library theOneLibrary;
+
     private final BookManager catalogueManager;
     private final ShelvesManager shelvesManager;
 
-    public Library(List<Book>allBooks) {
+    private Library(List<Book> allBooks) {
         catalogueManager = new BookManager(allBooks);
         shelvesManager = new ShelvesManager();
     }
 
+    public static Library getTheOneLibrary(List<Book> allBooks) {
+        if (theOneLibrary == null) {
+            theOneLibrary = new Library(allBooks);
+        }
+        return theOneLibrary;
+    }
 
     public String listBooks() {
         return catalogueManager.listBooks();
     }
 
+    //@@author WayneCh0y
     public String listShelf(String shelfGenre, int shelfIndex) {
         return shelvesManager.listShelf(shelfGenre, shelfIndex);
     }
@@ -33,10 +42,13 @@ public class Library {
         return catalogueManager.listBorrowedBooks();
     }
 
+    //@@author Deanson-Choo
     public String addNewBookToCatalogue(String bookDetails, String genre) {
-        return catalogueManager.addNewBookToCatalogue(bookDetails);
+        String bookID = shelvesManager.getBookId(genre);
+        return catalogueManager.addNewBookToCatalogue(bookDetails, bookID);
     }
 
+    //@@author WayneCh0y
     public String addNewBookToShelf(String bookDetails, String genre) {
         return shelvesManager.addBook(bookDetails, genre);
     }

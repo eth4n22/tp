@@ -53,7 +53,7 @@ public class BookManager {
      * @param bookDetails String containing title and author, expected format: "TITLE / AUTHOR"
      * @return A message confirming the book addition or an error message
      */
-    public String addNewBookToCatalogue(String bookDetails) {
+    public String addNewBookToCatalogue(String bookDetails, String bookID) {
         assert bookDetails != null : "Book details cannot be null";
 
         String[] parts = bookDetails.split(" / ", 3);
@@ -81,6 +81,7 @@ public class BookManager {
         Book newBook = new Book(title, author);
         int oldSize = books.size();
         books.add(newBook);
+        newBook.setBookID(bookID);
 
         // Assert that the book was successfully added
         assert books.size() == oldSize + 1 : "Book size should increase by 1 after adding";
