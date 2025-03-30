@@ -146,10 +146,11 @@ public class Shelf {
                 + " books on the Shelf: " + getShelfIdentifier(bookIndex);
     }
 
+    //@@author Deanson Choo
     public void deleteBookFromShelf(int slotNum) {
+        assert slotNum >= 0 && slotNum < booksCurrentlyOnShelf: "Invalid bookIndex!";
         Book temp = new Book("duMmy", "duMmy");
         shelfBooks.set(slotNum, temp);
         booksCurrentlyOnShelf -= 1;
     }
-
 }

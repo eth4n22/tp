@@ -41,11 +41,12 @@ public class Library {
         return shelvesManager.addBook(bookDetails, genre);
     }
 
+    //@@author Deanson Choo
     public String deleteBook(int bookIndex){
         try {
-            String bookID = catalogueManager.getBookID(bookIndex);
+            String bookID = catalogueManager.getBookID(bookIndex); //throw BookNotFound
             String response1 = catalogueManager.deleteBook(bookIndex);
-            //assuming the book exists - not a dummy
+            assert bookID != null; //that means it was fetchable
             shelvesManager.deleteBook(bookID);
             return response1;
         } catch (BookNotFoundException e) {
@@ -59,6 +60,7 @@ public class Library {
         return null;
     }
 
+    //@@author Deanson Choo
     public List<Book> getBooks() {
         return catalogueManager.getBooks();
     }
