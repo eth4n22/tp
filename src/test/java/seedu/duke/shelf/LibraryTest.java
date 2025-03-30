@@ -64,12 +64,12 @@ public class LibraryTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    public void testDeleteBook_deletesFromCatalogueAndShelf() throws NoSuchFieldException, IllegalAccessException {
+    public void testDeleteBookByIndex_exist() throws NoSuchFieldException, IllegalAccessException {
 
         String result = library.deleteBook(0);
         System.out.println(result);  // For debugging output
-        assertTrue(result.contains("Book deleted"), "Should include catalog deletion message");
         assertTrue(result.contains("Now you have 0 books"), "Should confirm deletion");
+        assertTrue(result.contains("Book deleted"), "Should include catalog deletion message");
 
         Field shelvesManagerField = Library.class.getDeclaredField("shelvesManager");
         shelvesManagerField.setAccessible(true);
@@ -93,10 +93,52 @@ public class LibraryTest {
         assertEquals("duMmY", bookAfterDelete.getTitle(), "Book on shelf should be dummy after deletion");
         assertEquals("duMmY", bookAfterDelete.getAuthor(), "Author should be dummy after deletion");
     }
+
     @Test
-    public void testDeleteBook_noExist() {
+    public void testDeleteBookByBook_noExist() {
 
         String result = library.deleteBook(1);
+        System.out.println(result);
+        assertTrue(result.contains("Book not found!"), "Book shouldn't exist");
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testDeleteBookByBook_exist() throws NoSuchFieldException, IllegalAccessException {
+        library.addNewBookToCatalogue("Delete Me", "Author A", "romance");
+        library.addNewBookToShelf("Delete Me", "Author A", "romance");
+
+        String result = library.deleteBook("Delete Me", "Author A");
+        assertTrue(result.contains("Book deleted"), "Should include catalog deletion message");
+        assertTrue(result.contains("Now you have 0 books"), "Should confirm deletion");
+
+        Field shelvesManagerField = Library.class.getDeclaredField("shelvesManager");
+        shelvesManagerField.setAccessible(true);
+        ShelvesManager shelvesManager = (ShelvesManager) shelvesManagerField.get(library);
+
+
+        Field romanceShelvesField = ShelvesManager.class.getDeclaredField("romanceShelves");
+        romanceShelvesField.setAccessible(true);
+        RomanceShelves romanceShelves = (RomanceShelves) romanceShelvesField.get(shelvesManager);
+
+        Field shelvesField = Shelves.class.getDeclaredField("shelves");
+        shelvesField.setAccessible(true);
+        Shelf[] shelvesArray = (Shelf[]) shelvesField.get(romanceShelves);
+        Shelf shelf0 = shelvesArray[0];
+
+        Field shelfBooksField = Shelf.class.getDeclaredField("shelfBooks");
+        shelfBooksField.setAccessible(true);
+        List<Book> booksOnShelf = (List<Book>) shelfBooksField.get(shelf0);
+
+        Book bookAfterDelete = booksOnShelf.get(1);
+        assertEquals("duMmY", bookAfterDelete.getTitle(), "Book on shelf should be dummy after deletion");
+        assertEquals("duMmY", bookAfterDelete.getAuthor(), "Author should be dummy after deletion");
+    }
+
+    @Test
+    public void testDeleteBookByIndex_noExist() {
+
+        String result = library.deleteBook("hello", "Author A");
         System.out.println(result);
         assertTrue(result.contains("Book not found!"), "Book shouldn't exist");
 

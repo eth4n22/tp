@@ -1,14 +1,16 @@
 package seedu.duke.parser;
 
 import org.junit.jupiter.api.Test;
+
 import seedu.duke.commands.AddCommand;
 import seedu.duke.commands.Command;
-import seedu.duke.commands.DeleteCommand;
+import seedu.duke.commands.DeleteByIndexCommand;
+import seedu.duke.commands.DeleteByBookCommand;
 import seedu.duke.commands.ExitCommand;
 import seedu.duke.commands.ListCommand;
-import seedu.duke.commands.ListOverdueUsersCommand;
 import seedu.duke.commands.ListShelfCommand;
 import seedu.duke.commands.UpdateStatusCommand;
+import seedu.duke.commands.ListOverdueUsersCommand;
 import seedu.duke.exception.LeBookException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -105,16 +107,37 @@ public class ParserTest {
     }
 
     @Test
-    void testParseDeleteCommand_validIndex() throws LeBookException {
-        Command result = Parser.parse("delete 1");
-        assertNotNull(result);
-        assertInstanceOf(DeleteCommand.class, result);
+    void testParseDeleteCommand_incomplete() {
+        Exception exception = assertThrows(LeBookException.class, () -> Parser.parse("delete"));
+        assertEquals("Invalid format. It should be: delete b/BOOK_TITLE/AUTHOR_NAME or delete i/BOOK_INDEX"
+                , exception.getMessage());
     }
 
     @Test
     void testParseDeleteCommand_invalidIndex() {
-        Exception exception = assertThrows(LeBookException.class, () -> Parser.parse("delete abc"));
+        Exception exception = assertThrows(LeBookException.class, () -> Parser.parse("delete i/abc"));
         assertEquals("Please provide a valid book index.", exception.getMessage());
+    }
+
+    //@@author Deanson Choo
+    @Test
+    void testParseDeleteCommand_validIndex() throws LeBookException {
+        Command result = Parser.parse("delete i/1");
+        assertNotNull(result);
+        assertInstanceOf(DeleteByIndexCommand.class, result);
+    }
+
+    @Test
+    void testParseDeleteCommand_invalidBook() {
+        Exception exception = assertThrows(LeBookException.class, () -> Parser.parse("delete b/abc"));
+        assertEquals("Invalid format. It should be: delete b/BOOK_TITLE/AUTHOR_NAME", exception.getMessage());
+    }
+
+    @Test
+    void testParseDeleteCommand_validBook() throws LeBookException {
+        Command result = Parser.parse("delete b/title/author");
+        assertNotNull(result);
+        assertInstanceOf(DeleteByBookCommand.class, result);
     }
 
     @Test

@@ -7,6 +7,7 @@ import seedu.duke.book.BookManager;
 import seedu.duke.exception.BookNotFoundException;
 
 import seedu.duke.member.MemberManager;
+import seedu.duke.utility.GroupReturns;
 
 
 import java.util.List;
@@ -54,7 +55,6 @@ public class Library {
     }
 
     //@@author Deanson Choo
-
     /**
      * Deletes a book from the catalogue and the corresponding shelf based on its index in the catalogue.
      * <p>
@@ -67,6 +67,20 @@ public class Library {
     public String deleteBook(int bookIndex){
         try {
             String bookID = catalogueManager.getBookID(bookIndex); //throw BookNotFound
+            String response1 = catalogueManager.deleteBook(bookIndex);
+            assert bookID != null; //that means it was fetchable
+            shelvesManager.deleteBook(bookID);
+            return response1;
+        } catch (BookNotFoundException e) {
+            return e.getMessage();
+        }
+    }
+    //Delete book by Bookdetails
+    public String deleteBook(String bookTitle, String author) {
+        try {
+            GroupReturns bookIndexBookID = catalogueManager.getBookID(bookTitle, author); //throw BookNotFound
+            int bookIndex = bookIndexBookID.number;
+            String bookID = bookIndexBookID.text;
             String response1 = catalogueManager.deleteBook(bookIndex);
             assert bookID != null; //that means it was fetchable
             shelvesManager.deleteBook(bookID);

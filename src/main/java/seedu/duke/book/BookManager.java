@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 import seedu.duke.member.Member;
 import seedu.duke.member.MemberManager;
+import seedu.duke.utility.GroupReturns;
 
 /**
  * Manages a collection of books by adding, deleting, listing, searching, and updating their status.
@@ -235,4 +236,15 @@ public class BookManager {
             throw new BookNotFoundException("Book not found!");
         }
     }
+
+    public GroupReturns getBookID(String bookTitle, String author) throws BookNotFoundException {
+        for (int i = 0; i < books.size(); i++) {
+            Book book = books.get(i);
+            if (book.getTitle().equals(bookTitle) && book.getAuthor().equals(author)) {
+                return new GroupReturns(i, book.getBookID()); // Example: pass the index to the constructor
+            }
+        }
+        throw new BookNotFoundException("Book not found!");
+    }
+
 }
