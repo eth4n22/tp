@@ -97,6 +97,7 @@ public class Shelf {
         return shelfBooks;
     }
 
+    //@@author WayneCh0y
     /**
      * Lists all books currently on the shelf, excluding books where the author's name is "duMmY".
      *
@@ -112,7 +113,7 @@ public class Shelf {
             return "No books on shelf";
         }
         return shelfBooks.stream()
-                .filter(book -> !book.getAuthor().equalsIgnoreCase("duMmY")) // Exclude books with author "duMmY"
+                .filter(book -> !book.getAuthor().equalsIgnoreCase("duMmY"))
                 .map(Book::toString)
                 .collect(Collectors.joining("\n"));
     }
