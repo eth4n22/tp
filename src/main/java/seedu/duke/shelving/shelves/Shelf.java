@@ -149,6 +149,11 @@ public class Shelf {
         if (booksCurrentlyOnShelf == MAX_BOOKS_ON_SHELF) {
             return "No books on shelf";
         }
+
+        if (booksCurrentlyOnShelf == 0) {
+            return "There are no books on this shelf! LEBRON";
+        }
+
         String genreName = getBackGenre();
 
         if (genreName.equals("No such genre!")) {
@@ -158,7 +163,7 @@ public class Shelf {
         return "Here is the list of the books on shelf " + genreName + " " + (shelfIndex + 1) + ":\n" +
                 IntStream.range(0, shelfBooks.size())
                         .filter(i -> !shelfBooks.get(i).getAuthor().equalsIgnoreCase("duMmY"))
-                        .mapToObj(i -> (i + 1) + ". " + shelfBooks.get(i).toString()) // Add index
+                        .mapToObj(i -> (i + 1) + ". " + shelfBooks.get(i).toString())
                         .collect(Collectors.joining("\n"));
     }
 
@@ -168,7 +173,6 @@ public class Shelf {
             return "The shelf is full!";
         }
 
-        //assert bookDetails != null : "Book details cannot be null";
 
         if (title.isEmpty()) {
             return "Book title cannot be empty!";

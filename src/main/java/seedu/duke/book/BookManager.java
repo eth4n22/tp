@@ -13,7 +13,6 @@ import seedu.duke.member.MemberManager;
  * Manages a collection of books by adding, deleting, listing, searching, and updating their status.
  */
 public class BookManager {
-    //private static final String DATE_FORMAT = "yyyy-MM-dd";
     private static final String BORROW = "borrow";
     private static final String RETURN = "return";
   
@@ -26,8 +25,6 @@ public class BookManager {
      */
     public BookManager(List<Book> books) {
         this.books = books != null ? new ArrayList<>(books) : new ArrayList<>();
-        // Assert that books is properly initialized
-        //assert this.books != null : "Books list should never be null after initialization";
     }
 
     private boolean isAppropriateGenre(String genre) {
@@ -43,8 +40,6 @@ public class BookManager {
      * @return The list of books
      */
     public List<Book> getBooks() {
-        // Assert that we're returning a non-null list
-        //assert books != null : "Book list should never be null";
         return books;
     }
 
