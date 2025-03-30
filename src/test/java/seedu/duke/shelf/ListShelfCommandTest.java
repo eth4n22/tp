@@ -17,7 +17,7 @@ public class ListShelfCommandTest {
 
     @Test
     void listShelf_emptyShelf_returnsNoBooksMessage() {
-        assertEquals("No books on shelf", shelf.listShelf());
+        assertEquals("There are no books on this shelf! LEBRON", shelf.listShelf());
     }
 
     @Test
@@ -25,7 +25,7 @@ public class ListShelfCommandTest {
         shelf.getShelfBooks().add(new Book("Title1", "duMmY"));
         shelf.getShelfBooks().add(new Book("Title2", "duMmY"));
 
-        assertEquals("No books on shelf", shelf.listShelf());
+        assertEquals("There are no books on this shelf! LEBRON", shelf.listShelf());
     }
 
 }
