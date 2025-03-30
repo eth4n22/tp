@@ -56,7 +56,7 @@ public class BookManager {
      *
      * @return A message confirming the book addition or an error message
      */
-    public String addNewBookToCatalogue(String title, String author, String genre) {
+    public String addNewBookToCatalogue(String title, String author, String genre, String bookID) {
         assert title != null : "Title cannot be null";
         assert author != null : "Author cannot be null";
         assert genre != null : "Genre cannot be null";
@@ -80,6 +80,7 @@ public class BookManager {
         Book newBook = new Book(title, author);
         int oldSize = books.size();
         books.add(newBook);
+        newBook.setBookID(bookID);
 
         // Assert that the book was successfully added
         assert books.size() == oldSize + 1 : "Book size should increase by 1 after adding";
