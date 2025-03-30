@@ -1,6 +1,5 @@
-package seedu.duke.Shelving.Shelves;
+package seedu.duke.shelving.shelves;
 
-import seedu.duke.Shelving.Shelves.Shelf;
 import seedu.duke.exception.SectionFullException;
 
 /**

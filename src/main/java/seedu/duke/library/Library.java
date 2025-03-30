@@ -1,6 +1,6 @@
 package seedu.duke.library;
 
-import seedu.duke.Shelving.ShelvesManager;
+import seedu.duke.shelving.ShelvesManager;
 import seedu.duke.book.Book;
 import seedu.duke.book.BookManager;
 
