@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -108,7 +109,7 @@ public class BookManagerTest {
     public void testUpdateBookStatus_borrow() {
         String action = bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald",
                 "romance", "R-0-0");
-        MemberManager memberManager = new MemberManager();
+        MemberManager memberManager = MemberManager.getInstance();
         Member borrower = memberManager.getMemberByName("John");
 
         String result = bookManager.updateBookStatus("borrow", 0, "John",
@@ -122,7 +123,7 @@ public class BookManagerTest {
     public void testUpdateBookStatus_return() {
         bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald",
                 "romance", "R-0-0");
-        MemberManager memberManager = new MemberManager();
+        MemberManager memberManager = MemberManager.getInstance();
         bookManager.updateBookStatus("borrow", 0, "John", memberManager);
 
         String result = bookManager.updateBookStatus("return", 0, "John",
@@ -135,7 +136,7 @@ public class BookManagerTest {
     @Test
     public void testUpdateBookStatus_invalidIndex() {
         bookManager.addNewBookToCatalogue("Test Book", "Test Author", "romance", "R-0-0");
-        MemberManager memberManager = new MemberManager();
+        MemberManager memberManager = MemberManager.getInstance();
 
         String result = bookManager.updateBookStatus("borrow", 2, "John",
                 memberManager);
@@ -147,7 +148,7 @@ public class BookManagerTest {
     void testBorrowBook() {
         bookManager.addNewBookToCatalogue("Harry Potter", "Wayne", "romance", "R-0-0");
         bookManager.addNewBookToCatalogue("I Love 2113", "Deanson", "romance", "R-0-1");
-        MemberManager memberManager = new MemberManager();
+        MemberManager memberManager = MemberManager.getInstance();
 
         String result = bookManager.updateBookStatus("borrow", 0, "John",
                 memberManager);
@@ -161,7 +162,7 @@ public class BookManagerTest {
     void testReturnBook() {
         bookManager.addNewBookToCatalogue("Harry Potter", "Wayne", "romance", "R-0-0");
         bookManager.addNewBookToCatalogue("I Love 2113", "Deanson", "romance", "R-0-1");
-        MemberManager memberManager = new MemberManager();
+        MemberManager memberManager = MemberManager.getInstance();
         bookManager.updateBookStatus("borrow", 0, "John", memberManager);
 
         String result = bookManager.updateBookStatus("return", 0, "John",
@@ -176,7 +177,7 @@ public class BookManagerTest {
     void testInvalidBookNumber() {
         bookManager.addNewBookToCatalogue("Harry Potter", "Wayne", "romance", "R-0-0");
         bookManager.addNewBookToCatalogue("I Love 2113", "Deanson", "romance", "R-0-1");
-        MemberManager memberManager = new MemberManager();
+        MemberManager memberManager = MemberManager.getInstance();
         String result = bookManager.updateBookStatus("borrow", 100, "John",
                 memberManager);
 
@@ -186,7 +187,7 @@ public class BookManagerTest {
     @Test
     void testAlreadyBorrowed() {
         bookManager.addNewBookToCatalogue("Harry Potter", "Wayne", "romance", "R-0-0");
-        MemberManager memberManager = new MemberManager();
+        MemberManager memberManager = MemberManager.getInstance();
         bookManager.updateBookStatus("borrow", 0, "John", memberManager);
 
         String result = bookManager.updateBookStatus("borrow", 0, "Jane",
@@ -198,11 +199,76 @@ public class BookManagerTest {
     @Test
     void testNotBorrowed() {
         bookManager.addNewBookToCatalogue("Harry Potter", "Wayne", "romance", "R-0-0");
-        MemberManager memberManager = new MemberManager();
+        MemberManager memberManager = MemberManager.getInstance();
 
         String result = bookManager.updateBookStatus("return", 0, "John",
                 memberManager);
 
         assertEquals("This book is not borrowed!", result);
     }
+
+    @Test
+    void testListOverdueBooks() {
+        bookManager.addNewBookToCatalogue("Overdue Book","Wayne", "romance", "R-0-0");
+        MemberManager memberManager = MemberManager.getInstance();
+        bookManager.updateBookStatus("borrow", 0, "John", memberManager);
+        bookManager.getBooks().get(0).setReturnDueDate(LocalDate.now().minusDays(2));
+
+        String result = bookManager.listOverdueBooks();
+        assertTrue(result.contains("Overdue Book"));
+    }
+
+    @Test
+    void testStatistics() {
+        bookManager.addNewBookToCatalogue("Moby A", "Author A", "romance", "R-0-0");
+        bookManager.addNewBookToCatalogue("Moby B", "Author B", "romance", "R-0-1");
+        MemberManager memberManager = MemberManager.getInstance();
+        bookManager.updateBookStatus("borrow", 0, "John", memberManager);
+
+        bookManager.getBooks().get(0).setReturnDueDate(LocalDate.now().minusDays(2));
+
+        String stats = bookManager.getStatistics();
+        assertTrue(stats.contains("Total books copies: 2"));
+        assertTrue(stats.contains("Unique titles: 2"));
+        assertTrue(stats.contains("Total books borrowed: 1"));
+        assertTrue(stats.contains("Total books overdue: 1"));
+    }
+
+    @Test
+    void testAddNewBookIncreaseQuantity() {
+        // Add a book
+        String result1 = bookManager.addNewBookToCatalogue("The Great Gatsby",
+                "F. Scott Fitzgerald", "romance", "R-0-0");
+        assertEquals(1, bookManager.getBooks().size());
+        assertTrue(result1.contains("I've added:"));
+
+        // Add the same book again (should increase quantity, not add new book)
+        String result2 = bookManager.addNewBookToCatalogue("The Great Gatsby",
+                "F. Scott Fitzgerald", "romance", "R-0-0");
+        assertEquals(1, bookManager.getBooks().size()); // Still only one entry
+        assertTrue(result2.contains("Increased quantity"));
+        assertEquals(2, bookManager.getBooks().get(0).getQuantity());
+    }
+
+    @Test
+    void testDeleteBookDecreaseQuantity() {
+        // Add book twice → quantity becomes 2
+        bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
+        bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
+
+        assertEquals(1, bookManager.getBooks().size());
+        assertEquals(2, bookManager.getBooks().get(0).getQuantity());
+
+        // Delete → quantity decreases
+        String result = bookManager.deleteBook(0);
+        assertTrue(result.contains("Decreased quantity"));
+        assertEquals(1, bookManager.getBooks().get(0).getQuantity());
+
+        // Delete again → book is fully removed
+        String result2 = bookManager.deleteBook(0);
+        assertTrue(result2.contains("Book deleted"));
+        assertEquals(0, bookManager.getBooks().size());
+    }
+
+
 }

@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import seedu.duke.member.MemberManager;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -21,13 +22,14 @@ class StorageTest {
     void setUp() throws IOException {
         Files.createDirectories(Paths.get("data"));
         Files.write(Paths.get(TEST_FILE_PATH),
-                Collections.singletonList("The Hobbit | J.R.R. Tolkien | 1"));
+                Collections.singletonList("The Hobbit | J.R.R. Tolkien | 1 | 2025-04-01 | AC-0-0 | 1 | test"));
     }
 
     @Test
     void loadFileContents_validFile_success() {
         Storage storage = Storage.getInstance(TEST_FILE_PATH);
-        List<Book> books = storage.loadFileContents();
+        MemberManager memberManager = MemberManager.getInstance();
+        List<Book> books = storage.loadFileContents(memberManager);
 
         assertEquals(1, books.size());
         Book book = books.get(0);

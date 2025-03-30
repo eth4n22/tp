@@ -20,7 +20,7 @@ public class Library {
 
     private Library(List<Book> allBooks) {
         catalogueManager = new BookManager(allBooks);
-        shelvesManager = new ShelvesManager();
+        shelvesManager = ShelvesManager.getShelvesManagerInstance();
     }
 
     public static Library getTheOneLibrary(List<Book> allBooks) {
@@ -35,8 +35,8 @@ public class Library {
     }
 
     //@@author WayneCh0y
-    public String listShelf(String shelfGenre, int shelfIndex) {
-        return shelvesManager.listShelf(shelfGenre, shelfIndex);
+    public String listShelves(String shelfGenre, int index) {
+        return shelvesManager.listShelf(shelfGenre, index);
     }
 
     public String listBorrowedBooks() {
@@ -90,10 +90,8 @@ public class Library {
         }
     }
 
-    public String updateBookStatus(String userInput, int bookIndex, String borrowerName, MemberManager memberManager) {
-        //update Book in catelogue
-        //update book in shelf
-        return null;
+    public String updateBookStatus(String command, int bookIndex, String borrowerName, MemberManager memberManager) {
+        return catalogueManager.updateBookStatus(command, bookIndex, borrowerName, memberManager);
     }
 
     //@@author Deanson Choo
@@ -104,5 +102,17 @@ public class Library {
      */
     public List<Book> getBooks() {
         return catalogueManager.getBooks();
+    }
+
+    public BookManager getBookManager() {
+        return catalogueManager;
+    }
+
+    public String getStatistics() {
+        return catalogueManager.getStatistics();
+    }
+
+    public String listOverdueBooks() {
+        return catalogueManager.listOverdueBooks();
     }
 }

@@ -9,19 +9,11 @@ public class Book {
     private boolean isBorrowed;
     private LocalDate returnDueDate;
     private String bookID; //IDENTIFIER-ShelfNum-Index
+    private int quantity;
+    private String borrowerName;
 
-    public Book(String title, String author, boolean isBorrowed, LocalDate returnDueDate) {
-        assert title != null && !title.trim().isEmpty() : "Title cannot be empty";
-        assert author != null && !author.trim().isEmpty() : "Author cannot be empty";
-
-        this.title = title;
-        this.author = author;
-        this.isBorrowed = isBorrowed;
-        this.returnDueDate = returnDueDate;
-        bookID = "NIL";
-    }
-
-    public Book(String title, String author, boolean isBorrowed, LocalDate returnDueDate, String bookID) {
+    public Book(String title, String author, boolean isBorrowed, LocalDate returnDueDate, String bookID, int quantity,
+                String borrowerName) {
         assert title != null && !title.trim().isEmpty() : "Title cannot be empty";
         assert author != null && !author.trim().isEmpty() : "Author cannot be empty";
 
@@ -30,10 +22,28 @@ public class Book {
         this.isBorrowed = isBorrowed;
         this.returnDueDate = returnDueDate;
         this.bookID = bookID;
+        this.quantity = quantity;
+        this.borrowerName = borrowerName;
     }
 
     public Book(String title, String author) {
-        this(title, author, false, null);
+        this(title, author, false, null, "NIL", 1, null);
+    }
+
+    public void increaseQuantity() {
+        this.quantity++;
+    }
+
+    public void decreaseQuantity() {
+        this.quantity--;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 
     public void setStatus(boolean isBorrowed) {
@@ -42,6 +52,14 @@ public class Book {
 
     public void setReturnDueDate(LocalDate date) {
         this.returnDueDate = date;
+    }
+
+    public String getBorrowerName() {
+        return borrowerName;
+    }
+
+    public void setBorrowerName(String borrowerName) {
+        this.borrowerName = borrowerName;
     }
 
     /**
@@ -54,15 +72,17 @@ public class Book {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
         String status = isBorrowed ? "[X]" : "[ ]";
         String dueDateStr = (returnDueDate != null) ? "(Due: " + returnDueDate.format(formatter) + ")" : "";
-        return status + " " + title + " (by " + author + ") " + dueDateStr;
+        return status + " " + title + " (by " + author + ") | Quantity: " + quantity + " " + dueDateStr;
     }
+
 
     /**
      * Edit Accordingly depending on how Wayne wants to format this
      */
     public String toFileFormat() {
-        return title + " | " + author + " | " + (isBorrowed ? 1 : 0) +
-                (returnDueDate != null ? " | " + returnDueDate : "") + " | " + bookID;
+        return title + " | " + author + " | " + (isBorrowed ? 1 : 0)
+                + " | " + returnDueDate + " | " + bookID
+                + " | " + quantity + " | " + borrowerName;
     }
 
     public boolean isOverdue() {

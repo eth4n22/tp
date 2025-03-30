@@ -29,14 +29,16 @@ public class Ui {
                 Available Commands:
                 -------------------
                 1. add TITLE/AUTHOR/GENRE      - Add a new book to the library.
-                2. delete i/BOOK_NUMBER        - Remove a book from the library by index
-                3. delete b/BOOK_TITLE/AUTHOR  - Remove a book from the library by title
-                4. list                        - List all current books.
-                5. borrow BOOK_NUMBER          - Borrow a book from the library.
-                6. return BOOK_NUMBER          - Return a borrowed book.
-                7. bye                         - Exit the program.
-                8. help                        - Show this help menu.
-                9. shelf SHELF/GENRE/NUMBER    - Lists a particular shelf of specified genre.
+                2. delete BOOK_NUMBER          - Remove a book from the library.
+                3. list                        - List all current books.
+                4. list overdue                - List all overdue books.
+                5. list borrowed               - List all borrowed books.
+                6. borrow BOOK_NUMBER          - Borrow a book from the library.
+                7. return BOOK_NUMBER          - Return a borrowed book.
+                8. statistics                  - View library statistics.
+                9. bye                         - Exit the program.
+                10. help                        - Show this help menu.
+                11. shelf SHELF/GENRE/NUMBER    - Lists a particular shelf of specified genre.
                 -------------------
                 Genres:
                   > romance
@@ -66,10 +68,6 @@ public class Ui {
         printSeparator();
         System.out.println(message);
         printSeparator();
-    }
-
-    public void printShelf() {
-
     }
 
     public void printSeparator() {

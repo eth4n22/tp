@@ -16,11 +16,12 @@ public class MemberManagerTest {
 
     @BeforeEach
     void setUp() {
-        memberManager = new MemberManager();
+        memberManager = MemberManager.getInstance();
     }
 
     @Test
     void testGetMemberByName_newMember() {
+        memberManager.cleanup();
         Member member = memberManager.getMemberByName("Alice");
         assertNotNull(member);
         assertEquals("Alice", member.getName());
@@ -28,6 +29,7 @@ public class MemberManagerTest {
 
     @Test
     void testGetMemberByName_existingMember() {
+        memberManager.cleanup();
         Member member1 = memberManager.getMemberByName("Bob");
         Member member2 = memberManager.getMemberByName("Bob");
         assertSame(member1, member2);
@@ -35,12 +37,14 @@ public class MemberManagerTest {
 
     @Test
     void testListMembersWithOverdueBooks_noOverdue() {
+        memberManager.cleanup();
         String result = memberManager.listMembersWithOverdueBooks();
         assertEquals("No members have overdue books.", result);
     }
 
     @Test
     void testListMembersWithOverdueBooks_withOverdue() {
+        memberManager.cleanup();
         Member member = memberManager.getMemberByName("Charlie");
         Book book1 = new Book("Harry Potter", "J.K. Rowling");
         Book book2 = new Book("Romeo and Juliet", "Shakespeare");

@@ -24,13 +24,17 @@ public class LibraryTest {
 
     @BeforeEach
     public void setup() throws Exception {
-        Book book = new Book("Delete Me", "Author A", false, LocalDate.of(2025, 5, 1), "R-0-0");
+        Book book = new Book("Delete Me", "Author A");
+        book.setBookID("R-0-0");
+        book.setStatus(false);
+        book.setReturnDueDate(LocalDate.of(2025, 5, 5));
+        book.setQuantity(1);
         List<Book> catalogBooks = new ArrayList<>();
         catalogBooks.add(book);
 
         library = Library.getTheOneLibrary(catalogBooks);
 
-        ShelvesManager shelvesManager = new ShelvesManager();
+        ShelvesManager shelvesManager = ShelvesManager.getShelvesManagerInstance();
 
 
         RomanceShelves romanceShelves = new RomanceShelves();

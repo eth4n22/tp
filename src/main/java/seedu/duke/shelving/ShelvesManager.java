@@ -1,5 +1,6 @@
 package seedu.duke.shelving;
 
+import seedu.duke.exception.NoSuchSectionException;
 import seedu.duke.shelving.shelves.ActionShelves;
 import seedu.duke.shelving.shelves.AdventureShelves;
 import seedu.duke.shelving.shelves.HorrorShelves;
@@ -11,6 +12,8 @@ import seedu.duke.exception.SectionFullException;
 
 
 public class ShelvesManager {
+    private static ShelvesManager shelvesManagerInstance;
+
     private static final String ROMANCE = "romance";
     private static final String ADVENTURE = "adventure";
     private static final String ACTION = "action";
@@ -37,7 +40,11 @@ public class ShelvesManager {
 
 
     //@@author WayneCh0y
-    public ShelvesManager() {
+    /**
+     * Private constructor to initialize the shelves for different genres.
+     * Initializes shelves for Romance, Adventure, Action, Horror, Mystery, Non-Fiction, and Sci-Fi genres.
+     */
+    private ShelvesManager() {
         romanceShelves = new RomanceShelves();
         adventureShelves = new AdventureShelves();
         actionShelves = new ActionShelves();
@@ -48,34 +55,68 @@ public class ShelvesManager {
     }
 
     //@@author WayneCh0y
-    public String listShelf(String shelfGenre, int shelfIndex) {
-        try {
-            switch (shelfGenre) {
-            case ROMANCE:
-                return romanceShelves.listShelf(shelfIndex);
-            case ADVENTURE:
-                return adventureShelves.listShelf(shelfIndex);
-            case ACTION:
-                return actionShelves.listShelf(shelfIndex);
-            case HORROR:
-                return horrorShelves.listShelf(shelfIndex);
-            case MYSTERY:
-                return mysteryShelves.listShelf(shelfIndex);
-            case NONFICTION:
-                return nonFictionShelves.listShelf(shelfIndex);
-            case SCIFI:
-                return sciFiShelves.listShelf(shelfIndex);
-            default:
-                return "";
-            }
-
-        } catch (SectionFullException e) {
-            System.out.println(e);
+    /**
+     * Returns the singleton instance of the {@code ShelvesManager}.
+     * If the instance is not already created, it initializes a new one.
+     *
+     * @return The singleton instance of {@code ShelvesManager}.
+     */
+    public static ShelvesManager getShelvesManagerInstance() {
+        if (shelvesManagerInstance == null) {
+            shelvesManagerInstance = new ShelvesManager();
         }
-        return "";
+        return shelvesManagerInstance;
     }
 
     //@@author WayneCh0y
+    /**
+     * Lists the books on a specific shelf within a given genre.
+     * It delegates the listing request to the corresponding genre's shelf.
+     *
+     * @param shelfGenre The genre of the shelf (e.g., "romance", "adventure").
+     * @param index The index of the shelf within the genre to list books from.
+     * @return A formatted string listing all books in the specified shelf, or an empty string if the genre is invalid.
+     * @throws SectionFullException If there is an issue with the shelf being full.
+     * @throws NoSuchSectionException If the specified section does not exist.
+     */
+    public String listShelf(String shelfGenre, int index) {
+        try {
+            switch (shelfGenre) {
+            case ROMANCE:
+                return romanceShelves.listShelf(index);
+            case ADVENTURE:
+                return adventureShelves.listShelf(index);
+            case ACTION:
+                return actionShelves.listShelf(index);
+            case HORROR:
+                return horrorShelves.listShelf(index);
+            case MYSTERY:
+                return mysteryShelves.listShelf(index);
+            case NONFICTION:
+                return nonFictionShelves.listShelf(index);
+            case SCIFI:
+                return sciFiShelves.listShelf(index);
+            default:
+                return "";
+            }
+        } catch (SectionFullException | NoSuchSectionException e) {
+            return e.getMessage();
+        }
+    }
+
+    //@@author WayneCh0y
+    /**
+     * Adds a new book to a specific genre's shelf section.
+     * Based on the provided genre, this method delegates the addition of the book to the corresponding shelf.
+     * If the section is full, a {@link SectionFullException} will be thrown and handled.
+     *
+     * @param title  The title of the book to be added.
+     * @param author The author of the book to be added.
+     * @param genre  The genre of the book, used to determine which shelf section to add the book to.
+     * @return A string indicating the outcome of the book addition. If the book is successfully added,
+     *         it will return a message from the respective genre's shelf.
+     *         If there is an exception, it returns a default message "Added" or the exception message.
+     */
     public String addBook(String title, String author, String genre) {
         try {
             switch (genre) {
@@ -94,12 +135,11 @@ public class ShelvesManager {
             case SCIFI:
                 return sciFiShelves.addBookToSection(title, author);
             default:
-                break;
+                return "";
             }
         } catch (SectionFullException e) {
-            System.out.println(e);
+            return e.getMessage();
         }
-        return "Added";
     }
 
 
@@ -172,4 +212,15 @@ public class ShelvesManager {
         return "No Book ID found!";
     }
 
+    public void cleanup() {
+        romanceShelves.cleanup();
+        adventureShelves.cleanup();
+        actionShelves.cleanup();
+        horrorShelves.cleanup();
+        mysteryShelves.cleanup();
+        nonFictionShelves.cleanup();
+        sciFiShelves.cleanup();
+
+        shelvesManagerInstance = null;
+    }
 }

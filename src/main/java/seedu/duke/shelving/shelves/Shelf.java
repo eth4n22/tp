@@ -5,6 +5,7 @@ import seedu.duke.book.Book;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Represents a single shelf in a library section, capable of storing up to {@value #MAX_BOOKS_ON_SHELF} books.
@@ -12,6 +13,21 @@ import java.util.stream.Collectors;
  * of {@link Book} objects.
  */
 public class Shelf {
+    private static final String ROMANCE = "romance";
+    private static final String ADVENTURE = "adventure";
+    private static final String ACTION = "action";
+    private static final String HORROR = "horror";
+    private static final String MYSTERY = "mystery";
+    private static final String NONFICTION = "nonfiction";
+    private static final String SCIFI = "scifi";
+
+    private static final String ROMANCE_ID = "R";
+    private static final String ADVENTURE_ID = "AD";
+    private static final String ACTION_ID = "AC";
+    private static final String HORROR_ID = "H";
+    private static final String MYSTERY_ID = "MY";
+    private static final String NONFICTION_ID = "NF";
+    private static final String SCIFI_ID = "SCIF";
 
     private static final int MAX_BOOKS_ON_SHELF = 100;
     private final List<Book> shelfBooks = new ArrayList<>();
@@ -51,6 +67,27 @@ public class Shelf {
         return shelfGenre + "-" + shelfIndex + "-" + bookIndex;
     }
 
+    //@@author WayneCh0y
+    private String getBackGenre() {
+        switch (this.shelfGenre) {
+        case ROMANCE_ID:
+            return ROMANCE;
+        case ADVENTURE_ID:
+            return ADVENTURE;
+        case ACTION_ID:
+            return ACTION;
+        case HORROR_ID:
+            return HORROR;
+        case MYSTERY_ID:
+            return MYSTERY;
+        case NONFICTION_ID:
+            return NONFICTION;
+        case SCIFI_ID:
+            return SCIFI;
+        default:
+            return "No such genre!";
+        }
+    }
 
     //@@author WayneCh0y
     /**
@@ -97,13 +134,37 @@ public class Shelf {
         return shelfBooks;
     }
 
+    //@@author WayneCh0y
+    /**
+     * Lists all books currently on the shelf, excluding books where the author's name is "duMmY".
+     *
+     * <p>If the shelf is empty, it returns a message indicating no books are available.
+     * If all books have the author "duMmY", it returns an empty string.</p>
+     *
+     * @return A formatted string listing all books on the shelf, one per line,
+     *         excluding books with the author "duMmY". If the shelf is empty,
+     *         returns "No books on shelf".
+     */
     public String listShelf() {
-        if (shelfBooks.isEmpty()) {
+        if (booksCurrentlyOnShelf == MAX_BOOKS_ON_SHELF) {
             return "No books on shelf";
         }
-        return shelfBooks.stream()
-                .map(Book::toString)
-                .collect(Collectors.joining("\n"));
+
+        if (booksCurrentlyOnShelf == 0) {
+            return "There are no books on this shelf! LEBRON";
+        }
+
+        String genreName = getBackGenre();
+
+        if (genreName.equals("No such genre!")) {
+            return "No books on shelf";
+        }
+
+        return "Here is the list of the books on shelf " + genreName + " " + (shelfIndex + 1) + ":\n" +
+                IntStream.range(0, shelfBooks.size())
+                        .filter(i -> !shelfBooks.get(i).getAuthor().equalsIgnoreCase("duMmY"))
+                        .mapToObj(i -> (i + 1) + ". " + shelfBooks.get(i).toString())
+                        .collect(Collectors.joining("\n"));
     }
 
     //@@author WayneCh0y
@@ -112,7 +173,6 @@ public class Shelf {
             return "The shelf is full!";
         }
 
-        //assert bookDetails != null : "Book details cannot be null";
 
         if (title.isEmpty()) {
             return "Book title cannot be empty!";
@@ -156,4 +216,10 @@ public class Shelf {
         return getShelfIdentifier(bookIndex);
     }
 
+    //@@author WayneCh0y
+    public void cleanup() {
+        shelfBooks.clear();
+        booksCurrentlyOnShelf = 0;
+        isShelfFull = false;
+    }
 }
