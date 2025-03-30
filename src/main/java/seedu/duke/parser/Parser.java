@@ -127,7 +127,7 @@ public class Parser {
         }
     }
 
-/**
+    /**
      * Parses user input and returns the corresponding command.
      *
      * @param userInput The input string.

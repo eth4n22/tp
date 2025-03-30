@@ -9,181 +9,200 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import seedu.duke.member.Member;
 import seedu.duke.member.MemberManager;
 
 
 public class BookManagerTest {
     private BookManager bookManager;
-        @BeforeEach
-        public void setUp() {
-            bookManager = new BookManager(new ArrayList<>());
-        }
 
-        @Test
-        public void testAddNewBook_validFormat() {
-            String result = bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
+    @BeforeEach
+    public void setUp() {
+        bookManager = new BookManager(new ArrayList<>());
+    }
 
-            assertEquals(1, bookManager.getBooks().size());
-            assertTrue(result.contains("I've added:"));
-            assertTrue(result.contains("The Great Gatsby"));
-            assertTrue(result.contains("F. Scott Fitzgerald"));
-        }
+    @Test
+    public void testAddNewBook_validFormat() {
+        String result = bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald",
+                "romance", "R-0-0");
 
-        @Test
-        public void testAddNewBook_emptyTitle() {
-            String result = bookManager.addNewBookToCatalogue("", "Some Author", "romance", "R-0-0");
+        assertEquals(1, bookManager.getBooks().size());
+        assertTrue(result.contains("I've added:"));
+        assertTrue(result.contains("The Great Gatsby"));
+        assertTrue(result.contains("F. Scott Fitzgerald"));
+    }
 
-            assertEquals(0, bookManager.getBooks().size());
-            assertEquals("Book title cannot be empty!", result);
-        }
+    @Test
+    public void testAddNewBook_emptyTitle() {
+        String result = bookManager.addNewBookToCatalogue("", "Some Author", "romance",
+                "R-0-0");
 
-        @Test
-        public void testAddNewBook_emptyAuthor() {
-            String result = bookManager.addNewBookToCatalogue("Some Title", "", "romance", "R-0-0");
+        assertEquals(0, bookManager.getBooks().size());
+        assertEquals("Book title cannot be empty!", result);
+    }
 
-            assertEquals(0, bookManager.getBooks().size());
-            assertEquals("Book author cannot be empty!", result);
-        }
+    @Test
+    public void testAddNewBook_emptyAuthor() {
+        String result = bookManager.addNewBookToCatalogue("Some Title", "", "romance",
+                "R-0-0");
 
-        @Test
-        public void testDeleteBook_validIndex() {
-            bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
-            assertEquals(1, bookManager.getBooks().size());
+        assertEquals(0, bookManager.getBooks().size());
+        assertEquals("Book author cannot be empty!", result);
+    }
 
-            String result = bookManager.deleteBook(0); //parser passes in 0-indexed bookIndex
+    @Test
+    public void testDeleteBook_validIndex() {
+        bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance",
+                "R-0-0");
+        assertEquals(1, bookManager.getBooks().size());
 
-            assertEquals(0, bookManager.getBooks().size());
-            assertTrue(result.contains("Book deleted:"));
-            assertTrue(result.contains("The Great Gatsby"));
-        }
+        String result = bookManager.deleteBook(0); //parser passes in 0-indexed bookIndex
 
-        @Test
-        public void testDeleteBook_invalidIndex() {
-            String action = bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
+        assertEquals(0, bookManager.getBooks().size());
+        assertTrue(result.contains("Book deleted:"));
+        assertTrue(result.contains("The Great Gatsby"));
+    }
 
-            String result = bookManager.deleteBook(2); // Index out of bounds
+    @Test
+    public void testDeleteBook_invalidIndex() {
+        String action = bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald",
+                "romance", "R-0-0");
 
-            assertEquals(1, bookManager.getBooks().size());
-            assertEquals("There is no such book in the library!", result);
-        }
+        String result = bookManager.deleteBook(2); // Index out of bounds
 
-        @Test
-        public void testDeleteBook_negativeIndex() {
-            String result = bookManager.deleteBook(-1);
+        assertEquals(1, bookManager.getBooks().size());
+        assertEquals("There is no such book in the library!", result);
+    }
 
-            assertEquals("There is no such book in the library!", result);
-        }
+    @Test
+    public void testDeleteBook_negativeIndex() {
+        String result = bookManager.deleteBook(-1);
 
-        @Test
-        public void testListBooks_emptyLibrary() {
-            String result = bookManager.listBooks();
+        assertEquals("There is no such book in the library!", result);
+    }
 
-            assertEquals("No books in the library yet.", result);
-        }
+    @Test
+    public void testListBooks_emptyLibrary() {
+        String result = bookManager.listBooks();
 
-        @Test
-        public void testListBooks_withBooks() {
-            String action1 = bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
-            String action2 = bookManager.addNewBookToCatalogue("The Hunger Games", "Suzanne", "romance", "R-0-1");
+        assertEquals("No books in the library yet.", result);
+    }
 
-            String result = bookManager.listBooks();
+    @Test
+    public void testListBooks_withBooks() {
+        String action1 = bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald",
+                "romance", "R-0-0");
+        String action2 = bookManager.addNewBookToCatalogue("The Hunger Games", "Suzanne",
+                "romance", "R-0-1");
 
-            assertTrue(result.contains("Here are the books in your library:"));
-            assertTrue(result.contains("1. [ ] The Great Gatsby (by F. Scott Fitzgerald)"));
-            assertTrue(result.contains("2. [ ] The Hunger Games (by Suzanne)"));
-            assertTrue(result.contains("Total books: 2"));
-        }
+        String result = bookManager.listBooks();
 
-        @Test
-        public void testUpdateBookStatus_borrow() {
-            String action = bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
-            MemberManager memberManager = new MemberManager();
-            Member borrower = memberManager.getMemberByName("John");
+        assertTrue(result.contains("Here are the books in your library:"));
+        assertTrue(result.contains("1. [ ] The Great Gatsby (by F. Scott Fitzgerald)"));
+        assertTrue(result.contains("2. [ ] The Hunger Games (by Suzanne)"));
+        assertTrue(result.contains("Total books: 2"));
+    }
 
-            String result = bookManager.updateBookStatus("borrow", 0, "John", memberManager);
+    @Test
+    public void testUpdateBookStatus_borrow() {
+        String action = bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald",
+                "romance", "R-0-0");
+        MemberManager memberManager = new MemberManager();
+        Member borrower = memberManager.getMemberByName("John");
 
-            assertEquals("John has borrowed: The Great Gatsby", result);
-            assertTrue(bookManager.getBooks().get(0).isBorrowed());
-        }
+        String result = bookManager.updateBookStatus("borrow", 0, "John",
+                memberManager);
 
-        @Test
-        public void testUpdateBookStatus_return() {
-            String action = bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
-            MemberManager memberManager = new MemberManager();
-            bookManager.updateBookStatus("borrow", 0, "John", memberManager);
+        assertEquals("John has borrowed: The Great Gatsby", result);
+        assertTrue(bookManager.getBooks().get(0).isBorrowed());
+    }
 
-            String result = bookManager.updateBookStatus("return", 0, "John", memberManager);
+    @Test
+    public void testUpdateBookStatus_return() {
+        bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald",
+                "romance", "R-0-0");
+        MemberManager memberManager = new MemberManager();
+        bookManager.updateBookStatus("borrow", 0, "John", memberManager);
 
-            assertEquals("Returned: The Great Gatsby", result);
-            assertFalse(bookManager.getBooks().get(0).isBorrowed());
-        }
+        String result = bookManager.updateBookStatus("return", 0, "John",
+                memberManager);
 
-        @Test
-        public void testUpdateBookStatus_invalidIndex() {
-            bookManager.addNewBookToCatalogue("Test Book", "Test Author", "romance", "R-0-0");
-            MemberManager memberManager = new MemberManager();
+        assertEquals("Returned: The Great Gatsby", result);
+        assertFalse(bookManager.getBooks().get(0).isBorrowed());
+    }
 
-            String result = bookManager.updateBookStatus("borrow", 2, "John", memberManager);
+    @Test
+    public void testUpdateBookStatus_invalidIndex() {
+        bookManager.addNewBookToCatalogue("Test Book", "Test Author", "romance", "R-0-0");
+        MemberManager memberManager = new MemberManager();
 
-            assertEquals("There is no such book in the library!", result);
-        }
+        String result = bookManager.updateBookStatus("borrow", 2, "John",
+                memberManager);
 
-        @Test
-        void testBorrowBook() {
-            bookManager.addNewBookToCatalogue("Harry Potter", "Wayne", "romance", "R-0-0");
-            bookManager.addNewBookToCatalogue("I Love 2113", "Deanson", "romance", "R-0-1");
-            MemberManager memberManager = new MemberManager();
+        assertEquals("There is no such book in the library!", result);
+    }
 
-            String result = bookManager.updateBookStatus("borrow", 0, "John", memberManager);
-            //parser passes in 0-indexed bookIndex
+    @Test
+    void testBorrowBook() {
+        bookManager.addNewBookToCatalogue("Harry Potter", "Wayne", "romance", "R-0-0");
+        bookManager.addNewBookToCatalogue("I Love 2113", "Deanson", "romance", "R-0-1");
+        MemberManager memberManager = new MemberManager();
 
-            assertEquals("John has borrowed: Harry Potter", result);
-            assertTrue(bookManager.getBooks().get(0).isBorrowed());
-        }
+        String result = bookManager.updateBookStatus("borrow", 0, "John",
+                memberManager);
+        //parser passes in 0-indexed bookIndex
 
-        @Test
-        void testReturnBook() {
-            bookManager.addNewBookToCatalogue("Harry Potter", "Wayne", "romance", "R-0-0");
-            bookManager.addNewBookToCatalogue("I Love 2113", "Deanson", "romance", "R-0-1");
-            MemberManager memberManager = new MemberManager();
-            bookManager.updateBookStatus("borrow", 0, "John", memberManager);
+        assertEquals("John has borrowed: Harry Potter", result);
+        assertTrue(bookManager.getBooks().get(0).isBorrowed());
+    }
 
-            String result = bookManager.updateBookStatus("return", 0, "John", memberManager);
+    @Test
+    void testReturnBook() {
+        bookManager.addNewBookToCatalogue("Harry Potter", "Wayne", "romance", "R-0-0");
+        bookManager.addNewBookToCatalogue("I Love 2113", "Deanson", "romance", "R-0-1");
+        MemberManager memberManager = new MemberManager();
+        bookManager.updateBookStatus("borrow", 0, "John", memberManager);
 
-            assertEquals("Returned: Harry Potter", result);
+        String result = bookManager.updateBookStatus("return", 0, "John",
+                memberManager);
 
-            assertFalse(bookManager.getBooks().get(0).isBorrowed());
-        }
+        assertEquals("Returned: Harry Potter", result);
 
-        @Test
-        void testInvalidBookNumber() {
-            bookManager.addNewBookToCatalogue("Harry Potter", "Wayne", "romance", "R-0-0");
-            bookManager.addNewBookToCatalogue("I Love 2113", "Deanson", "romance", "R-0-1");
-            MemberManager memberManager = new MemberManager();
-            String result = bookManager.updateBookStatus("borrow", 100, "John", memberManager);
+        assertFalse(bookManager.getBooks().get(0).isBorrowed());
+    }
 
-            assertEquals("There is no such book in the library!", result);
-        }
+    @Test
+    void testInvalidBookNumber() {
+        bookManager.addNewBookToCatalogue("Harry Potter", "Wayne", "romance", "R-0-0");
+        bookManager.addNewBookToCatalogue("I Love 2113", "Deanson", "romance", "R-0-1");
+        MemberManager memberManager = new MemberManager();
+        String result = bookManager.updateBookStatus("borrow", 100, "John",
+                memberManager);
 
-        @Test
-        void testAlreadyBorrowed() {
-            bookManager.addNewBookToCatalogue("Harry Potter", "Wayne", "romance", "R-0-0");
-            MemberManager memberManager = new MemberManager();
-            bookManager.updateBookStatus("borrow", 0, "John", memberManager);
+        assertEquals("There is no such book in the library!", result);
+    }
 
-            String result = bookManager.updateBookStatus("borrow", 0, "Jane", memberManager);
+    @Test
+    void testAlreadyBorrowed() {
+        bookManager.addNewBookToCatalogue("Harry Potter", "Wayne", "romance", "R-0-0");
+        MemberManager memberManager = new MemberManager();
+        bookManager.updateBookStatus("borrow", 0, "John", memberManager);
 
-            assertEquals("This book is already borrowed!", result);
-        }
+        String result = bookManager.updateBookStatus("borrow", 0, "Jane",
+                memberManager);
 
-        @Test
-        void testNotBorrowed() {
-            bookManager.addNewBookToCatalogue("Harry Potter", "Wayne", "romance", "R-0-0");
-            MemberManager memberManager = new MemberManager();
+        assertEquals("This book is already borrowed!", result);
+    }
 
-            String result = bookManager.updateBookStatus("return", 0, "John", memberManager);
+    @Test
+    void testNotBorrowed() {
+        bookManager.addNewBookToCatalogue("Harry Potter", "Wayne", "romance", "R-0-0");
+        MemberManager memberManager = new MemberManager();
 
-            assertEquals("This book is not borrowed!", result);
-        }
+        String result = bookManager.updateBookStatus("return", 0, "John",
+                memberManager);
+
+        assertEquals("This book is not borrowed!", result);
+    }
 }
