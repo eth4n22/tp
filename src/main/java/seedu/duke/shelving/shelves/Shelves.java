@@ -74,18 +74,18 @@ public class Shelves {
     /**
      * Adds a book to the first available shelf in this section.
      *
-     * @param bookDetails The book details in "TITLE/AUTHOR" format.
+     * @param title The title of the book to be added.
+     * @param author The author of the book to be added.
      * @return The shelf number where the book was added (e.g., "SCIFI1").
      * @throws SectionFullException If no shelves have available slots.
      */
-
-    public String addBookToSection(String bookDetails) {
+    public String addBookToSection(String title, String author) {
         if (checkIfShelfSectionIsFull()) {
             throw new SectionFullException("No more books can be added to this section!");
         }
         for (int index = 0; index < 5; index++) {
             if (!shelves[index].isFull()) {
-                return shelves[index].addBookToShelf(bookDetails);
+                return shelves[index].addBookToShelf(title, author);
             }
         }
         return NO_SECTION_AVAILABLE;

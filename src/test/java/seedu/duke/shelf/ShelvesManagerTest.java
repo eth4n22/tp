@@ -72,8 +72,8 @@ public class ShelvesManagerTest {
         Book book = books.get(1);
 
 
-        assertEquals("duMmy", book.getTitle(), "The book should be replaced by a dummy.");
-        assertEquals("duMmy", book.getAuthor(), "The book author should be replaced by a dummy.");
+        assertEquals("duMmY", book.getTitle(), "The book should be replaced by a dummy.");
+        assertEquals("duMmY", book.getAuthor(), "The book author should be replaced by a dummy.");
     }
 
 

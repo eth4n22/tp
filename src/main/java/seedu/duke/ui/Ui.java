@@ -17,7 +17,7 @@ public class Ui {
 
     public String readCommand() {
         System.out.print("Enter command: "); //EDIT ACCORDINGLY
-        return scanner.nextLine().trim();
+        return scanner.nextLine();
     }
 
     public void printWelcomeMessage() {

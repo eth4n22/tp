@@ -51,8 +51,8 @@ public class ShelvesTest {
         List<Book> books = shelvesArray[0].getShelfBooks();
         int booksNum = shelvesArray[0].getBooksCurrentlyOnShelf();
         Book book = books.get(1);
-        assertEquals("duMmy", book.getTitle());
-        assertEquals("duMmy", book.getAuthor());
+        assertEquals("duMmY", book.getTitle());
+        assertEquals("duMmY", book.getAuthor());
         assertEquals(1, booksNum);
     }
     @Test
@@ -64,8 +64,8 @@ public class ShelvesTest {
         List<Book> books = shelvesArray[0].getShelfBooks();
         int booksNum = shelvesArray[0].getBooksCurrentlyOnShelf();
         Book book = books.get(0);
-        assertEquals("duMmy", book.getTitle());
-        assertEquals("duMmy", book.getAuthor());
+        assertEquals("duMmY", book.getTitle());
+        assertEquals("duMmY", book.getAuthor());
         assertEquals(1, booksNum);
     }
 

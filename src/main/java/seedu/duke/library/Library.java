@@ -43,14 +43,14 @@ public class Library {
     }
 
     //@@author Deanson-Choo
-    public String addNewBookToCatalogue(String bookDetails, String genre) {
+    public String addNewBookToCatalogue(String title, String author, String genre) {
         String bookID = shelvesManager.getBookId(genre);
-        return catalogueManager.addNewBookToCatalogue(bookDetails, bookID);
+        return catalogueManager.addNewBookToCatalogue(title, author, genre, bookID);
     }
 
     //@@author WayneCh0y
-    public String addNewBookToShelf(String bookDetails, String genre) {
-        return shelvesManager.addBook(bookDetails, genre);
+    public String addNewBookToShelf(String title, String author, String genre) {
+        return shelvesManager.addBook(title, author, genre);
     }
 
     //@@author Deanson Choo
@@ -76,7 +76,7 @@ public class Library {
         }
     }
 
-    public String updateBookStatus(String userInput, int bookIndex, MemberManager memberManager) {
+    public String updateBookStatus(String userInput, int bookIndex, String borrowerName, MemberManager memberManager) {
         //update Book in catelogue
         //update book in shelf
         return null;

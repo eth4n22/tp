@@ -50,21 +50,16 @@ public class BookManager {
     /**
      * Adds a new book based on the provided details.
      *
-     * @param bookDetails String containing title and author, expected format: "TITLE / AUTHOR"
+     * @param title The title of the book to be added.
+     * @param author The author of the book to be added.
+     * @param genre The genre of the book to be added.
+     *
      * @return A message confirming the book addition or an error message
      */
-    public String addNewBookToCatalogue(String bookDetails, String bookID) {
-        assert bookDetails != null : "Book details cannot be null";
-
-        String[] parts = bookDetails.split(" / ", 3);
-
-        if (parts.length < 3) {
-            return "Invalid book format! It should be 'TITLE / AUTHOR'.";
-        }
-
-        String title = parts[0].trim();
-        String author = parts[1].trim();
-        String genre = parts[2].trim();
+    public String addNewBookToCatalogue(String title, String author, String genre, String bookID) {
+        assert title != null : "Title cannot be null";
+        assert author != null : "Author cannot be null";
+        assert genre != null : "Genre cannot be null";
 
         if (title.isEmpty()) {
             return "Book title cannot be empty!";
@@ -72,6 +67,10 @@ public class BookManager {
 
         if (author.isEmpty()) {
             return "Book author cannot be empty!";
+        }
+
+        if (genre.isEmpty()) {
+            return "Book genre cannot be empty!";
         }
 
         if (!isAppropriateGenre(genre)) {
