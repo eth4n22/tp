@@ -10,8 +10,10 @@ public class Book {
     private LocalDate returnDueDate;
     private String bookID; //IDENTIFIER-ShelfNum-Index
     private int quantity;
+    private String borrowerName;
 
-    public Book(String title, String author, boolean isBorrowed, LocalDate returnDueDate, String bookID, int quantity) {
+    public Book(String title, String author, boolean isBorrowed, LocalDate returnDueDate, String bookID, int quantity,
+                String borrowerName) {
         assert title != null && !title.trim().isEmpty() : "Title cannot be empty";
         assert author != null && !author.trim().isEmpty() : "Author cannot be empty";
 
@@ -21,10 +23,11 @@ public class Book {
         this.returnDueDate = returnDueDate;
         this.bookID = bookID;
         this.quantity = quantity;
+        this.borrowerName = borrowerName;
     }
 
     public Book(String title, String author) {
-        this(title, author, false, null, "NIL", 1);
+        this(title, author, false, null, "NIL", 1, null);
     }
 
     public void increaseQuantity() {
@@ -51,6 +54,14 @@ public class Book {
         this.returnDueDate = date;
     }
 
+    public String getBorrowerName() {
+        return borrowerName;
+    }
+
+    public void setBorrowerName(String borrowerName) {
+        this.borrowerName = borrowerName;
+    }
+
     /**
      * Returns the string representation of the book.
      *
@@ -70,8 +81,8 @@ public class Book {
      */
     public String toFileFormat() {
         return title + " | " + author + " | " + (isBorrowed ? 1 : 0)
-                + (returnDueDate != null ? " | " + returnDueDate : "") + " | " + bookID
-                + " | " + quantity;
+                + " | " + returnDueDate + " | " + bookID
+                + " | " + quantity + " | " + borrowerName;
     }
 
     public boolean isOverdue() {

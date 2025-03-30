@@ -1,6 +1,8 @@
 package seedu.duke.storage;
 
 import seedu.duke.book.Book;
+import seedu.duke.member.Member;
+import seedu.duke.member.MemberManager;
 import seedu.duke.shelving.ShelvesManager;
 
 import java.util.ArrayList;
@@ -19,7 +21,10 @@ public class Storage {
     private static final int BOOK_TITLE_INDEX = 0;
     private static final int BOOK_AUTHOR_INDEX = 1;
     private static final int BOOK_STATUS_INDEX = 2;
-    private static final int BOOK_ID_INDEX = 3;
+    private static final int BOOK_DUE_DATE_INDEX = 3;
+    private static final int BOOK_SHELF_DETAILS = 4;
+    private static final int BOOK_ID_INDEX = 5;
+    private static final int BORROWER_NAME_INDEX = 6;
 
     private static final int MAX_SPLIT_NUMBER = 4;
 
@@ -56,7 +61,7 @@ public class Storage {
     }
 
     //@@author WayneCh0y
-    public List<Book> loadFileContents() {
+    public List<Book> loadFileContents(MemberManager memberManager) {
         assert filePath != null : "File path must be initialized before loading";
 
         try {
@@ -71,6 +76,15 @@ public class Storage {
             while (scanner.hasNext()) {
                 String details = scanner.nextLine();
                 Book book = getBookFromLoad(details, shelvesManager);
+
+                if (book.isBorrowed()) {
+                    String borrowerName = book.getBorrowerName();
+                    if (borrowerName != null && !borrowerName.isEmpty()) {
+                        Member borrower = memberManager.getMemberByName(borrowerName);
+                        borrower.borrowBook(book);
+                    }
+                }
+
                 bookList.add(book);
             }
 
@@ -91,13 +105,20 @@ public class Storage {
         String bookTitle = specifiers[BOOK_TITLE_INDEX].trim();
         String bookAuthor = specifiers[BOOK_AUTHOR_INDEX].trim();
         String bookStatus = specifiers[BOOK_STATUS_INDEX].trim();
+        String bookDueDate = specifiers[BOOK_DUE_DATE_INDEX].trim();
         String bookID = specifiers[BOOK_ID_INDEX].trim();
         String genre = getGenreFromFile(bookID);
+        String borrowerName = specifiers[BORROWER_NAME_INDEX].trim();
 
         boolean isBorrowed;
-        LocalDate returnDueDate = null;
         isBorrowed = bookStatus.equals("1");
-        Book book = new Book(bookTitle, bookAuthor, isBorrowed, returnDueDate, bookID, 1);
+        
+        LocalDate returnDueDate = null;
+        if (isBorrowed) {
+            returnDueDate = LocalDate.parse(bookDueDate);
+        }
+        
+        Book book = new Book(bookTitle, bookAuthor, isBorrowed, returnDueDate, bookID, 1, borrowerName);
         shelvesManager.addBook(bookTitle, bookAuthor, genre);
         return book;
     }

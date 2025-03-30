@@ -181,6 +181,7 @@ public class BookManager {
             }
             book.setStatus(true);
             book.setReturnDueDate(LocalDate.now().plusWeeks(2));
+            book.setBorrowerName(borrowerName);
             borrower.borrowBook(book);
             return borrowerName + " has borrowed: " + book.getTitle();
         case RETURN:
@@ -189,6 +190,7 @@ public class BookManager {
             }
             book.setStatus(false);
             book.setReturnDueDate(null);
+            book.setBorrowerName(null);
             borrower.returnBook(book);
             return "Returned: " + book.getTitle();
         default:
@@ -203,17 +205,19 @@ public class BookManager {
      */
     public String listBorrowedBooks() {
         if (books.isEmpty()) {
-            return "No books have been borrowed yet.";
+            return "No books have been added yet.";
         } else {
+            int borrowedBooksCount = 0;
             StringBuilder borrowedBooks = new StringBuilder("Here are the books that have been borrowed:\n");
             for (int i = 0; i < books.size(); i++) {
                 Book book = books.get(i);
                 assert book != null : "Book at index " + i + " should not be null";
                 if (book.isBorrowed()) {
+                    borrowedBooksCount++;
                     borrowedBooks.append(i + 1).append(". ").append(book).append("\n");
                 }
             }
-            return borrowedBooks.toString();
+            return borrowedBooksCount == 0 ? "No books have been borrowed yet." : borrowedBooks.toString();
         }
     }
 

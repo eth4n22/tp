@@ -2,6 +2,7 @@ package seedu.duke.shelf;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -25,8 +26,10 @@ public class ShelvesTest {
 
         Shelf shelf0 = new Shelf(0, "R");
         List<Book> books = new ArrayList<>();
-        books.add(new Book("Book 1", "Author A", false, LocalDate.of(2025, 4, 1), "R-0-0", 1));
-        books.add(new Book("Book 2", "Author B", false, LocalDate.of(2025, 5, 1), "R-0-1", 1));
+        books.add(new Book("Book 1", "Author A", false, LocalDate.of(2025, 4,
+                1), "R-0-0", 1, "amy"));
+        books.add(new Book("Book 2", "Author B", false, LocalDate.of(2025, 5,
+                1), "R-0-1", 1, "charlie"));
 
         Field shelfField = Shelf.class.getDeclaredField("shelfBooks");
         shelfField.setAccessible(true);
@@ -55,6 +58,7 @@ public class ShelvesTest {
         assertEquals("duMmY", book.getAuthor());
         assertEquals(1, booksNum);
     }
+
     @Test
     public void test2DeleteBookFromSection() throws NoSuchFieldException, IllegalAccessException {
         shelves.deleteBookFromSection(0, 0); // Delete "Book 1"
@@ -72,7 +76,7 @@ public class ShelvesTest {
     @Test
     public void testDeleteBookInvalidShelfNum() {
         try {
-            shelves.deleteBookFromSection(5,0);
+            shelves.deleteBookFromSection(5, 0);
             fail();
         } catch (AssertionError e) {
             assertEquals("Invalid Shelf Number!", e.getMessage());
@@ -82,7 +86,7 @@ public class ShelvesTest {
     @Test
     public void testDeleteBookInvalidSlotNum() {
         try {
-            shelves.deleteBookFromSection(0,-1);
+            shelves.deleteBookFromSection(0, -1);
             fail();
         } catch (AssertionError e) {
             assertEquals("Invalid bookIndex!", e.getMessage());
