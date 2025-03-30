@@ -95,7 +95,7 @@ public class Shelves {
     public String listShelf(int index) {
         try {
             return shelves[index].listShelf();
-        } catch (NoSuchSectionException e) {
+        } catch (IndexOutOfBoundsException e) {
             throw new NoSuchSectionException("There is no such section!");
         }
     }
