@@ -78,6 +78,7 @@ public class Shelves {
      * @return The shelf number where the book was added (e.g., "SCIFI1").
      * @throws SectionFullException If no shelves have available slots.
      */
+
     public String addBookToSection(String bookDetails) {
         if (checkIfShelfSectionIsFull()) {
             throw new SectionFullException("No more books can be added to this section!");
@@ -89,7 +90,11 @@ public class Shelves {
         }
         return NO_SECTION_AVAILABLE;
     }
+
+    //@@author Deanson Choo
     public void deleteBookFromSection(int shelfNum, int slotNum) {
+        assert shelfNum >= 0 && shelfNum < 5: "Invalid Shelf Number!";
+        assert slotNum >= 0: "Invalid bookIndex!";
         shelves[shelfNum].deleteBookFromShelf(slotNum);
     }
 }

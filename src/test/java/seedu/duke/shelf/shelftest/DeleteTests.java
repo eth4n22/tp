@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
+//@@author Deanson Choo
 public class DeleteTests {
     private Shelf shelf;
     @BeforeEach
@@ -44,4 +46,16 @@ public class DeleteTests {
         assertEquals("duMmY", book.getTitle(), "Book title should be 'duMmY'");
         assertEquals(2, shelf.getBooksCurrentlyOnShelf());
     }
+
+    @Test
+    public void deleteBookFromShelfInvalidTest() {
+        try {
+            shelf.deleteBookFromShelf(4);
+            fail();
+        } catch (AssertionError e) {
+            assertEquals("Invalid bookIndex!", e.getMessage());
+        }
+    }
+
+
 }
