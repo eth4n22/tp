@@ -78,16 +78,21 @@ public class BookManager {
             return "This Library does not support this Genre!";
         }
 
+        for (Book book : books) {
+            if (book.getTitle().equalsIgnoreCase(title) && book.getAuthor().equalsIgnoreCase(author)) {
+                book.increaseQuantity();
+                return "Increased quantity of \"" + title + "\" by " + author +
+                        ".\nTotal Quantity: " + book.getQuantity();
+            }
+        }
+
         Book newBook = new Book(title, author);
-        int oldSize = books.size();
-        books.add(newBook);
         newBook.setBookID(bookID);
+        newBook.setQuantity(1);
+        books.add(newBook);
 
-        // Assert that the book was successfully added
-        assert books.size() == oldSize + 1 : "Book size should increase by 1 after adding";
-        assert books.contains(newBook) : "New book should be in the collection";
+        return "I've added: \"" + title + "\" by " + author + ".\nTotal books in library: " + books.size();
 
-        return "I've added: " + newBook + "\nNow you have " + books.size() + " books in the library.";
     }
 
 
@@ -99,12 +104,20 @@ public class BookManager {
      */
 
     public String deleteBook(int bookIndex) {
-        //assert index != null : "Book Index cannot be null";
-
         if (bookIndex < 0 || bookIndex >= books.size()) {
             return "There is no such book in the library!";
         }
 
+        Book book = books.get(bookIndex);
+
+        //If multiple copies of same book, lower quantity rather than delete
+        if (book.getQuantity() > 1) {
+            book.decreaseQuantity();
+            return "Decreased quantity of \"" + book.getTitle() + "\" by " + book.getAuthor()
+                    + ".\nRemaining Quantity: " + book.getQuantity();
+        }
+
+        //If only one of that book, remove book
         Book removedBook = books.get(bookIndex);
         int oldSize = books.size();
         books.remove(bookIndex);
@@ -129,16 +142,18 @@ public class BookManager {
             return "No books in the library yet.";
         } else {
             StringBuilder output = new StringBuilder("Here are the books in your library:\n");
+            int totalQuantity = 0;
             for (int i = 0; i < books.size(); i++) {
-                assert books.get(i) != null : "Book at index " + i + " should not be null";
-                output.append(i + 1).append(". ").append(books.get(i)).append("\n");
+                Book book = books.get(i);
+                assert book != null : "Book at index " + i + " should not be null";
+                output.append(i + 1).append(". ").append(book).append("\n");
+                totalQuantity += book.getQuantity();
+
             }
-            output.append("Total books: ").append(books.size());
+            output.append("Total books: ").append(totalQuantity);
 
             // Assert that the output message contains the expected elements
-            assert output.toString().contains("Here are the books") : "List output should contain header";
-            assert output.toString().contains("Total books: " + books.size()) :
-                    "List output should contain total book count";
+            assert totalQuantity >= books.size() : "Total quantity should be >= number of unique titles";
 
             return output.toString();
         }
@@ -238,11 +253,12 @@ public class BookManager {
     }
 
     public String getStatistics() {
-        int totalBooks = books.size();
+        int totalBooks = 0;
         int borrowedBooks = 0;
         int overdueBooks = 0;
 
         for (Book book : books) {
+            totalBooks += book.getQuantity();
             if (book.isBorrowed()) {
                 borrowedBooks++;
             }
@@ -253,7 +269,8 @@ public class BookManager {
 
         StringBuilder stats = new StringBuilder();
         stats.append("========== Library Statistics ==========\n");
-        stats.append("Total books: ").append(totalBooks).append("\n");
+        stats.append("Total books copies: ").append(totalBooks).append("\n");
+        stats.append("Unique titles: ").append(books.size()).append("\n");
         stats.append("Total books borrowed: ").append(borrowedBooks).append("\n");
         stats.append("Total books overdue: ").append(overdueBooks).append("\n");
 
