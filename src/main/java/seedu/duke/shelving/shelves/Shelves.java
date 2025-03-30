@@ -1,5 +1,6 @@
 package seedu.duke.shelving.shelves;
 
+import seedu.duke.exception.NoSuchSectionException;
 import seedu.duke.exception.SectionFullException;
 
 /**
@@ -56,6 +57,7 @@ public class Shelves {
         return false;
     }
 
+    //@@author WayneCh0y
     public String getBookID() {
         for (int shelfIndex = 0; shelfIndex < 5; shelfIndex++) {
             if (!shelves[shelfIndex].isFull()) {
@@ -65,9 +67,24 @@ public class Shelves {
         return "All shelves are Full!";
     }
 
-
+    //@@author WayneCh0y
+    /**
+     * Retrieves the list of books from the specified shelf.
+     *
+     * <p>This method calls {@code listShelf()} on the shelf at the given index.
+     * If the index is out of bounds, an {@link IndexOutOfBoundsException} is thrown.</p>
+     *
+     * @param shelfIndex The index of the shelf to retrieve books from.
+     * @return A formatted string listing all books on the specified shelf,
+     *         or "No books on shelf" if the shelf is empty.
+     * @throws IndexOutOfBoundsException If the provided index is out of the valid range.
+     */
     public String listShelf(int shelfIndex) {
-        return shelves[shelfIndex].listShelf();
+        try {
+            return shelves[shelfIndex].listShelf();
+        } catch (IndexOutOfBoundsException e) {
+            throw new NoSuchSectionException("No Such Shelf Index!");
+        }
     }
 
     //@@author WayneCh0y

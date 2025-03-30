@@ -1,5 +1,6 @@
 package seedu.duke.shelving;
 
+import seedu.duke.exception.NoSuchSectionException;
 import seedu.duke.shelving.shelves.ActionShelves;
 import seedu.duke.shelving.shelves.AdventureShelves;
 import seedu.duke.shelving.shelves.HorrorShelves;
@@ -68,11 +69,9 @@ public class ShelvesManager {
             default:
                 return "";
             }
-
-        } catch (SectionFullException e) {
-            System.out.println(e);
+        } catch (SectionFullException | NoSuchSectionException e) {
+            return e.getMessage();
         }
-        return "";
     }
 
     //@@author WayneCh0y
