@@ -97,11 +97,22 @@ public class Shelf {
         return shelfBooks;
     }
 
+    /**
+     * Lists all books currently on the shelf, excluding books where the author's name is "duMmY".
+     *
+     * <p>If the shelf is empty, it returns a message indicating no books are available.
+     * If all books have the author "duMmY", it returns an empty string.</p>
+     *
+     * @return A formatted string listing all books on the shelf, one per line,
+     *         excluding books with the author "duMmY". If the shelf is empty,
+     *         returns "No books on shelf".
+     */
     public String listShelf() {
         if (shelfBooks.isEmpty()) {
             return "No books on shelf";
         }
         return shelfBooks.stream()
+                .filter(book -> !book.getAuthor().equalsIgnoreCase("duMmY")) // Exclude books with author "duMmY"
                 .map(Book::toString)
                 .collect(Collectors.joining("\n"));
     }
