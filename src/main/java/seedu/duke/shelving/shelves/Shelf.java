@@ -147,6 +147,12 @@ public class Shelf {
     }
 
     //@@author Deanson Choo
+    /**
+     * Deletes a book from the shelf at the specified slot number.
+     * <p>
+     * This method replaces the book at the given slot with a placeholder book titled "duMmy"
+     * and decreases the count of books currently on the shelf.
+     */
     public void deleteBookFromShelf(int slotNum) {
         Book temp = new Book("duMmY", "duMmY");
         assert slotNum >= 0 && slotNum < booksCurrentlyOnShelf: "Invalid bookIndex!";

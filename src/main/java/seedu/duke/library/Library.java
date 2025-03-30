@@ -54,6 +54,16 @@ public class Library {
     }
 
     //@@author Deanson Choo
+
+    /**
+     * Deletes a book from the catalogue and the corresponding shelf based on its index in the catalogue.
+     * <p>
+     * This method first retrieves the book ID using the given index, then removes it from both the
+     * catalogue and the shelves. The book in the shelf is replaced with a dummy book.
+     *
+     * @param bookIndex The index of the book to delete in the catalogue.
+     * @return A confirmation message if deletion is successful, or an error message if the book is not found.
+     */
     public String deleteBook(int bookIndex){
         try {
             String bookID = catalogueManager.getBookID(bookIndex); //throw BookNotFound
@@ -73,6 +83,11 @@ public class Library {
     }
 
     //@@author Deanson Choo
+    /**
+     * Returns a list of all books currently in the catalogue.
+     *
+     * @return A list of {@link Book} objects in the catalogue.
+     */
     public List<Book> getBooks() {
         return catalogueManager.getBooks();
     }
