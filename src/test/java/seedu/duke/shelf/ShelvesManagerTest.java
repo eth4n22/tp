@@ -29,8 +29,8 @@ public class ShelvesManagerTest {
 
         Shelf shelf0 = new Shelf(0, "R");
         List<Book> books = new ArrayList<>();
-        books.add(new Book("Test Book 1", "Author A", false, LocalDate.of(2025, 6, 1), "AC-0-1"));
-        books.add(new Book("Test Book 2", "Author B", false, LocalDate.of(2025, 6, 1), "AC-0-2"));
+        books.add(new Book("Test Book 1", "Author A", false, LocalDate.of(2025, 6, 1), "AC-0-1", 1));
+        books.add(new Book("Test Book 2", "Author B", false, LocalDate.of(2025, 6, 1), "AC-0-2", 1));
 
         Field shelfField = Shelf.class.getDeclaredField("shelfBooks");
         shelfField.setAccessible(true);

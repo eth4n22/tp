@@ -228,8 +228,45 @@ public class BookManagerTest {
         bookManager.getBooks().get(0).setReturnDueDate(LocalDate.now().minusDays(2));
 
         String stats = bookManager.getStatistics();
-        assertTrue(stats.contains("Total books: 2"));
+        assertTrue(stats.contains("Total books copies: 2"));
+        assertTrue(stats.contains("Unique titles: 2"));
         assertTrue(stats.contains("Total books borrowed: 1"));
         assertTrue(stats.contains("Total books overdue: 1"));
     }
+
+    @Test
+    void testAddNewBook_IncreaseQuantity() {
+        // Add a book
+        String result1 = bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
+        assertEquals(1, bookManager.getBooks().size());
+        assertTrue(result1.contains("I've added:"));
+
+        // Add the same book again (should increase quantity, not add new book)
+        String result2 = bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
+        assertEquals(1, bookManager.getBooks().size()); // Still only one entry
+        assertTrue(result2.contains("Increased quantity"));
+        assertEquals(2, bookManager.getBooks().get(0).getQuantity());
+    }
+
+    @Test
+    void testDeleteBook_DecreaseQuantity() {
+        // Add book twice → quantity becomes 2
+        bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
+        bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
+
+        assertEquals(1, bookManager.getBooks().size());
+        assertEquals(2, bookManager.getBooks().get(0).getQuantity());
+
+        // Delete → quantity decreases
+        String result = bookManager.deleteBook(0);
+        assertTrue(result.contains("Decreased quantity"));
+        assertEquals(1, bookManager.getBooks().get(0).getQuantity());
+
+        // Delete again → book is fully removed
+        String result2 = bookManager.deleteBook(0);
+        assertTrue(result2.contains("Book deleted"));
+        assertEquals(0, bookManager.getBooks().size());
+    }
+
+
 }

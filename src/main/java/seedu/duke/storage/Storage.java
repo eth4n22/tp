@@ -79,7 +79,7 @@ public class Storage {
             }
         }
 
-        Book book = new Book(bookTitle, bookAuthor, isBorrowed, returnDueDate);
+        Book book = new Book(bookTitle, bookAuthor, isBorrowed, returnDueDate, "NIL", 1);
         return book;
     }
 
