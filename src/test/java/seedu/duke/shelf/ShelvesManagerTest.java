@@ -29,8 +29,10 @@ public class ShelvesManagerTest {
 
         Shelf shelf0 = new Shelf(0, "R");
         List<Book> books = new ArrayList<>();
-        books.add(new Book("Test Book 1", "Author A", false, LocalDate.of(2025, 6, 1), "AC-0-1", 1));
-        books.add(new Book("Test Book 2", "Author B", false, LocalDate.of(2025, 6, 1), "AC-0-2", 1));
+        books.add(new Book("Test Book 1", "Author A", false, LocalDate.of(2025, 6,
+                1), "AC-0-1", 1, "amy"));
+        books.add(new Book("Test Book 2", "Author B", false, LocalDate.of(2025, 6,
+                1), "AC-0-2", 1, "bob"));
 
         Field shelfField = Shelf.class.getDeclaredField("shelfBooks");
         shelfField.setAccessible(true);
@@ -52,7 +54,7 @@ public class ShelvesManagerTest {
     }
 
     @Test
-    public void testDeleteBook_deletesCorrectly() throws NoSuchFieldException, IllegalAccessException{
+    public void testDeleteBook_deletesCorrectly() throws NoSuchFieldException, IllegalAccessException {
         shelvesManager.deleteBook("R-0-1");
 
         Field romanceShelvesField = ShelvesManager.class.getDeclaredField("romanceShelves");

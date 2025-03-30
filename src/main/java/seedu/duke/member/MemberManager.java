@@ -6,10 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MemberManager {
+    private static MemberManager memberManagerInstance;
     private final List<Member> members;
 
-    public MemberManager() {
+    private MemberManager() {
         this.members = new ArrayList<>();
+    }
+
+    public static MemberManager getInstance() {
+        if (memberManagerInstance == null) {
+            memberManagerInstance = new MemberManager();
+        }
+        return memberManagerInstance;
     }
 
     public Member getMemberByName(String name) {
@@ -29,6 +37,7 @@ public class MemberManager {
         int memberIndex = 1;
 
         for (Member member : members) {
+            System.out.println("Member: " + member.getName());
             List<Book> overdueBooks = member.getOverdueBooks();
             if (!overdueBooks.isEmpty()) {
                 output.append(memberIndex).append(". ").append(member.getName()).append(" - ");
@@ -44,5 +53,9 @@ public class MemberManager {
             }
         }
         return hasOverdueMembers ? output.toString() : "No members have overdue books.";
+    }
+
+    public void cleanup() {
+        members.clear();
     }
 }

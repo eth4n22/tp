@@ -68,7 +68,7 @@ public class BookTest {
     @Test
     public void testToFileFormatBookNotBorrowed() {
         Book book = new Book("Moby Dick", "Herman Melville");
-        String expected = "Moby Dick | Herman Melville | 0 | NIL | 1";
+        String expected = "Moby Dick | Herman Melville | 0 | null | NIL | 1 | null";
         assertEquals(expected, book.toFileFormat());
     }
 
@@ -76,7 +76,7 @@ public class BookTest {
     public void testToFileFormatBookBorrowed() {
         Book book = new Book("Moby Dick", "Herman Melville");
         book.setStatus(true);
-        String expected = "Moby Dick | Herman Melville | 1 | NIL | 1";
+        String expected = "Moby Dick | Herman Melville | 1 | null | NIL | 1 | null";
         assertEquals(expected, book.toFileFormat());
     }
 }

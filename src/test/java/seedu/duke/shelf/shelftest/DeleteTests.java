@@ -17,13 +17,17 @@ import static org.junit.jupiter.api.Assertions.fail;
 //@@author Deanson Choo
 public class DeleteTests {
     private Shelf shelf;
+
     @BeforeEach
     public void setup() throws NoSuchFieldException, IllegalAccessException {
         shelf = new Shelf(0, "R");
         List<Book> books = new ArrayList<>();
-        Book book1 = new Book("Harry Potter", "J.K Rowling", false, LocalDate.of(2025, 4, 15), "R-0-0", 1);
-        Book book2 = new Book("Jerry Potter", "J.K Howling", false, LocalDate.of(2024, 4, 15), "R-0-1", 1);
-        Book book3 = new Book("Garry Potter", "J.K Dowling", false, LocalDate.of(2023, 4, 15), "R-0-2", 1);
+        Book book1 = new Book("Harry Potter", "J.K Rowling", false, LocalDate.of(2025,
+                4, 15), "R-0-0", 1, "john");
+        Book book2 = new Book("Jerry Potter", "J.K Howling", false, LocalDate.of(2024,
+                4, 15), "R-0-1", 1, "amy");
+        Book book3 = new Book("Garry Potter", "J.K Dowling", false, LocalDate.of(2023,
+                4, 15), "R-0-2", 1, "bob");
         books.add(book1);
         books.add(book2);
         books.add(book3);

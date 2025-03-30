@@ -27,8 +27,8 @@ public class LeBook {
         shelvesManager = ShelvesManager.getShelvesManagerInstance();
         ui = Ui.getUiInstance();
         storage = Storage.getInstance(filePath);
-        memberManager = new MemberManager();
-        library = Library.getTheOneLibrary(storage.loadFileContents());
+        memberManager = MemberManager.getInstance();
+        library = Library.getTheOneLibrary(storage.loadFileContents(memberManager));
 
         // Assertions to check if critical components are initialized
         assert ui != null : "UI instance should not be null";
