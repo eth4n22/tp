@@ -81,7 +81,8 @@ public class BookManager {
         for (Book book : books) {
             if (book.getTitle().equalsIgnoreCase(title) && book.getAuthor().equalsIgnoreCase(author)) {
                 book.increaseQuantity();
-                return "Increased quantity of \"" + title + "\" by " + author + ".\nTotal Quantity: " + book.getQuantity();
+                return "Increased quantity of \"" + title + "\" by " + author +
+                        ".\nTotal Quantity: " + book.getQuantity();
             }
         }
 
