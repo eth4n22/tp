@@ -93,11 +93,14 @@ public class UiTest {
                 1. add TITLE/AUTHOR/GENRE      - Add a new book to the library.
                 2. delete BOOK_NUMBER          - Remove a book from the library.
                 3. list                        - List all current books.
-                4. borrow BOOK_NUMBER          - Borrow a book from the library.
-                5. return BOOK_NUMBER          - Return a borrowed book.
-                6. bye                         - Exit the program.
-                7. help                        - Show this help menu.
-                8. shelf SHELF/GENRE/NUMBER    - Lists a particular shelf of specified genre.
+                4. list overdue                - List all overdue books.
+                5. list borrowed               - List all borrowed books.
+                6. borrow BOOK_NUMBER          - Borrow a book from the library.
+                7. return BOOK_NUMBER          - Return a borrowed book.
+                8. statistics                  - View library statistics.
+                9. bye                         - Exit the program.
+                10. help                        - Show this help menu.
+                11. shelf SHELF/GENRE/NUMBER    - Lists a particular shelf of specified genre.
                 -------------------
                 Genres:
                   > romance

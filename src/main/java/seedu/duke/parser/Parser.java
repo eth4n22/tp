@@ -1,16 +1,6 @@
 package seedu.duke.parser;
 
-import seedu.duke.commands.Command;
-import seedu.duke.commands.ExitCommand;
-import seedu.duke.commands.AddCommand;
-import seedu.duke.commands.DeleteCommand;
-import seedu.duke.commands.HelpCommand;
-import seedu.duke.commands.ListBorrowedCommand;
-import seedu.duke.commands.ListCommand;
-import seedu.duke.commands.ListOverdueCommand;
-import seedu.duke.commands.ListOverdueUsersCommand;
-import seedu.duke.commands.UpdateStatusCommand;
-import seedu.duke.commands.ListShelfCommand;
+import seedu.duke.commands.*;
 
 import seedu.duke.exception.LeBookException;
 
@@ -30,6 +20,7 @@ public class Parser {
     private static final String LIST_BORROWED = "borrowed";
     private static final String LIST_OVERDUE_USERS = "users";
     private static final String LIST_SHELF = "shelf";
+    private static final String STATISTICS = "statistics";
     private static final int SPLIT_INTO_TWO = 2;
     private static final int SPLIT_INTO_THREE = 3;
     private static final int LENGTH_LIMIT_TWO = 2;
@@ -166,6 +157,8 @@ public class Parser {
             return new HelpCommand();
         case LIST_SHELF:
             return parseListShelfCommand(inputDetails);
+        case STATISTICS:
+            return new StatisticsCommand();
         default:
             throw new LeBookException("I don't understand. Try starting with list, add, delete, borrow, return!");
         }
