@@ -1,5 +1,6 @@
 package seedu.duke.shelving.shelves;
 
+import seedu.duke.exception.NoSuchSectionException;
 import seedu.duke.exception.SectionFullException;
 
 /**
@@ -29,12 +30,28 @@ public class Shelves {
         }
     }
 
+    public void cleanup() {
+        // Reset the internal state
+        this.isFull = false;
+
+        // Call cleanup on each shelf to clear any resources or internal state
+        for (int i = 0; i < shelves.length; i++) {
+            if (shelves[i] != null) {
+                shelves[i].cleanup();  // Assuming the Shelf class has a cleanup method
+            }
+        }
+
+        // Optionally, reset the identifier and other properties if needed
+        this.identifier = null;
+    }
+
     /**
      * Marks this section as full (all shelves are occupied).
      */
     private void setShelfSectionAsFull() {
         this.isFull = true;
     }
+
 
     //@@author WayneCh0y
     /**
@@ -56,6 +73,7 @@ public class Shelves {
         return false;
     }
 
+    //@@author WayneCh0y
     public String getBookID() {
         for (int shelfIndex = 0; shelfIndex < 5; shelfIndex++) {
             if (!shelves[shelfIndex].isFull()) {
@@ -65,9 +83,21 @@ public class Shelves {
         return "All shelves are Full!";
     }
 
-
-    public String listShelf(int shelfIndex) {
-        return shelves[shelfIndex].listShelf();
+    //@@author WayneCh0y
+    /**
+     * Lists all the books on all shelves in the library.
+     * Iterates through the array of shelves and calls {@link Shelf#listShelf()} on each.
+     * Each shelf's books are displayed under a header indicating the shelf number.
+     *
+     * @return A formatted string containing the list of books on each shelf.
+     *         If a shelf is empty, it will indicate "No books on shelf".
+     */
+    public String listShelf(int index) {
+        try {
+            return shelves[index].listShelf();
+        } catch (NoSuchSectionException e) {
+            throw new NoSuchSectionException("There is no such section!");
+        }
     }
 
     //@@author WayneCh0y

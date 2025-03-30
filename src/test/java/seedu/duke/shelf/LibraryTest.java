@@ -34,7 +34,7 @@ public class LibraryTest {
 
         library = Library.getTheOneLibrary(catalogBooks);
 
-        ShelvesManager shelvesManager = new ShelvesManager();
+        ShelvesManager shelvesManager = ShelvesManager.getShelvesManagerInstance();
 
 
         RomanceShelves romanceShelves = new RomanceShelves();
