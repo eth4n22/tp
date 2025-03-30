@@ -9,6 +9,7 @@ import seedu.duke.shelving.shelves.RomanceShelves;
 import seedu.duke.shelving.shelves.SciFiShelves;
 import seedu.duke.exception.SectionFullException;
 
+
 public class ShelvesManager {
     private static final String ROMANCE = "romance";
     private static final String ADVENTURE = "adventure";
@@ -25,7 +26,6 @@ public class ShelvesManager {
     private static final String MYSTERY_ID = "MY";
     private static final String NONFICTION_ID = "NF";
     private static final String SCIFI_ID = "SCIF";
-
 
     private final RomanceShelves romanceShelves;
     private final AdventureShelves adventureShelves;
@@ -102,11 +102,15 @@ public class ShelvesManager {
         return "Added";
     }
 
-    public void deleteBook(String bookID) {
+    //@@author Deanson Choo
+    public void deleteBook(String bookID){
         String[] parts = bookID.split("-");
         String shelfID = parts[0];
+        assert shelfID != null;
         int shelfNum = Integer.parseInt(parts[1]);
+        assert shelfNum >= 0 && shelfNum < 5;
         int slotNum = Integer.parseInt(parts[2]);
+        assert slotNum >= 0;
         switch (shelfID) {
         case ROMANCE_ID:
             romanceShelves.deleteBookFromSection(shelfNum, slotNum);
@@ -133,5 +137,4 @@ public class ShelvesManager {
             break;
         }
     }
-
 }
