@@ -14,7 +14,7 @@ import java.util.List;
 
 import java.lang.reflect.Field;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ShelvesManagerTest {
 
@@ -48,7 +48,7 @@ public class ShelvesManagerTest {
     }
 
     @Test
-    public void testDeleteBook_validActionShelfBookID_deletesCorrectly() throws NoSuchFieldException, IllegalAccessException {
+    public void testDeleteBook_deletesCorrectly() throws NoSuchFieldException, IllegalAccessException {
         shelvesManager.deleteBook("R-0-1");
 
         Field romanceShelvesField = ShelvesManager.class.getDeclaredField("romanceShelves");

@@ -2,7 +2,7 @@ package seedu.duke.shelf;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import seedu.duke.shelving.shelves.Shelf;
 import seedu.duke.shelving.shelves.Shelves;
 import seedu.duke.book.Book;
