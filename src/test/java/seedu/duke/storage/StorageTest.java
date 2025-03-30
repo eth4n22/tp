@@ -21,7 +21,7 @@ class StorageTest {
     void setUp() throws IOException {
         Files.createDirectories(Paths.get("data"));
         Files.write(Paths.get(TEST_FILE_PATH),
-                Collections.singletonList("The Hobbit | J.R.R. Tolkien | 1"));
+                Collections.singletonList("The Hobbit | J.R.R. Tolkien | 1 | action"));
     }
 
     @Test

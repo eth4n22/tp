@@ -19,7 +19,7 @@ public class Library {
 
     private Library(List<Book> allBooks) {
         catalogueManager = new BookManager(allBooks);
-        shelvesManager = new ShelvesManager();
+        shelvesManager = ShelvesManager.getShelvesManagerInstance();
     }
 
     public static Library getTheOneLibrary(List<Book> allBooks) {

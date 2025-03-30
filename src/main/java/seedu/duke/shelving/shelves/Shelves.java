@@ -30,6 +30,21 @@ public class Shelves {
         }
     }
 
+    public void cleanup() {
+        // Reset the internal state
+        this.isFull = false;
+
+        // Call cleanup on each shelf to clear any resources or internal state
+        for (int i = 0; i < shelves.length; i++) {
+            if (shelves[i] != null) {
+                shelves[i].cleanup();  // Assuming the Shelf class has a cleanup method
+            }
+        }
+
+        // Optionally, reset the identifier and other properties if needed
+        this.identifier = null;
+    }
+
     /**
      * Marks this section as full (all shelves are occupied).
      */

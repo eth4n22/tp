@@ -23,7 +23,7 @@ public class ShelvesManagerTest {
 
     @BeforeEach
     public void setup() throws Exception {
-        shelvesManager = new ShelvesManager();
+        shelvesManager = ShelvesManager.getShelvesManagerInstance();
 
         RomanceShelves romanceShelves = new RomanceShelves();
 

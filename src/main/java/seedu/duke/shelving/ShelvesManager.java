@@ -12,6 +12,8 @@ import seedu.duke.exception.SectionFullException;
 
 
 public class ShelvesManager {
+    private static ShelvesManager shelvesManagerInstance;
+
     private static final String ROMANCE = "romance";
     private static final String ADVENTURE = "adventure";
     private static final String ACTION = "action";
@@ -38,7 +40,7 @@ public class ShelvesManager {
 
 
     //@@author WayneCh0y
-    public ShelvesManager() {
+    private ShelvesManager() {
         romanceShelves = new RomanceShelves();
         adventureShelves = new AdventureShelves();
         actionShelves = new ActionShelves();
@@ -46,6 +48,14 @@ public class ShelvesManager {
         mysteryShelves = new MysteryShelves();
         nonFictionShelves = new NonFictionShelves();
         sciFiShelves = new SciFiShelves();
+    }
+
+    //@@author WayneCh0y
+    public static ShelvesManager getShelvesManagerInstance() {
+        if (shelvesManagerInstance == null) {
+            shelvesManagerInstance = new ShelvesManager();
+        }
+        return shelvesManagerInstance;
     }
 
     //@@author WayneCh0y
@@ -171,4 +181,15 @@ public class ShelvesManager {
         return "No Book ID found!";
     }
 
+    public void cleanup() {
+        romanceShelves.cleanup();
+        adventureShelves.cleanup();
+        actionShelves.cleanup();
+        horrorShelves.cleanup();
+        mysteryShelves.cleanup();
+        nonFictionShelves.cleanup();
+        sciFiShelves.cleanup();
+
+        shelvesManagerInstance = null;
+    }
 }
