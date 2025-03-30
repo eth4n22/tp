@@ -97,7 +97,7 @@ public class Storage {
         boolean isBorrowed;
         LocalDate returnDueDate = null;
         isBorrowed = bookStatus.equals("1");
-        Book book = new Book(bookTitle, bookAuthor, isBorrowed, returnDueDate, "NIL", 1);
+        Book book = new Book(bookTitle, bookAuthor, isBorrowed, returnDueDate, bookID, 1);
         shelvesManager.addBook(bookTitle, bookAuthor, genre);
         return book;
     }
