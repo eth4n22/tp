@@ -20,7 +20,7 @@ public class ListShelfCommand extends Command{
         assert library != null : "BookManager should not be null";
         assert ui != null : "Ui should not be null";
         assert storage != null : "Storage should not be null";
-        String response = library.listShelf(shelfGenre, shelfIndex);
+        String response = library.listShelves(shelfGenre, shelfIndex);
         ui.printWithSeparator(response);
     }
 }

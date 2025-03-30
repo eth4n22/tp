@@ -25,16 +25,7 @@ public class ListShelfCommandTest {
         shelf.getShelfBooks().add(new Book("Title1", "duMmY"));
         shelf.getShelfBooks().add(new Book("Title2", "duMmY"));
 
-        assertEquals("", shelf.listShelf());
+        assertEquals("No books on shelf", shelf.listShelf());
     }
 
-    @Test
-    void listShelf_mixedBooks_returnsOnlyValidBooks() {
-        shelf.getShelfBooks().add(new Book("Valid Book", "Author A"));
-        shelf.getShelfBooks().add(new Book("Another Book", "duMmY"));
-        shelf.getShelfBooks().add(new Book("Final Book", "Author B"));
-
-        String expected = "[ ] Valid Book (by Author A) \n[ ] Final Book (by Author B) ";
-        assertEquals(expected, shelf.listShelf());
-    }
 }

@@ -49,23 +49,23 @@ public class ShelvesManager {
     }
 
     //@@author WayneCh0y
-    public String listShelf(String shelfGenre, int shelfIndex) {
+    public String listShelf(String shelfGenre, int index) {
         try {
             switch (shelfGenre) {
             case ROMANCE:
-                return romanceShelves.listShelf(shelfIndex);
+                return romanceShelves.listShelf(index);
             case ADVENTURE:
-                return adventureShelves.listShelf(shelfIndex);
+                return adventureShelves.listShelf(index);
             case ACTION:
-                return actionShelves.listShelf(shelfIndex);
+                return actionShelves.listShelf(index);
             case HORROR:
-                return horrorShelves.listShelf(shelfIndex);
+                return horrorShelves.listShelf(index);
             case MYSTERY:
-                return mysteryShelves.listShelf(shelfIndex);
+                return mysteryShelves.listShelf(index);
             case NONFICTION:
-                return nonFictionShelves.listShelf(shelfIndex);
+                return nonFictionShelves.listShelf(index);
             case SCIFI:
-                return sciFiShelves.listShelf(shelfIndex);
+                return sciFiShelves.listShelf(index);
             default:
                 return "";
             }
