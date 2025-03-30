@@ -28,7 +28,7 @@ public class LibraryTest {
         List<Book> catalogBooks = new ArrayList<>();
         catalogBooks.add(book);
 
-        library = new Library(catalogBooks);
+        library = Library.getTheOneLibrary(catalogBooks);
 
         ShelvesManager shelvesManager = new ShelvesManager();
 
@@ -90,8 +90,8 @@ public class LibraryTest {
         List<Book> booksOnShelf = (List<Book>) shelfBooksField.get(shelf0);
 
         Book bookAfterDelete = booksOnShelf.get(0);
-        assertEquals("duMmy", bookAfterDelete.getTitle(), "Book on shelf should be dummy after deletion");
-        assertEquals("duMmy", bookAfterDelete.getAuthor(), "Author should be dummy after deletion");
+        assertEquals("duMmY", bookAfterDelete.getTitle(), "Book on shelf should be dummy after deletion");
+        assertEquals("duMmY", bookAfterDelete.getAuthor(), "Author should be dummy after deletion");
     }
     @Test
     public void testDeleteBook_noExist() {

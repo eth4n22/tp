@@ -26,7 +26,7 @@ class StorageTest {
 
     @Test
     void loadFileContents_validFile_success() {
-        Storage storage = new Storage(TEST_FILE_PATH);
+        Storage storage = Storage.getInstance(TEST_FILE_PATH);
         List<Book> books = storage.loadFileContents();
 
         assertEquals(1, books.size());

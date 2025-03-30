@@ -30,10 +30,10 @@ public class Parser {
     private static final String LIST_BORROWED = "borrowed";
     private static final String LIST_OVERDUE_USERS = "users";
     private static final String LIST_SHELF = "shelf";
-    public static final int SPLIT_INTO_TWO = 2;
-    public static final int SPLIT_INTO_THREE = 3;
-    public static final int LENGTH_LIMIT_TWO = 2;
-    public static final int LENGTH_LIMIT_THREE = 3;
+    private static final int SPLIT_INTO_TWO = 2;
+    private static final int SPLIT_INTO_THREE = 3;
+    private static final int LENGTH_LIMIT_TWO = 2;
+    private static final int LENGTH_LIMIT_THREE = 3;
 
     /**
      * Parses the book index from the given string.
@@ -114,13 +114,17 @@ public class Parser {
         if (listCommandType.isEmpty()) {
             return new ListCommand();
         }
-        return switch (listCommandType) {
-            case LIST_OVERDUE -> new ListOverdueCommand();
-            case LIST_BORROWED -> new ListBorrowedCommand();
-            case LIST_OVERDUE_USERS -> new ListOverdueUsersCommand();
-            default -> throw new LeBookException("Invalid list command type. It should be: list overdue, " +
+        switch (listCommandType) {
+        case LIST_OVERDUE:
+            return new ListOverdueCommand();
+        case LIST_BORROWED:
+            return new ListBorrowedCommand();
+        case LIST_OVERDUE_USERS:
+            return new ListOverdueUsersCommand();
+        default:
+            throw new LeBookException("Invalid list command type. It should be: list overdue, " +
                     "list borrowed, list users.");
-        };
+        }
     }
 
 /**
