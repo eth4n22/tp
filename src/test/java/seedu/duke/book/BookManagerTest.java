@@ -235,21 +235,23 @@ public class BookManagerTest {
     }
 
     @Test
-    void testAddNewBook_IncreaseQuantity() {
+    void testAddNewBookIncreaseQuantity() {
         // Add a book
-        String result1 = bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
+        String result1 = bookManager.addNewBookToCatalogue("The Great Gatsby",
+                "F. Scott Fitzgerald", "romance", "R-0-0");
         assertEquals(1, bookManager.getBooks().size());
         assertTrue(result1.contains("I've added:"));
 
         // Add the same book again (should increase quantity, not add new book)
-        String result2 = bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
+        String result2 = bookManager.addNewBookToCatalogue("The Great Gatsby",
+                "F. Scott Fitzgerald", "romance", "R-0-0");
         assertEquals(1, bookManager.getBooks().size()); // Still only one entry
         assertTrue(result2.contains("Increased quantity"));
         assertEquals(2, bookManager.getBooks().get(0).getQuantity());
     }
 
     @Test
-    void testDeleteBook_DecreaseQuantity() {
+    void testDeleteBookDecreaseQuantity() {
         // Add book twice → quantity becomes 2
         bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
         bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
