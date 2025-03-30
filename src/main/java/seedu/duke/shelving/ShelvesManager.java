@@ -102,7 +102,18 @@ public class ShelvesManager {
         return "Added";
     }
 
+
     //@@author Deanson Choo
+    /**
+     * 'Deletes' a book from the appropriate shelf using its unique book ID.
+     * Book is replaced with a dummy book
+     * <p>
+     * The book ID is expected to follow the format {@code GENRE-ID-SLOT}, e.g., {@code R-0-1}.
+     * This method extracts the shelf genre ID, shelf number, and slot number from the book ID,
+     * and delegates the deletion to the corresponding shelf section.
+     *
+     * @param bookID The unique ID of the book to delete, in the format {@code GENRE-ID-SLOT}.
+     */
     public void deleteBook(String bookID){
         String[] parts = bookID.split("-");
         String shelfID = parts[0];

@@ -93,6 +93,12 @@ public class Shelves {
     }
 
     //@@author Deanson Choo
+    /**
+     * 'Deletes' a book from the appropriate shelf using its unique slotNum and shelfNum
+     * by replacing the book with a dummy book
+     * @param shelfNum the index of the shelf where the book is located.
+     * @param slotNum the index of the book in the list of books in the shelf
+     */
     public void deleteBookFromSection(int shelfNum, int slotNum) {
         assert shelfNum >= 0 && shelfNum < 5: "Invalid Shelf Number!";
         assert slotNum >= 0: "Invalid bookIndex!";
