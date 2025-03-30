@@ -114,10 +114,10 @@ public class Shelf {
 
         assert bookDetails != null : "Book details cannot be null";
 
-        String[] parts = bookDetails.split(" / ", 2);
+        String[] parts = bookDetails.split(" / ", 3);
 
         if (parts.length < 2) {
-            return "Invalid book format! It should be 'TITLE / AUTHOR'.";
+            return "Invalid book format! It should be 'TITLE / AUTHOR / GENRE'.";
         }
 
         String title = parts[0].trim();
@@ -147,9 +147,14 @@ public class Shelf {
     }
 
     public void deleteBookFromShelf(int slotNum) {
-        Book temp = new Book("duMmy", "duMmy");
+        Book temp = new Book("duMmY", "duMmY");
         shelfBooks.set(slotNum, temp);
         booksCurrentlyOnShelf -= 1;
+    }
+
+    public String getBookId() {
+        int bookIndex = getSuitableIndex();
+        return getShelfIdentifier(bookIndex);
     }
 
 }
