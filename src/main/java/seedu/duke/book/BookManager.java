@@ -2,6 +2,10 @@
 package seedu.duke.book;
 
 import seedu.duke.exception.BookNotFoundException;
+
+import java.util.List;
+import java.time.LocalDate;
+
 import seedu.duke.member.Member;
 import seedu.duke.member.MemberManager;
 import seedu.duke.utility.GroupReturns;
@@ -19,6 +23,8 @@ import java.util.List;
  * Search functionality is delegated to BookFinder.
  */
 public class BookManager {
+    private static BookManager bookManagerInstance;
+
     private static final String BORROW = "borrow";
     private static final String RETURN = "return";
 
@@ -26,11 +32,31 @@ public class BookManager {
     private static final List<String> VALID_GENRES = Arrays.asList(
             "romance", "adventure", "action", "horror", "mystery", "nonfiction", "scifi"
     );
+  
+    private static List<Book> books;
 
-    private final List<Book> books; // The authoritative list of books
+    /**
+     * Constructs a BookManager with the given list of books.
+     * If the provided list is null, an empty list is initialized.
+     *
+     * @param books The list of books to manage, or null to initialize an empty list.
+     */
+    private BookManager(List<Book> books) {
+        BookManager.books = books;
+    }
 
-    public BookManager(List<Book> books) {
-        this.books = (books != null) ? new ArrayList<>(books) : new ArrayList<>();
+    /**
+     * Returns the singleton instance of BookManager.
+     * If the instance does not exist, it is created using the given list of books.
+     *
+     * @param books The list of books to initialize the manager if the instance does not exist.
+     * @return The singleton instance of BookManager.
+     */
+    public static BookManager getBookManagerInstance(List<Book> books) {
+        if (bookManagerInstance == null) {
+            bookManagerInstance = new BookManager(books);
+        }
+        return bookManagerInstance;
     }
 
     /** Checks if the genre is supported by the library. */
@@ -90,20 +116,9 @@ public class BookManager {
                     + String.join(", ", VALID_GENRES);
         }
 
-        // Check for existing book (case-insensitive)
-        for (Book book : books) {
-            if (book.getTitle().equalsIgnoreCase(title) && book.getAuthor().equalsIgnoreCase(author)) {
-                book.increaseQuantity();
-                // Broke long line
-                return "Increased quantity of \"" + title + "\" by " + author
-                        + ".\nTotal Quantity: " + book.getQuantity();
-            }
-        }
-
         // Add new book if not found
         Book newBook = new Book(title, author);
         newBook.setBookID(bookID);
-        newBook.setQuantity(1);
         books.add(newBook);
 
         // Broke long line
@@ -123,21 +138,16 @@ public class BookManager {
             return "Invalid book index provided. There is no book at index "
                     + (bookIndex + 1) + ".";
         }
+        //If only one of that book, remove book
+        Book removedBook = books.get(bookIndex);
+        int oldSize = books.size();
+        books.remove(bookIndex);
 
-        Book book = books.get(bookIndex);
-        if (book.getQuantity() > 1) {
-            book.decreaseQuantity();
-            // Broke long line
-            return "Decreased quantity of \"" + book.getTitle() + "\" by " + book.getAuthor()
-                    + ".\nRemaining Quantity: " + book.getQuantity();
-        }
+        // Assert that the book was successfully removed
+        assert books.size() == oldSize - 1 : "Book size should decrease by 1 after deletion";
+        assert !books.contains(removedBook) : "Removed book should not be in the collection";
 
-        // Remove the book entirely if quantity is 1
-        Book removedBook = books.remove(bookIndex);
-        int newSize = books.size();
-        // Broke long line
-        return "Book deleted:\n  " + removedBook.getTitle() + " by " + removedBook.getAuthor()
-                + "\nNow you have " + newSize + " unique titles in the library.";
+        return "Book deleted:\n  " + removedBook + "\nNow you have " + books.size() + " books in the library";
     }
 
     /**
@@ -147,8 +157,20 @@ public class BookManager {
      */
     public String listBooks() {
         if (books.isEmpty()) {
-            return "The library is empty. Add some books!";
-        }
+            return "No books in the library yet.";
+        } else {
+            StringBuilder output = new StringBuilder("Here are the books in your library:\n");
+            int totalQuantity = 0;
+            for (int i = 0; i < books.size(); i++) {
+                Book book = books.get(i);
+                assert book != null : "Book at index " + i + " should not be null";
+                output.append(i + 1).append(". ").append(book).append("\n");
+                totalQuantity++;
+            }
+            output.append("Total books: ").append(totalQuantity);
+
+            // Assert that the output message contains the expected elements
+            assert totalQuantity >= books.size() : "Total quantity should be >= number of unique titles";
 
         StringBuilder output = new StringBuilder("Here are the books in your library:\n");
         int totalQuantity = 0;
@@ -332,36 +354,56 @@ public class BookManager {
                 + "' and author '" + author + "'.");
     }
 
-    /**
-     * Generates a string containing library statistics.
-     *
-     * @return Formatted statistics string.
-     */
-    public String getStatistics() {
-        // Separated variable definitions and initialization
-        int totalCopies = 0;
-        int borrowedCount = 0;
-        int overdueCount = 0;
+    //    public String getStatistics() {
+    //        int totalBooks = 0;
+    //        int borrowedBooks = 0;
+    //        int overdueBooks = 0;
+    //
+    //        for (Book book : books) {
+    //            totalBooks += book.getQuantity();
+    //            if (book.isBorrowed()) {
+    //                borrowedBooks++;
+    //            }
+    //            if (book.isOverdue()) {
+    //                overdueBooks++;
+    //            }
+    //        }
+    //
+    //        StringBuilder stats = new StringBuilder();
+    //        stats.append("========== Library Statistics ==========\n");
+    //        stats.append("Total books copies: ").append(totalBooks).append("\n");
+    //        stats.append("Unique titles: ").append(books.size()).append("\n");
+    //        stats.append("Total books borrowed: ").append(borrowedBooks).append("\n");
+    //        stats.append("Total books overdue: ").append(overdueBooks).append("\n");
+    //
+    //        return stats.toString();
+    //    }
 
-        for (Book book : books) {
-            totalCopies += book.getQuantity();
-            if (book.isBorrowed()) {
-                borrowedCount++;
-            }
-            if (book.isOverdue()) {
-                overdueCount++;
+    public static int findBookQuantity(String title, String authorName) {
+        int count = 0;
+        for (Book books : books) {
+            if (books.corresponds(title, authorName)) {
+                count++;
             }
         }
-        int uniqueTitles = books.size();
+        return count;
+    }
 
-        StringBuilder stats = new StringBuilder();
-        stats.append("========== Library Statistics ==========\n");
-        // Used String.format for consistent alignment if needed later
-        stats.append(String.format("Unique book titles: %d%n", uniqueTitles));
-        stats.append(String.format("Total book copies:  %d%n", totalCopies));
-        stats.append(String.format("Titles borrowed:    %d%n", borrowedCount));
-        stats.append(String.format("Titles overdue:     %d%n", overdueCount));
-        stats.append("========================================");
-        return stats.toString();
+    public static int findBookQuantityBorrowed(String title, String authorName) {
+        int count = 0;
+        for (Book books : books) {
+            if (books.correspondsToBorrowed(title, authorName)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    //@@author WayneCh0y
+    /**
+     * Clears the list of books, removing all entries.
+     */
+    public void cleanup() {
+        books.clear();
     }
 }

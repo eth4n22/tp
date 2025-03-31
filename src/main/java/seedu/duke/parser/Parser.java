@@ -1,24 +1,23 @@
 package seedu.duke.parser;
 
-// --- Import new search commands ---
-
 import seedu.duke.commands.SearchByTitleCommand;
 import seedu.duke.commands.SearchByAuthorCommand;
 import seedu.duke.commands.SearchByGenreCommand;
 import seedu.duke.commands.SearchByShelfCommand;
 
-import seedu.duke.commands.AddCommand;
 import seedu.duke.commands.Command;
-import seedu.duke.commands.DeleteByIndexCommand;
+import seedu.duke.commands.AddCommand;
 import seedu.duke.commands.DeleteByBookCommand;
+import seedu.duke.commands.DeleteByIndexCommand;
 import seedu.duke.commands.ExitCommand;
 import seedu.duke.commands.HelpCommand;
-import seedu.duke.commands.ListCommand;
+import seedu.duke.commands.ListBookQuantityCommand;
 import seedu.duke.commands.ListBorrowedCommand;
+import seedu.duke.commands.ListCommand;
 import seedu.duke.commands.ListOverdueCommand;
+import seedu.duke.commands.ListOverdueUsersCommand;
 import seedu.duke.commands.ListShelfCommand;
 import seedu.duke.commands.UpdateStatusCommand;
-import seedu.duke.commands.StatisticsCommand;
 
 import seedu.duke.exception.LeBookException;
 
@@ -43,9 +42,11 @@ public class Parser {
     // LIST subcommand constants
     private static final String LIST_OVERDUE = "overdue";
     private static final String LIST_BORROWED = "borrowed";
-    private static final String LIST_OVERDUE_USERS = "users"; // Keep definition if command might be added later
 
-    // DELETE subcommand constants
+    private static final String LIST_OVERDUE_USERS = "users";
+    private static final String LIST_SHELF = "shelf";
+    private static final String LIST_QUANTITY = "quantity";
+
     private static final String DELETE_BY_INDEX = "i";
     private static final String DELETE_BY_BOOK = "b";
 
@@ -198,6 +199,18 @@ public class Parser {
         }
     }
 
+  
+    private static Command parseListQuantityCommand(String inputDetails) throws LeBookException{
+        String[] parts = inputDetails.split("/", SPLIT_INTO_THREE);
+        if (parts.length < LENGTH_LIMIT_THREE) {
+            throw new LeBookException("Invalid format. It should be: quantity / BOOK_TITLE / AUTHOR_NAME");
+        }
+        String title = parts[1].trim();
+        String author = parts[2].trim();
+        return new ListBookQuantityCommand(title, author);
+    }
+
+
     /**
      * Parses details for the find command.
      * Expects "CRITERIA SEARCH_TERM".
@@ -254,44 +267,34 @@ public class Parser {
         String inputDetails = (fullInput.length > 1) ? fullInput[1] : "";
 
         switch (commandType) {
-            case BYE:
-                return new ExitCommand();
-            case LIST:
-                // Handles list, list overdue, list borrowed
-                return parseListCommand(inputDetails);
-            case BORROW:
-                if (inputDetails.isEmpty() || !inputDetails.contains("/")) {
-                    throw new LeBookException("Invalid borrow format. Required: borrow INDEX / MEMBER_NAME");
-                }
-                // Extract index string before parsing
-                String[] borrowParts = inputDetails.split("/", SPLIT_INTO_TWO);
-                String indexStringBorrow = borrowParts[0].trim();
-                int borrowIndex = parseIndex(indexStringBorrow); // Can throw LeBookException
-                // Let parseBorrowCommand handle extracting name from the *full* details after '/'
-                String borrowerName = parseBorrowCommand(inputDetails);
-                return new UpdateStatusCommand(BORROW, borrowIndex, borrowerName);
-            case RETURN:
-                if (inputDetails.isEmpty()) {
-                    throw new LeBookException("Missing book index for return command.");
-                }
-                int returnIndex = parseIndex(inputDetails); // Can throw LeBookException
-                return new UpdateStatusCommand(RETURN, returnIndex, null);
-            case DELETE:
-                return parseDeleteCommand(inputDetails);
-            case ADD:
-                return parseAddCommand(inputDetails);
-            case HELP:
-                return new HelpCommand();
-            case FIND:
-                // Delegate parsing of find details to the helper method
-                return parseFindCommand(inputDetails);
-            case LIST_SHELF:
-                return parseListShelfCommand(inputDetails);
-            case STATISTICS:
-                return new StatisticsCommand();
-            default:
-                throw new LeBookException("Sorry, I don't understand the command '" + commandType
-                        + "'. Try 'help' for options.");
+        case BYE:
+            return new ExitCommand();
+        case LIST:
+            return parseListCommand(inputDetails);
+        case BORROW:
+            String bookIndexString = inputDetails.split("/")[0].trim();
+            bookIndex = parseIndex(bookIndexString);
+            String borrowerName = parseBorrowCommand(inputDetails);
+            return new UpdateStatusCommand(commandType, bookIndex, borrowerName);
+        case RETURN:
+            bookIndex = parseIndex(inputDetails);
+            return new UpdateStatusCommand(commandType, bookIndex, null);
+        case DELETE:
+            return parseDeleteCommand(inputDetails);
+        case ADD:
+            return parseAddCommand(inputDetails);
+        case HELP:
+            return new HelpCommand();
+        case FIND:
+            return parseFindCommand(inputDetails);
+        case LIST_SHELF:
+            return parseListShelfCommand(inputDetails);
+        case LIST_QUANTITY:
+            return parseListQuantityCommand(inputDetails);
+            //        case STATISTICS:
+            //            return new StatisticsCommand();
+        default:
+            throw new LeBookException("I don't understand. Try starting with list, add, delete, borrow, return!");
         }
     }
 }

@@ -25,9 +25,9 @@ public class Storage {
     private static final int BOOK_DUE_DATE_INDEX = 3;
     private static final int BOOK_SHELF_INDEX = 4;
     private static final int BOOK_QUANTITY_INDEX = 5;
-    private static final int BORROWER_NAME_INDEX = 6;
+    private static final int BORROWER_NAME_INDEX = 5;
 
-    private static final int MAX_SPLIT_NUMBER = 7;
+    private static final int MAX_SPLIT_NUMBER = 6;
 
     private static final String ROMANCE = "romance";
     private static final String ADVENTURE = "adventure";
@@ -117,7 +117,7 @@ public class Storage {
         String bookDueDate = specifiers[BOOK_DUE_DATE_INDEX].trim();
         String bookID = specifiers[BOOK_SHELF_INDEX].trim();
         String genre = getGenreFromFile(bookID);
-        String quantityString = specifiers[BOOK_QUANTITY_INDEX].trim();
+        //String quantityString = specifiers[BOOK_QUANTITY_INDEX].trim();
         String borrowerName = specifiers[BORROWER_NAME_INDEX].trim();
 
         boolean isBorrowed = bookStatus.equals("1");
@@ -127,9 +127,9 @@ public class Storage {
             returnDueDate = LocalDate.parse(bookDueDate);
         }
 
-        int bookQuantity = Integer.parseInt(quantityString);
+        //int bookQuantity = Integer.parseInt(quantityString);
 
-        Book book = new Book(bookTitle, bookAuthor, isBorrowed, returnDueDate, bookID, bookQuantity, borrowerName);
+        Book book = new Book(bookTitle, bookAuthor, isBorrowed, returnDueDate, bookID, borrowerName);
         shelvesManager.addBook(bookTitle, bookAuthor, genre);
         return book;
     }

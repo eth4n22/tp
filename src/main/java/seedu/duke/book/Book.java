@@ -29,9 +29,6 @@ public class Book {
     private final String author;
     private boolean isBorrowed;
     private LocalDate returnDueDate;
-    private String bookID; // Format: IDENTIFIER-ShelfNum-Index
-    private int quantity;
-    private String borrowerName;
 
     /**
      * Full constructor for creating a Book instance.
@@ -45,8 +42,11 @@ public class Book {
      * @param borrowerName  Name of the borrower if borrowed, null otherwise.
      */
     // Line 52 broken down
-    public Book(String title, String author, boolean isBorrowed, LocalDate returnDueDate,
-                String bookID, int quantity, String borrowerName) {
+    private String bookID; //IDENTIFIER-ShelfNum-Index
+    private String borrowerName;
+
+    public Book(String title, String author, boolean isBorrowed, LocalDate returnDueDate, String bookID,
+                String borrowerName) {
         assert title != null && !title.trim().isEmpty() : "Title cannot be empty";
         assert author != null && !author.trim().isEmpty() : "Author cannot be empty";
 
@@ -55,7 +55,6 @@ public class Book {
         this.isBorrowed = isBorrowed;
         this.returnDueDate = returnDueDate;
         this.bookID = bookID;
-        this.quantity = quantity;
         this.borrowerName = borrowerName;
     }
 
@@ -66,26 +65,7 @@ public class Book {
      * @param author Author of the book.
      */
     public Book(String title, String author) {
-        this(title, author, false, null, "NIL", 1, null);
-    }
-
-    // --- Quantity Management ---
-    public void increaseQuantity() {
-        this.quantity++;
-    }
-
-    public void decreaseQuantity() {
-        // Consider adding validation: if (this.quantity > 0) this.quantity--;
-        this.quantity--;
-    }
-
-    public void setQuantity(int quantity) {
-        // Consider adding validation: quantity >= 0
-        this.quantity = quantity;
-    }
-
-    public int getQuantity() {
-        return quantity;
+        this(title, author, false, null, "NIL", null);
     }
 
     // --- Borrowing Status Management ---
@@ -161,37 +141,21 @@ public class Book {
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
-        String status = getStatusSymbol(); // Use helper
-        String dueDateStr = (returnDueDate != null) ? "(Due: " + returnDueDate.format(formatter) + ")" : "";
-        String displayId = (bookID != null ? bookID : "N/A");
-
-        // Line 136 broken down using String.format placeholders for better readability
-        return String.format("%s %s (by %s) | ID: %s | Genre: %s | Quantity: %d %s",
-                status, title, author, displayId, getGenre(), quantity, dueDateStr);
+        String status = isBorrowed ? "[X]" : "[ ]";
+        String dueDateStr = (returnDueDate != null) ? " | (Due: " + returnDueDate.format(formatter) + ") " : "";
+        return status + " " + title + " (by " + author + ")" + dueDateStr;
     }
 
-    /**
+      /**
      * Generates a string representation suitable for saving to a file.
      * Uses '|' as a delimiter. Handles null values for saving.
      *
      * @return Delimited string for file storage.
      */
     public String toFileFormat() {
-        // Use "null" string for null values to avoid issues during loading
-        String borrowerNameToSave = (borrowerName == null || borrowerName.trim().isEmpty())
-                ? "null" : borrowerName.trim();
-        String dueDateToSave = (returnDueDate == null) ? "null" : returnDueDate.toString();
-        String idToSave = (bookID == null || bookID.equals("NIL")) ? "NIL" : bookID;
-
-        return String.join(" | ",
-                title,
-                author,
-                (isBorrowed ? "1" : "0"),
-                dueDateToSave,
-                idToSave,
-                String.valueOf(quantity), // Convert quantity to string
-                borrowerNameToSave
-        );
+        return title + " | " + author + " | " + (isBorrowed ? 1 : 0)
+                + " | " + returnDueDate + " | " + bookID
+                +  " | " + borrowerName;
     }
 
     /**
@@ -210,6 +174,14 @@ public class Book {
 
     public String getAuthor() {
         return author;
+    }
+
+    public boolean corresponds(String title, String authorName) {
+        return this.title.equals(title) && this.author.equals(authorName);
+    }
+
+    public boolean correspondsToBorrowed(String title, String authorName) {
+        return (this.title.equals(title) && this.author.equals(authorName) && this.isBorrowed);
     }
 
     public boolean isBorrowed() {
