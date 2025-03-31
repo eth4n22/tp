@@ -59,6 +59,7 @@ public class Library {
     }
 
     //@@author Deanson-Choo
+
     /**
      * Deletes a book from the catalogue and the corresponding shelf based on its index in the catalogue.
      * <p>
@@ -68,7 +69,7 @@ public class Library {
      * @param bookIndex The index of the book to delete in the catalogue.
      * @return A confirmation message if deletion is successful, or an error message if the book is not found.
      */
-    public String deleteBook(int bookIndex){
+    public String deleteBook(int bookIndex) {
         try {
             String bookID = catalogueManager.getBookID(bookIndex);
             String response1 = catalogueManager.deleteBook(bookIndex);
@@ -79,6 +80,7 @@ public class Library {
             return e.getMessage();
         }
     }
+
     //Delete book by Bookdetails
     public String deleteBook(String bookTitle, String author) {
         try {
@@ -99,6 +101,7 @@ public class Library {
     }
 
     //@@author Deanson-Choo
+
     /**
      * Returns a list of all books currently in the catalogue.
      *
@@ -108,9 +111,9 @@ public class Library {
         return catalogueManager.getBooks();
     }
 
-        public String getStatistics() {
-            return catalogueManager.getStatistics();
-        }
+    public String getStatistics() {
+        return catalogueManager.getStatistics();
+    }
 
     public String listOverdueBooks() {
         return catalogueManager.listOverdueBooks();

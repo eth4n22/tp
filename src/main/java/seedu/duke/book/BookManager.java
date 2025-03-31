@@ -3,12 +3,16 @@ package seedu.duke.book;
 
 import seedu.duke.exception.BookNotFoundException;
 
-import java.util.*;
+
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.ArrayList;
 
 import seedu.duke.member.Member;
 import seedu.duke.member.MemberManager;
-import seedu.duke.book.QuantityManager;
 import seedu.duke.utility.GroupReturns;
 
 
