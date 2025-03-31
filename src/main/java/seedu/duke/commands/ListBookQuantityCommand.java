@@ -10,11 +10,13 @@ public class ListBookQuantityCommand extends Command{
     private final String title;
     private final String author;
 
+    //@@author eth4n22
     public ListBookQuantityCommand(String title, String author) {
         this.title = title;
         this.author = author;
     }
 
+    //@@author eth4n22
     @Override
     public void execute(Library library, Ui ui, Storage storage, MemberManager memberManager) {
         assert library != null : "Library should not be null";

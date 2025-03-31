@@ -25,10 +25,12 @@ public class Ui {
         return scanner.nextLine();
     }
 
+    //@@author eth4n22
     public void printWelcomeMessage() {
         printWithSeparator("Welcome to Lebook, your personal book management system!");
     }
 
+    //@@author eth4n22
     // --- Updated Help Message ---
     public void printHelp() {
         String message = """
@@ -69,37 +71,39 @@ public class Ui {
         printSeparator();
     }
 
+    //@@author eth4n22
     public void printExitMessage() {
         printWithSeparator("Goodbye! Hope to see you again soon!");
     }
 
-    // --- Method for general messages (like search results count) ---
+    //@@author eth4n22
     public void printMessage(String message) {
         System.out.println(message);
     }
 
-    // Keep specific success/error methods if preferred
+    //@@author eth4n22
     public void printSuccess(String message) {
         printWithSeparator("[SUCCESS] " + message);
     }
 
+    //@@author eth4n22
     public void printError(String message) {
         printWithSeparator("[ERROR] " + message);
     }
 
-    // Keep separator methods
+    //@@author eth4n22
     public void printWithSeparator(String message) {
         printSeparator();
         System.out.println(message);
         printSeparator();
     }
 
+    //@@author eth4n22
     public void printSeparator() {
         System.out.println("========================================");
     }
 
-
-    // --- NEW METHOD to display list of books (for list, find, etc.) ---
+    //@@author eth4n22
     /**
      * Displays a formatted list of books.
      * Used by ListCommand, FindCommand, ListBorrowedCommand, ListOverdueCommand etc.
