@@ -36,9 +36,10 @@ public class Ui {
                 6. borrow BOOK_NUMBER          - Borrow a book from the library.
                 7. return BOOK_NUMBER          - Return a borrowed book.
                 8. statistics                  - View library statistics.
-                9. bye                         - Exit the program.
-                10. help                        - Show this help menu.
-                11. shelf SHELF/GENRE/NUMBER    - Lists a particular shelf of specified genre.
+                9. undo                        - undoes the last command(add/delete/borrow/return).
+                10. bye                        - Exit the program.
+                11. help                       - Show this help menu.
+                12. shelf SHELF/GENRE/NUMBER   - Lists a particular shelf of specified genre.
                 -------------------
                 Genres:
                   > romance
@@ -73,5 +74,11 @@ public class Ui {
     public void printSeparator() {
         System.out.println("========================================");
     }
+
+    public void printUndoSuccessMessage(String undoneCommand) {
+        printWithSeparator("[SUCCESS] Successfully undone: " + undoneCommand);
+    }
+
+
 }
 

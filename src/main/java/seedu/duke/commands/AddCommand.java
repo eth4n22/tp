@@ -9,6 +9,7 @@ public class AddCommand extends Command {
     private final String title;
     private final String author;
     private final String genre;
+    private int addedBookIndex = -1;
 
     public AddCommand(String title, String author, String genre) {
         this.title = title;
@@ -31,6 +32,25 @@ public class AddCommand extends Command {
             String responseForShelf = library.addNewBookToShelf(title, author, genre);
             ui.printWithSeparator(responseForShelf);
             storage.writeToFile(library.getBooks());
+
+            //records index for undo
+            addedBookIndex = library.getLastAddedBookIndex(title, author);
         }
+    }
+
+    @Override
+    public void undo(Library library, Ui ui, Storage storage, MemberManager memberManager) {
+        if (addedBookIndex != -1) {
+            String result = library.deleteBook(addedBookIndex);
+            ui.printWithSeparator("Undo AddCommand:\n" + result);
+            storage.writeToFile(library.getBooks());
+        } else {
+            ui.printError("Nothing to undo for AddCommand.");
+        }
+    }
+
+    @Override
+    public String getCommandDescription() {
+        return "Add Command";
     }
 }

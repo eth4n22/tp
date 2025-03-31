@@ -10,6 +10,26 @@ public abstract class Command {
     public abstract void execute(Library library, Ui ui, Storage storage, MemberManager memberManager)
             throws LeBookException;
 
+    public void undo(Library library, Ui ui, Storage storage, MemberManager memberManager){
+        ui.printError("This command cannot be undone");
+    }
+
+    public String getCommandDescription(){
+        return this.getClass().getSimpleName();
+    }
+
+    public boolean isUndoable() {
+        return !(this instanceof ExitCommand
+                || this instanceof HelpCommand
+                || this instanceof ListCommand
+                || this instanceof ListBorrowedCommand
+                || this instanceof ListOverdueCommand
+                || this instanceof ListOverdueUsersCommand
+                || this instanceof ListShelfCommand
+                || this instanceof ListBookQuantityCommand
+                || this instanceof UndoCommand);
+    }
+
     public boolean isExit() {
         return false;
     }

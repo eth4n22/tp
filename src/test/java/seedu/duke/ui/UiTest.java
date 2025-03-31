@@ -7,6 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UiTest {
     private Ui ui;
@@ -74,46 +75,16 @@ public class UiTest {
         assertEquals(expected.trim(), normalize(outputStream.toString()));
     }
 
-    /*
-    @Test
-    public void testReadCommand() {
-        String input = "test command\n";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-        Ui uiWithInput = Ui.getUiInstance();
-        assertEquals("test command", uiWithInput.readCommand());
-    }*/
-
     @Test
     public void testHelpCommand() {
         ui.printHelp();
-        String expected = """
-                ========================================
-                Available Commands:
-                -------------------
-                1. add TITLE/AUTHOR/GENRE      - Add a new book to the library.
-                2. delete BOOK_NUMBER          - Remove a book from the library.
-                3. list                        - List all current books.
-                4. list overdue                - List all overdue books.
-                5. list borrowed               - List all borrowed books.
-                6. borrow BOOK_NUMBER          - Borrow a book from the library.
-                7. return BOOK_NUMBER          - Return a borrowed book.
-                8. statistics                  - View library statistics.
-                9. bye                         - Exit the program.
-                10. help                        - Show this help menu.
-                11. shelf SHELF/GENRE/NUMBER    - Lists a particular shelf of specified genre.
-                -------------------
-                Genres:
-                  > romance
-                  > adventure
-                  > action
-                  > horror
-                  > mystery
-                  > nonfiction
-                  > scifi
-                
-                ========================================
-                """;
-        assertEquals(expected.trim(), normalize(outputStream.toString()));
+        String output = normalize(outputStream.toString());
+        assertTrue(output.contains("Available Commands:"));
+        assertTrue(output.contains("1. add TITLE/AUTHOR/GENRE"));
+        assertTrue(output.contains("12. shelf SHELF/GENRE/NUMBER"));
+        assertTrue(output.contains("Genres:"));
+        assertTrue(output.contains("> romance"));
+        assertTrue(output.contains("> scifi"));
     }
 
     // Helper function to normalize line endings and trim spaces

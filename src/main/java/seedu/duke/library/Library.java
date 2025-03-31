@@ -3,12 +3,12 @@ package seedu.duke.library;
 import seedu.duke.shelving.ShelvesManager;
 import seedu.duke.book.Book;
 import seedu.duke.book.BookManager;
+import seedu.duke.book.UndoManager;
 
 import seedu.duke.exception.BookNotFoundException;
 
 import seedu.duke.member.MemberManager;
 import seedu.duke.utility.GroupReturns;
-
 
 import java.util.List;
 
@@ -17,10 +17,12 @@ public class Library {
 
     private final BookManager catalogueManager;
     private final ShelvesManager shelvesManager;
+    private final UndoManager undoManager;
 
     private Library(List<Book> allBooks) {
         catalogueManager = BookManager.getBookManagerInstance(allBooks);
         shelvesManager = ShelvesManager.getShelvesManagerInstance();
+        undoManager = new UndoManager();
     }
 
     public static Library getTheOneLibrary(List<Book> allBooks) {
@@ -28,6 +30,10 @@ public class Library {
             theOneLibrary = new Library(allBooks);
         }
         return theOneLibrary;
+    }
+
+    public UndoManager getUndoManager() {
+        return undoManager;
     }
 
     public String listBooks() {
@@ -110,5 +116,39 @@ public class Library {
 
     public String listOverdueBooks() {
         return catalogueManager.listOverdueBooks();
+    }
+
+    public Book getBookByTitleAndAuthor(String title, String author) {
+        for (Book book : getBooks()) {
+            if (book.getTitle().equals(title) && book.getAuthor().equals(author)) {
+                return book;
+            }
+        }
+        return null;
+    }
+
+    public int getLastAddedBookIndex(String title, String author) {
+        List<Book> books = getBooks();
+        for (int i = books.size() - 1; i >= 0; i--) { // reverse loop
+            Book book = books.get(i);
+            if (book.getTitle().equals(title) && book.getAuthor().equals(author)) {
+                return i;
+            }
+        }
+        return -1; // if not found
+    }
+
+
+    public void restoreBook(Book book) {
+        if (book == null) {
+            return;
+        }
+        getBooks().add(book);
+        shelvesManager.addBook(book.getTitle(), book.getAuthor(), book.getBookID());
+    }
+
+    //for testing
+    public static void resetLibrary() {
+        theOneLibrary = null;
     }
 }
