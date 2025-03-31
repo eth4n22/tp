@@ -55,6 +55,9 @@ public class Parser {
     private static final int MIN_PARTS_TWO = 2; // Use clearer names for length limits
     private static final int MIN_PARTS_THREE = 3;
 
+    private static final int LENGTH_LIMIT_THREE = 3;
+    private static final int LENGTH_LIMIT_TWO = 2;
+
 
     /**
      * Parses the book index (1-based user input) to a 0-based index.
@@ -115,23 +118,20 @@ public class Parser {
      * Parses details for the list shelf command.
      * Expects details in format "GENRE / SHELF_NUMBER".
      */
-    private static Command parseListShelfCommand(String shelfDetails) throws LeBookException {
-        if (shelfDetails == null || shelfDetails.trim().isEmpty()) {
-            throw new LeBookException("Missing shelf details. Format: shelf GENRE / SHELF_NUMBER");
-        }
-        String[] parts = shelfDetails.split("/", SPLIT_INTO_TWO);
-        if (parts.length < MIN_PARTS_TWO) {
-            throw new LeBookException("Invalid format. Required: shelf GENRE / SHELF_NUMBER");
+    private static Command parseListShelfCommand(String bookDetails) throws LeBookException {
+        String[] parts = bookDetails.split("/", SPLIT_INTO_TWO);
+        if (parts.length < LENGTH_LIMIT_TWO) {
+            throw new LeBookException("Invalid format. It should be: shelf / GENRE / INDEX");
         }
 
-        String genre = parts[0].trim().toLowerCase();
-        String indexString = parts[1].trim();
-
-        if (genre.isEmpty() || indexString.isEmpty()) {
-            throw new LeBookException("Genre and Shelf Number cannot be empty.");
+        String[] shelfDetails = parts[1].split("/", SPLIT_INTO_TWO);
+        if (shelfDetails.length < LENGTH_LIMIT_TWO) {
+            throw new LeBookException("Invalid format. It should be: shelf / GENRE / INDEX");
         }
 
-        int shelfIndex = parseIndex(indexString); // Reuses index parser (expects 1-based input)
+        String genre = shelfDetails[0].trim().toLowerCase();
+        String indexString = shelfDetails[1].trim();
+        int shelfIndex = parseIndex(indexString);
         return new ListShelfCommand(genre, shelfIndex);
     }
 
@@ -146,15 +146,15 @@ public class Parser {
         }
 
         switch (listCommandType) {
-            case LIST_OVERDUE:
-                return new ListOverdueCommand();
-            case LIST_BORROWED:
-                return new ListBorrowedCommand();
-            // case LIST_OVERDUE_USERS: // If command exists
-            //     return new ListOverdueUsersCommand();
-            default:
-                throw new LeBookException("Unknown list type: '" + listCommandType +
-                        "'. Valid options: list overdue, list borrowed"); // Add list users if needed
+        case LIST_OVERDUE:
+            return new ListOverdueCommand();
+        case LIST_BORROWED:
+            return new ListBorrowedCommand();
+        case LIST_OVERDUE_USERS:
+            return new ListOverdueUsersCommand();
+        default:
+            throw new LeBookException("Unknown list type: '" + listCommandType +
+                    "'. Valid options: list overdue, list borrowed"); // Add list users if needed
         }
     }
 
@@ -162,44 +162,33 @@ public class Parser {
      * Parses details for the delete command.
      * Expects "i/INDEX" or "b/TITLE/AUTHOR".
      */
-    private static Command parseDeleteCommand(String deleteDetails) throws LeBookException {
-        if (deleteDetails == null || deleteDetails.trim().isEmpty()) {
-            throw new LeBookException("Missing delete details. Format: delete i/INDEX or delete b/TITLE/AUTHOR");
+    private static Command parseDeleteCommand(String userInput) throws LeBookException {
+        String[] parts = userInput.split("/", SPLIT_INTO_TWO);
+        if (parts.length < LENGTH_LIMIT_TWO) {
+            throw new LeBookException("Invalid format. It should be: delete b/BOOK_TITLE/AUTHOR_NAME "
+                    + "or delete i/BOOK_INDEX");
         }
-        String[] parts = deleteDetails.split("/", SPLIT_INTO_TWO);
-        if (parts.length < MIN_PARTS_TWO) {
-            throw new LeBookException("Invalid delete format. Use 'i/' for index or 'b/' for book details.");
-        }
-
-        String deleteType = parts[0].trim().toLowerCase();
-        String details = parts[1].trim();
-
-        if (details.isEmpty()) {
-            throw new LeBookException("Missing index or book details after '" + deleteType + "/'.");
-        }
-
-        switch (deleteType) {
-            case DELETE_BY_INDEX:
-                int bookIndex = parseIndex(details); // Can throw LeBookException
-                return new DeleteByIndexCommand(bookIndex);
-            case DELETE_BY_BOOK:
-                String[] bookParts = details.split("/", SPLIT_INTO_TWO); // Expects TITLE / AUTHOR
-                if (bookParts.length < MIN_PARTS_TWO) {
-                    throw new LeBookException("Invalid format for delete by book. Required: delete b/TITLE/AUTHOR");
-                }
-                String bookTitle = bookParts[0].trim();
-                String authorName = bookParts[1].trim();
-                if (bookTitle.isEmpty() || authorName.isEmpty()) {
-                    throw new LeBookException("Book Title and Author cannot be empty for delete by book.");
-                }
-                return new DeleteByBookCommand(bookTitle, authorName);
-            default:
-                throw new LeBookException("Invalid delete type '" + deleteType + "'. Use 'i' for index or 'b' for book.");
+        String deleteCommandType = parts[0].trim();
+        switch (deleteCommandType) {
+        case DELETE_BY_INDEX:
+            int bookIndex = parseIndex(parts[1].trim()); //throws LeBook Exception
+            return new DeleteByIndexCommand(bookIndex);
+        case DELETE_BY_BOOK:
+            String[] bookDetails = parts[1].split("/", SPLIT_INTO_TWO); //should split into title and author
+            if (bookDetails.length < LENGTH_LIMIT_TWO) {
+                throw new LeBookException("Invalid format. It should be: delete b/BOOK_TITLE/AUTHOR_NAME");
+            }
+            String bookTitle = bookDetails[0].trim();
+            String authorName = bookDetails[1].trim();
+            return new DeleteByBookCommand(bookTitle, authorName);
+        default:
+            throw new LeBookException("Invalid format. It should be: delete b/BOOK_TITLE/AUTHOR_NAME "
+                    + "or delete i/BOOK_INDEX");
         }
     }
 
-  
-    private static Command parseListQuantityCommand(String inputDetails) throws LeBookException{
+
+    private static Command parseListQuantityCommand(String inputDetails) throws LeBookException {
         String[] parts = inputDetails.split("/", SPLIT_INTO_THREE);
         if (parts.length < LENGTH_LIMIT_THREE) {
             throw new LeBookException("Invalid format. It should be: quantity / BOOK_TITLE / AUTHOR_NAME");
@@ -229,19 +218,19 @@ public class Parser {
         String searchTerm = parts[1].trim(); // Keep original case for title/author/shelf search term
 
         switch (criteria) {
-            case "title":
-                return new SearchByTitleCommand(searchTerm);
-            case "author":
-                return new SearchByAuthorCommand(searchTerm);
-            case "genre":
-                // Pass lowercase genre for consistent handling in the command
-                return new SearchByGenreCommand(searchTerm.toLowerCase());
-            case "shelf":
-                // Pass shelf ID as is (case might matter)
-                return new SearchByShelfCommand(searchTerm);
-            default:
-                throw new LeBookException("Invalid search criteria '" + criteria +
-                        "'. Use 'title', 'author', 'genre', or 'shelf'.");
+        case "title":
+            return new SearchByTitleCommand(searchTerm);
+        case "author":
+            return new SearchByAuthorCommand(searchTerm);
+        case "genre":
+            // Pass lowercase genre for consistent handling in the command
+            return new SearchByGenreCommand(searchTerm.toLowerCase());
+        case "shelf":
+            // Pass shelf ID as is (case might matter)
+            return new SearchByShelfCommand(searchTerm);
+        default:
+            throw new LeBookException("Invalid search criteria '" + criteria +
+                    "'. Use 'title', 'author', 'genre', or 'shelf'.");
         }
     }
 
@@ -264,6 +253,7 @@ public class Parser {
         String[] fullInput = trimmedInput.split("\\s+", SPLIT_INTO_TWO);
         String commandType = fullInput[0].toLowerCase();
         String inputDetails = (fullInput.length > 1) ? fullInput[1] : "";
+        int bookIndex;
 
         switch (commandType) {
         case BYE:
@@ -290,8 +280,8 @@ public class Parser {
             return parseListShelfCommand(inputDetails);
         case LIST_QUANTITY:
             return parseListQuantityCommand(inputDetails);
-            //        case STATISTICS:
-            //            return new StatisticsCommand();
+        //        case STATISTICS:
+        //            return new StatisticsCommand();
         default:
             throw new LeBookException("I don't understand. Try starting with list, add, delete, borrow, return!");
         }

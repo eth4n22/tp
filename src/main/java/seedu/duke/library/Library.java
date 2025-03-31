@@ -30,6 +30,10 @@ public class Library {
         return theOneLibrary;
     }
 
+    public BookManager getBookManager() {
+        return catalogueManager;
+    }
+
     public String listBooks() {
         return catalogueManager.listBooks();
     }
@@ -110,5 +114,10 @@ public class Library {
 
     public String listOverdueBooks() {
         return catalogueManager.listOverdueBooks();
+    }
+
+    public void cleanup() {
+        catalogueManager.cleanup();
+        shelvesManager.cleanup();
     }
 }

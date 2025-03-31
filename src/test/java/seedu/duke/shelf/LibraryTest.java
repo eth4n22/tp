@@ -68,7 +68,6 @@ public class LibraryTest {
     @SuppressWarnings("unchecked")
     @Test
     public void testDeleteBookByIndex_exist() throws NoSuchFieldException, IllegalAccessException {
-
         String result = library.deleteBook(0);
         System.out.println(result);  // For debugging output
         assertTrue(result.contains("Now you have 0 books"), "Should confirm deletion");
@@ -98,11 +97,10 @@ public class LibraryTest {
     }
 
     @Test
-    public void testDeleteBookByBook_noExist() {
-
+    public void testDeleteBookByBook_noExist() throws Exception {
         String result = library.deleteBook(1);
         System.out.println(result);
-        assertTrue(result.contains("Book not found!"), "Book shouldn't exist");
+        assertTrue(result.contains("Invalid book index"), "Book shouldn't exist");
     }
 
     @SuppressWarnings("unchecked")
@@ -140,10 +138,9 @@ public class LibraryTest {
 
     @Test
     public void testDeleteBookByIndex_noExist() {
-
         String result = library.deleteBook("hello", "Author A");
         System.out.println(result);
-        assertTrue(result.contains("Book not found!"), "Book shouldn't exist");
+        assertTrue(result.contains("Book not found with title"), "Book shouldn't exist");
 
     }
 }

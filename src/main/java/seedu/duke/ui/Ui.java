@@ -7,9 +7,10 @@ import java.time.format.DateTimeFormatter; // Import Formatter
 
 public class Ui {
     private static final Ui uiInstance = new Ui();
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
     private final Scanner scanner;
     // Formatter for due dates in showBookList
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private Ui() {
         this.scanner = new Scanner(System.in);

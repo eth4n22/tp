@@ -15,7 +15,8 @@ import java.util.List;
  * Command to search for books by their genre.
  */
 public class SearchByGenreCommand extends Command {
-    public static final String MESSAGE_INVALID_GENRE = "Invalid genre provided. Please use one of the supported genres:" +
+    public static final String MESSAGE_INVALID_GENRE = "Invalid genre provided. " +
+            "Please use one of the supported genres:" +
             "\n" + "  romance, adventure, action, horror, mystery, nonfiction, scifi";
 
     private final String searchTerm;

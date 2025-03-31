@@ -31,8 +31,8 @@ public class SearchByAuthorCommand extends Command {
         if (searchTerm.isEmpty()) {
             throw new LeBookException("Please provide an author name to search for.");
         }
-
-        BookManager bookManager = library.getBookManager();
+        List<Book> books = null;
+        BookManager bookManager = BookManager.getBookManagerInstance(books);
         BookFinder finder = new BookFinder(bookManager.getBooks());
         List<Book> results = finder.findBooksByAuthor(searchTerm);
 

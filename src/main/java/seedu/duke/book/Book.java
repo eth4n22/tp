@@ -100,22 +100,22 @@ public class Book {
             String genreId = bookID.split("-")[0];
             // Corrected Indentation for switch block
             switch (genreId.toUpperCase()) { // Use uppercase for reliable matching
-                case ROMANCE_ID:
-                    return ROMANCE;
-                case ADVENTURE_ID:
-                    return ADVENTURE;
-                case ACTION_ID:
-                    return ACTION;
-                case HORROR_ID:
-                    return HORROR;
-                case MYSTERY_ID:
-                    return MYSTERY;
-                case NONFICTION_ID:
-                    return NONFICTION;
-                case SCIFI_ID:
-                    return SCIFI;
-                default:
-                    return UNKNOWN_GENRE;
+            case ROMANCE_ID:
+                return ROMANCE;
+            case ADVENTURE_ID:
+                return ADVENTURE;
+            case ACTION_ID:
+                return ACTION;
+            case HORROR_ID:
+                return HORROR;
+            case MYSTERY_ID:
+                return MYSTERY;
+            case NONFICTION_ID:
+                return NONFICTION;
+            case SCIFI_ID:
+                return SCIFI;
+            default:
+                return UNKNOWN_GENRE;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             // Handle cases where split doesn't produce enough parts
@@ -146,7 +146,7 @@ public class Book {
         return status + " " + title + " (by " + author + ")" + dueDateStr;
     }
 
-      /**
+    /**
      * Generates a string representation suitable for saving to a file.
      * Uses '|' as a delimiter. Handles null values for saving.
      *
@@ -155,7 +155,7 @@ public class Book {
     public String toFileFormat() {
         return title + " | " + author + " | " + (isBorrowed ? 1 : 0)
                 + " | " + returnDueDate + " | " + bookID
-                +  " | " + borrowerName;
+                + " | " + borrowerName;
     }
 
     /**

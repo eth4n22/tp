@@ -35,7 +35,7 @@ public class UiTest {
         ui.printExitMessage();
         String expected = """
                 ========================================
-                Goodbye! See you again.
+                Goodbye! Hope to see you again soon!
                 ========================================
                 """;
         assertEquals(expected.trim(), normalize(outputStream.toString()));
@@ -90,26 +90,34 @@ public class UiTest {
                 ========================================
                 Available Commands:
                 -------------------
-                1. add TITLE/AUTHOR/GENRE      - Add a new book to the library.
-                2. delete BOOK_NUMBER          - Remove a book from the library.
-                3. list                        - List all current books.
-                4. list overdue                - List all overdue books.
-                5. list borrowed               - List all borrowed books.
-                6. borrow BOOK_NUMBER          - Borrow a book from the library.
-                7. return BOOK_NUMBER          - Return a borrowed book.
-                8. statistics                  - View library statistics.
-                9. bye                         - Exit the program.
-                10. help                        - Show this help menu.
-                11. shelf SHELF/GENRE/NUMBER    - Lists a particular shelf of specified genre.
+                1.  add TITLE / AUTHOR / GENRE      - Add a new book.
+                2.  delete i/INDEX                  - Remove book by list index (1-based).
+                3.  delete b/TITLE / AUTHOR         - Remove book by title and author.
+                4.  list                            - List all unique book titles.
+                5.  list overdue                    - List overdue books.
+                6.  list borrowed                   - List borrowed books.
+                7.  borrow INDEX / MEMBER_NAME      - Borrow a book (using 1-based index).
+                8.  return INDEX                    - Return a borrowed book (using 1-based index).
+                9.  find CRITERIA TERM              - Search books.
+                      Criteria: title, author, genre, shelf
+                10. shelf GENRE / SHELF_NUMBER      - List books on a specific shelf (1-based number).
+                11. statistics                      - View library statistics.
+                12. help                            - Show this help menu.
+                13. bye                             - Exit the program.
                 -------------------
-                Genres:
-                  > romance
-                  > adventure
-                  > action
-                  > horror
-                  > mystery
-                  > nonfiction
-                  > scifi
+                Supported Genres:
+                  > romance, adventure, action, horror, mystery, nonfiction, scifi
+                -------------------
+                Example Usage:
+                  add The Lord of the Rings / J.R.R. Tolkien / adventure
+                  list
+                  borrow 1 / Alice
+                  find title lord
+                  find genre adventure
+                  find shelf AD-0-0
+                  return 1
+                  delete i/1
+                  bye
                 
                 ========================================
                 """;

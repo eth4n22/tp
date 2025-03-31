@@ -78,7 +78,7 @@ public class BookManagerTest {
         String result = bookManager.deleteBook(2); // Index out of bounds
 
         assertEquals(1, bookManager.getBooks().size());
-        assertEquals("There is no such book in the library!", result);
+        assertEquals("Invalid book index provided. There is no book at index 3.", result);
     }
 
     @Test
@@ -86,7 +86,7 @@ public class BookManagerTest {
         bookManager.cleanup();
         String result = bookManager.deleteBook(-1);
 
-        assertEquals("There is no such book in the library!", result);
+        assertEquals("Invalid book index provided. There is no book at index 0.", result);
     }
 
     @Test
@@ -124,7 +124,7 @@ public class BookManagerTest {
         String result = bookManager.updateBookStatus("borrow", 0, "John",
                 memberManager);
 
-        assertEquals("John has borrowed: The Great Gatsby", result);
+        assertEquals("John has borrowed: \"The Great Gatsby\" (Due: 2025-04-15)", result);
         assertTrue(bookManager.getBooks().get(0).isBorrowed());
     }
 
@@ -139,7 +139,7 @@ public class BookManagerTest {
         String result = bookManager.updateBookStatus("return", 0, "John",
                 memberManager);
 
-        assertEquals("Returned: The Great Gatsby", result);
+        assertEquals("Returned: \"The Great Gatsby\"", result);
         assertFalse(bookManager.getBooks().get(0).isBorrowed());
     }
 
@@ -152,7 +152,7 @@ public class BookManagerTest {
         String result = bookManager.updateBookStatus("borrow", 2, "John",
                 memberManager);
 
-        assertEquals("There is no such book in the library!", result);
+        assertEquals("Invalid book index provided. There is no book at index 3.", result);
     }
 
     @Test
@@ -166,7 +166,7 @@ public class BookManagerTest {
                 memberManager);
         //parser passes in 0-indexed bookIndex
 
-        assertEquals("John has borrowed: Harry Potter", result);
+        assertEquals("John has borrowed: \"Harry Potter\" (Due: 2025-04-15)", result);
         assertTrue(bookManager.getBooks().get(0).isBorrowed());
     }
 
@@ -181,7 +181,7 @@ public class BookManagerTest {
         String result = bookManager.updateBookStatus("return", 0, "John",
                 memberManager);
 
-        assertEquals("Returned: Harry Potter", result);
+        assertEquals("Returned: \"Harry Potter\"", result);
 
         assertFalse(bookManager.getBooks().get(0).isBorrowed());
     }
@@ -195,7 +195,7 @@ public class BookManagerTest {
         String result = bookManager.updateBookStatus("borrow", 100, "John",
                 memberManager);
 
-        assertEquals("There is no such book in the library!", result);
+        assertEquals("Invalid book index provided. There is no book at index 101.", result);
     }
 
     @Test
@@ -208,7 +208,7 @@ public class BookManagerTest {
         String result = bookManager.updateBookStatus("borrow", 0, "Jane",
                 memberManager);
 
-        assertEquals("This book is already borrowed!", result);
+        assertEquals("\"Harry Potter\" is already borrowed by John.", result);
     }
 
     @Test
@@ -220,7 +220,7 @@ public class BookManagerTest {
         String result = bookManager.updateBookStatus("return", 0, "John",
                 memberManager);
 
-        assertEquals("This book is not borrowed!", result);
+        assertEquals("\"Harry Potter\" is not currently borrowed.", result);
     }
 
     @Test
