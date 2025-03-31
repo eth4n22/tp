@@ -3,7 +3,6 @@ package seedu.duke;
 import seedu.duke.commands.Command;
 import seedu.duke.exception.LeBookException;
 import seedu.duke.library.Library;
-import seedu.duke.shelving.ShelvesManager;
 import seedu.duke.ui.Ui;
 import seedu.duke.parser.Parser;
 import seedu.duke.storage.Storage;
@@ -19,12 +18,9 @@ public class LeBook {
     private final Storage storage;
     private final Ui ui;
     private final MemberManager memberManager;
-    private final ShelvesManager shelvesManager;
 
     public LeBook(String filePath) {
         assert filePath != null && !filePath.trim().isEmpty() : "File path cannot be null or empty";
-
-        shelvesManager = ShelvesManager.getShelvesManagerInstance();
         ui = Ui.getUiInstance();
         storage = Storage.getInstance(filePath);
         memberManager = MemberManager.getInstance();

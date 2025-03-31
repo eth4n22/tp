@@ -19,7 +19,7 @@ public class Library {
     private final ShelvesManager shelvesManager;
 
     private Library(List<Book> allBooks) {
-        catalogueManager = new BookManager(allBooks);
+        catalogueManager = BookManager.getBookManagerInstance(allBooks);
         shelvesManager = ShelvesManager.getShelvesManagerInstance();
     }
 
@@ -94,7 +94,7 @@ public class Library {
         return catalogueManager.updateBookStatus(command, bookIndex, borrowerName, memberManager);
     }
 
-    //@@author Deanson Choo
+    //@@author Deanson-Choo
     /**
      * Returns a list of all books currently in the catalogue.
      *
@@ -104,13 +104,9 @@ public class Library {
         return catalogueManager.getBooks();
     }
 
-    public BookManager getBookManager() {
-        return catalogueManager;
-    }
-
-    public String getStatistics() {
-        return catalogueManager.getStatistics();
-    }
+    //    public String getStatistics() {
+    //        return catalogueManager.getStatistics();
+    //    }
 
     public String listOverdueBooks() {
         return catalogueManager.listOverdueBooks();

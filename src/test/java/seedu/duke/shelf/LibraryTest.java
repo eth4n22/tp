@@ -28,7 +28,6 @@ public class LibraryTest {
         book.setBookID("R-0-0");
         book.setStatus(false);
         book.setReturnDueDate(LocalDate.of(2025, 5, 5));
-        book.setQuantity(1);
         List<Book> catalogBooks = new ArrayList<>();
         catalogBooks.add(book);
 
