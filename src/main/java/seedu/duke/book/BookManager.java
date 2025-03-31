@@ -171,6 +171,7 @@ public class BookManager {
 
             // Assert that the output message contains the expected elements
             assert totalQuantity >= books.size() : "Total quantity should be >= number of unique titles";
+        }
 
         StringBuilder output = new StringBuilder("Here are the books in your library:\n");
         int totalQuantity = 0;
