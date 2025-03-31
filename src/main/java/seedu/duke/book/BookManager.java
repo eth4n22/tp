@@ -1,289 +1,367 @@
+// src/main/java/seedu/duke/book/BookManager.java
 package seedu.duke.book;
 
 import seedu.duke.exception.BookNotFoundException;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.time.LocalDate;
-
 import seedu.duke.member.Member;
 import seedu.duke.member.MemberManager;
 import seedu.duke.utility.GroupReturns;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+// You might need this import if you uncomment the stream().filter() lines below
+// import java.util.stream.Collectors;
+
 /**
- * Manages a collection of books by adding, deleting, listing, searching, and updating their status.
+ * Manages the collection of books: adding, deleting, listing, updating status,
+ * providing access to the book list, and validating genres.
+ * Search functionality is delegated to BookFinder.
  */
 public class BookManager {
     private static final String BORROW = "borrow";
     private static final String RETURN = "return";
-  
-    private final List<Book> books;
 
-    /**
-     * Constructs a new BookManager with the given books.
-     *
-     * @param books The initial list of books
-     */
+    // Central list of valid genres
+    private static final List<String> VALID_GENRES = Arrays.asList(
+            "romance", "adventure", "action", "horror", "mystery", "nonfiction", "scifi"
+    );
+
+    private final List<Book> books; // The authoritative list of books
+
     public BookManager(List<Book> books) {
-        this.books = books != null ? new ArrayList<>(books) : new ArrayList<>();
+        this.books = (books != null) ? new ArrayList<>(books) : new ArrayList<>();
     }
 
+    /** Checks if the genre is supported by the library. */
     private boolean isAppropriateGenre(String genre) {
-        return genre.equals("romance") || genre.equals("adventure") || genre.equals("action") ||
-                genre.equals("horror") || genre.equals("mystery") || genre.equals("scifi") ||
-                genre.equals("nonfiction");
-
+        return isValidGenre(genre);
     }
 
     /**
-     * Gets the list of all books.
+     * Validates if a given genre string is one of the supported genres (case-insensitive).
      *
-     * @return The list of books
+     * @param genre The genre string to check.
+     * @return true if the genre is valid, false otherwise.
+     */
+    public boolean isValidGenre(String genre) {
+        if (genre == null) {
+            return false;
+        }
+        return VALID_GENRES.contains(genre.toLowerCase());
+    }
+
+    /**
+     * Gets the list of all books managed by this manager.
+     *
+     * @return The list of books.
      */
     public List<Book> getBooks() {
         return books;
     }
 
     /**
-     * Adds a new book based on the provided details.
+     * Adds a new book or increases the quantity if it already exists.
      *
-     * @param title The title of the book to be added.
-     * @param author The author of the book to be added.
-     * @param genre The genre of the book to be added.
-     *
-     * @return A message confirming the book addition or an error message
+     * @param title Title of the book.
+     * @param author Author of the book.
+     * @param genre Genre of the book (must be valid).
+     * @param bookID Generated Shelf ID for the book.
+     * @return Confirmation or error message string.
      */
     public String addNewBookToCatalogue(String title, String author, String genre, String bookID) {
         assert title != null : "Title cannot be null";
         assert author != null : "Author cannot be null";
         assert genre != null : "Genre cannot be null";
 
+        // Moved checks to separate lines for clarity
         if (title.isEmpty()) {
             return "Book title cannot be empty!";
         }
-
         if (author.isEmpty()) {
             return "Book author cannot be empty!";
         }
-
         if (genre.isEmpty()) {
             return "Book genre cannot be empty!";
         }
-
-        if (!isAppropriateGenre(genre)) {
-            return "This Library does not support this Genre!";
+        if (!isValidGenre(genre)) {
+            // Broke long line
+            return "This Library does not support this Genre! Valid genres are: "
+                    + String.join(", ", VALID_GENRES);
         }
 
+        // Check for existing book (case-insensitive)
         for (Book book : books) {
             if (book.getTitle().equalsIgnoreCase(title) && book.getAuthor().equalsIgnoreCase(author)) {
                 book.increaseQuantity();
-                return "Increased quantity of \"" + title + "\" by " + author +
-                        ".\nTotal Quantity: " + book.getQuantity();
+                // Broke long line
+                return "Increased quantity of \"" + title + "\" by " + author
+                        + ".\nTotal Quantity: " + book.getQuantity();
             }
         }
 
+        // Add new book if not found
         Book newBook = new Book(title, author);
         newBook.setBookID(bookID);
         newBook.setQuantity(1);
         books.add(newBook);
 
-        return "I've added: \"" + title + "\" by " + author + ".\nTotal books in library: " + books.size();
-
+        // Broke long line
+        return "I've added: \"" + title + "\" by " + author + " (Genre: " + genre + ", ID: " + bookID + ").\n"
+                + "Total unique titles in library: " + books.size();
     }
 
-
     /**
-     * Deletes a book from the books list.
+     * Deletes a book by its 0-based index or decreases its quantity.
      *
-     * @param bookIndex Array containing the book index information [index]
-     * @return A message indicating whether the deletion was successful or if there was an error
+     * @param bookIndex The 0-based index of the book in the list.
+     * @return Confirmation or error message string.
      */
-
     public String deleteBook(int bookIndex) {
         if (bookIndex < 0 || bookIndex >= books.size()) {
-            return "There is no such book in the library!";
+            // Broke long line
+            return "Invalid book index provided. There is no book at index "
+                    + (bookIndex + 1) + ".";
         }
 
         Book book = books.get(bookIndex);
-
-        //If multiple copies of same book, lower quantity rather than delete
         if (book.getQuantity() > 1) {
             book.decreaseQuantity();
+            // Broke long line
             return "Decreased quantity of \"" + book.getTitle() + "\" by " + book.getAuthor()
                     + ".\nRemaining Quantity: " + book.getQuantity();
         }
 
-        //If only one of that book, remove book
-        Book removedBook = books.get(bookIndex);
-        int oldSize = books.size();
-        books.remove(bookIndex);
-
-        // Assert that the book was successfully removed
-        assert books.size() == oldSize - 1 : "Book size should decrease by 1 after deletion";
-        assert !books.contains(removedBook) : "Removed book should not be in the collection";
-
-        return "Book deleted:\n  " + removedBook + "\nNow you have " + books.size() + " books in the library";
+        // Remove the book entirely if quantity is 1
+        Book removedBook = books.remove(bookIndex);
+        int newSize = books.size();
+        // Broke long line
+        return "Book deleted:\n  " + removedBook.getTitle() + " by " + removedBook.getAuthor()
+                + "\nNow you have " + newSize + " unique titles in the library.";
     }
 
     /**
-     * Lists all books in the library.
+     * Generates a string listing all books in the library.
      *
-     * @return A formatted string of all books
+     * @return Formatted string of all books or a message if the library is empty.
      */
     public String listBooks() {
-        // Assert that books is never null when listing
-        //assert books != null : "Book list should never be null when listing";
-
         if (books.isEmpty()) {
-            return "No books in the library yet.";
-        } else {
-            StringBuilder output = new StringBuilder("Here are the books in your library:\n");
-            int totalQuantity = 0;
-            for (int i = 0; i < books.size(); i++) {
-                Book book = books.get(i);
-                assert book != null : "Book at index " + i + " should not be null";
-                output.append(i + 1).append(". ").append(book).append("\n");
-                totalQuantity += book.getQuantity();
-
-            }
-            output.append("Total books: ").append(totalQuantity);
-
-            // Assert that the output message contains the expected elements
-            assert totalQuantity >= books.size() : "Total quantity should be >= number of unique titles";
-
-            return output.toString();
+            return "The library is empty. Add some books!";
         }
+
+        StringBuilder output = new StringBuilder("Here are the books in your library:\n");
+        int totalQuantity = 0;
+        for (int i = 0; i < books.size(); i++) {
+            Book book = books.get(i);
+            // Uses Book.toString() which is already formatted
+            output.append(i + 1).append(". ").append(book.toString()).append("\n");
+            totalQuantity += book.getQuantity();
+        }
+        output.append("-----\nTotal unique titles: ").append(books.size());
+        output.append("\nTotal copies: ").append(totalQuantity);
+        return output.toString();
     }
 
     /**
-     * Updates the status of a book in the library based on the provided command.
+     * Updates the borrowing status of a book (borrow or return).
      *
-     * @param command   The operation to perform, either BORROW or RETURN.
-     * @param bookIndex The index of the book in the library (0-based).
-     * @return A message indicating the result of the operation, which can be:
-     * @throws NumberFormatException If the book number provided cannot be parsed as an integer
+     * @param command      "borrow" or "return".
+     * @param bookIndex    0-based index of the book.
+     * @param borrowerName Name of the borrower (required for borrow).
+     * @param memberManager Manager to handle member records.
+     * @return Confirmation or error message string.
      */
     public String updateBookStatus(String command, int bookIndex, String borrowerName, MemberManager memberManager) {
-        //assert userInput != null : "Input should not be null";
-
         if (bookIndex < 0 || bookIndex >= books.size()) {
-            return "There is no such book in the library!";
+            // Broke long line
+            return "Invalid book index provided. There is no book at index "
+                    + (bookIndex + 1) + ".";
         }
 
         Book book = books.get(bookIndex);
-        assert book != null : "Book object should not be null";
+        Member borrower; // Declare borrower outside the blocks
 
-        Member borrower = memberManager.getMemberByName(borrowerName);
-
-        switch (command) {
-        case BORROW:
+        if (command.equals(BORROW)) {
+            if (borrowerName == null || borrowerName.trim().isEmpty()) {
+                return "Borrower name cannot be empty for borrowing.";
+            }
+            borrower = memberManager.getMemberByName(borrowerName);
             if (book.isBorrowed()) {
-                return "This book is already borrowed!";
+                // Broke long line
+                return "\"" + book.getTitle() + "\" is already borrowed by "
+                        + book.getBorrowerName() + ".";
             }
             book.setStatus(true);
             book.setReturnDueDate(LocalDate.now().plusWeeks(2));
             book.setBorrowerName(borrowerName);
             borrower.borrowBook(book);
-            return borrowerName + " has borrowed: " + book.getTitle();
-        case RETURN:
+            // Broke long line
+            return borrowerName + " has borrowed: \"" + book.getTitle() + "\" (Due: "
+                    + book.getReturnDueDate() + ")";
+
+        } else if (command.equals(RETURN)) {
             if (!book.isBorrowed()) {
-                return "This book is not borrowed!";
+                return "\"" + book.getTitle() + "\" is not currently borrowed.";
+            }
+            String originalBorrowerName = book.getBorrowerName();
+            // Ensure borrower name from book record is valid before looking up member
+            if (originalBorrowerName != null && !originalBorrowerName.equals("null")
+                    && !originalBorrowerName.trim().isEmpty()) {
+                borrower = memberManager.getMemberByName(originalBorrowerName);
+                borrower.returnBook(book); // Update member's borrowed list
             }
             book.setStatus(false);
             book.setReturnDueDate(null);
-            book.setBorrowerName(null);
-            borrower.returnBook(book);
-            return "Returned: " + book.getTitle();
-        default:
-            return "Invalid command!";
+            book.setBorrowerName(null); // Clear borrower info on the book
+            return "Returned: \"" + book.getTitle() + "\"";
+
+        } else {
+            // This case should ideally not be reached if parser validates commands
+            return "Invalid update command!";
         }
     }
 
     /**
-     * Lists all the books that have been borrowed in the library.
+     * Generates a string listing all currently borrowed books.
      *
-     * @return A string representation of the borrowed books. If no books have been borrowed,
+     * @return Formatted string of borrowed books or a message if none are borrowed.
      */
     public String listBorrowedBooks() {
-        if (books.isEmpty()) {
-            return "No books have been added yet.";
-        } else {
-            int borrowedBooksCount = 0;
-            StringBuilder borrowedBooks = new StringBuilder("Here are the books that have been borrowed:\n");
-            for (int i = 0; i < books.size(); i++) {
-                Book book = books.get(i);
-                assert book != null : "Book at index " + i + " should not be null";
-                if (book.isBorrowed()) {
-                    borrowedBooksCount++;
-                    borrowedBooks.append(i + 1).append(". ").append(book).append("\n");
-                }
+        List<Book> borrowed = new ArrayList<>();
+        for (Book book : books) {
+            if (book.isBorrowed()) {
+                borrowed.add(book);
             }
-            return borrowedBooksCount == 0 ? "No books have been borrowed yet." : borrowedBooks.toString();
         }
+        // Alternative using streams (requires import):
+        // List<Book> borrowed = books.stream().filter(Book::isBorrowed).collect(Collectors.toList());
+
+        if (borrowed.isEmpty()) {
+            return "No books are currently borrowed.";
+        }
+
+        StringBuilder output = new StringBuilder("Borrowed Books:\n");
+        for (int i = 0; i < borrowed.size(); i++) {
+            Book book = borrowed.get(i);
+            String dueDateStr = (book.getReturnDueDate() != null) ? book.getReturnDueDate().toString() : "N/A";
+            // Broke long line using append chaining
+            output.append(i + 1).append(". ")
+                    .append(book.getTitle()).append(" by ").append(book.getAuthor())
+                    .append(" (Borrowed by: ").append(book.getBorrowerName())
+                    .append(", Due: ").append(dueDateStr)
+                    .append(")\n");
+        }
+        return output.toString();
     }
 
+    /**
+     * Generates a string listing all currently overdue books.
+     *
+     * @return Formatted string of overdue books or a message if none are overdue.
+     */
     public String listOverdueBooks() {
-        StringBuilder output = new StringBuilder("List of Overdue Books:\n");
-        boolean hasOverdue = false;
-
-        for (int i = 0; i < books.size(); i++) {
-            Book book = books.get(i);
-            boolean isOverdue = book.isOverdue();
-
-            if (isOverdue) {
-                output.append(i + 1)
-                        .append(". ")
-                        .append(book)
-                        .append("\n");
-                hasOverdue = true;
+        List<Book> overdue = new ArrayList<>();
+        for (Book book : books) {
+            if (book.isOverdue()) {
+                overdue.add(book);
             }
         }
+        // Alternative using streams (requires import):
+        // List<Book> overdue = books.stream().filter(Book::isOverdue).collect(Collectors.toList());
 
-
-        return hasOverdue ? output.toString() : "No Overdue Books";
-    }
-
-    public String getBookID(int bookIndex) throws BookNotFoundException {
-        try {
-            Book book = books.get(bookIndex);
-            return book.getBookID();
-        } catch (IndexOutOfBoundsException e) {
-            throw new BookNotFoundException("Book not found!");
+        if (overdue.isEmpty()) {
+            return "No books are currently overdue.";
         }
+
+        StringBuilder output = new StringBuilder("Overdue Books:\n");
+        for (int i = 0; i < overdue.size(); i++) {
+            Book book = overdue.get(i);
+            // Broke long line using append chaining
+            output.append(i + 1).append(". ")
+                    .append(book.getTitle()).append(" by ").append(book.getAuthor())
+                    .append(" (Borrowed by: ").append(book.getBorrowerName())
+                    .append(", Due: ").append(book.getReturnDueDate()) // Assured non-null by isOverdue()
+                    .append(")\n");
+        }
+        return output.toString();
     }
 
+    /**
+     * Retrieves the shelf ID of a book given its 0-based index.
+     *
+     * @param bookIndex The 0-based index.
+     * @return The book's shelf ID.
+     * @throws BookNotFoundException If the index is invalid or the book has no valid ID.
+     */
+    public String getBookID(int bookIndex) throws BookNotFoundException {
+        if (bookIndex < 0 || bookIndex >= books.size()) {
+            throw new BookNotFoundException("Invalid book index: " + (bookIndex + 1));
+        }
+        Book book = books.get(bookIndex);
+        if (book.getBookID() == null || book.getBookID().equals("NIL")) {
+            // Broke long line
+            throw new BookNotFoundException("Book at index " + (bookIndex + 1)
+                    + " does not have a valid Shelf ID.");
+        }
+        return book.getBookID();
+    }
+
+    /**
+     * Retrieves the 0-based index and shelf ID of a book given its title and author (case-insensitive).
+     *
+     * @param bookTitle The title to search for.
+     * @param author The author to search for.
+     * @return A GroupReturns object containing the index and shelf ID.
+     * @throws BookNotFoundException If the book is not found or lacks a valid ID.
+     */
     public GroupReturns getBookID(String bookTitle, String author) throws BookNotFoundException {
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
-            if (book.getTitle().equals(bookTitle) && book.getAuthor().equals(author)) {
-                return new GroupReturns(i, book.getBookID()); // Example: pass the index to the constructor
+            if (book.getTitle().equalsIgnoreCase(bookTitle) && book.getAuthor().equalsIgnoreCase(author)) {
+                if (book.getBookID() == null || book.getBookID().equals("NIL")) {
+                    // Broke long line
+                    throw new BookNotFoundException("Found book '" + bookTitle
+                            + "' but it has no valid Shelf ID.");
+                }
+                return new GroupReturns(i, book.getBookID());
             }
         }
-        throw new BookNotFoundException("Book not found!");
+        // Broke long line
+        throw new BookNotFoundException("Book not found with title '" + bookTitle
+                + "' and author '" + author + "'.");
     }
 
+    /**
+     * Generates a string containing library statistics.
+     *
+     * @return Formatted statistics string.
+     */
     public String getStatistics() {
-        int totalBooks = 0;
-        int borrowedBooks = 0;
-        int overdueBooks = 0;
+        // Separated variable definitions and initialization
+        int totalCopies = 0;
+        int borrowedCount = 0;
+        int overdueCount = 0;
 
         for (Book book : books) {
-            totalBooks += book.getQuantity();
+            totalCopies += book.getQuantity();
             if (book.isBorrowed()) {
-                borrowedBooks++;
+                borrowedCount++;
             }
             if (book.isOverdue()) {
-                overdueBooks++;
+                overdueCount++;
             }
         }
+        int uniqueTitles = books.size();
 
         StringBuilder stats = new StringBuilder();
         stats.append("========== Library Statistics ==========\n");
-        stats.append("Total books copies: ").append(totalBooks).append("\n");
-        stats.append("Unique titles: ").append(books.size()).append("\n");
-        stats.append("Total books borrowed: ").append(borrowedBooks).append("\n");
-        stats.append("Total books overdue: ").append(overdueBooks).append("\n");
-
+        // Used String.format for consistent alignment if needed later
+        stats.append(String.format("Unique book titles: %d%n", uniqueTitles));
+        stats.append(String.format("Total book copies:  %d%n", totalCopies));
+        stats.append(String.format("Titles borrowed:    %d%n", borrowedCount));
+        stats.append(String.format("Titles overdue:     %d%n", overdueCount));
+        stats.append("========================================");
         return stats.toString();
     }
 }
