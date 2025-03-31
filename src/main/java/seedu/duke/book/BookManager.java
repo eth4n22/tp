@@ -135,16 +135,18 @@ public class BookManager {
      */
     public String deleteBook(int bookIndex) {
         if (bookIndex < 0 || bookIndex >= books.size()) {
-            // Broke long line
             return "Invalid book index provided. There is no book at index "
                     + (bookIndex + 1) + ".";
         }
-        //If only one of that book, remove book
         Book removedBook = books.get(bookIndex);
+
+        for (Member member : MemberManager.getInstance().getAllMembers()) {
+            member.returnBook(removedBook);
+        }
+
         int oldSize = books.size();
         books.remove(bookIndex);
 
-        // Assert that the book was successfully removed
         assert books.size() == oldSize - 1 : "Book size should decrease by 1 after deletion";
         assert !books.contains(removedBook) : "Removed book should not be in the collection";
 

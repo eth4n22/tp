@@ -20,6 +20,10 @@ public class MemberManager {
         return memberManagerInstance;
     }
 
+    public List<Member> getAllMembers() {
+        return new ArrayList<>(members);
+    }
+
     public Member getMemberByName(String name) {
         for (Member member : members) {
             if (member.getName().equalsIgnoreCase(name)) {
@@ -37,7 +41,6 @@ public class MemberManager {
         int memberIndex = 1;
 
         for (Member member : members) {
-            System.out.println("Member: " + member.getName());
             List<Book> overdueBooks = member.getOverdueBooks();
             if (!overdueBooks.isEmpty()) {
                 output.append(memberIndex).append(". ").append(member.getName()).append(" - ");
