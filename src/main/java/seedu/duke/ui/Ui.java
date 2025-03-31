@@ -121,8 +121,7 @@ public class Ui {
                     book.getTitle(),
                     book.getAuthor(),
                     book.getGenre(),                // Use the getGenre() method
-                    book.getBookID() != null ? book.getBookID() : "N/A", // Show the full book ID or N/A
-                    book.getQuantity());
+                    book.getBookID() != null ? book.getBookID() : "N/A");
 
             // Display borrower info and due date if borrowed
             if (book.isBorrowed()) {
