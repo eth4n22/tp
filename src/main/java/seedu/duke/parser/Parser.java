@@ -28,7 +28,6 @@ import seedu.duke.exception.LeBookException;
  */
 public class Parser {
 
-    // Command words constants
     private static final String BYE = "bye";
     private static final String ADD = "add";
     private static final String LIST = "list";
@@ -39,7 +38,6 @@ public class Parser {
     private static final String FIND = "find";
     private static final String STATISTICS = "statistics";
 
-    // LIST subcommand constants
     private static final String LIST_OVERDUE = "overdue";
     private static final String LIST_BORROWED = "borrowed";
 
@@ -50,31 +48,27 @@ public class Parser {
     private static final String DELETE_BY_INDEX = "i";
     private static final String DELETE_BY_BOOK = "b";
 
-    // Parsing constants
     private static final int SPLIT_INTO_TWO = 2;
     private static final int SPLIT_INTO_THREE = 3;
-    private static final int MIN_PARTS_TWO = 2; // Use clearer names for length limits
+    private static final int MIN_PARTS_TWO = 2;
     private static final int MIN_PARTS_THREE = 3;
 
     private static final int LENGTH_LIMIT_THREE = 3;
     private static final int LENGTH_LIMIT_TWO = 2;
 
-
+    //@@author jenmarieng
     /**
      * Parses the book index (1-based user input) to a 0-based index.
      */
     private static int parseIndex(String indexString) throws LeBookException {
         if (indexString == null || indexString.trim().isEmpty()) {
-            throw new LeBookException("Book index cannot be empty.");
+            throw new LeBookException("Index cannot be empty.");
         }
         try {
             int index = Integer.parseInt(indexString.trim());
-            if (index <= 0) {
-                throw new LeBookException("Book index must be a positive number.");
-            }
-            return index - 1; // Convert to 0-based index
+            return index - 1;
         } catch (NumberFormatException e) {
-            throw new LeBookException("Invalid book index format. Please provide a number.");
+            throw new LeBookException("Invalid index format. Please provide a number.");
         }
     }
 
@@ -102,7 +96,7 @@ public class Parser {
         }
         String[] parts = bookDetails.split("/", SPLIT_INTO_THREE);
         if (parts.length < MIN_PARTS_THREE) {
-            throw new LeBookException("Invalid format. Required: add TITLE / AUTHOR / GENRE");
+            throw new LeBookException("Invalid format. Format: add TITLE / AUTHOR / GENRE");
         }
 
         String title = parts[0].trim();
@@ -145,7 +139,7 @@ public class Parser {
         String listCommandType = inputDetails.trim().toLowerCase();
 
         if (listCommandType.isEmpty()) {
-            return new ListCommand(); // Default: list all books
+            return new ListCommand();
         }
 
         switch (listCommandType) {
@@ -157,7 +151,7 @@ public class Parser {
             return new ListOverdueUsersCommand();
         default:
             throw new LeBookException("Unknown list type: '" + listCommandType +
-                    "'. Valid options: list overdue, list borrowed"); // Add list users if needed
+                    "'. Valid options: list overdue, list borrowed");
         }
     }
 
@@ -203,7 +197,6 @@ public class Parser {
         return new ListBookQuantityCommand(title, author);
     }
 
-
     //@@author jenmarieng
     /**
      * Parses details for the find command.
@@ -214,14 +207,13 @@ public class Parser {
             throw new LeBookException("Missing search criteria and term. Format: find CRITERIA SEARCH_TERM");
         }
 
-        // Split into criteria (first word) and the rest (search term)
         String[] parts = findDetails.trim().split("\\s+", 2);
         if (parts.length < MIN_PARTS_TWO || parts[1].trim().isEmpty()) {
             throw new LeBookException("Missing search term. Format: find CRITERIA SEARCH_TERM");
         }
 
         String criteria = parts[0].toLowerCase().trim();
-        String searchTerm = parts[1].trim(); // Keep original case for title/author/shelf search term
+        String searchTerm = parts[1].trim();
 
         switch (criteria) {
         case "title":
@@ -229,10 +221,8 @@ public class Parser {
         case "author":
             return new SearchByAuthorCommand(searchTerm);
         case "genre":
-            // Pass lowercase genre for consistent handling in the command
             return new SearchByGenreCommand(searchTerm.toLowerCase());
         case "shelf":
-            // Pass shelf ID as is (case might matter)
             return new SearchByShelfCommand(searchTerm);
         default:
             throw new LeBookException("Invalid search criteria '" + criteria +
@@ -256,8 +246,7 @@ public class Parser {
             throw new LeBookException("Command cannot be empty!");
         }
 
-        // Split command word from the rest of the input details
-        String[] fullInput = trimmedInput.split("\\s+", SPLIT_INTO_TWO);
+        String[] fullInput = trimmedInput.split(" ", SPLIT_INTO_TWO);
         String commandType = fullInput[0].toLowerCase();
         String inputDetails = (fullInput.length > 1) ? fullInput[1] : "";
         int bookIndex;

@@ -103,7 +103,7 @@ public class ParserTest {
     @Test
     void testParseReturnCommand_invalidIndex() {
         Exception exception = assertThrows(LeBookException.class, () -> Parser.parse("return xyz"));
-        assertEquals("Invalid book index format. Please provide a number.", exception.getMessage());
+        assertEquals("Invalid index format. Please provide a number.", exception.getMessage());
     }
 
     @Test
@@ -116,7 +116,7 @@ public class ParserTest {
     @Test
     void testParseDeleteCommand_invalidIndex() {
         Exception exception = assertThrows(LeBookException.class, () -> Parser.parse("delete i/abc"));
-        assertEquals("Invalid book index format. Please provide a number.", exception.getMessage());
+        assertEquals("Invalid index format. Please provide a number.", exception.getMessage());
     }
 
     //@@author Deanson Choo
