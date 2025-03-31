@@ -5,6 +5,7 @@ import seedu.duke.member.Member;
 import seedu.duke.member.MemberManager;
 import seedu.duke.shelving.ShelvesManager;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,11 +23,11 @@ public class Storage {
     private static final int BOOK_AUTHOR_INDEX = 1;
     private static final int BOOK_STATUS_INDEX = 2;
     private static final int BOOK_DUE_DATE_INDEX = 3;
-    private static final int BOOK_SHELF_DETAILS = 4;
-    private static final int BOOK_ID_INDEX = 5;
+    private static final int BOOK_SHELF_INDEX = 4;
+    private static final int BOOK_QUANTITY_INDEX = 5;
     private static final int BORROWER_NAME_INDEX = 6;
 
-    private static final int MAX_SPLIT_NUMBER = 4;
+    private static final int MAX_SPLIT_NUMBER = 7;
 
     private static final String ROMANCE = "romance";
     private static final String ADVENTURE = "adventure";
@@ -75,50 +76,60 @@ public class Storage {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNext()) {
                 String details = scanner.nextLine();
-                Book book = getBookFromLoad(details, shelvesManager);
+                try {
+                    Book book = getBookFromLoad(details, shelvesManager);
 
-                if (book.isBorrowed()) {
-                    String borrowerName = book.getBorrowerName();
-                    if (borrowerName != null && !borrowerName.isEmpty()) {
-                        Member borrower = memberManager.getMemberByName(borrowerName);
-                        borrower.borrowBook(book);
+                    if (book.isBorrowed()) {
+                        String borrowerName = book.getBorrowerName();
+                        if (borrowerName != null && !borrowerName.isEmpty()) {
+                            Member borrower = memberManager.getMemberByName(borrowerName);
+                            borrower.borrowBook(book);
+                        }
                     }
-                }
 
-                bookList.add(book);
+                    bookList.add(book);
+                } catch (IOException e) {
+                    System.out.println("[ERROR] " + e.getMessage());
+                }
             }
 
             scanner.close();
             return bookList;
 
-        } catch (IOException e) {
-            System.out.print("ERROR:" + e.getMessage());
+        } catch (FileNotFoundException e) {
+            System.out.print("[ERROR] " + e.getMessage());
         }
 
         return new ArrayList<>();
     }
 
     //@@author WayneCh0y
-    private static Book getBookFromLoad(String details, ShelvesManager shelvesManager) {
+    private static Book getBookFromLoad(String details, ShelvesManager shelvesManager) throws IOException {
         String[] specifiers = details.split(SPLIT_REGEX);
+
+        if (specifiers.length < MAX_SPLIT_NUMBER) {
+            throw new IOException("Invalid data format in stored file: " + details);
+        }
 
         String bookTitle = specifiers[BOOK_TITLE_INDEX].trim();
         String bookAuthor = specifiers[BOOK_AUTHOR_INDEX].trim();
         String bookStatus = specifiers[BOOK_STATUS_INDEX].trim();
         String bookDueDate = specifiers[BOOK_DUE_DATE_INDEX].trim();
-        String bookID = specifiers[BOOK_ID_INDEX].trim();
+        String bookID = specifiers[BOOK_SHELF_INDEX].trim();
         String genre = getGenreFromFile(bookID);
+        String quantityString = specifiers[BOOK_QUANTITY_INDEX].trim();
         String borrowerName = specifiers[BORROWER_NAME_INDEX].trim();
 
-        boolean isBorrowed;
-        isBorrowed = bookStatus.equals("1");
-        
+        boolean isBorrowed = bookStatus.equals("1");
+
         LocalDate returnDueDate = null;
         if (isBorrowed) {
             returnDueDate = LocalDate.parse(bookDueDate);
         }
-        
-        Book book = new Book(bookTitle, bookAuthor, isBorrowed, returnDueDate, bookID, 1, borrowerName);
+
+        int bookQuantity = Integer.parseInt(quantityString);
+
+        Book book = new Book(bookTitle, bookAuthor, isBorrowed, returnDueDate, bookID, bookQuantity, borrowerName);
         shelvesManager.addBook(bookTitle, bookAuthor, genre);
         return book;
     }
