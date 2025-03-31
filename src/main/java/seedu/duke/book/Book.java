@@ -86,6 +86,7 @@ public class Book {
     }
 
 
+    //@@author Xavierleejrui
     /**
      * Derives the full genre name from the book's ID.
      * Assumes the bookID format is "IDENTIFIER-ShelfNum-Index".
@@ -132,6 +133,7 @@ public class Book {
         return isBorrowed ? "[X]" : "[ ]";
     }
 
+    //@@author eth4n22
     /**
      * Returns a string representation of the book for display purposes.
      * Includes status, title, author, ID, genre, quantity, and due date if applicable.

@@ -3,15 +3,13 @@ package seedu.duke.book;
 
 import seedu.duke.exception.BookNotFoundException;
 
-import java.util.List;
+import java.util.*;
 import java.time.LocalDate;
 
 import seedu.duke.member.Member;
 import seedu.duke.member.MemberManager;
+import seedu.duke.book.QuantityManager;
 import seedu.duke.utility.GroupReturns;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 
 /**
@@ -29,7 +27,7 @@ public class BookManager {
     private static final List<String> VALID_GENRES = Arrays.asList(
             "romance", "adventure", "action", "horror", "mystery", "nonfiction", "scifi"
     );
-  
+
     private static List<Book> books;
 
     /**
@@ -56,7 +54,9 @@ public class BookManager {
         return bookManagerInstance;
     }
 
-    /** Checks if the genre is supported by the library. */
+    /**
+     * Checks if the genre is supported by the library.
+     */
     private boolean isAppropriateGenre(String genre) {
         return isValidGenre(genre);
     }
@@ -86,9 +86,9 @@ public class BookManager {
     /**
      * Adds a new book or increases the quantity if it already exists.
      *
-     * @param title Title of the book.
+     * @param title  Title of the book.
      * @param author Author of the book.
-     * @param genre Genre of the book (must be valid).
+     * @param genre  Genre of the book (must be valid).
      * @param bookID Generated Shelf ID for the book.
      * @return Confirmation or error message string.
      */
@@ -120,7 +120,7 @@ public class BookManager {
 
         // Broke long line
         return "I've added: \"" + title + "\" by " + author + " (Genre: " + genre + ", ID: " + bookID + ").\n"
-                + "Total unique titles in library: " + books.size();
+                + "Total unique titles in library: " + getUniqueTitleSize();
     }
 
     /**
@@ -175,9 +175,9 @@ public class BookManager {
     /**
      * Updates the borrowing status of a book (borrow or return).
      *
-     * @param command      "borrow" or "return".
-     * @param bookIndex    0-based index of the book.
-     * @param borrowerName Name of the borrower (required for borrow).
+     * @param command       "borrow" or "return".
+     * @param bookIndex     0-based index of the book.
+     * @param borrowerName  Name of the borrower (required for borrow).
      * @param memberManager Manager to handle member records.
      * @return Confirmation or error message string.
      */
@@ -320,7 +320,7 @@ public class BookManager {
      * Retrieves the 0-based index and shelf ID of a book given its title and author (case-insensitive).
      *
      * @param bookTitle The title to search for.
-     * @param author The author to search for.
+     * @param author    The author to search for.
      * @return A GroupReturns object containing the index and shelf ID.
      * @throws BookNotFoundException If the book is not found or lacks a valid ID.
      */
@@ -341,30 +341,48 @@ public class BookManager {
                 + "' and author '" + author + "'.");
     }
 
-    //    public String getStatistics() {
-    //        int totalBooks = 0;
-    //        int borrowedBooks = 0;
-    //        int overdueBooks = 0;
-    //
-    //        for (Book book : books) {
-    //            totalBooks += book.getQuantity();
-    //            if (book.isBorrowed()) {
-    //                borrowedBooks++;
-    //            }
-    //            if (book.isOverdue()) {
-    //                overdueBooks++;
-    //            }
-    //        }
-    //
-    //        StringBuilder stats = new StringBuilder();
-    //        stats.append("========== Library Statistics ==========\n");
-    //        stats.append("Total books copies: ").append(totalBooks).append("\n");
-    //        stats.append("Unique titles: ").append(books.size()).append("\n");
-    //        stats.append("Total books borrowed: ").append(borrowedBooks).append("\n");
-    //        stats.append("Total books overdue: ").append(overdueBooks).append("\n");
-    //
-    //        return stats.toString();
-    //    }
+    //@@author eth4n22
+    public String getStatistics() {
+        int borrowedBooks = 0;
+        int overdueBooks = 0;
+
+        for (Book book : books) {
+            if (book.isBorrowed()) {
+                borrowedBooks++;
+            }
+            if (book.isOverdue()) {
+                overdueBooks++;
+            }
+        }
+
+        StringBuilder stats = new StringBuilder();
+        stats.append("========== Library Statistics ==========\n");
+        stats.append("Total books copies: ").append(books.size()).append("\n");
+        stats.append("Unique titles: ").append(getUniqueTitleSize()).append("\n");
+        stats.append("Total books borrowed: ").append(borrowedBooks).append("\n");
+        stats.append("Total books overdue: ").append(overdueBooks).append("\n");
+        stats.append("List of unique titles: ").append(getUniqueTitles()).append("\n");
+
+        return stats.toString();
+    }
+
+    //@@author eth4n22
+    public int getUniqueTitleSize() {
+        Set<String> uniqueTitlesSet = new HashSet<>();
+        for (Book book : books) {
+            uniqueTitlesSet.add(book.getTitle());
+        }
+        return uniqueTitlesSet.size();
+    }
+
+    //@@author eth4n22
+    public Set<String> getUniqueTitles() {
+        Set<String> uniqueTitlesSet = new HashSet<>();
+        for (Book book : books) {
+            uniqueTitlesSet.add(book.getTitle());
+        }
+        return uniqueTitlesSet;
+    }
 
     public static int findBookQuantity(String title, String authorName) {
         int count = 0;

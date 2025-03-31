@@ -235,58 +235,65 @@ public class BookManagerTest {
         assertTrue(result.contains("Overdue Book"));
     }
 
-    //    @Test
-    //    void testStatistics() {
-    //        bookManager.cleanup();
-    //        bookManager.addNewBookToCatalogue("Moby A", "Author A", "romance", "R-0-0");
-    //        bookManager.addNewBookToCatalogue("Moby B", "Author B", "romance", "R-0-1");
-    //        MemberManager memberManager = MemberManager.getInstance();
-    //        bookManager.updateBookStatus("borrow", 0, "John", memberManager);
-    //
-    //        bookManager.getBooks().get(0).setReturnDueDate(LocalDate.now().minusDays(2));
-    //
-    //        String stats = bookManager.getStatistics();
-    //        assertTrue(stats.contains("Total books copies: 2"));
-    //        assertTrue(stats.contains("Unique titles: 2"));
-    //        assertTrue(stats.contains("Total books borrowed: 1"));
-    //        assertTrue(stats.contains("Total books overdue: 1"));
-    //    }
+    //@@author eth4n22
+    @Test
+    void testStatistics() {
+        bookManager.cleanup();
+        bookManager.addNewBookToCatalogue("Moby A", "Author A", "romance", "R-0-0");
+        bookManager.addNewBookToCatalogue("Moby B", "Author B", "romance", "R-0-1");
+        MemberManager memberManager = MemberManager.getInstance();
+        bookManager.updateBookStatus("borrow", 0, "John", memberManager);
 
-    //    @Test
-    //    void testAddNewBookIncreaseQuantity() {
-    //        bookManager.cleanup();
-    //        // Add a book
-    //        String result1 = bookManager.addNewBookToCatalogue("The Great Gatsby",
-    //                "F. Scott Fitzgerald", "romance", "R-0-0");
-    //        assertEquals(1, bookManager.getBooks().size());
-    //        assertTrue(result1.contains("I've added:"));
-    //
-    //        // Add the same book again (should increase quantity, not add new book)
-    //        String result2 = bookManager.addNewBookToCatalogue("The Great Gatsby",
-    //                "F. Scott Fitzgerald", "romance", "R-0-0");
-    //        assertEquals(1, bookManager.getBooks().size()); // Still only one entry
-    //        assertTrue(result2.contains("Increased quantity"));
-    //        assertEquals(2, bookManager.getBooks().get(0).getQuantity());
-    //    }
-    //
-    //    @Test
-    //    void testDeleteBookDecreaseQuantity() {
-    //        bookManager.cleanup();
-    //        // Add book twice → quantity becomes 2
-    //        bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
-    //        bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
-    //
-    //        assertEquals(1, bookManager.getBooks().size());
-    //        assertEquals(2, bookManager.getBooks().get(0).getQuantity());
-    //
-    //        // Delete → quantity decreases
-    //        String result = bookManager.deleteBook(0);
-    //        assertTrue(result.contains("Decreased quantity"));
-    //        assertEquals(1, bookManager.getBooks().get(0).getQuantity());
-    //
-    //        // Delete again → book is fully removed
-    //        String result2 = bookManager.deleteBook(0);
-    //        assertTrue(result2.contains("Book deleted"));
-    //        assertEquals(0, bookManager.getBooks().size());
-    //    }
+        bookManager.getBooks().get(0).setReturnDueDate(LocalDate.now().minusDays(2));
+
+        String stats = bookManager.getStatistics();
+        assertTrue(stats.contains("Total books copies: 2"));
+        assertTrue(stats.contains("Unique titles: 2"));
+        assertTrue(stats.contains("Total books borrowed: 1"));
+        assertTrue(stats.contains("Total books overdue: 1"));
+    }
+
+    //@@author eth4n22
+    @Test
+    void testAddNewBookIncreaseQuantity() {
+        bookManager.cleanup();
+        // Add a book
+        String result1 = bookManager.addNewBookToCatalogue("The Great Gatsby",
+                "F. Scott Fitzgerald", "romance", "R-0-0");
+        assertEquals(1, bookManager.getBooks().size());
+        assertTrue(result1.contains("I've added:"));
+
+        // Add the same book again (should increase quantity, not add new book)
+        String result2 = bookManager.addNewBookToCatalogue("The Great Gatsby",
+                "F. Scott Fitzgerald", "romance", "R-0-0");
+        assertEquals(2, bookManager.getBooks().size()); // Still only one entry
+        assertTrue(result2.contains("I've added:"));
+        assertEquals(2, QuantityManager.getQuantityManagerInstance().getHowManyBooks("The Great Gatsby",
+                "F. Scott Fitzgerald"));
+    }
+
+    //@@author eth4n22
+    @Test
+    void testDeleteBookDecreaseQuantity() {
+        bookManager.cleanup();
+        // Add book twice → quantity becomes 2
+        bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
+        bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
+
+        assertEquals(2, bookManager.getBooks().size());
+        assertEquals(2, QuantityManager.getQuantityManagerInstance().getHowManyBooks("The Great Gatsby",
+                "F. Scott Fitzgerald"));
+
+        // Delete → quantity decreases
+        String result = bookManager.deleteBook(0);
+        assertTrue(result.contains("Book deleted:"));
+        assertEquals(1, QuantityManager.getQuantityManagerInstance().getHowManyBooks("The Great Gatsby",
+                "F. Scott Fitzgerald"));
+
+        // Delete again → book is fully removed
+        String result2 = bookManager.deleteBook(0);
+        assertTrue(result2.contains("Book deleted:"));
+        assertEquals(0, QuantityManager.getQuantityManagerInstance().getHowManyBooks("The Great Gatsby",
+                "F. Scott Fitzgerald"));
+    }
 }
