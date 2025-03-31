@@ -12,6 +12,7 @@ import seedu.duke.commands.DeleteByIndexCommand;
 import seedu.duke.commands.ExitCommand;
 import seedu.duke.commands.HelpCommand;
 import seedu.duke.commands.ListBookQuantityCommand;
+import seedu.duke.commands.StatisticsCommand;
 import seedu.duke.commands.ListBorrowedCommand;
 import seedu.duke.commands.ListCommand;
 import seedu.duke.commands.ListOverdueCommand;
@@ -82,7 +83,6 @@ public class Parser {
      * Expects details in format "INDEX / MEMBER_NAME".
      */
     private static String parseBorrowCommand(String borrowDetails) throws LeBookException {
-        // Assumes borrowDetails is not null/empty (checked in main parse method)
         String[] parts = borrowDetails.split("/", SPLIT_INTO_TWO);
         if (parts.length < MIN_PARTS_TWO || parts[1].trim().isEmpty()) {
             throw new LeBookException("Invalid format. Missing borrower name. "
@@ -91,6 +91,7 @@ public class Parser {
         return parts[1].trim();
     }
 
+    //@@author jenmarieng
     /**
      * Parses details for the add command.
      * Expects details in format "TITLE / AUTHOR / GENRE".
@@ -114,6 +115,7 @@ public class Parser {
         return new AddCommand(title, author, genre);
     }
 
+    //@@author jenmarieng
     /**
      * Parses details for the list shelf command.
      * Expects details in format "GENRE / SHELF_NUMBER".
@@ -135,6 +137,7 @@ public class Parser {
         return new ListShelfCommand(genre, shelfIndex);
     }
 
+    //@@author jenmarieng
     /**
      * Parses the details following the "list" command word.
      */
@@ -158,6 +161,7 @@ public class Parser {
         }
     }
 
+    //@@author jenmarieng
     /**
      * Parses details for the delete command.
      * Expects "i/INDEX" or "b/TITLE/AUTHOR".
@@ -188,6 +192,7 @@ public class Parser {
     }
 
 
+    //@@author WayneCh0y
     private static Command parseListQuantityCommand(String inputDetails) throws LeBookException {
         String[] parts = inputDetails.split("/", SPLIT_INTO_THREE);
         if (parts.length < LENGTH_LIMIT_THREE) {
@@ -199,6 +204,7 @@ public class Parser {
     }
 
 
+    //@@author jenmarieng
     /**
      * Parses details for the find command.
      * Expects "CRITERIA SEARCH_TERM".
@@ -234,6 +240,7 @@ public class Parser {
         }
     }
 
+    //@@author jenmarieng
     /**
      * Parses the full user input string into a Command object.
      *
@@ -280,8 +287,8 @@ public class Parser {
             return parseListShelfCommand(inputDetails);
         case LIST_QUANTITY:
             return parseListQuantityCommand(inputDetails);
-        //        case STATISTICS:
-        //            return new StatisticsCommand();
+        case STATISTICS:
+            return new StatisticsCommand();
         default:
             throw new LeBookException("I don't understand. Try starting with list, add, delete, borrow, return!");
         }
