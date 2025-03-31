@@ -32,7 +32,7 @@ public class SearchByShelfCommand extends Command {
             throw new LeBookException("Please provide a shelf ID to search for (e.g., AD-0-1).");
         }
 
-        BookManager bookManager = library.getBookManager();
+        BookManager bookManager = Library.getBookManager();
         BookFinder finder = new BookFinder(bookManager.getBooks());
         // Finder uses case-insensitive compare by default, adjust if needed
         List<Book> results = finder.findBooksByShelfId(searchTerm);
