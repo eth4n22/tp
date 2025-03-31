@@ -171,19 +171,8 @@ public class BookManager {
 
             // Assert that the output message contains the expected elements
             assert totalQuantity >= books.size() : "Total quantity should be >= number of unique titles";
+            return output.toString();
         }
-
-        StringBuilder output = new StringBuilder("Here are the books in your library:\n");
-        int totalQuantity = 0;
-        for (int i = 0; i < books.size(); i++) {
-            Book book = books.get(i);
-            // Uses Book.toString() which is already formatted
-            output.append(i + 1).append(". ").append(book.toString()).append("\n");
-            totalQuantity += book.getQuantity();
-        }
-        output.append("-----\nTotal unique titles: ").append(books.size());
-        output.append("\nTotal copies: ").append(totalQuantity);
-        return output.toString();
     }
 
     /**
