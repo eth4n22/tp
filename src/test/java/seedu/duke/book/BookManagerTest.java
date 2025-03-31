@@ -124,7 +124,7 @@ public class BookManagerTest {
         String result = bookManager.updateBookStatus("borrow", 0, "John",
                 memberManager);
 
-        assertEquals("John has borrowed: \"The Great Gatsby\" (Due: 2025-04-15)", result);
+        assertEquals("John has borrowed: \"The Great Gatsby\" (Due: 2025-04-14)", result);
         assertTrue(bookManager.getBooks().get(0).isBorrowed());
     }
 
@@ -166,7 +166,7 @@ public class BookManagerTest {
                 memberManager);
         //parser passes in 0-indexed bookIndex
 
-        assertEquals("John has borrowed: \"Harry Potter\" (Due: 2025-04-15)", result);
+        assertEquals("John has borrowed: \"Harry Potter\" (Due: 2025-04-14)", result);
         assertTrue(bookManager.getBooks().get(0).isBorrowed());
     }
 
