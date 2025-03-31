@@ -1,20 +1,18 @@
 package seedu.duke.parser;
 
-import seedu.duke.commands.AddCommand;
 import seedu.duke.commands.Command;
-import seedu.duke.commands.DeleteByIndexCommand;
+import seedu.duke.commands.AddCommand;
 import seedu.duke.commands.DeleteByBookCommand;
+import seedu.duke.commands.DeleteByIndexCommand;
 import seedu.duke.commands.ExitCommand;
 import seedu.duke.commands.HelpCommand;
-import seedu.duke.commands.ListCommand;
+import seedu.duke.commands.ListBookQuantityCommand;
 import seedu.duke.commands.ListBorrowedCommand;
+import seedu.duke.commands.ListCommand;
 import seedu.duke.commands.ListOverdueCommand;
+import seedu.duke.commands.ListOverdueUsersCommand;
 import seedu.duke.commands.ListShelfCommand;
 import seedu.duke.commands.UpdateStatusCommand;
-import seedu.duke.commands.ListOverdueUsersCommand;
-import seedu.duke.commands.StatisticsCommand;
-
-
 
 import seedu.duke.exception.LeBookException;
 
@@ -34,6 +32,7 @@ public class Parser {
     private static final String LIST_BORROWED = "borrowed";
     private static final String LIST_OVERDUE_USERS = "users";
     private static final String LIST_SHELF = "shelf";
+    private static final String LIST_QUANTITY = "quantity";
     private static final String DELETE_BY_INDEX = "i";
     private static final String DELETE_BY_BOOK = "b";
     private static final String STATISTICS = "statistics";
@@ -134,6 +133,16 @@ public class Parser {
         }
     }
 
+    private static Command parseListQuantityCommand(String inputDetails) throws LeBookException{
+        String[] parts = inputDetails.split("/", SPLIT_INTO_THREE);
+        if (parts.length < LENGTH_LIMIT_THREE) {
+            throw new LeBookException("Invalid format. It should be: quantity / BOOK_TITLE / AUTHOR_NAME");
+        }
+        String title = parts[1].trim();
+        String author = parts[2].trim();
+        return new ListBookQuantityCommand(title, author);
+    }
+
     private static Command parseDeleteCommand(String userInput) throws LeBookException {
         String[] parts = userInput.split("/", SPLIT_INTO_TWO);
         if (parts.length < LENGTH_LIMIT_TWO) {
@@ -197,8 +206,10 @@ public class Parser {
             return new HelpCommand();
         case LIST_SHELF:
             return parseListShelfCommand(inputDetails);
-        case STATISTICS:
-            return new StatisticsCommand();
+        case LIST_QUANTITY:
+            return parseListQuantityCommand(inputDetails);
+            //        case STATISTICS:
+            //            return new StatisticsCommand();
         default:
             throw new LeBookException("I don't understand. Try starting with list, add, delete, borrow, return!");
         }

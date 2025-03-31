@@ -212,6 +212,9 @@ public class ShelvesManager {
         return "No Book ID found!";
     }
 
+    /**
+     * Clears the shelves.
+     */
     public void cleanup() {
         romanceShelves.cleanup();
         adventureShelves.cleanup();

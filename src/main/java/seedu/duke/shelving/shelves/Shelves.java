@@ -30,18 +30,17 @@ public class Shelves {
         }
     }
 
+    /**
+     * Clears the list of books on each shelf.
+     */
     public void cleanup() {
-        // Reset the internal state
         this.isFull = false;
 
-        // Call cleanup on each shelf to clear any resources or internal state
         for (int i = 0; i < shelves.length; i++) {
             if (shelves[i] != null) {
-                shelves[i].cleanup();  // Assuming the Shelf class has a cleanup method
+                shelves[i].cleanup();
             }
         }
-
-        // Optionally, reset the identifier and other properties if needed
         this.identifier = null;
     }
 

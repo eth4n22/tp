@@ -217,6 +217,9 @@ public class Shelf {
     }
 
     //@@author WayneCh0y
+    /**
+     * Clears the list of books, removing all entries.
+     */
     public void cleanup() {
         shelfBooks.clear();
         booksCurrentlyOnShelf = 0;
