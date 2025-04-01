@@ -32,47 +32,46 @@ public class Ui {
 
     //@@author eth4n22
     // --- Updated Help Message ---
-public void printHelp() {
-    String message = """
-            -------------------------------
-             Available Commands:
-            -------------------------------
-            1. add TITLE / AUTHOR / GENRE      - Add a new book.
-            2. delete i/INDEX                  - Remove book by list index (1-based).
-            3. delete b/TITLE / AUTHOR         - Remove book by title and author.
-            4. list                            - List all unique book titles.
-            5. list overdue                    - List overdue books.
-            6. list borrowed                   - List borrowed books.
-            7. borrow INDEX / MEMBER_NAME      - Borrow a book (using 1-based index).
-            8. return INDEX                    - Return a borrowed book (using 1-based index).
-            9. find CRITERIA TERM              - Search books.
-               Criteria: title, author, genre, shelf
-            10. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (1-based number).
-            11. statistics                     - View library statistics.
-            12. undo                           - Undo the last command (add/delete/borrow/return).
-            13. help                           - Show this help menu.
-            14. bye                            - Exit the program.
-            -------------------------------
-            Supported Genres:
-              > romance, adventure, action, horror, mystery, nonfiction, scifi
-            -------------------------------
-            Example Usage:
-              add The Lord of the Rings / J.R.R. Tolkien / adventure
-              list
-              borrow 1 / Alice
-              find title lord
-              find genre adventure
-              find shelf AD-0-0
-              return 1
-              delete i/1
-              bye
-            """;
-    // Print help directly without extra separators
-    printSeparator();
-    System.out.println(message);
-    printSeparator();
-}
-
+    public void printHelp() {
+        String message = """
+                -------------------------------
+                 Available Commands:
+                -------------------------------
+                1. add TITLE / AUTHOR / GENRE      - Add a new book.
+                2. delete i/INDEX                  - Remove book by list index (1-based).
+                3. delete b/TITLE / AUTHOR         - Remove book by title and author.
+                4. list                            - List all unique book titles.
+                5. list overdue                    - List overdue books.
+                6. list borrowed                   - List borrowed books.
+                7. borrow INDEX / MEMBER_NAME      - Borrow a book (using 1-based index).
+                8. return INDEX                    - Return a borrowed book (using 1-based index).
+                9. find CRITERIA TERM              - Search books.
+                   Criteria: title, author, genre, shelf
+                10. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (1-based number).
+                11. statistics                     - View library statistics.
+                12. undo                           - Undo the last command (add/delete/borrow/return).
+                13. help                           - Show this help menu.
+                14. bye                            - Exit the program.
+                -------------------------------
+                Supported Genres:
+                  > romance, adventure, action, horror, mystery, nonfiction, scifi
+                -------------------------------
+                Example Usage:
+                  add The Lord of the Rings / J.R.R. Tolkien / adventure
+                  list
+                  borrow 1 / Alice
+                  find title lord
+                  find genre adventure
+                  find shelf AD-0-0
+                  return 1
+                  delete i/1
+                  bye
+                """;
+        // Print help directly without extra separators
+        printSeparator();
+        System.out.println(message);
+        printSeparator();
+    }
 
     //@@author eth4n22
     public void printExitMessage() {
