@@ -12,13 +12,12 @@ import seedu.duke.commands.DeleteByIndexCommand;
 import seedu.duke.commands.ExitCommand;
 import seedu.duke.commands.HelpCommand;
 import seedu.duke.commands.ListBookQuantityCommand;
-
-
 import seedu.duke.commands.ListBorrowedCommand;
 import seedu.duke.commands.ListCommand;
 import seedu.duke.commands.ListOverdueCommand;
 import seedu.duke.commands.ListOverdueUsersCommand;
 import seedu.duke.commands.ListShelfCommand;
+import seedu.duke.commands.StatisticsCommand;
 import seedu.duke.commands.UpdateStatusCommand;
 import seedu.duke.commands.UndoCommand;
 
@@ -38,11 +37,9 @@ public class Parser {
     private static final String DELETE = "delete";
     private static final String HELP = "help";
     private static final String FIND = "find";
-    //private static final String STATISTICS = "statistics";
 
     private static final String LIST_OVERDUE = "overdue";
     private static final String LIST_BORROWED = "borrowed";
-
     private static final String LIST_OVERDUE_USERS = "users";
     private static final String LIST_SHELF = "shelf";
     private static final String LIST_QUANTITY = "quantity";
@@ -51,21 +48,23 @@ public class Parser {
     private static final String DELETE_BY_BOOK = "b";
 
     private static final String UNDO = "undo";
-    //private static final String STATISTICS = "statistics";
-
-
+    private static final String STATISTICS = "statistics";
 
     private static final int SPLIT_INTO_TWO = 2;
     private static final int SPLIT_INTO_THREE = 3;
     private static final int MIN_PARTS_TWO = 2;
     private static final int MIN_PARTS_THREE = 3;
-
     private static final int LENGTH_LIMIT_THREE = 3;
     private static final int LENGTH_LIMIT_TWO = 2;
 
     //@@author jenmarieng
+
     /**
      * Parses the book index (1-based user input) to a 0-based index.
+     *
+     * @param indexString The user input index.
+     * @return The 0-based index.
+     * @throws LeBookException If the input is invalid.
      */
     private static int parseIndex(String indexString) throws LeBookException {
         if (indexString == null || indexString.trim().isEmpty()) {
@@ -79,9 +78,14 @@ public class Parser {
         }
     }
 
+    //@@author jenmarieng
+
     /**
      * Parses the borrower's name from the full borrow command details string.
-     * Expects details in format "INDEX / MEMBER_NAME".
+     *
+     * @param borrowDetails The borrow command details.
+     * @return The parsed borrower's name.
+     * @throws LeBookException If the format is invalid or borrower name is missing.
      */
     private static String parseBorrowCommand(String borrowDetails) throws LeBookException {
         String[] parts = borrowDetails.split("/", SPLIT_INTO_TWO);
@@ -93,9 +97,13 @@ public class Parser {
     }
 
     //@@author jenmarieng
+
     /**
      * Parses details for the add command.
-     * Expects details in format "TITLE / AUTHOR / GENRE".
+     *
+     * @param bookDetails The book details string.
+     * @return An AddCommand object with parsed details.
+     * @throws LeBookException If the format is invalid or details are missing.
      */
     private static Command parseAddCommand(String bookDetails) throws LeBookException {
         if (bookDetails == null || bookDetails.trim().isEmpty()) {
@@ -110,16 +118,18 @@ public class Parser {
         String author = parts[1].trim();
         String genre = parts[2].trim().toLowerCase();
 
-        if (title.isEmpty() || author.isEmpty() || genre.isEmpty()) {
-            throw new LeBookException("Title, Author, and Genre cannot be empty.");
-        }
         return new AddCommand(title, author, genre);
     }
 
     //@@author jenmarieng
+
     /**
      * Parses details for the list shelf command.
-     * Expects details in format "GENRE / SHELF_NUMBER".
+     * Expects input in the format "shelf / GENRE / SHELF_NUMBER".
+     *
+     * @param bookDetails The input string containing list shelf command details.
+     * @return A ListShelfCommand object containing parsed details.
+     * @throws LeBookException If the format is incorrect.
      */
     private static Command parseListShelfCommand(String bookDetails) throws LeBookException {
         String[] parts = bookDetails.split("/", SPLIT_INTO_TWO);
@@ -139,8 +149,13 @@ public class Parser {
     }
 
     //@@author jenmarieng
+
     /**
-     * Parses the details following the "list" command word.
+     * Parses the details for the list command and determines the specific list type.
+     *
+     * @param inputDetails The input string containing the list type.
+     * @return A command object corresponding to the specified list type.
+     * @throws LeBookException If the list type is unrecognised.
      */
     private static Command parseListCommand(String inputDetails) throws LeBookException {
         String listCommandType = inputDetails.trim().toLowerCase();
@@ -158,14 +173,19 @@ public class Parser {
             return new ListOverdueUsersCommand();
         default:
             throw new LeBookException("Unknown list type: '" + listCommandType +
-                    "'. Valid options: list overdue, list borrowed");
+                    "'. Valid options: list overdue, list borrowed, list users.");
         }
     }
 
     //@@author jenmarieng
+
     /**
      * Parses details for the delete command.
-     * Expects "i/INDEX" or "b/TITLE/AUTHOR".
+     * Supports deletion by book index or book title and author.
+     *
+     * @param userInput The input string containing delete command details.
+     * @return A DeleteCommand object based on the parsed details.
+     * @throws LeBookException If the format is invalid.
      */
     private static Command parseDeleteCommand(String userInput) throws LeBookException {
         String[] parts = userInput.split("/", SPLIT_INTO_TWO);
@@ -176,7 +196,7 @@ public class Parser {
         String deleteCommandType = parts[0].trim();
         switch (deleteCommandType) {
         case DELETE_BY_INDEX:
-            int bookIndex = parseIndex(parts[1].trim()); //throws LeBook Exception
+            int bookIndex = parseIndex(parts[1].trim());
             return new DeleteByIndexCommand(bookIndex);
         case DELETE_BY_BOOK:
             String[] bookDetails = parts[1].split("/", SPLIT_INTO_TWO); //should split into title and author
@@ -205,9 +225,13 @@ public class Parser {
     }
 
     //@@author jenmarieng
+
     /**
-     * Parses details for the find command.
-     * Expects "CRITERIA SEARCH_TERM".
+     * Parses details for the find command, extracting search criteria and term.
+     *
+     * @param findDetails The input string containing the search criteria and term.
+     * @return A command object corresponding to the specified search criteria.
+     * @throws LeBookException If the format is incorrect.
      */
     private static Command parseFindCommand(String findDetails) throws LeBookException {
         if (findDetails == null || findDetails.trim().isEmpty()) {
@@ -237,7 +261,21 @@ public class Parser {
         }
     }
 
+    //@@author eth4n22
+    private static Command parseUndoCommand(String undoDetails) throws LeBookException {
+        int count = 1;
+        if (!undoDetails.isEmpty()) {
+            try {
+                count = Integer.parseInt(undoDetails.trim());
+            } catch (NumberFormatException e) {
+                throw new LeBookException("Invalid format. It should be: undo");
+            }
+        }
+        return new UndoCommand(count);
+    }
+
     //@@author jenmarieng
+
     /**
      * Parses the full user input string into a Command object.
      *
@@ -278,25 +316,17 @@ public class Parser {
         case HELP:
             return new HelpCommand();
         case UNDO:
-            int count = 1;
-            if (!inputDetails.isEmpty()) {
-                try {
-                    count = Integer.parseInt(inputDetails.trim());
-                } catch (NumberFormatException e) {
-                    throw new LeBookException("Invalid format. It should be: undo");
-                }
-            }
-            return new UndoCommand(count);
+            return parseUndoCommand(inputDetails);
         case FIND:
             return parseFindCommand(inputDetails);
         case LIST_SHELF:
             return parseListShelfCommand(inputDetails);
         case LIST_QUANTITY:
             return parseListQuantityCommand(inputDetails);
-        //case STATISTICS:
-            //return new StatisticsCommand();
+        case STATISTICS:
+            return new StatisticsCommand();
         default:
-            throw new LeBookException("I don't understand. Try starting with list, add, delete, borrow, return!");
+            throw new LeBookException("I don't understand. Try \"help\" to see the available commands!");
         }
     }
 }
