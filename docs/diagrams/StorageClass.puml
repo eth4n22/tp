@@ -1,0 +1,34 @@
+<puml width="200">
+@startuml
+
+class Storage {
+    - final ShelvesManager shelvesManager
+    - final String filePath
+
+    + List<Book> loadFileContents(MemberManager memberManager)
+    - static Book getBookFromLoad(String details, ShelvesManager shelvesManager)
+    - static String getGenreFromFile(String bookID)
+    + void writeToFile(List<Book> bookList)
+}
+
+class ShelvesManager {
+    + static ShelvesManager getShelvesManagerInstance()
+    + void addBook(String title, String author, String genre)
+}
+
+class MemberManager {
+    + Member getMemberByName(String name)
+}
+
+class Book {
+    + String getTitle()
+    + String getAuthor()
+    + boolean isBorrowed()
+    + String getBorrowerName()
+    + String toFileFormat()
+}
+
+Storage --> ShelvesManager : uses
+Storage --> MemberManager : uses
+Storage --> Book : instantiates
+@enduml

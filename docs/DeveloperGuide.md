@@ -20,13 +20,15 @@ How the parser component works:
 4. Returns a corresponding Command object for execution.
 
 ### Storage Class
-
+**API:** [`Storage.java`](https://github.com/AY2425S2-CS2113-T13-3/tp/blob/master/src/main/java/seedu/duke/storage/Storage.java)
 1. **Overview**
    - The `Storage` class in LeBook is responsible for saving the data after the user exits `LeBook`. To load the data when the user launches `LeBook`, it reads data from a file and loads it into a list. When exiting the program, it writes the Books back into the file in a specific format.
 2. **Design**
    - Each `Book` is stored in structured text using a `|` delimiter.
    - Each time the user exits the program, the file is overwritten, ensuring that the content is up to date.
    - If the file to save the data does not exist, an empty list is returned. Exceptions are caught and logged.
+![StorageClass](UmlImages/StorageClass.png)
+
 
 ### Command Class
 
