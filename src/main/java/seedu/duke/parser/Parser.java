@@ -11,11 +11,8 @@ import seedu.duke.commands.DeleteByBookCommand;
 import seedu.duke.commands.DeleteByIndexCommand;
 import seedu.duke.commands.ExitCommand;
 import seedu.duke.commands.HelpCommand;
-import seedu.duke.commands.ListBookQuantityCommand;
+//import seedu.duke.commands.ListBookQuantityCommand;
 
-//import seedu.duke.commands.StatisticsCommand;
-
-//import seedu.duke.commands.StatisticsCommand;
 
 import seedu.duke.commands.ListBorrowedCommand;
 import seedu.duke.commands.ListCommand;
