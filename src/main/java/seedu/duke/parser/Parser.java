@@ -11,7 +11,7 @@ import seedu.duke.commands.DeleteByBookCommand;
 import seedu.duke.commands.DeleteByIndexCommand;
 import seedu.duke.commands.ExitCommand;
 import seedu.duke.commands.HelpCommand;
-//import seedu.duke.commands.ListBookQuantityCommand;
+import seedu.duke.commands.ListBookQuantityCommand;
 
 
 import seedu.duke.commands.ListBorrowedCommand;
@@ -38,7 +38,7 @@ public class Parser {
     private static final String DELETE = "delete";
     private static final String HELP = "help";
     private static final String FIND = "find";
-    private static final String STATISTICS = "statistics";
+    //private static final String STATISTICS = "statistics";
 
     private static final String LIST_OVERDUE = "overdue";
     private static final String LIST_BORROWED = "borrowed";
@@ -293,8 +293,8 @@ public class Parser {
             return parseListShelfCommand(inputDetails);
         case LIST_QUANTITY:
             return parseListQuantityCommand(inputDetails);
-        case STATISTICS:
-            return new StatisticsCommand();
+        //case STATISTICS:
+            //return new StatisticsCommand();
         default:
             throw new LeBookException("I don't understand. Try starting with list, add, delete, borrow, return!");
         }
