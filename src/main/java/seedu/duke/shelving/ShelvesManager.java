@@ -226,4 +226,9 @@ public class ShelvesManager {
 
         shelvesManagerInstance = null;
     }
+
+    public static void resetShelvesManager() {
+        shelvesManagerInstance = null;
+    }
+
 }
