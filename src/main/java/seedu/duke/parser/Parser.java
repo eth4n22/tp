@@ -12,13 +12,15 @@ import seedu.duke.commands.DeleteByIndexCommand;
 import seedu.duke.commands.ExitCommand;
 import seedu.duke.commands.HelpCommand;
 import seedu.duke.commands.ListBookQuantityCommand;
-import seedu.duke.commands.StatisticsCommand;
+
+
 import seedu.duke.commands.ListBorrowedCommand;
 import seedu.duke.commands.ListCommand;
 import seedu.duke.commands.ListOverdueCommand;
 import seedu.duke.commands.ListOverdueUsersCommand;
 import seedu.duke.commands.ListShelfCommand;
 import seedu.duke.commands.UpdateStatusCommand;
+import seedu.duke.commands.UndoCommand;
 
 import seedu.duke.exception.LeBookException;
 
@@ -36,7 +38,7 @@ public class Parser {
     private static final String DELETE = "delete";
     private static final String HELP = "help";
     private static final String FIND = "find";
-    private static final String STATISTICS = "statistics";
+    //private static final String STATISTICS = "statistics";
 
     private static final String LIST_OVERDUE = "overdue";
     private static final String LIST_BORROWED = "borrowed";
@@ -47,6 +49,11 @@ public class Parser {
 
     private static final String DELETE_BY_INDEX = "i";
     private static final String DELETE_BY_BOOK = "b";
+
+    private static final String UNDO = "undo";
+    //private static final String STATISTICS = "statistics";
+
+
 
     private static final int SPLIT_INTO_TWO = 2;
     private static final int SPLIT_INTO_THREE = 3;
@@ -270,14 +277,24 @@ public class Parser {
             return parseAddCommand(inputDetails);
         case HELP:
             return new HelpCommand();
+        case UNDO:
+            int count = 1;
+            if (!inputDetails.isEmpty()) {
+                try {
+                    count = Integer.parseInt(inputDetails.trim());
+                } catch (NumberFormatException e) {
+                    throw new LeBookException("Invalid format. It should be: undo");
+                }
+            }
+            return new UndoCommand(count);
         case FIND:
             return parseFindCommand(inputDetails);
         case LIST_SHELF:
             return parseListShelfCommand(inputDetails);
         case LIST_QUANTITY:
             return parseListQuantityCommand(inputDetails);
-        case STATISTICS:
-            return new StatisticsCommand();
+        //case STATISTICS:
+            //return new StatisticsCommand();
         default:
             throw new LeBookException("I don't understand. Try starting with list, add, delete, borrow, return!");
         }

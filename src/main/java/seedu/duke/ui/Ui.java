@@ -1,16 +1,15 @@
 package seedu.duke.ui;
 
-import seedu.duke.book.Book; // Import Book
-import java.util.List; // Import List
+import seedu.duke.book.Book;
+import java.util.List;
 import java.util.Scanner;
-import java.time.format.DateTimeFormatter; // Import Formatter
+import java.time.format.DateTimeFormatter;
 
 public class Ui {
     private static final Ui uiInstance = new Ui();
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private final Scanner scanner;
-    // Formatter for due dates in showBookList
 
     private Ui() {
         this.scanner = new Scanner(System.in);
@@ -31,29 +30,30 @@ public class Ui {
     }
 
     //@@author eth4n22
-    // --- Updated Help Message ---
     public void printHelp() {
         String message = """
-                Available Commands:
-                -------------------
-                1.  add TITLE / AUTHOR / GENRE      - Add a new book.
-                2.  delete i/INDEX                  - Remove book by list index (1-based).
-                3.  delete b/TITLE / AUTHOR         - Remove book by title and author.
-                4.  list                            - List all unique book titles.
-                5.  list overdue                    - List overdue books.
-                6.  list borrowed                   - List borrowed books.
-                7.  borrow INDEX / MEMBER_NAME      - Borrow a book (using 1-based index).
-                8.  return INDEX                    - Return a borrowed book (using 1-based index).
-                9.  find CRITERIA TERM              - Search books.
-                      Criteria: title, author, genre, id
-                10. shelf GENRE / SHELF_NUMBER      - List books on a specific shelf (1-based number).
-                11. statistics                      - View library statistics.
-                12. help                            - Show this help menu.
-                13. bye                             - Exit the program.
-                -------------------
+                -------------------------------
+                 Available Commands:
+                -------------------------------
+                1. add TITLE / AUTHOR / GENRE      - Add a new book.
+                2. delete i/INDEX                  - Remove book by list index (1-based).
+                3. delete b/TITLE / AUTHOR         - Remove book by title and author.
+                4. list                            - List all unique book titles.
+                5. list overdue                    - List overdue books.
+                6. list borrowed                   - List borrowed books.
+                7. borrow INDEX / MEMBER_NAME      - Borrow a book (using 1-based index).
+                8. return INDEX                    - Return a borrowed book (using 1-based index).
+                9. find CRITERIA TERM              - Search books.
+                   Criteria: title, author, genre, id
+                10. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (1-based number).
+                11. statistics                     - View library statistics.
+                12. undo                           - Undo the last command (add/delete/borrow/return).
+                13. help                           - Show this help menu.
+                14. bye                            - Exit the program.
+                -------------------------------
                 Supported Genres:
                   > romance, adventure, action, horror, mystery, nonfiction, scifi
-                -------------------
+                -------------------------------
                 Example Usage:
                   add The Lord of the Rings / J.R.R. Tolkien / adventure
                   list
@@ -65,7 +65,6 @@ public class Ui {
                   delete i/1
                   bye
                 """;
-        // Print help directly without extra separators
         printSeparator();
         System.out.println(message);
         printSeparator();
@@ -76,34 +75,32 @@ public class Ui {
         printWithSeparator("Goodbye! Hope to see you again soon!");
     }
 
-    //@@author eth4n22
     public void printMessage(String message) {
         System.out.println(message);
     }
 
-    //@@author eth4n22
     public void printSuccess(String message) {
         printWithSeparator("[SUCCESS] " + message);
     }
 
-    //@@author eth4n22
     public void printError(String message) {
         printWithSeparator("[ERROR] " + message);
     }
 
-    //@@author eth4n22
     public void printWithSeparator(String message) {
         printSeparator();
         System.out.println(message);
         printSeparator();
     }
 
-    //@@author eth4n22
     public void printSeparator() {
         System.out.println("========================================");
     }
 
-    //@@author eth4n22
+    public void printUndoSuccessMessage(String undoneCommand) {
+        printWithSeparator("[SUCCESS] Successfully undone: " + undoneCommand);
+    }
+
     /**
      * Displays a formatted list of books.
      * Used by ListCommand, FindCommand, ListBorrowedCommand, ListOverdueCommand etc.
@@ -112,23 +109,21 @@ public class Ui {
      */
     public void showBookList(List<Book> books) {
         if (books == null || books.isEmpty()) {
-            // The calling command should print "No books found" or similar.
-            // This method just handles the display if there *are* books.
             return;
         }
-        // Use 1-based indexing for user display
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
+        branch-searchIDupdates
             // Use getters for clarity and encapsulation
             System.out.printf("%d. %s %s by %s (Genre: %s, Shelf: %s)%n",
                     i + 1,                          // 1-based index for display
                     book.getStatusSymbol(),         // [ ] or [X]
+
                     book.getTitle(),
                     book.getAuthor(),
-                    book.getGenre(),                // Use the getGenre() method
+                    book.getGenre(),
                     book.getBookID() != null ? book.getBookID() : "N/A");
 
-            // Display borrower info and due date if borrowed
             if (book.isBorrowed()) {
                 String borrower = (book.getBorrowerName() != null && !book.getBorrowerName().equals("null"))
                         ? book.getBorrowerName() : "Unknown Borrower";
@@ -137,7 +132,5 @@ public class Ui {
                 System.out.printf("     Borrowed by: %s (Due: %s)%n", borrower, dueDate);
             }
         }
-        // Optional: Add a separator after the list
-        // printSeparator();
     }
 }

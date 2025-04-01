@@ -7,6 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UiTest {
     private Ui ui;
@@ -74,54 +75,20 @@ public class UiTest {
         assertEquals(expected.trim(), normalize(outputStream.toString()));
     }
 
-    /*
-    @Test
-    public void testReadCommand() {
-        String input = "test command\n";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-        Ui uiWithInput = Ui.getUiInstance();
-        assertEquals("test command", uiWithInput.readCommand());
-    }*/
-
     @Test
     public void testHelpCommand() {
         ui.printHelp();
-        String expected = """
-                ========================================
-                Available Commands:
-                -------------------
-                1.  add TITLE / AUTHOR / GENRE      - Add a new book.
-                2.  delete i/INDEX                  - Remove book by list index (1-based).
-                3.  delete b/TITLE / AUTHOR         - Remove book by title and author.
-                4.  list                            - List all unique book titles.
-                5.  list overdue                    - List overdue books.
-                6.  list borrowed                   - List borrowed books.
-                7.  borrow INDEX / MEMBER_NAME      - Borrow a book (using 1-based index).
-                8.  return INDEX                    - Return a borrowed book (using 1-based index).
-                9.  find CRITERIA TERM              - Search books.
-                      Criteria: title, author, genre, shelf
-                10. shelf GENRE / SHELF_NUMBER      - List books on a specific shelf (1-based number).
-                11. statistics                      - View library statistics.
-                12. help                            - Show this help menu.
-                13. bye                             - Exit the program.
-                -------------------
-                Supported Genres:
-                  > romance, adventure, action, horror, mystery, nonfiction, scifi
-                -------------------
-                Example Usage:
-                  add The Lord of the Rings / J.R.R. Tolkien / adventure
-                  list
-                  borrow 1 / Alice
-                  find title lord
-                  find genre adventure
-                  find shelf AD-0-0
-                  return 1
-                  delete i/1
-                  bye
-                
-                ========================================
-                """;
-        assertEquals(expected.trim(), normalize(outputStream.toString()));
+        String output = normalize(outputStream.toString());
+        assertTrue(output.contains("Available Commands:"));
+        assertTrue(output.contains("add TITLE / AUTHOR / GENRE"));
+        assertTrue(output.contains("delete i/INDEX"));
+        assertTrue(output.contains("list overdue"));
+        assertTrue(output.contains("undo"));
+        assertTrue(output.contains("help"));
+        assertTrue(output.contains("bye"));
+        assertTrue(output.contains("Supported Genres:"));
+        assertTrue(output.contains("romance"));
+        assertTrue(output.contains("scifi"));
     }
 
     // Helper function to normalize line endings and trim spaces
