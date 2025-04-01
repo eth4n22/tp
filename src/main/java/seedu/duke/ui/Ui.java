@@ -41,15 +41,16 @@ public class Ui {
                 4. list                            - List all unique book titles.
                 5. list overdue                    - List overdue books.
                 6. list borrowed                   - List borrowed books.
-                7. borrow INDEX / MEMBER_NAME      - Borrow a book (using 1-based index).
-                8. return INDEX                    - Return a borrowed book (using 1-based index).
-                9. find CRITERIA TERM              - Search books.
+                7. list users                      - List users who have overdue books.
+                8. borrow INDEX / MEMBER_NAME      - Borrow a book (using 1-based index).
+                9. return INDEX                    - Return a borrowed book (using 1-based index).
+                10. find CRITERIA TERM              - Search books.
                    Criteria: title, author, genre, id
-                10. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (1-based number).
-                11. statistics                     - View library statistics.
-                12. undo                           - Undo the last command (add/delete/borrow/return).
-                13. help                           - Show this help menu.
-                14. bye                            - Exit the program.
+                11. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (1-based number).
+                12. statistics                     - View library statistics.
+                13. undo                           - Undo the last command (add/delete/borrow/return).
+                14. help                           - Show this help menu.
+                15. bye                            - Exit the program.
                 -------------------------------
                 Supported Genres:
                   > romance, adventure, action, horror, mystery, nonfiction, scifi
