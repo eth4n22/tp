@@ -113,7 +113,6 @@ public class Ui {
         }
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
-        branch-searchIDupdates
             // Use getters for clarity and encapsulation
             System.out.printf("%d. %s %s by %s (Genre: %s, Shelf: %s)%n",
                     i + 1,                          // 1-based index for display
