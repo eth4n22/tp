@@ -45,12 +45,13 @@ public class Ui {
                 7. list                            - List all unique book titles. \s
                 8. list borrowed                   - List borrowed books. \s
                 9. list overdue                    - List overdue books. \s
-                10. quantity / TITLE / AUTHOR      - Shows the quantity of the specified book. \s
-                11. return INDEX                   - Return a borrowed book (using 1-based index). \s
-                12. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (1-based number). \s
-                13. statistics                     - View library statistics. \s
-                14. undo                           - Undo the last command (add/delete/borrow/return). \s
-                15. bye                            - Exit the program. \s
+                10. list users                     - List users who have overdue books. \s
+                11. quantity / TITLE / AUTHOR      - Shows the quantity of the specified book. \s
+                12. return INDEX                   - Return a borrowed book (using 1-based index). \s
+                13. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (1-based number). \s
+                14. statistics                     - View library statistics. \s
+                15. undo                           - Undo the last command (add/delete/borrow/return). \s
+                16. bye                            - Exit the program. \s
                 ------------------------------- \s
                 Supported Genres: \s
                   > romance, adventure, action, horror, mystery, nonfiction, scifi \s

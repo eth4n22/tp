@@ -11,4 +11,11 @@ public class HelpCommand extends Command {
     public void execute(Library library, Ui ui, Storage storage, MemberManager memberManager) {
         ui.printHelp();
     }
+
+    @Override
+    public void undo(Library library, Ui ui, Storage storage, MemberManager memberManager) {
+    }
+
 }
+
+

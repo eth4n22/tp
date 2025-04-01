@@ -31,4 +31,8 @@ public class ListBookQuantityCommand extends Command{
         String areOrIs = (response == 1) ? " is " : " are ";
         ui.printWithSeparator("There" + areOrIs + message + copyOrCopies + "of the book: " + title + " by: " + author);
     }
+    @Override
+    public void undo(Library library, Ui ui, Storage storage, MemberManager memberManager) {
+    }
+
 }

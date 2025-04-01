@@ -23,4 +23,9 @@ public class ListShelfCommand extends Command{
         String response = library.listShelves(shelfGenre, shelfIndex);
         ui.printWithSeparator(response);
     }
+
+    @Override
+    public void undo(Library library, Ui ui, Storage storage, MemberManager memberManager) {
+    }
+
 }
