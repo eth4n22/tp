@@ -7,8 +7,14 @@ import seedu.duke.commands.Command;
 import seedu.duke.commands.DeleteByIndexCommand;
 import seedu.duke.commands.DeleteByBookCommand;
 import seedu.duke.commands.ExitCommand;
+import seedu.duke.commands.ListBorrowedCommand;
 import seedu.duke.commands.ListCommand;
+import seedu.duke.commands.ListOverdueCommand;
 import seedu.duke.commands.ListShelfCommand;
+import seedu.duke.commands.SearchByAuthorCommand;
+import seedu.duke.commands.SearchByGenreCommand;
+import seedu.duke.commands.SearchByIDCommand;
+import seedu.duke.commands.SearchByTitleCommand;
 import seedu.duke.commands.UpdateStatusCommand;
 import seedu.duke.commands.ListOverdueUsersCommand;
 import seedu.duke.exception.LeBookException;
@@ -74,7 +80,7 @@ public class ParserTest {
     @Test
     void testParseInvalidCommand() {
         Exception exception = assertThrows(LeBookException.class, () -> Parser.parse("invalidCommand"));
-        assertEquals("I don't understand. Try starting with list, add, delete, borrow, return!",
+        assertEquals("I don't understand. Try \"help\" to see the available commands!",
                 exception.getMessage());
     }
 
@@ -145,5 +151,46 @@ public class ParserTest {
         Command result = Parser.parse("list users");
         assertNotNull(result);
         assertInstanceOf(ListOverdueUsersCommand.class, result);
+    }
+
+    @Test
+    void testParseInvalidCommand_listOverdueUsersCommand() throws LeBookException {
+        Exception exception = assertThrows(LeBookException.class, () -> Parser.parse("list users hi"));
+        assertEquals("Unknown list type: 'users hi'. Valid options: list overdue, list borrowed, list users.",
+                exception.getMessage());
+    }
+
+    @Test
+    void testParseListCommand_valid() throws LeBookException {
+        assertInstanceOf(ListCommand.class, Parser.parse("list"));
+        assertInstanceOf(ListOverdueCommand.class, Parser.parse("list overdue"));
+        assertInstanceOf(ListBorrowedCommand.class, Parser.parse("list borrowed"));
+        assertInstanceOf(ListOverdueUsersCommand.class, Parser.parse("list users"));
+    }
+
+    @Test
+    void testParseListCommand_invalid() {
+        Exception exception = assertThrows(LeBookException.class, () -> Parser.parse("list invalid"));
+        assertTrue(exception.getMessage().contains("Unknown list type"));
+    }
+
+    @Test
+    void testParseFindCommand_valid() throws LeBookException {
+        assertInstanceOf(SearchByTitleCommand.class, Parser.parse("find title Harry Potter"));
+        assertInstanceOf(SearchByAuthorCommand.class, Parser.parse("find author J.K. Rowling"));
+        assertInstanceOf(SearchByGenreCommand.class, Parser.parse("find genre Fantasy"));
+        assertInstanceOf(SearchByIDCommand.class, Parser.parse("find id 12345"));
+    }
+
+    @Test
+    void testParseFindCommand_invalid() {
+        Exception exception1 = assertThrows(LeBookException.class, () -> Parser.parse("find"));
+        assertTrue(exception1.getMessage().contains("Missing search criteria"));
+
+        Exception exception2 = assertThrows(LeBookException.class, () -> Parser.parse("find title"));
+        assertTrue(exception2.getMessage().contains("Missing search term"));
+
+        Exception exception3 = assertThrows(LeBookException.class, () -> Parser.parse("find unknown abc"));
+        assertTrue(exception3.getMessage().contains("Invalid search criteria"));
     }
 }
