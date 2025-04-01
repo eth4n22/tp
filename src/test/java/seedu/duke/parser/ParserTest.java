@@ -80,12 +80,12 @@ public class ParserTest {
 
     @Test
     public void parse_emptyInput_assertionErrorThrown() {
-        assertThrows(AssertionError.class, () -> Parser.parse(""));
+        assertThrows(LeBookException.class, () -> Parser.parse(""));
     }
 
     @Test
     public void parse_spacesInput_assertionErrorThrown() {
-        assertThrows(AssertionError.class, () -> Parser.parse("  "));
+        assertThrows(LeBookException.class, () -> Parser.parse("  "));
     }
 
     @Test
@@ -103,7 +103,7 @@ public class ParserTest {
     @Test
     void testParseReturnCommand_invalidIndex() {
         Exception exception = assertThrows(LeBookException.class, () -> Parser.parse("return xyz"));
-        assertEquals("Please provide a valid book index.", exception.getMessage());
+        assertEquals("Invalid index format. Please provide a number.", exception.getMessage());
     }
 
     @Test
@@ -116,7 +116,7 @@ public class ParserTest {
     @Test
     void testParseDeleteCommand_invalidIndex() {
         Exception exception = assertThrows(LeBookException.class, () -> Parser.parse("delete i/abc"));
-        assertEquals("Please provide a valid book index.", exception.getMessage());
+        assertEquals("Invalid index format. Please provide a number.", exception.getMessage());
     }
 
     //@@author Deanson Choo

@@ -36,7 +36,7 @@ public class UiTest {
         ui.printExitMessage();
         String expected = """
                 ========================================
-                Goodbye! See you again.
+                Goodbye! Hope to see you again soon!
                 ========================================
                 """;
         assertEquals(expected.trim(), normalize(outputStream.toString()));
@@ -80,11 +80,15 @@ public class UiTest {
         ui.printHelp();
         String output = normalize(outputStream.toString());
         assertTrue(output.contains("Available Commands:"));
-        assertTrue(output.contains("1. add TITLE/AUTHOR/GENRE"));
-        assertTrue(output.contains("12. shelf SHELF/GENRE/NUMBER"));
-        assertTrue(output.contains("Genres:"));
-        assertTrue(output.contains("> romance"));
-        assertTrue(output.contains("> scifi"));
+        assertTrue(output.contains("add TITLE / AUTHOR / GENRE"));
+        assertTrue(output.contains("delete i/INDEX"));
+        assertTrue(output.contains("list overdue"));
+        assertTrue(output.contains("undo"));
+        assertTrue(output.contains("help"));
+        assertTrue(output.contains("bye"));
+        assertTrue(output.contains("Supported Genres:"));
+        assertTrue(output.contains("romance"));
+        assertTrue(output.contains("scifi"));
     }
 
     // Helper function to normalize line endings and trim spaces

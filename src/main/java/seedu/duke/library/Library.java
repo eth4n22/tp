@@ -35,6 +35,9 @@ public class Library {
     public UndoManager getUndoManager() {
         return undoManager;
     }
+    public BookManager getBookManager() {
+        return catalogueManager;
+    }
 
     public String listBooks() {
         return catalogueManager.listBooks();
@@ -60,7 +63,8 @@ public class Library {
         return shelvesManager.addBook(title, author, genre);
     }
 
-    //@@author Deanson Choo
+    //@@author Deanson-Choo
+
     /**
      * Deletes a book from the catalogue and the corresponding shelf based on its index in the catalogue.
      * <p>
@@ -70,25 +74,26 @@ public class Library {
      * @param bookIndex The index of the book to delete in the catalogue.
      * @return A confirmation message if deletion is successful, or an error message if the book is not found.
      */
-    public String deleteBook(int bookIndex){
+    public String deleteBook(int bookIndex) {
         try {
-            String bookID = catalogueManager.getBookID(bookIndex); //throw BookNotFound
+            String bookID = catalogueManager.getBookID(bookIndex);
             String response1 = catalogueManager.deleteBook(bookIndex);
-            assert bookID != null; //that means it was fetchable
+            assert bookID != null;
             shelvesManager.deleteBook(bookID);
             return response1;
         } catch (BookNotFoundException e) {
             return e.getMessage();
         }
     }
+
     //Delete book by Bookdetails
     public String deleteBook(String bookTitle, String author) {
         try {
-            GroupReturns bookIndexBookID = catalogueManager.getBookID(bookTitle, author); //throw BookNotFound
+            GroupReturns bookIndexBookID = catalogueManager.getBookID(bookTitle, author);
             int bookIndex = bookIndexBookID.number;
             String bookID = bookIndexBookID.text;
             String response1 = catalogueManager.deleteBook(bookIndex);
-            assert bookID != null; //that means it was fetchable
+            assert bookID != null;
             shelvesManager.deleteBook(bookID);
             return response1;
         } catch (BookNotFoundException e) {
@@ -101,6 +106,7 @@ public class Library {
     }
 
     //@@author Deanson-Choo
+
     /**
      * Returns a list of all books currently in the catalogue.
      *
@@ -110,9 +116,9 @@ public class Library {
         return catalogueManager.getBooks();
     }
 
-    //    public String getStatistics() {
-    //        return catalogueManager.getStatistics();
-    //    }
+    public String getStatistics() {
+        return catalogueManager.getStatistics();
+    }
 
     public String listOverdueBooks() {
         return catalogueManager.listOverdueBooks();
@@ -150,5 +156,9 @@ public class Library {
     //for testing
     public static void resetLibrary() {
         theOneLibrary = null;
+    }
+    public void cleanup() {
+        catalogueManager.cleanup();
+        shelvesManager.cleanup();
     }
 }

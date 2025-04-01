@@ -1,10 +1,14 @@
 package seedu.duke.ui;
 
+import seedu.duke.book.Book;
+import java.util.List;
 import java.util.Scanner;
-
+import java.time.format.DateTimeFormatter;
 
 public class Ui {
     private static final Ui uiInstance = new Ui();
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
     private final Scanner scanner;
 
     private Ui() {
@@ -16,45 +20,63 @@ public class Ui {
     }
 
     public String readCommand() {
-        System.out.print("Enter command: "); //EDIT ACCORDINGLY
+        System.out.print("Enter command: ");
         return scanner.nextLine();
     }
 
+    //@@author eth4n22
     public void printWelcomeMessage() {
         printWithSeparator("Welcome to Lebook, your personal book management system!");
     }
 
+    //@@author eth4n22
     public void printHelp() {
         String message = """
-                Available Commands:
-                -------------------
-                1. add TITLE/AUTHOR/GENRE      - Add a new book to the library.
-                2. delete BOOK_NUMBER          - Remove a book from the library.
-                3. list                        - List all current books.
-                4. list overdue                - List all overdue books.
-                5. list borrowed               - List all borrowed books.
-                6. borrow BOOK_NUMBER          - Borrow a book from the library.
-                7. return BOOK_NUMBER          - Return a borrowed book.
-                8. statistics                  - View library statistics.
-                9. undo                        - undoes the last command(add/delete/borrow/return).
-                10. bye                        - Exit the program.
-                11. help                       - Show this help menu.
-                12. shelf SHELF/GENRE/NUMBER   - Lists a particular shelf of specified genre.
-                -------------------
-                Genres:
-                  > romance
-                  > adventure
-                  > action
-                  > horror
-                  > mystery
-                  > nonfiction
-                  > scifi
+                -------------------------------
+                 Available Commands:
+                -------------------------------
+                1. add TITLE / AUTHOR / GENRE      - Add a new book.
+                2. delete i/INDEX                  - Remove book by list index (1-based).
+                3. delete b/TITLE / AUTHOR         - Remove book by title and author.
+                4. list                            - List all unique book titles.
+                5. list overdue                    - List overdue books.
+                6. list borrowed                   - List borrowed books.
+                7. borrow INDEX / MEMBER_NAME      - Borrow a book (using 1-based index).
+                8. return INDEX                    - Return a borrowed book (using 1-based index).
+                9. find CRITERIA TERM              - Search books.
+                   Criteria: title, author, genre, shelf
+                10. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (1-based number).
+                11. statistics                     - View library statistics.
+                12. undo                           - Undo the last command (add/delete/borrow/return).
+                13. help                           - Show this help menu.
+                14. bye                            - Exit the program.
+                -------------------------------
+                Supported Genres:
+                  > romance, adventure, action, horror, mystery, nonfiction, scifi
+                -------------------------------
+                Example Usage:
+                  add The Lord of the Rings / J.R.R. Tolkien / adventure
+                  list
+                  borrow 1 / Alice
+                  find title lord
+                  find genre adventure
+                  find shelf AD-0-0
+                  return 1
+                  delete i/1
+                  bye
                 """;
-        printWithSeparator(message);
+        printSeparator();
+        System.out.println(message);
+        printSeparator();
     }
 
+    //@@author eth4n22
     public void printExitMessage() {
-        printWithSeparator("Goodbye! See you again.");
+        printWithSeparator("Goodbye! Hope to see you again soon!");
+    }
+
+    public void printMessage(String message) {
+        System.out.println(message);
     }
 
     public void printSuccess(String message) {
@@ -79,6 +101,33 @@ public class Ui {
         printWithSeparator("[SUCCESS] Successfully undone: " + undoneCommand);
     }
 
+    /**
+     * Displays a formatted list of books.
+     * Used by ListCommand, FindCommand, ListBorrowedCommand, ListOverdueCommand etc.
+     *
+     * @param books The list of books to display.
+     */
+    public void showBookList(List<Book> books) {
+        if (books == null || books.isEmpty()) {
+            return;
+        }
+        for (int i = 0; i < books.size(); i++) {
+            Book book = books.get(i);
+            System.out.printf("%d. %s %s by %s (Genre: %s, Shelf: %s, Qty: %d)%n",
+                    i + 1,
+                    book.getStatusSymbol(),
+                    book.getTitle(),
+                    book.getAuthor(),
+                    book.getGenre(),
+                    book.getBookID() != null ? book.getBookID() : "N/A");
 
+            if (book.isBorrowed()) {
+                String borrower = (book.getBorrowerName() != null && !book.getBorrowerName().equals("null"))
+                        ? book.getBorrowerName() : "Unknown Borrower";
+                String dueDate = (book.getReturnDueDate() != null)
+                        ? book.getReturnDueDate().format(DATE_FORMATTER) : "No Due Date";
+                System.out.printf("     Borrowed by: %s (Due: %s)%n", borrower, dueDate);
+            }
+        }
+    }
 }
-

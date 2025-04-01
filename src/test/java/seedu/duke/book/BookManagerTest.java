@@ -78,7 +78,7 @@ public class BookManagerTest {
         String result = bookManager.deleteBook(2); // Index out of bounds
 
         assertEquals(1, bookManager.getBooks().size());
-        assertEquals("There is no such book in the library!", result);
+        assertEquals("Invalid book index provided. There is no book at index 3.", result);
     }
 
     @Test
@@ -86,7 +86,7 @@ public class BookManagerTest {
         bookManager.cleanup();
         String result = bookManager.deleteBook(-1);
 
-        assertEquals("There is no such book in the library!", result);
+        assertEquals("Invalid book index provided. There is no book at index 0.", result);
     }
 
     @Test
@@ -130,7 +130,7 @@ public class BookManagerTest {
         LocalDate expectedDueDate = LocalDate.now().plusDays(14);
         LocalDate actualDueDate = bookManager.getBooks().get(0).getReturnDueDate();
         assertEquals(expectedDueDate, actualDueDate);
-        
+
         assertTrue(bookManager.getBooks().get(0).isBorrowed());
     }
 
@@ -148,7 +148,7 @@ public class BookManagerTest {
         String result = bookManager.updateBookStatus("return", 0, "John",
                 memberManager);
 
-        assertEquals("Returned: The Great Gatsby", result);
+        assertEquals("Returned: \"The Great Gatsby\"", result);
         assertFalse(bookManager.getBooks().get(0).isBorrowed());
     }
 
@@ -161,7 +161,7 @@ public class BookManagerTest {
         String result = bookManager.updateBookStatus("borrow", 2, "John",
                 memberManager);
 
-        assertEquals("There is no such book in the library!", result);
+        assertEquals("Invalid book index provided. There is no book at index 3.", result);
     }
 
     @Test
@@ -195,7 +195,7 @@ public class BookManagerTest {
         String result = bookManager.updateBookStatus("return", 0, "John",
                 memberManager);
 
-        assertEquals("Returned: Harry Potter", result);
+        assertEquals("Returned: \"Harry Potter\"", result);
 
         assertFalse(bookManager.getBooks().get(0).isBorrowed());
     }
@@ -209,7 +209,7 @@ public class BookManagerTest {
         String result = bookManager.updateBookStatus("borrow", 100, "John",
                 memberManager);
 
-        assertEquals("There is no such book in the library!", result);
+        assertEquals("Invalid book index provided. There is no book at index 101.", result);
     }
 
     @Test
@@ -222,7 +222,7 @@ public class BookManagerTest {
         String result = bookManager.updateBookStatus("borrow", 0, "Jane",
                 memberManager);
 
-        assertEquals("This book is already borrowed!", result);
+        assertEquals("\"Harry Potter\" is already borrowed by John.", result);
     }
 
     @Test
@@ -234,7 +234,7 @@ public class BookManagerTest {
         String result = bookManager.updateBookStatus("return", 0, "John",
                 memberManager);
 
-        assertEquals("This book is not borrowed!", result);
+        assertEquals("\"Harry Potter\" is not currently borrowed.", result);
     }
 
     @Test
@@ -249,58 +249,65 @@ public class BookManagerTest {
         assertTrue(result.contains("Overdue Book"));
     }
 
-    //    @Test
-    //    void testStatistics() {
-    //        bookManager.cleanup();
-    //        bookManager.addNewBookToCatalogue("Moby A", "Author A", "romance", "R-0-0");
-    //        bookManager.addNewBookToCatalogue("Moby B", "Author B", "romance", "R-0-1");
-    //        MemberManager memberManager = MemberManager.getInstance();
-    //        bookManager.updateBookStatus("borrow", 0, "John", memberManager);
-    //
-    //        bookManager.getBooks().get(0).setReturnDueDate(LocalDate.now().minusDays(2));
-    //
-    //        String stats = bookManager.getStatistics();
-    //        assertTrue(stats.contains("Total books copies: 2"));
-    //        assertTrue(stats.contains("Unique titles: 2"));
-    //        assertTrue(stats.contains("Total books borrowed: 1"));
-    //        assertTrue(stats.contains("Total books overdue: 1"));
-    //    }
+    //@@author eth4n22
+    @Test
+    void testStatistics() {
+        bookManager.cleanup();
+        bookManager.addNewBookToCatalogue("Moby A", "Author A", "romance", "R-0-0");
+        bookManager.addNewBookToCatalogue("Moby B", "Author B", "romance", "R-0-1");
+        MemberManager memberManager = MemberManager.getInstance();
+        bookManager.updateBookStatus("borrow", 0, "John", memberManager);
 
-    //    @Test
-    //    void testAddNewBookIncreaseQuantity() {
-    //        bookManager.cleanup();
-    //        // Add a book
-    //        String result1 = bookManager.addNewBookToCatalogue("The Great Gatsby",
-    //                "F. Scott Fitzgerald", "romance", "R-0-0");
-    //        assertEquals(1, bookManager.getBooks().size());
-    //        assertTrue(result1.contains("I've added:"));
-    //
-    //        // Add the same book again (should increase quantity, not add new book)
-    //        String result2 = bookManager.addNewBookToCatalogue("The Great Gatsby",
-    //                "F. Scott Fitzgerald", "romance", "R-0-0");
-    //        assertEquals(1, bookManager.getBooks().size()); // Still only one entry
-    //        assertTrue(result2.contains("Increased quantity"));
-    //        assertEquals(2, bookManager.getBooks().get(0).getQuantity());
-    //    }
-    //
-    //    @Test
-    //    void testDeleteBookDecreaseQuantity() {
-    //        bookManager.cleanup();
-    //        // Add book twice → quantity becomes 2
-    //        bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
-    //        bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
-    //
-    //        assertEquals(1, bookManager.getBooks().size());
-    //        assertEquals(2, bookManager.getBooks().get(0).getQuantity());
-    //
-    //        // Delete → quantity decreases
-    //        String result = bookManager.deleteBook(0);
-    //        assertTrue(result.contains("Decreased quantity"));
-    //        assertEquals(1, bookManager.getBooks().get(0).getQuantity());
-    //
-    //        // Delete again → book is fully removed
-    //        String result2 = bookManager.deleteBook(0);
-    //        assertTrue(result2.contains("Book deleted"));
-    //        assertEquals(0, bookManager.getBooks().size());
-    //    }
+        bookManager.getBooks().get(0).setReturnDueDate(LocalDate.now().minusDays(2));
+
+        String stats = bookManager.getStatistics();
+        assertTrue(stats.contains("Total books copies: 2"));
+        assertTrue(stats.contains("Unique titles: 2"));
+        assertTrue(stats.contains("Total books borrowed: 1"));
+        assertTrue(stats.contains("Total books overdue: 1"));
+    }
+
+    //@@author eth4n22
+    @Test
+    void testAddNewBookIncreaseQuantity() {
+        bookManager.cleanup();
+        // Add a book
+        String result1 = bookManager.addNewBookToCatalogue("The Great Gatsby",
+                "F. Scott Fitzgerald", "romance", "R-0-0");
+        assertEquals(1, bookManager.getBooks().size());
+        assertTrue(result1.contains("I've added:"));
+
+        // Add the same book again (should increase quantity, not add new book)
+        String result2 = bookManager.addNewBookToCatalogue("The Great Gatsby",
+                "F. Scott Fitzgerald", "romance", "R-0-0");
+        assertEquals(2, bookManager.getBooks().size()); // Still only one entry
+        assertTrue(result2.contains("I've added:"));
+        assertEquals(2, QuantityManager.getQuantityManagerInstance().getHowManyBooks("The Great Gatsby",
+                "F. Scott Fitzgerald"));
+    }
+
+    //@@author eth4n22
+    @Test
+    void testDeleteBookDecreaseQuantity() {
+        bookManager.cleanup();
+        // Add book twice → quantity becomes 2
+        bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
+        bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
+
+        assertEquals(2, bookManager.getBooks().size());
+        assertEquals(2, QuantityManager.getQuantityManagerInstance().getHowManyBooks("The Great Gatsby",
+                "F. Scott Fitzgerald"));
+
+        // Delete → quantity decreases
+        String result = bookManager.deleteBook(0);
+        assertTrue(result.contains("Book deleted:"));
+        assertEquals(1, QuantityManager.getQuantityManagerInstance().getHowManyBooks("The Great Gatsby",
+                "F. Scott Fitzgerald"));
+
+        // Delete again → book is fully removed
+        String result2 = bookManager.deleteBook(0);
+        assertTrue(result2.contains("Book deleted:"));
+        assertEquals(0, QuantityManager.getQuantityManagerInstance().getHowManyBooks("The Great Gatsby",
+                "F. Scott Fitzgerald"));
+    }
 }
