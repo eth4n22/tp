@@ -121,12 +121,21 @@ public class BookManagerTest {
         MemberManager memberManager = MemberManager.getInstance();
         Member borrower = memberManager.getMemberByName("John");
 
-        String result = bookManager.updateBookStatus("borrow", 0, "John",
-                memberManager);
+        String result = bookManager.updateBookStatus("borrow", 0, "John", memberManager);
 
-        assertEquals("John has borrowed: The Great Gatsby", result);
+        // Assert message contains expected information
+        assertTrue(result.contains("John has borrowed: \"The Great Gatsby\""));
+
+        //due date is 14 days from current date rather than hard coded
+        LocalDate expectedDueDate = LocalDate.now().plusDays(14);
+        LocalDate actualDueDate = bookManager.getBooks().get(0).getReturnDueDate();
+        assertEquals(expectedDueDate, actualDueDate);
+        
         assertTrue(bookManager.getBooks().get(0).isBorrowed());
     }
+
+
+
 
     @Test
     public void testUpdateBookStatus_return() {
@@ -158,17 +167,22 @@ public class BookManagerTest {
     @Test
     void testBorrowBook() {
         bookManager.cleanup();
-        bookManager.addNewBookToCatalogue("Harry Potter", "Wayne", "romance", "R-0-0");
-        bookManager.addNewBookToCatalogue("I Love 2113", "Deanson", "romance", "R-0-1");
+        bookManager.addNewBookToCatalogue("Percy Jackson", "Rick", "romance", "R-0-0");
+        bookManager.addNewBookToCatalogue("1234", "abcd", "romance", "R-0-1");
         MemberManager memberManager = MemberManager.getInstance();
 
-        String result = bookManager.updateBookStatus("borrow", 0, "John",
-                memberManager);
-        //parser passes in 0-indexed bookIndex
+        String result = bookManager.updateBookStatus("borrow", 0, "John", memberManager);
 
-        assertEquals("John has borrowed: Harry Potter", result);
+        assertTrue(result.contains("John has borrowed: \"Percy Jackson\""));
+
+        LocalDate expectedDueDate = LocalDate.now().plusDays(14);
+        LocalDate actualDueDate = bookManager.getBooks().get(0).getReturnDueDate();
+        assertEquals(expectedDueDate, actualDueDate);
+
         assertTrue(bookManager.getBooks().get(0).isBorrowed());
     }
+
+
 
     @Test
     void testReturnBook() {
