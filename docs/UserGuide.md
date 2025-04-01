@@ -29,7 +29,8 @@ add The Great Gatsby / F. Scott Fitzgerald / nonfiction
 ```
 ____________________________________________________________
 I've added: "The Great Gatsby" by F. Scott Fitzgerald (Genre: nonfiction, ID: NF-0-0).
-Total unique titles in library: 1
+Total books in library: 9
+Now you have 1 books on the Shelf: NF-0
 ____________________________________________________________
 ```
 
@@ -192,7 +193,96 @@ Sorry, no books found with titles containing 'rings'.
 ____________________________________________________________
 ```
 
-### 9. Exiting the Application
+### 9. Finding Quantity of a book
+Search for number of copies of a specific book in your library.
+
+**Format:**
+```
+quantity / BOOK_TITLE / BOOK_AUTHOR
+```
+
+**Examples:**
+```
+quantity / Harry Potter / J.K. Rowling
+```
+
+**Example Output:**
+```
+____________________________________________________________
+There are 3 copies of the book: Harry Potter by: J.K. Rowling
+____________________________________________________________
+```
+
+### 10. Listing of a specific Shelf
+Allows for the viewing of what books are on a specified shelf.
+
+**Format:**
+```
+shelf / GENRE / SHELF_INDEX
+```
+
+**Examples:**
+```
+shelf / romance / 1
+```
+
+**Example Output:**
+```
+____________________________________________________________
+Here is the list of the books on shelf romance 1:
+1. [ ] Romeo and Juliet (by Shakespeare)
+____________________________________________________________
+```
+
+### 11. Help
+Brings up the help menu for the user to refer to.
+
+**Format:**
+```
+help
+```
+
+**Example Output:**
+```
+-------------------------------  
+ Available Commands:  
+-------------------------------  
+1. add TITLE / AUTHOR / GENRE       - Add a new book.  
+2. borrow INDEX / MEMBER_NAME      - Borrow a book (using 1-based index).  
+3. delete b/TITLE / AUTHOR         - Remove book by title and author.  
+4. delete i/INDEX                  - Remove book by list index (1-based).  
+5. find CRITERIA TERM              - Search books.  
+   Criteria: title, author, genre, id  
+6. help                            - Show this help menu.  
+7. list                            - List all unique book titles.  
+8. list borrowed                   - List borrowed books.  
+9. list overdue                    - List overdue books.  
+10. list users                     - List users who have overdue books.  
+11. quantity / TITLE / AUTHOR      - Shows the quantity of the specified book.  
+12. return INDEX                   - Return a borrowed book (using 1-based index).  
+13. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (1-based number).  
+14. statistics                     - View library statistics.  
+15. undo                           - Undo the last command (add/delete/borrow/return).  
+16. bye                            - Exit the program.  
+-------------------------------  
+Supported Genres:  
+  > romance, adventure, action, horror, mystery, nonfiction, scifi  
+-------------------------------  
+Example Usage:  
+  add The Lord of the Rings / J.R.R. Tolkien / adventure  
+  quantity / Harry Potter / J.K. Rowling  
+  list  
+  borrow 1 / Alice  
+  find title lord  
+  find genre adventure  
+  find id AD-0-0  
+  return 1  
+  delete i/1  
+  bye  
+
+```
+
+### 12. Exiting the Application
 Close the application and save the current state of your library.
 
 **Format:**
