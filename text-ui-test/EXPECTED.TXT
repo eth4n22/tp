@@ -2,5 +2,5 @@
 Welcome to Lebook, your personal book management system!
 ========================================
 Enter command: ========================================
-Goodbye! See you again.
+Goodbye! Hope to see you again soon!
 ========================================
