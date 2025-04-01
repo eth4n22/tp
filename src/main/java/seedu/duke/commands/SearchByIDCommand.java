@@ -14,15 +14,16 @@ import java.util.List;
 /**
  * Command to search for books by their exact shelf ID.
  */
-public class SearchByShelfCommand extends Command {
+public class SearchByIDCommand extends Command {
 
     private final String searchTerm;
 
-    public SearchByShelfCommand(String searchTerm) {
+    public SearchByIDCommand(String searchTerm) {
         if (searchTerm == null || searchTerm.trim().isEmpty()) {
             this.searchTerm = "";
         } else {
-            this.searchTerm = searchTerm.trim(); // Shelf IDs might be case-sensitive depending on your system
+            // Shelf IDs might be case-sensitive depending on implementation, but BookFinder does case-insensitive.
+            this.searchTerm = searchTerm.trim();
         }
     }
 
@@ -31,10 +32,10 @@ public class SearchByShelfCommand extends Command {
         if (searchTerm.isEmpty()) {
             throw new LeBookException("Please provide a shelf ID to search for (e.g., AD-0-1).");
         }
-        List<Book> books = null;
-        BookManager bookManager = BookManager.getBookManagerInstance(books);
+
+
+        BookManager bookManager = library.getBookManager();
         BookFinder finder = new BookFinder(bookManager.getBooks());
-        // Finder uses case-insensitive compare by default, adjust if needed
         List<Book> results = finder.findBooksByShelfId(searchTerm);
 
         if (results.isEmpty()) {
