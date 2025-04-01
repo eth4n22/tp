@@ -40,7 +40,7 @@ public class Parser {
     private static final String DELETE = "delete";
     private static final String HELP = "help";
     private static final String FIND = "find";
-    private static final String STATISTICS = "statistics";
+    //private static final String STATISTICS = "statistics";
 
     private static final String LIST_OVERDUE = "overdue";
     private static final String LIST_BORROWED = "borrowed";
