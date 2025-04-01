@@ -81,7 +81,22 @@ Total books: 3
 ____________________________________________________________
 ```
 
-### 4. Borrowing a Book
+### 4. Listing Overdue Books
+View all the overdue books currently in your library, including their title, author, borrower name and due date.
+
+**Format:**
+```
+list overdue
+```
+**Example Output:**
+```
+____________________________________________________________
+Overdue Books:
+1. harry potter by rowling (Borrowed by: deanson, Due: 2025-04-01)
+____________________________________________________________
+```
+
+### 5. Borrowing a Book
 Mark a book as borrowed by a specific member.
 
 **Format:**
@@ -100,7 +115,7 @@ Bob has borrowed: "1984" (Due: ...)
 ____________________________________________________________
 ```
 
-### 5. Returning a Book
+### 6. Returning a Book
 Mark a borrowed book as returned.
 
 **Format:**
@@ -119,7 +134,29 @@ Returned: "The Hobbit"
 ____________________________________________________________
 ```
 
-### 6. Finding Books
+### 7. Undoing Previous Command(s)
+Undo the last registered command (Add, Delete, Return, Borrow)
+
+**Format:**
+```
+undo NUMBER_OF_COMMANDS_TO_UNDO
+```
+**Example:**
+```
+undo 2
+```
+
+**Example Output:**
+```
+____________________________________________________________
+[SUCCESS] Successfully undone: Delete a book by its index
+____________________________________________________________
+____________________________________________________________
+[SUCCESS] Successfully undone: Add Command
+____________________________________________________________
+```
+
+### 8. Finding Books
 Search for specific books in your library based on different criteria.
 
 **Format:**
@@ -155,7 +192,7 @@ Sorry, no books found with titles containing 'rings'.
 ____________________________________________________________
 ```
 
-### 7. Exiting the Application
+### 9. Exiting the Application
 Close the application and save the current state of your library.
 
 **Format:**
@@ -187,16 +224,18 @@ INDEX. [STATUS] TITLE by AUTHOR (Genre: GENRE, ID: BOOK_ID) | (Due: DUE_DATE) Bo
 ```
 
 ## Command Summary
-| Command | Format | Example |
-|---------|--------|---------|
-| **Add Book** | `add TITLE / AUTHOR / GENRE` | `add Dune / Frank Herbert / scifi` |
-| **Delete by Index** | `delete i/BOOK_NUMBER` | `delete i/1` |
-| **Delete by Book** | `delete b/TITLE / AUTHOR` | `delete b/Dune / Frank Herbert` |
-| **List Books** | `list` | `list` |
-| **Borrow Book** | `borrow BOOK_NUMBER / MEMBER` | `borrow 2 / Eve` |
-| **Return Book** | `return BOOK_NUMBER` | `return 3` |
-| **Find Book** | `find CRITERIA TERM` | `find title dune` |
-| **Exit** | `bye` | `bye` |
+| Command                | Format                            | Example                            |
+|------------------------|-----------------------------------|------------------------------------|
+| **Add Book**           | `add TITLE / AUTHOR / GENRE`      | `add Dune / Frank Herbert / scifi` |
+| **Delete by Index**    | `delete i/BOOK_NUMBER`            | `delete i/1`                       |
+| **Delete by Book**     | `delete b/TITLE / AUTHOR`         | `delete b/Dune / Frank Herbert`    |
+| **List Books**         | `list`                            | `list`                             |
+| **List Overdue Books** | `list overdue`                    | `list overdue`                     |
+| **Borrow Book**        | `borrow BOOK_NUMBER / MEMBER`     | `borrow 2 / Eve`                   |
+| **Return Book**        | `return BOOK_NUMBER`              | `return 3`                         |
+| **Undo Command**       | `undo NUMBER_OF_COMMANDS_TO_UNDO` | `undo 3`                           |
+| **Find Book**          | `find CRITERIA TERM`              | `find title dune`                  |
+| **Exit**               | `bye`                             | `bye`                              |
 
 ---
 
