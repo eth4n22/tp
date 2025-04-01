@@ -20,4 +20,9 @@ public class StatisticsCommand extends Command {
         String statistics = Library.getTheOneLibrary(books).getStatistics();
         ui.printWithSeparator(statistics);
     }
+
+    @Override
+    public void undo(Library library, Ui ui, Storage storage, MemberManager memberManager) {
+    }
+
 }

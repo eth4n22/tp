@@ -10,9 +10,8 @@ public abstract class Command {
     public abstract void execute(Library library, Ui ui, Storage storage, MemberManager memberManager)
             throws LeBookException;
 
-    public void undo(Library library, Ui ui, Storage storage, MemberManager memberManager){
-        ui.printError("This command cannot be undone");
-    }
+    public abstract void undo(Library library, Ui ui, Storage storage, MemberManager memberManager);
+
 
     public String getCommandDescription(){
         return this.getClass().getSimpleName();
@@ -27,6 +26,7 @@ public abstract class Command {
                 || this instanceof ListOverdueUsersCommand
                 || this instanceof ListShelfCommand
                 || this instanceof ListBookQuantityCommand
+                || this instanceof StatisticsCommand
                 || this instanceof UndoCommand);
     }
 

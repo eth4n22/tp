@@ -25,14 +25,23 @@ public class UndoManager {
             return;
         }
 
-        for (int i = 0; i < count; i++) {
+        int undoneCount = 0;
+        while (undoneCount < count) {
             if (commandHistory.isEmpty()) {
-                ui.printError("No more commands to undo!");
+                ui.printError("No commands to undo!");
                 break;
             }
             Command lastCommand = commandHistory.pop();
-            lastCommand.undo(library, ui, storage, memberManager);
-            ui.printSuccess("Successfully undone: " + lastCommand.getCommandDescription());
+            if (lastCommand.isUndoable()) {
+                lastCommand.undo(library, ui, storage, memberManager);
+                ui.printSuccess("Successfully undone: " + lastCommand.getCommandDescription());
+                undoneCount++;
+            } else {
+                ui.printError(lastCommand.getCommandDescription());
+            }
         }
+
+
+
     }
 }

@@ -45,4 +45,9 @@ public class SearchByTitleCommand extends Command {
             ui.showBookList(results);
         }
     }
+
+    @Override
+    public void undo(Library library, Ui ui, Storage storage, MemberManager memberManager) {
+    }
+
 }

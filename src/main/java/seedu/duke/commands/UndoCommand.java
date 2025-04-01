@@ -23,6 +23,10 @@ public class UndoCommand extends Command {
     }
 
     @Override
+    public void undo(Library library, Ui ui, Storage storage, MemberManager memberManager) {
+    }
+
+    @Override
     public String getCommandDescription() {
         return "Undo Command (" + undoCount + " times)";
     }
