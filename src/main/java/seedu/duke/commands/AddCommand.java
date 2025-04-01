@@ -26,14 +26,12 @@ public class AddCommand extends Command {
         assert author != null : "Author cannot be null";
 
         String responseForCatalogue = library.addNewBookToCatalogue(title, author, genre);
-        ui.printWithSeparator(responseForCatalogue);
 
         if (!responseForCatalogue.equals("This Library does not support this Genre!")) {
             String responseForShelf = library.addNewBookToShelf(title, author, genre);
-            ui.printWithSeparator(responseForShelf);
+            ui.printWithSeparator(responseForCatalogue + responseForShelf);
             storage.writeToFile(library.getBooks());
 
-            //records index for undo
             addedBookIndex = library.getLastAddedBookIndex(title, author);
         }
     }

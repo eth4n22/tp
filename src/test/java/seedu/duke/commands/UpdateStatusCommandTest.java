@@ -47,6 +47,7 @@ public class UpdateStatusCommandTest {
         assertTrue(book.isBorrowed());
         assertEquals("Alice", book.getBorrowerName());
         assertNotNull(book.getReturnDueDate());
+        storage.cleanup();
     }
 
     @Test
@@ -65,6 +66,7 @@ public class UpdateStatusCommandTest {
         assertFalse(book.isBorrowed());
         assertNull(book.getBorrowerName());
         assertNull(book.getReturnDueDate());
+        storage.cleanup();
     }
 
     @Test
@@ -83,6 +85,7 @@ public class UpdateStatusCommandTest {
         assertFalse(book.isBorrowed());
         assertNull(book.getBorrowerName());
         assertNull(book.getReturnDueDate());
+        storage.cleanup();
     }
 
     @Test
@@ -105,6 +108,7 @@ public class UpdateStatusCommandTest {
         assertTrue(book.isBorrowed());
         assertEquals("Alice", book.getBorrowerName());
         assertNotNull(book.getReturnDueDate());
+        storage.cleanup();
     }
 }
 
