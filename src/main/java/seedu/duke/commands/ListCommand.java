@@ -6,6 +6,7 @@ import seedu.duke.storage.Storage;
 import seedu.duke.ui.Ui;
 
 public class ListCommand extends Command {
+
     @Override
     public void execute(Library library, Ui ui, Storage storage, MemberManager memberManager) {
         assert library != null : "BookManager should not be null";
@@ -14,4 +15,9 @@ public class ListCommand extends Command {
         String response = library.listBooks();
         ui.printWithSeparator(response);
     }
+
+    @Override
+    public void undo(Library library, Ui ui, Storage storage, MemberManager memberManager) {
+    }
+
 }
