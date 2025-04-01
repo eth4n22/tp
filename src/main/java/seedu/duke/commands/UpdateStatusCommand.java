@@ -7,7 +7,9 @@ import seedu.duke.storage.Storage;
 import seedu.duke.ui.Ui;
 
 import java.time.LocalDate;
-
+/**
+ * Commands for changing the status of books to borrowed or returned
+ */
 public class UpdateStatusCommand extends Command {
 
     private final String commandType;
