@@ -282,7 +282,39 @@ Example Usage:
 
 ```
 
-### 12. Exiting the Application
+### 12. Listing Borrowed Books
+View all the books in your library that are borrowed, including their title, author, borrower name and due date.
+
+**Format:**
+```
+list borrowed
+```
+**Example Output:**
+```
+========================================
+Borrowed Books:
+1. Harry Potter by J.K Rowling (Borrowed by: Bob, Due: 2025-04-15)
+
+========================================
+```
+
+### 13. Listing Library Members with Overdue Books
+View all the members who have overdue books, including the book title and borrower name.
+
+**Format:**
+```
+list users
+```
+**Example Output:**
+```
+========================================
+Members with overdue books:
+1. Bob - Harry Potter
+
+========================================
+```
+
+### 14. Exiting the Application
 Close the application and save the current state of your library.
 
 **Format:**
@@ -314,18 +346,20 @@ INDEX. [STATUS] TITLE by AUTHOR (Genre: GENRE, ID: BOOK_ID) | (Due: DUE_DATE) Bo
 ```
 
 ## Command Summary
-| Command                | Format                            | Example                            |
-|------------------------|-----------------------------------|------------------------------------|
-| **Add Book**           | `add TITLE / AUTHOR / GENRE`      | `add Dune / Frank Herbert / scifi` |
-| **Delete by Index**    | `delete i/BOOK_NUMBER`            | `delete i/1`                       |
-| **Delete by Book**     | `delete b/TITLE / AUTHOR`         | `delete b/Dune / Frank Herbert`    |
-| **List Books**         | `list`                            | `list`                             |
-| **List Overdue Books** | `list overdue`                    | `list overdue`                     |
-| **Borrow Book**        | `borrow BOOK_NUMBER / MEMBER`     | `borrow 2 / Eve`                   |
-| **Return Book**        | `return BOOK_NUMBER`              | `return 3`                         |
-| **Undo Command**       | `undo NUMBER_OF_COMMANDS_TO_UNDO` | `undo 3`                           |
-| **Find Book**          | `find CRITERIA TERM`              | `find title dune`                  |
-| **Exit**               | `bye`                             | `bye`                              |
+| Command                             | Format                            | Example                            |
+|-------------------------------------|-----------------------------------|------------------------------------|
+| **Add Book**                        | `add TITLE / AUTHOR / GENRE`      | `add Dune / Frank Herbert / scifi` |
+| **Delete by Index**                 | `delete i/BOOK_NUMBER`            | `delete i/1`                       |
+| **Delete by Book**                  | `delete b/TITLE / AUTHOR`         | `delete b/Dune / Frank Herbert`    |
+| **List Books**                      | `list`                            | `list`                             |
+| **List Overdue Books**              | `list overdue`                    | `list overdue`                     |
+| **List Borrowed Books**             | `list borrowed`                   | `list borrowed`                    |
+| **List Members with Overdue Books** | `list users`                      | `list users`                       |
+| **Borrow Book**                     | `borrow BOOK_NUMBER / MEMBER`     | `borrow 2 / Eve`                   |
+| **Return Book**                     | `return BOOK_NUMBER`              | `return 3`                         |
+| **Undo Command**                    | `undo NUMBER_OF_COMMANDS_TO_UNDO` | `undo 3`                           |
+| **Find Book**                       | `find CRITERIA TERM`              | `find title dune`                  |
+| **Exit**                            | `bye`                             | `bye`                              |
 
 ---
 
