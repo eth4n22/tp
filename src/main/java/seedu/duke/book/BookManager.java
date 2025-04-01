@@ -1,4 +1,3 @@
-// src/main/java/seedu/duke/book/BookManager.java
 package seedu.duke.book;
 
 import seedu.duke.exception.BookNotFoundException;

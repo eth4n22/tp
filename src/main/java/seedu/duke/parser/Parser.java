@@ -3,7 +3,7 @@ package seedu.duke.parser;
 import seedu.duke.commands.SearchByTitleCommand;
 import seedu.duke.commands.SearchByAuthorCommand;
 import seedu.duke.commands.SearchByGenreCommand;
-import seedu.duke.commands.SearchByShelfCommand;
+import seedu.duke.commands.SearchByIDCommand;
 
 import seedu.duke.commands.Command;
 import seedu.duke.commands.AddCommand;
@@ -222,11 +222,11 @@ public class Parser {
             return new SearchByAuthorCommand(searchTerm);
         case "genre":
             return new SearchByGenreCommand(searchTerm.toLowerCase());
-        case "shelf":
-            return new SearchByShelfCommand(searchTerm);
+        case "id":
+            return new SearchByIDCommand(searchTerm);
         default:
             throw new LeBookException("Invalid search criteria '" + criteria +
-                    "'. Use 'title', 'author', 'genre', or 'shelf'.");
+                    "'. Use 'title', 'author', 'genre', or 'id'.");
         }
     }
 

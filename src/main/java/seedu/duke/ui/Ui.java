@@ -45,7 +45,7 @@ public class Ui {
                 7.  borrow INDEX / MEMBER_NAME      - Borrow a book (using 1-based index).
                 8.  return INDEX                    - Return a borrowed book (using 1-based index).
                 9.  find CRITERIA TERM              - Search books.
-                      Criteria: title, author, genre, shelf
+                      Criteria: title, author, genre, id
                 10. shelf GENRE / SHELF_NUMBER      - List books on a specific shelf (1-based number).
                 11. statistics                      - View library statistics.
                 12. help                            - Show this help menu.
@@ -60,7 +60,7 @@ public class Ui {
                   borrow 1 / Alice
                   find title lord
                   find genre adventure
-                  find shelf AD-0-0
+                  find id AD-0-0
                   return 1
                   delete i/1
                   bye
@@ -120,7 +120,7 @@ public class Ui {
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
             // Use getters for clarity and encapsulation
-            System.out.printf("%d. %s %s by %s (Genre: %s, Shelf: %s, Qty: %d)%n",
+            System.out.printf("%d. %s %s by %s (Genre: %s, Shelf: %s)%n",
                     i + 1,                          // 1-based index for display
                     book.getStatusSymbol(),         // [ ] or [X]
                     book.getTitle(),
