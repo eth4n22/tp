@@ -6,6 +6,8 @@ import seedu.duke.member.MemberManager;
 import seedu.duke.shelving.ShelvesManager;
 
 import java.io.FileNotFoundException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -15,6 +17,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.time.LocalDate;
 
+//@@author WayneCh0y
 public class Storage {
     private static final String SPLIT_REGEX = "\\|";
     private static final String DIRECTORY_NAME = "data";
@@ -24,7 +27,6 @@ public class Storage {
     private static final int BOOK_STATUS_INDEX = 2;
     private static final int BOOK_DUE_DATE_INDEX = 3;
     private static final int BOOK_SHELF_INDEX = 4;
-    private static final int BOOK_QUANTITY_INDEX = 5;
     private static final int BORROWER_NAME_INDEX = 5;
 
     private static final int MAX_SPLIT_NUMBER = 6;
@@ -45,15 +47,17 @@ public class Storage {
     private static final String NONFICTION_ID = "NF";
     private static final String SCIFI_ID = "SCIF";
 
-    private static Storage instance; // Singleton instance
+    private static Storage instance;
     private final ShelvesManager shelvesManager;
-    private final String filePath;   // Instance variable (not static)
+    private final String filePath;
 
+    //@@author WayneCh0y
     private Storage(String path) {
         this.filePath = path;
         shelvesManager = ShelvesManager.getShelvesManagerInstance();
     }
 
+    //@@author WayneCh0y
     public static Storage getInstance(String path) {
         if (instance == null) {
             instance = new Storage(path);
@@ -117,7 +121,6 @@ public class Storage {
         String bookDueDate = specifiers[BOOK_DUE_DATE_INDEX].trim();
         String bookID = specifiers[BOOK_SHELF_INDEX].trim();
         String genre = getGenreFromFile(bookID);
-        //String quantityString = specifiers[BOOK_QUANTITY_INDEX].trim();
         String borrowerName = specifiers[BORROWER_NAME_INDEX].trim();
 
         boolean isBorrowed = bookStatus.equals("1");
@@ -126,8 +129,6 @@ public class Storage {
         if (isBorrowed) {
             returnDueDate = LocalDate.parse(bookDueDate);
         }
-
-        //int bookQuantity = Integer.parseInt(quantityString);
 
         Book book = new Book(bookTitle, bookAuthor, isBorrowed, returnDueDate, bookID, borrowerName);
         shelvesManager.addBook(bookTitle, bookAuthor, genre);
@@ -157,6 +158,7 @@ public class Storage {
         }
     }
 
+    //@@author WayneCh0y
     public void writeToFile(List<Book> bookList) {
         assert bookList != null : "Book list cannot be null";
 
@@ -172,6 +174,17 @@ public class Storage {
             }
         } catch (IOException e) {
             System.out.print("ERROR:" + e.getMessage());
+        }
+    }
+
+    //@@author WayneCh0y
+    public void cleanup() {
+        try {
+            Files.deleteIfExists(Paths.get(filePath)); // Ensure file is deleted
+            Files.createFile(Paths.get(filePath));     // Recreate empty file
+            instance = null;
+        } catch (IOException e) {
+            System.out.println("ERROR: Failed to clear file - " + e.getMessage());
         }
     }
 }

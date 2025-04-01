@@ -40,6 +40,7 @@ public class StatisticsCommandTest {
 
         StatisticsCommand statsCommand = new StatisticsCommand();
         assertDoesNotThrow(() -> statsCommand.execute(library, ui, storage, memberManager));
+        storage.cleanup();
     }
 }
 

@@ -39,6 +39,7 @@ public class AddCommandTest {
         assertEquals("The Hobbit", addedBook.getTitle());
         assertEquals("J.R.R. Tolkien", addedBook.getAuthor());
         assertEquals("adventure", addedBook.getGenre());
+        storage.cleanup();
     }
 
     @Test
@@ -47,6 +48,7 @@ public class AddCommandTest {
         addCommand.execute(library, ui, storage, memberManager);
 
         assertEquals(0, library.getBooks().size());
+        storage.cleanup();
     }
 }
 

@@ -68,6 +68,11 @@ public class Shelf {
     }
 
     //@@author WayneCh0y
+    private String getShelfNumber() {
+        return shelfGenre + "-" + shelfIndex;
+    }
+
+    //@@author WayneCh0y
     private String getBackGenre() {
         switch (this.shelfGenre) {
         case ROMANCE_ID:
@@ -193,8 +198,8 @@ public class Shelf {
             setShelfAsFull();
         }
 
-        return "Added: " + title + " by: " + author + "\nNow you have " + booksCurrentlyOnShelf
-                + " books on the Shelf: " + getShelfIdentifier(bookIndex);
+        return "\nNow you have " + booksCurrentlyOnShelf
+                + " books on the Shelf: " + getShelfNumber();
     }
 
     //@@author Deanson Choo

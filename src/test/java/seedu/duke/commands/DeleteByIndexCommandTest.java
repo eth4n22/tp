@@ -43,6 +43,7 @@ public class DeleteByIndexCommandTest {
         deleteCommand.execute(library, ui, storage, memberManager);
 
         assertEquals(0, library.getBooks().size());
+        storage.cleanup();
     }
 
     @Test
@@ -59,6 +60,7 @@ public class DeleteByIndexCommandTest {
 
         // Book list remains unchanged
         assertEquals(1, library.getBooks().size());
+        storage.cleanup();
     }
 
     @Test
@@ -79,6 +81,7 @@ public class DeleteByIndexCommandTest {
         Book restoredBook = library.getBooks().get(0);
         assertEquals("The Hobbit", restoredBook.getTitle());
         assertEquals("J.R.R. Tolkien", restoredBook.getAuthor());
+        storage.cleanup();
     }
 
     @Test

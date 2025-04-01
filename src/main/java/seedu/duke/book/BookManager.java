@@ -123,7 +123,7 @@ public class BookManager {
 
         // Broke long line
         return "I've added: \"" + title + "\" by " + author + " (Genre: " + genre + ", ID: " + bookID + ").\n"
-                + "Total unique titles in library: " + getUniqueTitleSize();
+                + "Total books in library: " + books.size();
     }
 
     /**

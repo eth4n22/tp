@@ -43,6 +43,7 @@ public class ListOverdueCommandTest {
 
         ListOverdueCommand overdueCommand = new ListOverdueCommand();
         assertDoesNotThrow(() -> overdueCommand.execute(library, ui, storage, memberManager));
+        storage.cleanup();
     }
 
     @Test
@@ -52,6 +53,7 @@ public class ListOverdueCommandTest {
 
         ListOverdueCommand overdueCommand = new ListOverdueCommand();
         assertDoesNotThrow(() -> overdueCommand.execute(library, ui, storage, memberManager));
+        storage.cleanup();
     }
 }
 
