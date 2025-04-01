@@ -5,6 +5,10 @@ import seedu.duke.member.MemberManager;
 import seedu.duke.storage.Storage;
 import seedu.duke.ui.Ui;
 
+/**
+ * Command to undo previous commands made
+ */
+
 public class UndoCommand extends Command {
 
     private final int undoCount;
