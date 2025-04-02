@@ -2,6 +2,7 @@ package seedu.duke.commands;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import seedu.duke.exception.LeBookException;
 import seedu.duke.library.Library;
 import seedu.duke.member.MemberManager;
 import seedu.duke.storage.Storage;
@@ -30,7 +31,7 @@ public class AddCommandTest {
     }
 
     @Test
-    public void testExecute_validBook_bookAdded() {
+    public void testExecute_validBook_bookAdded() throws LeBookException {
         AddCommand addCommand = new AddCommand("The Hobbit", "J.R.R. Tolkien", "adventure");
         addCommand.execute(library, ui, storage, memberManager);
 
@@ -43,7 +44,7 @@ public class AddCommandTest {
     }
 
     @Test
-    public void testExecute_unsupportedGenre_bookNotAdded() {
+    public void testExecute_unsupportedGenre_bookNotAdded() throws LeBookException {
         AddCommand addCommand = new AddCommand("Unknown Book", "Unknown Author", "unsupported");
         addCommand.execute(library, ui, storage, memberManager);
 

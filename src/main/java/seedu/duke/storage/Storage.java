@@ -111,7 +111,8 @@ public class Storage {
     }
 
     //@@author WayneCh0y
-    private static Book getBookFromLoad(String details, ShelvesManager shelvesManager) throws IOException, LeBookException {
+    private static Book getBookFromLoad(String details, ShelvesManager shelvesManager) throws IOException,
+            LeBookException {
         String[] specifiers = details.split(SPLIT_REGEX);
 
         if (specifiers.length < MAX_SPLIT_NUMBER) {

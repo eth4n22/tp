@@ -23,7 +23,7 @@ public class Book {
     private static final String NONFICTION_ID = "NF";
     private static final String SCIFI_ID = "SCIF";
     private static final String UNKNOWN_GENRE = "Unknown"; // Fallback
-    public static final String REGEX = " | ";
+    private static final String REGEX = " | ";
 
     // --- Instance Variables ---
     private final String title;
