@@ -157,6 +157,14 @@ public class Library {
         return -1; // if not found
     }
 
+    public Book getBookByID(String bookID) {
+        for (Book book : getBooks()) {
+            if (book.getBookID().equals(bookID)) {
+                return book;
+            }
+        }
+        return null;
+    }
 
     public void restoreBook(Book book) {
         if (book == null) {
