@@ -23,6 +23,7 @@ public class Book {
     private static final String NONFICTION_ID = "NF";
     private static final String SCIFI_ID = "SCIF";
     private static final String UNKNOWN_GENRE = "Unknown"; // Fallback
+    public static final String REGEX = " | ";
 
     // --- Instance Variables ---
     private final String title;
@@ -155,9 +156,9 @@ public class Book {
      * @return Delimited string for file storage.
      */
     public String toFileFormat() {
-        return title + " | " + author + " | " + (isBorrowed ? 1 : 0)
-                + " | " + returnDueDate + " | " + bookID
-                + " | " + borrowerName;
+        return title + REGEX + author + REGEX + (isBorrowed ? 1 : 0)
+                + REGEX + returnDueDate + REGEX + bookID
+                + REGEX + borrowerName;
     }
 
     /**

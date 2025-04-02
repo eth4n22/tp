@@ -88,8 +88,12 @@ The feature is facilitated by the following components:
 
 ![ListUsersSequence](images/ListUsersSequence.png)
 
+### Shelving Feature
+
+
 ### Undo Feature
 *(to be updated)*
+
 
 ## Appendix
 ### Product scope

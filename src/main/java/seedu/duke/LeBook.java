@@ -52,6 +52,9 @@ public class LeBook {
 
                 isExit = command.isExit();
             } catch (LeBookException e) {
+                if (e.getMessage().equals("Stop messing with my storage text file!")) {
+                    storage.cleanup();
+                }
                 ui.printError(e.getMessage());
             }
         }

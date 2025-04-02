@@ -1,5 +1,6 @@
 package seedu.duke.commands;
 
+import seedu.duke.exception.LeBookException;
 import seedu.duke.library.Library;
 import seedu.duke.member.MemberManager;
 import seedu.duke.storage.Storage;
@@ -18,12 +19,16 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public void execute(Library library, Ui ui, Storage storage, MemberManager memberManager) {
+    public void execute(Library library, Ui ui, Storage storage, MemberManager memberManager) throws LeBookException {
         assert library != null : "Library should not be null";
         assert ui != null : "Ui should not be null";
         assert storage != null : "Storage should not be null";
         assert title != null : "Title cannot be null";
         assert author != null : "Author cannot be null";
+
+        if (title.trim().contains("|") || author.trim().contains("|")) {
+            throw new LeBookException("Book title cannot contain \"|\"");
+        }
 
         String responseForCatalogue = library.addNewBookToCatalogue(title, author, genre);
 
