@@ -45,9 +45,13 @@ public class MemberManager {
             if (!overdueBooks.isEmpty()) {
                 output.append(memberIndex).append(". ").append(member.getName()).append(" - ");
                 for (int i = 0; i < overdueBooks.size(); i++) {
-                    output.append(overdueBooks.get(i).getTitle());
+                    Book overdueBook = overdueBooks.get(i);
+                    String title = overdueBook.getTitle();
+                    String author = overdueBook.getAuthor();
+                    output.append(title).append(" (by: ").append(author).append(")");
                     if (i < overdueBooks.size() - 1) {
                         output.append(", ");
+                        
                     }
                 }
                 output.append("\n");
