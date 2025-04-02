@@ -1,6 +1,7 @@
 package seedu.duke.storage;
 
 import seedu.duke.book.Book;
+import seedu.duke.exception.LeBookException;
 import seedu.duke.member.Member;
 import seedu.duke.member.MemberManager;
 import seedu.duke.shelving.ShelvesManager;
@@ -94,6 +95,8 @@ public class Storage {
                     bookList.add(book);
                 } catch (IOException e) {
                     System.out.println("[ERROR] " + e.getMessage());
+                } catch (LeBookException leBookException) {
+                    System.out.println(leBookException.getMessage());
                 }
             }
 
@@ -108,7 +111,8 @@ public class Storage {
     }
 
     //@@author WayneCh0y
-    private static Book getBookFromLoad(String details, ShelvesManager shelvesManager) throws IOException {
+    private static Book getBookFromLoad(String details, ShelvesManager shelvesManager) throws IOException,
+            LeBookException {
         String[] specifiers = details.split(SPLIT_REGEX);
 
         if (specifiers.length < MAX_SPLIT_NUMBER) {
@@ -123,11 +127,44 @@ public class Storage {
         String genre = getGenreFromFile(bookID);
         String borrowerName = specifiers[BORROWER_NAME_INDEX].trim();
 
+        if (bookTitle.trim().isEmpty()) {
+            throw new LeBookException("Stop messing with my storage text file!");
+        }
+
+        if (bookAuthor.trim().isEmpty()) {
+            throw new LeBookException("Stop messing with my storage text file!");
+        }
+
+        if (bookStatus.trim().isEmpty()) {
+            throw new LeBookException("Stop messing with my storage text file!");
+        }
+
+        if (bookDueDate.trim().isEmpty()) {
+            throw new LeBookException("Stop messing with my storage text file!");
+        }
+
+        if (bookID.trim().isEmpty()) {
+            throw new LeBookException("Stop messing with my storage text file!");
+        }
+
+        if (borrowerName.trim().isEmpty()) {
+            throw new LeBookException("Stop messing with my storage text file!");
+        }
+
+        if (!bookStatus.trim().equals("1") && !bookStatus.trim().equals("0")) {
+            throw new LeBookException("Stop messing with my storage text file!");
+        }
+
         boolean isBorrowed = bookStatus.equals("1");
 
         LocalDate returnDueDate = null;
+
         if (isBorrowed) {
-            returnDueDate = LocalDate.parse(bookDueDate);
+            try {
+                returnDueDate = LocalDate.parse(bookDueDate);
+            } catch (Exception e) {
+                throw new LeBookException("Stop messing with my storage text file!");
+            }
         }
 
         Book book = new Book(bookTitle, bookAuthor, isBorrowed, returnDueDate, bookID, borrowerName);

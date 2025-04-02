@@ -140,7 +140,6 @@ Implement search methods directly in `BookManager`
 2. Cons: Bloats the `BookManager` class, mixing management and query responsibilities. Makes `BookManager` harder to test and potentially violates SRP.
 
 
-
 ### Undo Feature
 The Undo feature allows users to revert the effects of previous commands that modified the library's state (`add`, `delete`, `borrow`, `return`).
 It retrieves the command history from the `UndoManager` class which maintains a stack of executed commands and calls `undo()` method of the most recent undoable command.
@@ -170,6 +169,7 @@ The feature is facilitated by the following components:
 **Sequence Diagram**
 
 ![Undo Command Sequence Diagram](images/UndoCommandSequence.png)
+
 
 ## Appendix
 ### Product scope
