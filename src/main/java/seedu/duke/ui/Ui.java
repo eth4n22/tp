@@ -65,6 +65,9 @@ public class Ui {
                   find genre adventure \s
                   find id AD-0-0 \s
                   return 1 \s
+                  shelf romance / 1 \s
+                  statistics \s
+                  undo 3 \s
                   delete i/1 \s
                   bye \s
                 """;
@@ -98,10 +101,6 @@ public class Ui {
 
     public void printSeparator() {
         System.out.println("========================================");
-    }
-
-    public void printUndoSuccessMessage(String undoneCommand) {
-        printWithSeparator("[SUCCESS] Successfully undone: " + undoneCommand);
     }
 
     /**

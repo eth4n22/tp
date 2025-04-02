@@ -47,6 +47,8 @@ How the parser component works:
    - The Commands enum defines all possible commands, like ADD, DELETE, LIST, BORROW, RETURN, etc.
    - The enum makes it easier to map user input to the correct command type.
 
+![UndoCommandClass](images/UndoCommandClass.png)
+
 ## Implementation
 
 ### Add Book Feature
@@ -88,8 +90,36 @@ The feature is facilitated by the following components:
 
 ![ListUsersSequence](images/ListUsersSequence.png)
 
+
 ### Undo Feature
-*(to be updated)*
+The Undo feature allows users to revert the effects of previous commands that modified the library's state (`add`, `delete`, `borrow`, `return`).
+It retrieves the command history from the `UndoManager` class which maintains a stack of executed commands and calls `undo()` method of the most recent undoable command.
+
+The feature is facilitated by the following components:
+- UndoCommand: Command object encapsulating logic for performing undo operation.
+- UndoManager: Responsible for storing and managing history of executed commands.
+- Command: Abstract class that defines `undo()` method of all commands.
+- Ui: Displays `SUCCESS` or `ERROR` messages after an undo operation is made.
+
+**Key Methods**
+- `undoCommands()` in UndoManager class:
+   - Pops and undoes the specified number of undoable commands from the history stack.
+   - Displays error message in the event there are no undoable commands.
+- `undo()` in Command class:
+   - Reverts changes made by command.
+   - Implemented by undoable commands, empty for non-undoable commands.
+
+**Execution Flow**
+1. User inputs string input `undo`.
+2. Parser class parses input and creates UndoCommand instance.
+3. Execute method in UndoCommand calls `Library`'s `getUndoManager() method.
+4. UndoManager invokes `undoCommands()` and checks command history.
+5. `undo()` method called for each undoable command to revert operation.
+6. Ui displays success message if command was undone successfully or error message if no commands to undo.
+
+**Sequence Diagram**
+
+![Undo Command Sequence Diagram](images/UndoCommandSequence.png)
 
 ## Appendix
 ### Product scope
@@ -286,7 +316,7 @@ Viewing the total number of book copies, unique titles, borrowed and overdue boo
 1. Test case: `statistics`
    - Expected: Displays library statistics.
 
-### Undo
+### Undo last valid command
 Undoing the last command
 
 1. Prerequisites: There was a command executed previously.
