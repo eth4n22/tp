@@ -19,7 +19,6 @@ import seedu.duke.commands.UpdateStatusCommand;
 import seedu.duke.commands.ListOverdueUsersCommand;
 import seedu.duke.commands.DeleteByIDCommand;
 import seedu.duke.exception.LeBookException;
-import seedu.duke.exception.LeBookException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
