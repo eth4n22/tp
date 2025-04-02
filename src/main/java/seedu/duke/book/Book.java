@@ -145,7 +145,7 @@ public class Book {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
         String status = isBorrowed ? "[X]" : "[ ]";
         String dueDateStr = (returnDueDate != null) ? " | (Due: " + returnDueDate.format(formatter) + ") " : "";
-        return status + " " + title + " (by " + author + ")" + dueDateStr;
+        return status + " " + title + " (by " + author + ") " + "(ID: " + bookID + ")" + dueDateStr;
     }
 
     /**
