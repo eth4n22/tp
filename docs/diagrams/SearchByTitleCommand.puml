@@ -1,0 +1,31 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide circle
+
+actor User
+participant ":LeBook" as LeBook
+participant ":Parser" as Parser
+participant "cmd:SearchByTitleCommand" as Cmd
+participant ":Library" as Lib
+participant ":BookManager" as BM
+participant ":BookFinder" as Finder
+participant ":Ui" as Ui
+
+User -> LeBook : enterCommand("find title hobbit")
+LeBook -> Parser : parse("find title hobbit")
+Parser --> LeBook : cmd:SearchByTitleCommand <<create>>
+LeBook -> Cmd : execute(library, ui, ...)
+
+Cmd -> Lib : getBookManager()
+Lib --> Cmd : bookManager
+Cmd -> BM : getBooks()
+BM --> Cmd : bookList
+
+Cmd -> Finder : <<create>>(bookList)
+Cmd -> Finder : findBooksByTitle("hobbit")
+Finder --> Cmd : resultsList
+note right of Finder : Filters list using\ncase-insensitive search\n(e.g., via Streams)
+
+Cmd -> Ui : displayResults(resultsList)
+Ui --> User : Shows found books or 'not found' message
+@enduml
