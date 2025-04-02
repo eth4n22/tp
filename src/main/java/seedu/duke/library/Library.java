@@ -39,6 +39,7 @@ public class Library {
         return catalogueManager;
     }
 
+    //@@author Deanson-Choo
     public String listBooks() {
         return catalogueManager.listBooks();
     }
@@ -52,7 +53,6 @@ public class Library {
         return catalogueManager.listBorrowedBooks();
     }
 
-    //@@author Deanson-Choo
     public String addNewBookToCatalogue(String title, String author, String genre) {
         String bookID = shelvesManager.getBookId(genre);
         return catalogueManager.addNewBookToCatalogue(title, author, genre, bookID);
@@ -64,7 +64,6 @@ public class Library {
     }
 
     //@@author Deanson-Choo
-
     /**
      * Deletes a book from the catalogue and the corresponding shelf based on its index in the catalogue.
      * <p>
@@ -86,7 +85,16 @@ public class Library {
         }
     }
 
-    //Delete book by Bookdetails
+    /**
+     * Deletes a book from the catalogue and the corresponding shelf based on its title and author.
+     * <p>
+     * This method retrieves the book index and bookID using the given title and author.
+     * The book is removed from the catalogue using bookIndex.
+     * The book is removed from the shelf using bookID and replaced with a dummy book
+     * @param bookTitle The title of the book to delete in the catalogue.
+     * @param author The author of the book to be deleted.
+     * @return A confirmation message if deletion is successful, or an error message if the book is not found.
+     */
     public String deleteBook(String bookTitle, String author) {
         try {
             GroupReturns bookIndexBookID = catalogueManager.getBookID(bookTitle, author);
@@ -100,7 +108,15 @@ public class Library {
             return e.getMessage();
         }
     }
-
+    /**
+     * Deletes a book from the catalogue and the corresponding shelf based on its bookID in the catalogue.
+     * <p>
+     * This method first retrieves the book index using the bookID, then removes it from both the
+     * catalogue and the shelves. The book in the shelf is replaced with a dummy book.
+     *
+     * @param bookID The unique ID of the book to delete in the catalogue.
+     * @return A confirmation message if deletion is successful, or an error message if the book is not found.
+     */
     public String deleteBook(String bookID) {
         try {
             int bookIndex = catalogueManager.getBookIndex(bookID);

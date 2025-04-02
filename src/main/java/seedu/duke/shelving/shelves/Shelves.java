@@ -120,7 +120,7 @@ public class Shelves {
         return NO_SECTION_AVAILABLE;
     }
 
-    //@@author Deanson Choo
+    //@@author Deanson-Choo
     /**
      * 'Deletes' a book from the appropriate shelf using its unique slotNum and shelfNum
      * by replacing the book with a dummy book

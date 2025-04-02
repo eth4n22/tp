@@ -22,6 +22,7 @@ public class ShelvesManager {
     private static final String NONFICTION = "nonfiction";
     private static final String SCIFI = "scifi";
 
+    //@@author Deanson-Choo
     private static final String ROMANCE_ID = "R";
     private static final String ADVENTURE_ID = "AD";
     private static final String ACTION_ID = "AC";
@@ -29,7 +30,7 @@ public class ShelvesManager {
     private static final String MYSTERY_ID = "MY";
     private static final String NONFICTION_ID = "NF";
     private static final String SCIFI_ID = "SCIF";
-
+    //@@author
     private final RomanceShelves romanceShelves;
     private final AdventureShelves adventureShelves;
     private final ActionShelves actionShelves;
@@ -143,7 +144,7 @@ public class ShelvesManager {
     }
 
 
-    //@@author Deanson Choo
+    //@@author Deanson-Choo
     /**
      * 'Deletes' a book from the appropriate shelf using its unique book ID.
      * Book is replaced with a dummy book

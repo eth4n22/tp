@@ -178,9 +178,10 @@ public class Parser {
         }
     }
 
+    //@@author Deanson-Choo
     /**
      * Parses details for the delete command.
-     * Supports deletion by book index or book title and author.
+     * Supports deletion by book index or book title and author or bookID.
      *
      * @param userInput The input string containing delete command details.
      * @return A DeleteCommand object based on the parsed details.
@@ -190,7 +191,7 @@ public class Parser {
         String[] parts = userInput.split("/", SPLIT_INTO_TWO);
         if (parts.length < LENGTH_LIMIT_TWO) {
             throw new LeBookException("Invalid format. It should be: delete b/BOOK_TITLE/AUTHOR_NAME "
-                    + "or delete i/BOOK_INDEX");
+                    + "or delete i/BOOK_INDEX or delete id/GENRE-SHELFNUM-SLOTNUM");
         }
         String deleteCommandType = parts[0].trim();
         switch (deleteCommandType) {
@@ -209,12 +210,12 @@ public class Parser {
             String bookID = parts[1].trim();
             String[] bookIDSplit = bookID.split("-");
             if (bookIDSplit.length < LENGTH_LIMIT_THREE) {
-                throw new LeBookException("Invalid format. It should be: delete b/");
+                throw new LeBookException("Invalid format. It should be: delete id/GENRE-SHELFNUM-SLOTNUM, e.g R-0-0");
             }
             return new DeleteByIDCommand(bookID);
         default:
-            throw new LeBookException("Invalid format. It should be: delete b/BOOK_TITLE/AUTHOR_NAME "
-                    + "or delete i/BOOK_INDEX");
+            throw new LeBookException("Invalid format. It should be: delete bk/BOOK_TITLE/AUTHOR_NAME "
+                    + "or delete num/BOOK_INDEX or delete id/GENRE-SHELFNUM-SLOTNUM");
         }
     }
 
