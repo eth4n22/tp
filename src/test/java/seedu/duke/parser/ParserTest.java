@@ -2,7 +2,23 @@ package seedu.duke.parser;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.duke.commands.*;
+import seedu.duke.commands.AddCommand;
+import seedu.duke.commands.Command;
+import seedu.duke.commands.DeleteByIndexCommand;
+import seedu.duke.commands.DeleteByBookCommand;
+import seedu.duke.commands.ExitCommand;
+import seedu.duke.commands.ListBorrowedCommand;
+import seedu.duke.commands.ListCommand;
+import seedu.duke.commands.ListOverdueCommand;
+import seedu.duke.commands.ListShelfCommand;
+import seedu.duke.commands.SearchByAuthorCommand;
+import seedu.duke.commands.SearchByGenreCommand;
+import seedu.duke.commands.SearchByIDCommand;
+import seedu.duke.commands.SearchByTitleCommand;
+import seedu.duke.commands.UpdateStatusCommand;
+import seedu.duke.commands.ListOverdueUsersCommand;
+import seedu.duke.commands.DeleteByIDCommand;
+import seedu.duke.exception.LeBookException;
 import seedu.duke.exception.LeBookException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
