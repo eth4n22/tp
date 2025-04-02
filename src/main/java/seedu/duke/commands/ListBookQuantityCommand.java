@@ -1,6 +1,7 @@
 package seedu.duke.commands;
 
 import seedu.duke.book.QuantityManager;
+import seedu.duke.exception.LeBookException;
 import seedu.duke.library.Library;
 import seedu.duke.member.MemberManager;
 import seedu.duke.storage.Storage;
@@ -18,7 +19,7 @@ public class ListBookQuantityCommand extends Command{
 
     //@@author eth4n22
     @Override
-    public void execute(Library library, Ui ui, Storage storage, MemberManager memberManager) {
+    public void execute(Library library, Ui ui, Storage storage, MemberManager memberManager) throws LeBookException {
         assert library != null : "Library should not be null";
         assert ui != null : "Ui should not be null";
         assert storage != null : "Storage should not be null";

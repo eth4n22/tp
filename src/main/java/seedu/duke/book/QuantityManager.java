@@ -1,5 +1,7 @@
 package seedu.duke.book;
 
+import seedu.duke.exception.LeBookException;
+
 public class QuantityManager {
     private static QuantityManager quantityManagerInstance;
 
@@ -18,7 +20,12 @@ public class QuantityManager {
     }
 
     //@@author jenmarieng
-    public int getHowManyBooks(String title, String authorName) {
+    public int getHowManyBooks(String title, String authorName) throws LeBookException {
+        boolean hasMissingFields = title == null || title.trim().isEmpty() || authorName == null
+                || authorName.trim().isEmpty();
+        if (hasMissingFields) {
+            throw new LeBookException("Both the book title and author cannot be empty.");
+        }
         return BookManager.findBookQuantity(title, authorName);
     }
 }
