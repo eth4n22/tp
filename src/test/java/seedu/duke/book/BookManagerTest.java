@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import seedu.duke.exception.LeBookException;
 import seedu.duke.member.Member;
 import seedu.duke.member.MemberManager;
 
@@ -269,7 +270,7 @@ public class BookManagerTest {
 
     //@@author eth4n22
     @Test
-    void testAddNewBookIncreaseQuantity() {
+    void testAddNewBookIncreaseQuantity() throws LeBookException {
         bookManager.cleanup();
         // Add a book
         String result1 = bookManager.addNewBookToCatalogue("The Great Gatsby",
@@ -288,7 +289,7 @@ public class BookManagerTest {
 
     //@@author eth4n22
     @Test
-    void testDeleteBookDecreaseQuantity() {
+    void testDeleteBookDecreaseQuantity() throws LeBookException {
         bookManager.cleanup();
         // Add book twice → quantity becomes 2
         bookManager.addNewBookToCatalogue("The Great Gatsby", "F. Scott Fitzgerald", "romance", "R-0-0");
