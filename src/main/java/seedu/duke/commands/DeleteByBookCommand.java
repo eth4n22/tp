@@ -47,6 +47,6 @@ public class DeleteByBookCommand extends Command {
 
     @Override
     public String getCommandDescription() {
-        return "Delete a book by its name and author";
+        return "Delete a book by its title and author";
     }
 }
