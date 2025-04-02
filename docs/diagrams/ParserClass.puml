@@ -1,0 +1,24 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide circle
+
+class Parser {
+    + parse(input: String): Command
+}
+
+abstract class Command {
+    + execute()
+}
+
+class ExitCommand extends Command {
+}
+
+class XYZCommand extends Command {
+}
+
+Parser --> Command : creates
+
+note bottom of XYZCommand
+XYZCommand = AddCommand, ListCommand, DeleteCommand, UpdateStatusCommand etc.
+end note
+@enduml
