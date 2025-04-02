@@ -6,17 +6,21 @@ LeBook uses the following libraries:
 1. [JUnit](https://junit.org/junit5/) - For writing and executing automated tests
 2. [Gradle](https://gradle.org/) - A build automation tool
 
-## Design & implementation
+## Design
 
 ### Parser component
 **API:** [`Parser.java`](https://github.com/AY2425S2-CS2113-T13-3/tp/blob/master/src/main/java/seedu/duke/parser/Parser.java)
+
+Shown below is a simplified class diagram of the `Parser` component:
+![ParserClass](images/ParserClass.png)
+
 The parser component is responsible for interpreting user input and calling the appropriate command object.
 It takes a string input from the user, determines the corresponding command type, and returns an instance of a subclass of Command.
 
 How the parser component works:
 1. Extracts the command keyword from the user input.
 2. Matches the keyword to the relevant commands.
-3. Extracts the remaining arguments (if any).
+3. Parses and extracts the remaining arguments (if any).
 4. Returns a corresponding Command object for execution.
 
 ### Storage Class
@@ -27,7 +31,7 @@ How the parser component works:
    - Each `Book` is stored in structured text using a `|` delimiter.
    - Each time the user exits the program, the file is overwritten, ensuring that the content is up to date.
    - If the file to save the data does not exist, an empty list is returned. Exceptions are caught and logged.
-![StorageClass](UmlImages/StorageClass.png)
+![StorageClass](images/StorageClass.png)
 
 
 ### Command Class
@@ -42,6 +46,50 @@ How the parser component works:
 
    - The Commands enum defines all possible commands, like ADD, DELETE, LIST, BORROW, RETURN, etc.
    - The enum makes it easier to map user input to the correct command type.
+
+## Implementation
+
+### Add Book Feature
+*(to be updated)*
+
+### Delete Book Feature
+*(to be updated)*
+
+### List Book Feature
+*(to be updated)*
+
+### List Members with Overdue Books Feature
+The list members with overdue books feature allows librarians to view a list of members who currently have overdue books.
+It retrieves data from the MemberManager class, which maintains a list of all members and their borrowed books, and 
+checks the overdue status of each book.
+
+The feature is facilitated by the following components:
+- ListOverdueUsersCommand: A command object that encapsulates the logic for listing members with overdue books.
+- MemberManager: Responsible for managing all members and their borrowed books.
+- Member: Represents an individual member and provides methods to retrieve their overdue books.
+- Ui: Displays the formatted list of members with overdue books to the librarian.
+
+**Key Methods**
+- `listMembersWithOverdueBooks()` in MemberManager class:
+  - Iterates through all members.
+  - Checks each member's borrowed books for overdue status.
+  - Returns a formatted string listing members with overdue books.
+- `getOverdueBooks()` in Member class:
+  - Returns a list of overdue books for a specific member.
+
+**Execution Flow**
+1. The librarian enters a string input `list users`.
+2. The Parser class parses the input and creates a ListOverdueUsersCommand.
+3. The `execute` method in ListOverdueUsersCommand class calls MemberManager's `listMembersWithOverdueBooks()` method.
+4. The MemberManager iterates through its list of members, checks for overdue books, and builds a formatted string containing the results.
+5. The result is passed to the Ui, which displays it to the user.
+
+**Sequence Diagram**
+
+![ListUsersSequence](images/ListUsersSequence.png)
+
+### Undo Feature
+*(to be updated)*
 
 ## Appendix
 ### Product scope
@@ -65,8 +113,8 @@ to manage inventory and track book availability quickly compared to a typical mo
 | v1.0    | librarian | add new books to the system                   | keep track of the new arrivals.                                                                           |
 | v1.0    | librarian | delete a book                                 | remove outdated or lost books.                                                                            |
 | v1.0    | librarian | see the list of all my books                  | see what books I have in the library.                                                                     |
-| v1.0    | librarian | record when people borrow a book              | keep track when a book is borrowed.                                                                       |
-| v1.0    | librarian | record when people return a book              | update its availability.                                                                                  |
+| v1.0    | librarian | record when members borrow a book             | keep track when a book is borrowed.                                                                       |
+| v1.0    | librarian | record when members return a book             | update its availability.                                                                                  |
 | v1.0    | librarian | set due dates for my books                    | so that I can monitor when books will be returned and keep track of books that have yet to been returned. |
 | v1.0    | librarian | save the book details                         | keep track of book statuses when using the system again.                                                  |
 | v1.0    | librarian | enter the command as one long string          | enter the input without caring about different parts of the input.                                        |
@@ -75,7 +123,7 @@ to manage inventory and track book availability quickly compared to a typical mo
 | v2.0    | librarian | know the genre of a book                      | better organise the catalogue.                                                                            |
 | v2.0    | librarian | keep track of what shelf a book is on         | easily locate the book.                                                                                   |
 | v2.0    | librarian | view the catalogue of a specific shelf        | view available/missing/borrowed books on the shelf.                                                       |
-| v2.0    | librarian | view a list of overdue books                  | follow up with contacting the appropriate user.                                                           |
+| v2.0    | librarian | view a list of overdue books                  | follow up with contacting the appropriate member.                                                         |
 | v2.0    | librarian | search for a book through keywords            | find the appropriate book.                                                                                |
 | v2.0    | librarian | see the overall statistics of the library     | know the total number of books, overdue books and borrowed books.                                         |
 | v2.0    | librarian | undo the last command                         | correct my actions if it was a wrong commnd                                                               |
@@ -87,7 +135,7 @@ to manage inventory and track book availability quickly compared to a typical mo
 
 ## Glossary
 
-* *glossary item* - Definition
+* *Member* - A person who visits the library to borrow or return a book(s).
 
 ## Instructions for manual testing
 
@@ -100,38 +148,39 @@ to manage inventory and track book availability quickly compared to a typical mo
 Adding a book while the library is empty
 
 1. Prerequisites: List all books using the `list` command. No books in the list.
-
-2. Test case: `add The Great Gatsby / F. Scott Fitzgerald`
-   - Expected: Book is added to the library. Details of the added book shown in the status message. Library now contains 1 book.
-
-3. Test case: `add` (without title and author)
+2. Test case: `add The Great Gatsby / F. Scott Fitzgerald / romance`
+   - Expected: Book is added to the library and the relevant shelf. Details of the added book shown in the status message. Library now contains 1 book.
+3. Test case: `add` (without title, author and genre)
    - Expected: No book is added. Error details shown in the status message. Library remains empty.
-
-4. Other incorrect add commands to try: `add TITLE`, `add / AUTHOR`, `add TITLE /` (without author)
+4. Other incorrect add commands to try:
+   - `add TITLE`
+   - `add / AUTHOR`
+   - `add TITLE / AUTHOR` (missing genre)
+   - `add TITLE / AUTHOR / ` (missing genre value)
    - Expected: Similar to previous.
 
 ### Deleting a book
 Deleting a book while multiple books are listed
 
 1. Prerequisites: List all books using the `list` command. Multiple books in the list.
-
-2. Test case: `delete 1`
+2. Test case: `delete i/ 1`
    - Expected: First book is deleted from the list. Details of the deleted book shown in the status message. Library now contains fewer books.
-
-3. Test case: `delete 0`
+3. Test case: `delete i/ 0`
    - Expected: No book is deleted. Error details shown in the status message. Library remains unchanged.
-
-4. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size)
+4. Test case: `delete b/ Harry Potter / J.K. Rowling` (assuming this book does not exist in the library)
+   - Expected: No book is deleted. Message shows that no such book is found.
+5. Other incorrect delete commands to try:
+   - `delete`
+   - `delete b/ ` (missing title)
+   - `delete b/ TITLE` (missing author)
    - Expected: Similar to previous.
 
 ### Listing books
 Listing books when the library is empty and when it contains multiple books
 
 1. Prerequisites: List all books using the `list` command. Initially, no books in the list.
-
 2. Test case: `list` (with no books)
    - Expected: Message indicating that the library is empty.
-
 3. Test case: `list` (after adding multiple books)
    - Expected: List displays all books with their status and details.
 
@@ -139,48 +188,117 @@ Listing books when the library is empty and when it contains multiple books
 Borrowing a book when it is available
 
 1. Prerequisites: List all books using the `list` command. At least one available book in the list.
-
-2. Test case: `borrow 1`
+2. Test case: `borrow 1 / Alice`
    - Expected: Book is marked as borrowed. Status message indicates that the book has been borrowed. Book status changes to `[X]`.
    - Return due date is set to 2 weeks from the date of borrowing.
-
-3. Test case: `borrow 0`
+3. Test case: `borrow 0 / Alice`
    - Expected: No book is borrowed. Error details shown in the status message. Book status remains unchanged.
-
-4. Other incorrect borrow commands to try: `borrow`, `borrow x` (where x is larger than the list size or the book is already borrowed)
+4. Other incorrect borrow commands to try:
+   - `borrow`
+   - `borrow 1 / ` (missing borrower name)
    - Expected: Similar to previous.
 
 ### Returning a book
 Returning a borrowed book
 
 1. Prerequisites: List all books using the `list` command. At least one borrowed book in the list.
-
 2. Test case: `return 1`
    - Expected: Book is marked as returned. Status message indicates that the book has been returned. Book status changes to `[ ]`.
    - Return due date is reset and set to `null`.
-
 3. Test case: `return 0`
    - Expected: No book is returned. Error details shown in the status message. Book status remains unchanged.
-
-4. Other incorrect return commands to try: `return`, `return x` (where x is larger than the list size or the book is not borrowed)
+4. Other incorrect return commands to try: 
+   - `return`
+   - `return x` (where x is larger than the list size or the book is not borrowed)
    - Expected: Similar to previous.
 
 ### Listing overdue books
 Listing books whose return due date has been surpassed by the current date
 
 1. Prerequisites: List all overdue books using the `list overdue` command. Initially, no books are overdue.
-
 2. Test case: `list overdue` (with no overdue books)
    - Expected: Message indicating that there are currently no overdue books.
-
 3. Test case: `list overdue` (after multiple books have surpassed overdue date)
    - Expected: List displays all overdue books with their status and details.
+
+### Listing borrowed books
+Listing books that are currently borrowed
+
+1. Prerequisites: List all borrowed books using the `list borrowed` command. Initially, no books are borrowed.
+2. Test case: `list borrowed` (with no borrowed books)
+   - Expected: Message indicating that there are currently no borrowed books.
+3. Test case: `list borrowed` (after multiple books have been borrowed)
+   - Expected: List displays all borrowed books with their status and details.
+
+### Listing members with overdue books
+Listing members who have overdue books, where the book title and author are also displayed
+
+1. Prerequisites: List all members with overdue books using the `list users` command. Initially, no members have overdue books.
+2. Test case: `list users` (with no members having overdue books)
+   - Expected: Message indicating that there are currently no members with overdue books.
+3. Test case: `list users` (after multiple members have overdue books)
+   - Expected: List displays all members with overdue books.
+
+### Searching books
+Searching books by various criteria (title, author, genre, bookID)
+
+1. Test case: `find title lord`
+   - Expected: List displays books with titles containing "lord".
+2. Test case: `find author Tolkien`
+   - Expected: List displays books by authors containing "Tolkien". 
+3. Test case: `find genre adventure`
+   - Expected: List displays books with the genre "adventure".
+4. Test case: `find id AD-0-0`
+   - Expected: List displays the book with the specified ID.
+5. Other incorrect find commands to try:
+   - `find`
+   - `find title` (missing term)
+   - `find genre` (missing term)
+   - Expected: Similar to previous.
+
+### Viewing book quantity
+Viewing the quantity of a specific book
+
+1. Test case: `quantity / Harry Potter / J.K. Rowling`
+   - Expected: Displays the quantity of the specified book.
+2. Test case: `quantity / ` (missing title and author)
+   - Expected: Error details shown in the status message.
+3. Other incorrect quantity commands to try:
+   - `quantity`
+   - `quantity / TITLE ` (missing author)
+   - Expected: Similar to previous.
+
+### Listing books on a shelf
+Listing books on a specific shelf
+
+1. Test case: `shelf romance / 1`
+   - Expected: List displays books on the specified shelf.
+2. Test case: `shelf ` (missing genre and shelf number)
+   - Expected: Error details shown in the status message.
+3. Other incorrect shelf commands to try:
+   - `shelf GENRE`
+   - `shelf / SHELF_NUMBER`
+   - Expected: Similar to previous.
+
+### Viewing library statistics
+Viewing the total number of book copies, unique titles, borrowed and overdue books, as well as the list of unique book titles
+
+1. Test case: `statistics`
+   - Expected: Displays library statistics.
+
+### Undo
+Undoing the last command
+
+1. Prerequisites: There was a command executed previously.
+2. Test case: `undo` (when the previous command was add, delete, borrow, return)
+   - Expected: Last command is undone. Library state reverts to before the last command.
+3. Test case: `undo` (other commands)
+   - Expected: No command is undone. Error details shown in the status message.
 
 ### Exiting the application
 Exiting the application
 
 1. Prerequisites: Application is running.
-
 2. Test case: `exit`
    - Expected: Application closes with a goodbye message.
 
