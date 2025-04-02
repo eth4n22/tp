@@ -299,7 +299,7 @@ Borrowed Books:
 ```
 
 ### 13. Listing Library Members with Overdue Books
-View all the members who have overdue books, including the book title and borrower name.
+View all the members who have overdue books, including the book title, book author and borrower name.
 
 **Format:**
 ```
@@ -309,7 +309,7 @@ list users
 ```
 ========================================
 Members with overdue books:
-1. Bob - Harry Potter
+1. Bob - Harry Potter (by: J.K. Rowling)
 
 ========================================
 ```
