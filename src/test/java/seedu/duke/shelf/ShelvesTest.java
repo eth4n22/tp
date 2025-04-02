@@ -1,3 +1,4 @@
+//@@author Deanson-Choo
 package seedu.duke.shelf;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -9,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-//@@author Deanson-Choo
 public class ShelvesTest {
     private Shelves shelves;
 

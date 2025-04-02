@@ -1,3 +1,4 @@
+//@@author Deanson-Choo
 package seedu.duke.shelf.shelftest;
 
 import seedu.duke.shelving.shelves.Shelf;
@@ -14,7 +15,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-//@@author Deanson Choo
 public class DeleteTests {
     private Shelf shelf;
 

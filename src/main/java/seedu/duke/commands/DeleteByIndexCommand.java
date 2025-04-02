@@ -1,11 +1,16 @@
 package seedu.duke.commands;
 
+//@@author Deanson-Choo
 import seedu.duke.book.Book;
 import seedu.duke.library.Library;
 import seedu.duke.member.MemberManager;
 import seedu.duke.storage.Storage;
 import seedu.duke.ui.Ui;
 
+/**
+ * Represents a command that deletes a book from the library based on its index in the catalog.
+ * The command supports undo functionality to restore the previously deleted book.
+ */
 public class DeleteByIndexCommand extends Command {
 
     private final int bookIndex;
@@ -32,7 +37,7 @@ public class DeleteByIndexCommand extends Command {
         ui.printWithSeparator(response);
         storage.writeToFile(library.getBooks());
     }
-
+    //@@author eth4n22
     @Override
     public void undo(Library library, Ui ui, Storage storage, MemberManager memberManager) {
         if (deletedBook != null) {

@@ -20,7 +20,7 @@ public class Shelf {
     private static final String MYSTERY = "mystery";
     private static final String NONFICTION = "nonfiction";
     private static final String SCIFI = "scifi";
-
+    //@@author Deanson-Choo
     private static final String ROMANCE_ID = "R";
     private static final String ADVENTURE_ID = "AD";
     private static final String ACTION_ID = "AC";
@@ -28,7 +28,7 @@ public class Shelf {
     private static final String MYSTERY_ID = "MY";
     private static final String NONFICTION_ID = "NF";
     private static final String SCIFI_ID = "SCIF";
-
+    //@@author
     private static final int MAX_BOOKS_ON_SHELF = 100;
     private final List<Book> shelfBooks = new ArrayList<>();
 
@@ -202,7 +202,7 @@ public class Shelf {
                 + " books on the Shelf: " + getShelfNumber();
     }
 
-    //@@author Deanson Choo
+    //@@author Deanson-Choo
     /**
      * Deletes a book from the shelf at the specified slot number.
      * <p>
@@ -216,14 +216,12 @@ public class Shelf {
         booksCurrentlyOnShelf -= 1;
     }
 
+    //@@author WayneCh0y
     public String getBookId() {
         int bookIndex = getSuitableIndex();
         return getShelfIdentifier(bookIndex);
     }
 
-    public Book getBook(int bookIndex) {
-        return shelfBooks.get(bookIndex);
-    }
 
     //@@author WayneCh0y
     /**

@@ -1,11 +1,17 @@
 package seedu.duke.commands;
 
+//@@author Deanson-Choo
 import seedu.duke.book.Book;
 import seedu.duke.library.Library;
 import seedu.duke.member.MemberManager;
 import seedu.duke.storage.Storage;
 import seedu.duke.ui.Ui;
 
+/**
+ * Represents a command to delete a book from the library using its unique book ID.
+ * This command is executed when the user provides the book ID.
+ * The deleted book is stored to support undo functionality.
+ */
 public class DeleteByIDCommand extends Command {
 
     private final String bookID;
@@ -33,6 +39,7 @@ public class DeleteByIDCommand extends Command {
         storage.writeToFile(library.getBooks());
     }
 
+    //@@author eth4n22
     @Override
     public void undo(Library library, Ui ui, Storage storage, MemberManager memberManager) {
         if (deletedBook != null) {
