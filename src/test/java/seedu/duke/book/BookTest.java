@@ -53,7 +53,7 @@ public class BookTest {
     @Test
     public void testToStringBookNotBorrowed() {
         Book book = new Book("Moby Dick", "Herman Melville");
-        String expected = "[ ] Moby Dick (by Herman Melville)";
+        String expected = "[ ] Moby Dick (by Herman Melville) (ID: NIL)";
         assertEquals(expected, book.toString());
     }
 
@@ -61,7 +61,7 @@ public class BookTest {
     public void testToStringBookBorrowed() {
         Book book = new Book("Moby Dick", "Herman Melville");
         book.setStatus(true);
-        String expected = "[X] Moby Dick (by Herman Melville)";
+        String expected = "[X] Moby Dick (by Herman Melville) (ID: NIL)";
         assertEquals(expected, book.toString());
     }
 

@@ -1,6 +1,5 @@
 package seedu.duke.commands;
 
-import seedu.duke.book.Book;
 import seedu.duke.library.Library;
 import seedu.duke.member.MemberManager;
 import seedu.duke.storage.Storage;

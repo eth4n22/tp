@@ -1,8 +1,27 @@
 package seedu.duke.parser;
 
-import seedu.duke.commands.*;
-
+import seedu.duke.commands.AddCommand;
+import seedu.duke.commands.Command;
+import seedu.duke.commands.DeleteByIndexCommand;
+import seedu.duke.commands.DeleteByBookCommand;
+import seedu.duke.commands.ExitCommand;
+import seedu.duke.commands.ListBorrowedCommand;
+import seedu.duke.commands.ListCommand;
+import seedu.duke.commands.ListOverdueCommand;
+import seedu.duke.commands.ListShelfCommand;
+import seedu.duke.commands.SearchByAuthorCommand;
+import seedu.duke.commands.SearchByGenreCommand;
+import seedu.duke.commands.SearchByIDCommand;
+import seedu.duke.commands.SearchByTitleCommand;
+import seedu.duke.commands.UpdateStatusCommand;
+import seedu.duke.commands.ListOverdueUsersCommand;
+import seedu.duke.commands.DeleteByIDCommand;
+import seedu.duke.commands.HelpCommand;
+import seedu.duke.commands.ListBookQuantityCommand;
+import seedu.duke.commands.StatisticsCommand;
+import seedu.duke.commands.UndoCommand;
 import seedu.duke.exception.LeBookException;
+
 
 /**
  * Parses user input and returns the corresponding command.
@@ -188,8 +207,8 @@ public class Parser {
             return new DeleteByBookCommand(bookTitle, authorName);
         case DELETE_BY_ID:
             String bookID = parts[1].trim();
-            String[] bookID_split = bookID.split("-");
-            if (bookID_split.length < LENGTH_LIMIT_THREE) {
+            String[] bookIDSplit = bookID.split("-");
+            if (bookIDSplit.length < LENGTH_LIMIT_THREE) {
                 throw new LeBookException("Invalid format. It should be: delete b/");
             }
             return new DeleteByIDCommand(bookID);
