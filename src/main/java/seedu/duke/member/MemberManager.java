@@ -35,27 +35,49 @@ public class MemberManager {
         return newMember;
     }
 
+    /**
+     * Builds a formatted list of a member's overdue books.
+     *
+     * @param overdueBooks List of overdue books.
+     * @return A string listing the overdue books.
+     */
+    private String buildOverdueBookList(List<Book> overdueBooks) {
+        StringBuilder bookListBuilder = new StringBuilder();
+        for (int i = 0; i < overdueBooks.size(); i++) {
+            Book overdueBook = overdueBooks.get(i);
+            String title = overdueBook.getTitle();
+            String author = overdueBook.getAuthor();
+
+            bookListBuilder.append(String.format("%s (by: %s)", title, author));
+
+            if (i < overdueBooks.size() - 1) {
+                bookListBuilder.append(", ");
+            }
+        }
+        return bookListBuilder.toString();
+    }
+
+    /**
+     * Lists members who have overdue books.
+     *
+     * @return A formatted string listing members with overdue books.
+     */
     public String listMembersWithOverdueBooks() {
-        StringBuilder output = new StringBuilder("Members with overdue books:\n");
+        StringBuilder resultBuilder = new StringBuilder("Members with overdue books:\n");
         boolean hasOverdueMembers = false;
         int memberIndex = 1;
 
         for (Member member : members) {
             List<Book> overdueBooks = member.getOverdueBooks();
             if (!overdueBooks.isEmpty()) {
-                output.append(memberIndex).append(". ").append(member.getName()).append(" - ");
-                for (int i = 0; i < overdueBooks.size(); i++) {
-                    output.append(overdueBooks.get(i).getTitle());
-                    if (i < overdueBooks.size() - 1) {
-                        output.append(", ");
-                    }
-                }
-                output.append("\n");
+                resultBuilder.append(memberIndex).append(". ").append(member.getName()).append(" - ");
+                resultBuilder.append(buildOverdueBookList(overdueBooks));
+                resultBuilder.append("\n");
                 hasOverdueMembers = true;
                 memberIndex++;
             }
         }
-        return hasOverdueMembers ? output.toString() : "No members have overdue books.";
+        return hasOverdueMembers ? resultBuilder.toString() : "No members have overdue books.";
     }
 
     public void cleanup() {

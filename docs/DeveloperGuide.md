@@ -77,6 +77,8 @@ to manage inventory and track book availability quickly compared to a typical mo
 | v2.0    | librarian | view the catalogue of a specific shelf        | view available/missing/borrowed books on the shelf.                                                       |
 | v2.0    | librarian | view a list of overdue books                  | follow up with contacting the appropriate user.                                                           |
 | v2.0    | librarian | search for a book through keywords            | find the appropriate book.                                                                                |
+| v2.0    | librarian | see the overall statistics of the library     | know the total number of books, overdue books and borrowed books.                                         |
+| v2.0    | librarian | undo the last command                         | correct my actions if it was a wrong commnd                                                               |
 
 ## Non-Functional Requirements
 
