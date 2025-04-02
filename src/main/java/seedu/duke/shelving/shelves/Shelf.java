@@ -221,6 +221,10 @@ public class Shelf {
         return getShelfIdentifier(bookIndex);
     }
 
+    public Book getBook(int bookIndex) {
+        return shelfBooks.get(bookIndex);
+    }
+
     //@@author WayneCh0y
     /**
      * Clears the list of books, removing all entries.

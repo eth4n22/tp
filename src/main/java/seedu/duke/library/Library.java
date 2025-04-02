@@ -101,11 +101,24 @@ public class Library {
         }
     }
 
+    public String deleteBook(String bookID) {
+        try {
+            int bookIndex = catalogueManager.getBookIndex(bookID);
+            String response1 = catalogueManager.deleteBook(bookIndex);
+            assert bookID != null;
+            shelvesManager.deleteBook(bookID);
+            return response1;
+        } catch (BookNotFoundException e) {
+            return e.getMessage();
+        }
+    }
+
+
+
     public String updateBookStatus(String command, int bookIndex, String borrowerName, MemberManager memberManager) {
         return catalogueManager.updateBookStatus(command, bookIndex, borrowerName, memberManager);
     }
 
-    //@@author Deanson-Choo
 
     /**
      * Returns a list of all books currently in the catalogue.

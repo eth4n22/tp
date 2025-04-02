@@ -1,27 +1,27 @@
 package seedu.duke.parser;
 
-import seedu.duke.commands.SearchByTitleCommand;
-import seedu.duke.commands.SearchByAuthorCommand;
-import seedu.duke.commands.SearchByGenreCommand;
-import seedu.duke.commands.SearchByIDCommand;
-
-import seedu.duke.commands.Command;
 import seedu.duke.commands.AddCommand;
-import seedu.duke.commands.DeleteByBookCommand;
+import seedu.duke.commands.Command;
 import seedu.duke.commands.DeleteByIndexCommand;
+import seedu.duke.commands.DeleteByBookCommand;
 import seedu.duke.commands.ExitCommand;
-import seedu.duke.commands.HelpCommand;
-import seedu.duke.commands.ListBookQuantityCommand;
 import seedu.duke.commands.ListBorrowedCommand;
 import seedu.duke.commands.ListCommand;
 import seedu.duke.commands.ListOverdueCommand;
-import seedu.duke.commands.ListOverdueUsersCommand;
 import seedu.duke.commands.ListShelfCommand;
-import seedu.duke.commands.StatisticsCommand;
+import seedu.duke.commands.SearchByAuthorCommand;
+import seedu.duke.commands.SearchByGenreCommand;
+import seedu.duke.commands.SearchByIDCommand;
+import seedu.duke.commands.SearchByTitleCommand;
 import seedu.duke.commands.UpdateStatusCommand;
+import seedu.duke.commands.ListOverdueUsersCommand;
+import seedu.duke.commands.DeleteByIDCommand;
+import seedu.duke.commands.HelpCommand;
+import seedu.duke.commands.ListBookQuantityCommand;
+import seedu.duke.commands.StatisticsCommand;
 import seedu.duke.commands.UndoCommand;
-
 import seedu.duke.exception.LeBookException;
+
 
 /**
  * Parses user input and returns the corresponding command.
@@ -44,8 +44,9 @@ public class Parser {
     private static final String LIST_SHELF = "shelf";
     private static final String LIST_QUANTITY = "quantity";
 
-    private static final String DELETE_BY_INDEX = "i";
-    private static final String DELETE_BY_BOOK = "b";
+    private static final String DELETE_BY_INDEX = "num";
+    private static final String DELETE_BY_BOOK = "bk";
+    private static final String DELETE_BY_ID = "id";
 
     private static final String UNDO = "undo";
     private static final String STATISTICS = "statistics";
@@ -177,8 +178,6 @@ public class Parser {
         }
     }
 
-    //@@author jenmarieng
-
     /**
      * Parses details for the delete command.
      * Supports deletion by book index or book title and author.
@@ -206,6 +205,13 @@ public class Parser {
             String bookTitle = bookDetails[0].trim();
             String authorName = bookDetails[1].trim();
             return new DeleteByBookCommand(bookTitle, authorName);
+        case DELETE_BY_ID:
+            String bookID = parts[1].trim();
+            String[] bookIDSplit = bookID.split("-");
+            if (bookIDSplit.length < LENGTH_LIMIT_THREE) {
+                throw new LeBookException("Invalid format. It should be: delete b/");
+            }
+            return new DeleteByIDCommand(bookID);
         default:
             throw new LeBookException("Invalid format. It should be: delete b/BOOK_TITLE/AUTHOR_NAME "
                     + "or delete i/BOOK_INDEX");

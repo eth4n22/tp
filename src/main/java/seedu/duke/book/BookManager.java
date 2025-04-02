@@ -409,6 +409,15 @@ public class BookManager {
         return count;
     }
 
+    public int getBookIndex(String bookID) throws BookNotFoundException {
+        for (int i = 0; i < books.size(); i++) {
+            if (books.get(i).getBookID().equals(bookID)) {
+                return i;
+            }
+        }
+        throw new BookNotFoundException("Book not found in library!");
+    }
+
     //@@author WayneCh0y
     /**
      * Clears the list of books, removing all entries.
