@@ -148,9 +148,11 @@ public class ParserTest {
         assertInstanceOf(DeleteByIDCommand.class, result);
     }
 
+    @Test
     void testParseDeleteByIDCommand_invalidID() {
         Exception exception = assertThrows(LeBookException.class, () -> Parser.parse("delete id/R-0"));
-        assertEquals("Invalid format. It should be: delete id/GENRE-SHELFNUM-SLOTNUM, e.g R-0-0", exception.getMessage());
+        assertEquals("Invalid format. It should be: delete id/GENRE-SHELFNUM-SLOTNUM, e.g R-0-0"
+                , exception.getMessage());
     }
 
 
