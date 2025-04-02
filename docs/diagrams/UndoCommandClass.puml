@@ -1,0 +1,33 @@
+@startuml
+
+hide circle
+skinparam classAttributeIconSize 0
+
+class Command {
+    +execute(library, ui, storage, memberManager)
+    +undo(library, ui, storage, memberManager)
+    +isUndoable() : boolean
+}
+
+class UndoCommand {
+    -undoCount : int
+    +execute(library, ui, storage, memberManager)
+    +undo(library, ui, storage, memberManager)
+}
+
+class UndoManager {
+    -commandHistory : Stack<Command>
+    +pushCommand(command : Command)
+    +undoCommands(count, library, ui, storage, memberManager)
+}
+
+class Library {
+    -undoManager : UndoManager
+    +getUndoManager() : UndoManager
+}
+
+Command <|-- UndoCommand
+Library "1" *-- "1" UndoManager
+UndoManager "1" *-- "*" Command
+
+@enduml
