@@ -111,8 +111,8 @@ public class ParserTest {
     @Test
     void testParseDeleteCommand_incomplete() {
         Exception exception = assertThrows(LeBookException.class, () -> Parser.parse("delete"));
-        assertEquals("Invalid format. It should be: delete b/BOOK_TITLE/AUTHOR_NAME or delete i/BOOK_INDEX"
-                , exception.getMessage());
+        assertEquals("Invalid format. It should be: delete b/BOOK_TITLE/AUTHOR_NAME " +
+                "or delete i/BOOK_INDEX or delete id/GENRE-SHELFNUM-SLOTNUM", exception.getMessage());
     }
 
     @Test
@@ -147,6 +147,13 @@ public class ParserTest {
         assertNotNull(result);
         assertInstanceOf(DeleteByIDCommand.class, result);
     }
+
+    void testParseDeleteByIDCommand_invalidID() {
+        Exception exception = assertThrows(LeBookException.class, () -> Parser.parse("delete id/R-0"));
+        assertEquals("Invalid format. It should be: delete id/GENRE-SHELFNUM-SLOTNUM, e.g R-0-0", exception.getMessage());
+    }
+
+
     //@@author
 
     @Test
