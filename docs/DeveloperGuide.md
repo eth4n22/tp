@@ -1,5 +1,43 @@
 # Developer Guide
-
+- [Achknowledgements](#acknowledgements)
+- [Design](#design)
+  - [Architecture](#architecture)
+  - [Parser](#parser-component)
+  - [Command](#command-component)
+  - [Storage](#storage-component)
+  - [Library](#library-component)
+  - [Ui](#ui-component)
+- [Implementation](#implementation)
+  - [Add Book Feature](#add-book-feature)
+  - [Delete Book Feature](#delete-book-feature)
+  - [List Book Feature](#list-book-feature)
+  - [List Members With Overdue Books Feature](#list-members-with-overdue-books-feature)
+  - [Undo Feature](#undo-feature)
+- [Appendix](#appendix)
+  - [Product Scope](#product-scope)
+  - [Target User Profile](#target-user-profile)
+  - [Value Proposition](#value-proposition)
+  - [User Stories](#user-stories)
+- [Non-Functional Requirements](#non-functional-requirements)
+- [Glossary](#glossary)
+- [Instructions for manual testing](#instructions-for-manual-testing)
+  - [Initial Launch](#initial-launch)
+  - [Adding a book](#adding-a-book)
+  - [Deleting a book](#deleting-a-book)
+  - [Listing books](#listing-books)
+  - [Borrowing a book](#borrowing-a-book)
+  - [Returning a book](#returning-a-book)
+  - [Listing overdue books](#listing-overdue-books)
+  - [Listing borrowed books](#listing-borrowed-books)
+  - [Listing members with overdue books](#listing-members-with-overdue-books)
+  - [Searching books](#searching-books)
+  - [Viewing book quantity](#viewing-book-quantity)
+  - [Listing books on a shelf](#listing-books-on-a-shelf)
+  - [Viewing library statistics](#viewing-library-statistics)
+  - [Undo last valid command](#undo-last-valid-command)
+  - [Exiting the application](#exiting-the-application)
+  - [Additional test cases](#additional-test-cases)
+- [Handling missing/corrupted data files](#handling-missingcorrupted-data-files)
 ## Acknowledgements
 
 LeBook uses the following libraries:
@@ -294,7 +332,7 @@ Library staff who wish to efficiently manage book collections
 Enables efficient cataloging, borrowing, and returning of books through a command-line interface, allowing librarians 
 to manage inventory and track book availability quickly compared to a typical mouse/GUI driven app
 
-## User Stories
+### User Stories
 
 | Version | As a ...  | I want to ...                                 | So that I can ...                                                                                         |
 |---------|-----------|-----------------------------------------------|-----------------------------------------------------------------------------------------------------------|
@@ -491,21 +529,12 @@ Exiting the application
 2. Test case: `exit`
    - Expected: Application closes with a goodbye message.
 
-### User Interface Class
+### Additional test cases
 
-1. Introduction
-   The `Ui` class in LeBook handles all interactions with the user. It is responsible for reading inputs and printing outputs including welcome messages, command results and error messages.
-   This class abstracts all system input/output logic to maintain separation of concerns in application.
+- **Invalid commands**: Test various invalid commands (e.g., `borrow`, `return`, `delete` without specifying a book number) to ensure that the application responds correctly with error messages.
+- **Edge cases**: Test edge cases such as deleting books when the library is empty, borrowing or returning books that are not available or already borrowed, etc.
 
-2. Design and Implementation
-   `Ui` class encapsulates a `Scanner` object to read inputs from `System.in`
-   The `readCommand()` method prompts users for inputs and returns trimmed string for parsing.
-   All output messages are standardized using `printWithSeparator(String message)`, which adds visual separators `=====` above and below messages for better readability.
-
-3. Future enhancements
-   Potentially add support for multi-lined inputs
-
-### Handling missing/corrupted data files
+## Handling missing/corrupted data files
 
 To simulate a missing or corrupted data file:
 1. Delete or rename the data file used by LeBook.
@@ -514,8 +543,3 @@ To simulate a missing or corrupted data file:
 Expected behavior:
 - LeBook should handle the absence or corruption of the data file gracefully.
 - It should either create a new data file or display an error message indicating the problem.
-
-### Additional test cases
-
-- **Invalid commands**: Test various invalid commands (e.g., `borrow`, `return`, `delete` without specifying a book number) to ensure that the application responds correctly with error messages.
-- **Edge cases**: Test edge cases such as deleting books when the library is empty, borrowing or returning books that are not available or already borrowed, etc.
