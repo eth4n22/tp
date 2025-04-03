@@ -1,5 +1,43 @@
 # Developer Guide
-
+- [Achknowledgements](#acknowledgements)
+- [Design](#design)
+  - [Architecture](#architecture)
+  - [Parser](#parser-component)
+  - [Command](#command-component)
+  - [Storage](#storage-component)
+  - [Library](#library-component)
+  - [Ui](#ui-component)
+- [Implementation](#implementation)
+  - [Add Book Feature](#add-book-feature)
+  - [Delete Book Feature](#delete-book-feature)
+  - [List Book Feature](#list-book-feature)
+  - [List Members With Overdue Books Feature](#list-members-with-overdue-books-feature)
+  - [Undo Feature](#undo-feature)
+- [Appendix](#appendix)
+  - [Product Scope](#product-scope)
+  - [Target User Profile](#target-user-profile)
+  - [Value Proposition](#value-proposition)
+  - [User Stories](#user-stories)
+- [Non-Functional Requirements](#non-functional-requirements)
+- [Glossary](#glossary)
+- [Instructions for manual testing](#instructions-for-manual-testing)
+  - [Initial Launch](#initial-launch)
+  - [Adding a book](#adding-a-book)
+  - [Deleting a book](#deleting-a-book)
+  - [Listing books](#listing-books)
+  - [Borrowing a book](#borrowing-a-book)
+  - [Returning a book](#returning-a-book)
+  - [Listing overdue books](#listing-overdue-books)
+  - [Listing borrowed books](#listing-borrowed-books)
+  - [Listing members with overdue books](#listing-members-with-overdue-books)
+  - [Searching books](#searching-books)
+  - [Viewing book quantity](#viewing-book-quantity)
+  - [Listing books on a shelf](#listing-books-on-a-shelf)
+  - [Viewing library statistics](#viewing-library-statistics)
+  - [Undo last valid command](#undo-last-valid-command)
+  - [Exiting the application](#exiting-the-application)
+  - [Additional test cases](#additional-test-cases)
+- [Handling missing/corrupted data files](#handling-missingcorrupted-data-files)
 ## Acknowledgements
 
 LeBook uses the following libraries:
@@ -100,7 +138,35 @@ How the parser component works:
 ## Implementation
 
 ### Add Book Feature
-*(to be updated)*
+The add book feature allows librarians to add a book to the catalogue. When the librarian wishes to add a book, the book
+is added to the global catalogue in `BookManager`, and also concurrently added to the shelf in `ShelvesManager`. 
+
+The feature is facilitated by the following components:
+- `AddCommand`: A command object that encapsulates the logic for adding the book to the catalogue and shelf.
+- `Library`: Responsible for managing the `BookManager` as well as the `ShelvesManager`.
+- `ShelvesManager`: Responsible for sorting the books into the correct genre.
+- `Shelves`: Responsible for checking the appropriate `shelf` to add the book to.
+
+**Key Methods**
+- `getSuitableIndex()` in `Shelf`:
+   - Iterates through all the slots in the shelf.
+   - Check for a suitable spot on the shelf.
+   The spot is suitable if:
+     1. A book that was in that spot and previously deleted.
+     2. The spot was never occupied.
+
+**Execution Flow**
+1. The librarian enters a string input `add <Book Details>`.
+2. The Parser class parses the input and creates a `AddCommand`.
+3. The `execute` method in `AddCommand` class calls `Library`'s `addNewBookToCatalogue(<Book Details>)` and `addNewBookToShelf(<Book Details>)` method.
+4. The `ShelfManager` iterates through its shelf indexes, checks for open slots.
+5. The result is passed to the Ui, which displays it to the user.
+
+**Sequence Diagram**
+
+![AddBookSequence](images/AddBookSequence.png)
+_Note: The `Book Details` consists of the Title, Author Name, as well as the genre._
+
 
 ### Delete Book Feature
 The delete book feature allows librarians to delete irrelevant books
@@ -311,7 +377,7 @@ Library staff who wish to efficiently manage book collections
 Enables efficient cataloging, borrowing, and returning of books through a command-line interface, allowing librarians 
 to manage inventory and track book availability quickly compared to a typical mouse/GUI driven app
 
-## User Stories
+### User Stories
 
 | Version | As a ...  | I want to ...                                 | So that I can ...                                                                                         |
 |---------|-----------|-----------------------------------------------|-----------------------------------------------------------------------------------------------------------|
@@ -508,7 +574,12 @@ Exiting the application
 2. Test case: `exit`
    - Expected: Application closes with a goodbye message.
 
-### Handling missing/corrupted data files
+### Additional test cases
+
+- **Invalid commands**: Test various invalid commands (e.g., `borrow`, `return`, `delete` without specifying a book number) to ensure that the application responds correctly with error messages.
+- **Edge cases**: Test edge cases such as deleting books when the library is empty, borrowing or returning books that are not available or already borrowed, etc.
+
+## Handling missing/corrupted data files
 
 To simulate a missing or corrupted data file:
 1. Delete or rename the data file used by LeBook.
@@ -517,8 +588,3 @@ To simulate a missing or corrupted data file:
 Expected behavior:
 - LeBook should handle the absence or corruption of the data file gracefully.
 - It should either create a new data file or display an error message indicating the problem.
-
-### Additional test cases
-
-- **Invalid commands**: Test various invalid commands (e.g., `borrow`, `return`, `delete` without specifying a book number) to ensure that the application responds correctly with error messages.
-- **Edge cases**: Test edge cases such as deleting books when the library is empty, borrowing or returning books that are not available or already borrowed, etc.

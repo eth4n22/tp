@@ -3,6 +3,7 @@ package seedu.duke.commands;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seedu.duke.book.Book;
+import seedu.duke.exception.LeBookException;
 import seedu.duke.library.Library;
 import seedu.duke.member.MemberManager;
 import seedu.duke.storage.Storage;
@@ -35,7 +36,7 @@ public class UpdateStatusCommandTest {
     }
 
     @Test
-    public void testExecute_borrowBook_statusUpdated() {
+    public void testExecute_borrowBook_statusUpdated() throws LeBookException {
         // Add a book
         library.addNewBookToCatalogue("The Hobbit", "J.R.R. Tolkien", "adventure");
         library.addNewBookToShelf("The Hobbit", "J.R.R. Tolkien", "adventure");
@@ -51,7 +52,7 @@ public class UpdateStatusCommandTest {
     }
 
     @Test
-    public void testExecute_returnBook_statusUpdated() {
+    public void testExecute_returnBook_statusUpdated() throws LeBookException {
         // Add and borrow a book
         library.addNewBookToCatalogue("The Hobbit", "J.R.R. Tolkien", "adventure");
         library.addNewBookToShelf("The Hobbit", "J.R.R. Tolkien", "adventure");
@@ -70,7 +71,7 @@ public class UpdateStatusCommandTest {
     }
 
     @Test
-    public void testUndo_borrowCommand_bookRestored() {
+    public void testUndo_borrowCommand_bookRestored() throws LeBookException {
         // Add and borrow a book
         library.addNewBookToCatalogue("The Hobbit", "J.R.R. Tolkien", "adventure");
         library.addNewBookToShelf("The Hobbit", "J.R.R. Tolkien", "adventure");
@@ -89,7 +90,7 @@ public class UpdateStatusCommandTest {
     }
 
     @Test
-    public void testUndo_returnCommand_bookRestored() {
+    public void testUndo_returnCommand_bookRestored() throws LeBookException {
         // Add and borrow a book
         library.addNewBookToCatalogue("The Hobbit", "J.R.R. Tolkien", "adventure");
         library.addNewBookToShelf("The Hobbit", "J.R.R. Tolkien", "adventure");

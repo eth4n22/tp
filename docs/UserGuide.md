@@ -39,27 +39,35 @@ Remove books from your library. You can delete by the book's number in the list 
 
 **Format 1 (By Index):**
 ```
-delete i/BOOK_NUMBER
+delete num/BOOK_NUMBER
 ```
 **Example:**
 ```
-delete i/1
+delete num/1
 ```
 
 **Format 2 (By Title/Author):**
 ```
-delete b/TITLE / AUTHOR
+delete bk/TITLE/AUTHOR
 ```
 **Example:**
 ```
-delete b/The Great Gatsby / F. Scott Fitzgerald
+delete bk/The Great Gatsby/F. Scott Fitzgerald
+```
+**Format 3 (By BookID):**
+```
+delete id/BOOKID
+```
+**Example:**
+```
+delete id/R-0-0
 ```
 
 **Example Output:**
 ```
 ____________________________________________________________
 Book deleted:
-  [ ] The Great Gatsby by F. Scott Fitzgerald (Genre: nonfiction, ID: NF-0-0)
+  [ ] The Great Gatsby by F. Scott Fitzgerald (ID: NF-0-0)
 Now you have 0 books in the library
 ____________________________________________________________
 ```
@@ -75,9 +83,9 @@ list
 ```
 ____________________________________________________________
 Here are the books in your library:
-1. [ ] To Kill a Mockingbird by Harper Lee (Genre: nonfiction, ID: NF-0-1)
-2. [ ] 1984 by George Orwell (Genre: scifi, ID: SCIF-0-0)
-3. [X] The Hobbit by J.R.R. Tolkien (Genre: adventure, ID: AD-0-0) | (Due: ...) Borrowed by: Alice
+1. [ ] To Kill a Mockingbird (by Harper Lee) (ID: NF-0-1)
+2. [ ] 1984 (by George Orwell) (ID: SCIF-0-0)
+3. [X] The Hobbit by J.R.R. Tolkien (ID: AD-0-0) | (Due: ...)
 Total books: 3
 ____________________________________________________________
 ```
@@ -247,23 +255,24 @@ help
 -------------------------------  
  Available Commands:  
 -------------------------------  
-1. add TITLE / AUTHOR / GENRE       - Add a new book.  
+1. add TITLE / AUTHOR / GENRE      - Add a new book.  
 2. borrow INDEX / MEMBER_NAME      - Borrow a book (using 1-based index).  
-3. delete b/TITLE / AUTHOR         - Remove book by title and author.  
-4. delete i/INDEX                  - Remove book by list index (1-based).  
-5. find CRITERIA TERM              - Search books.  
+3. delete bk / TITLE / AUTHOR      - Remove book by title and author.  
+4. delete num/INDEX                - Remove book by list index (1-based).  
+5. delete id/ID                    - Remove book by book ID.  
+6. find CRITERIA TERM              - Search books.  
    Criteria: title, author, genre, id  
-6. help                            - Show this help menu.  
-7. list                            - List all unique book titles.  
-8. list borrowed                   - List borrowed books.  
-9. list overdue                    - List overdue books.  
-10. list users                     - List users who have overdue books.  
-11. quantity / TITLE / AUTHOR      - Shows the quantity of the specified book.  
-12. return INDEX                   - Return a borrowed book (using 1-based index).  
-13. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (1-based number).  
-14. statistics                     - View library statistics.  
-15. undo                           - Undo the last command (add/delete/borrow/return).  
-16. bye                            - Exit the program.  
+7. help                            - Show this help menu.  
+8. list                            - List all unique book titles.  
+9. list borrowed                   - List borrowed books.  
+10. list overdue                   - List overdue books.  
+11. list users                     - List users who have overdue books.  
+12. quantity / TITLE / AUTHOR      - Shows the quantity of the specified book.  
+13. return INDEX                   - Return a borrowed book (using 1-based index).  
+14. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (1-based number).  
+15. statistics                     - View library statistics.  
+16. undo                           - Undo the last command (add/delete/borrow/return).  
+17. bye                            - Exit the program.  
 -------------------------------  
 Supported Genres:  
   > romance, adventure, action, horror, mystery, nonfiction, scifi  
