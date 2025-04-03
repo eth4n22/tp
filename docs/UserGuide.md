@@ -247,23 +247,24 @@ help
 -------------------------------  
  Available Commands:  
 -------------------------------  
-1. add TITLE / AUTHOR / GENRE       - Add a new book.  
+1. add TITLE / AUTHOR / GENRE      - Add a new book.  
 2. borrow INDEX / MEMBER_NAME      - Borrow a book (using 1-based index).  
-3. delete b/TITLE / AUTHOR         - Remove book by title and author.  
-4. delete i/INDEX                  - Remove book by list index (1-based).  
-5. find CRITERIA TERM              - Search books.  
+3. delete bk / TITLE / AUTHOR      - Remove book by title and author.  
+4. delete num/INDEX                - Remove book by list index (1-based).  
+5. delete id/ID                    - Remove book by book ID.  
+6. find CRITERIA TERM              - Search books.  
    Criteria: title, author, genre, id  
-6. help                            - Show this help menu.  
-7. list                            - List all unique book titles.  
-8. list borrowed                   - List borrowed books.  
-9. list overdue                    - List overdue books.  
-10. list users                     - List users who have overdue books.  
-11. quantity / TITLE / AUTHOR      - Shows the quantity of the specified book.  
-12. return INDEX                   - Return a borrowed book (using 1-based index).  
-13. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (1-based number).  
-14. statistics                     - View library statistics.  
-15. undo                           - Undo the last command (add/delete/borrow/return).  
-16. bye                            - Exit the program.  
+7. help                            - Show this help menu.  
+8. list                            - List all unique book titles.  
+9. list borrowed                   - List borrowed books.  
+10. list overdue                   - List overdue books.  
+11. list users                     - List users who have overdue books.  
+12. quantity / TITLE / AUTHOR      - Shows the quantity of the specified book.  
+13. return INDEX                   - Return a borrowed book (using 1-based index).  
+14. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (1-based number).  
+15. statistics                     - View library statistics.  
+16. undo                           - Undo the last command (add/delete/borrow/return).  
+17. bye                            - Exit the program.  
 -------------------------------  
 Supported Genres:  
   > romance, adventure, action, horror, mystery, nonfiction, scifi  

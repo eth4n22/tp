@@ -81,7 +81,7 @@ public class UiTest {
         String output = normalize(outputStream.toString());
         assertTrue(output.contains("Available Commands:"));
         assertTrue(output.contains("add TITLE / AUTHOR / GENRE"));
-        assertTrue(output.contains("delete i/INDEX"));
+        assertTrue(output.contains("delete num/INDEX"));
         assertTrue(output.contains("list overdue"));
         assertTrue(output.contains("undo"));
         assertTrue(output.contains("help"));

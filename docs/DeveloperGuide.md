@@ -50,7 +50,35 @@ How the parser component works:
 ## Implementation
 
 ### Add Book Feature
-*(to be updated)*
+The add book feature allows librarians to add a book to the catalogue. When the librarian wishes to add a book, the book
+is added to the global catalogue in `BookManager`, and also concurrently added to the shelf in `ShelvesManager`. 
+
+The feature is facilitated by the following components:
+- `AddCommand`: A command object that encapsulates the logic for adding the book to the catalogue and shelf.
+- `Library`: Responsible for managing the `BookManager` as well as the `ShelvesManager`.
+- `ShelvesManager`: Responsible for sorting the books into the correct genre.
+- `Shelves`: Responsible for checking the appropriate `shelf` to add the book to.
+
+**Key Methods**
+- `getSuitableIndex()` in `Shelf`:
+   - Iterates through all the slots in the shelf.
+   - Check for a suitable spot on the shelf.
+   The spot is suitable if:
+     1. A book that was in that spot and previously deleted.
+     2. The spot was never occupied.
+
+**Execution Flow**
+1. The librarian enters a string input `add <Book Details>`.
+2. The Parser class parses the input and creates a `AddCommand`.
+3. The `execute` method in `AddCommand` class calls `Library`'s `addNewBookToCatalogue(<Book Details>)` and `addNewBookToShelf(<Book Details>)` method.
+4. The `ShelfManager` iterates through its shelf indexes, checks for open slots.
+5. The result is passed to the Ui, which displays it to the user.
+
+**Sequence Diagram**
+
+![AddBookSequence](images/AddBookSequence.png)
+_Note: The `Book Details` consists of the Title, Author Name, as well as the genre._
+
 
 ### Delete Book Feature
 *(to be updated)*
