@@ -74,7 +74,7 @@ public class Parser {
         try {
             int index = Integer.parseInt(indexString.trim());
             return index - 1;
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
             throw new LeBookException("Invalid index format. Please provide a number.");
         }
     }

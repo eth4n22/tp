@@ -187,6 +187,7 @@ public class BookManager {
      * @return Confirmation or error message string.
      */
     public String updateBookStatus(String command, int bookIndex, String borrowerName, MemberManager memberManager) {
+        System.out.println("enter BookManager updateBookStatus");
         if (bookIndex < 0 || bookIndex >= books.size()) {
             // Broke long line
             return "Invalid book index provided. There is no book at index "
