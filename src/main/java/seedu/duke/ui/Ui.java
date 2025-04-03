@@ -35,23 +35,24 @@ public class Ui {
                 ------------------------------- \s
                  Available Commands: \s
                 ------------------------------- \s
-                1. add TITLE / AUTHOR / GENRE       - Add a new book. \s
+                1. add TITLE / AUTHOR / GENRE      - Add a new book. \s
                 2. borrow INDEX / MEMBER_NAME      - Borrow a book (using 1-based index). \s
-                3. delete b/TITLE / AUTHOR         - Remove book by title and author. \s
-                4. delete i/INDEX                  - Remove book by list index (1-based). \s
-                5. find CRITERIA TERM              - Search books. \s
+                3. delete bk /TITLE / AUTHOR       - Remove book by title and author. \s
+                4. delete num/INDEX                - Remove book by list index (1-based). \s
+                5. delete id/ID                    - Remove book by book ID. \s
+                6. find CRITERIA TERM              - Search books. \s
                    Criteria: title, author, genre, id \s
-                6. help                            - Show this help menu. \s
-                7. list                            - List all unique book titles. \s
-                8. list borrowed                   - List borrowed books. \s
-                9. list overdue                    - List overdue books. \s
-                10. list users                     - List users who have overdue books. \s
-                11. quantity / TITLE / AUTHOR      - Shows the quantity of the specified book. \s
-                12. return INDEX                   - Return a borrowed book (using 1-based index). \s
-                13. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (1-based number). \s
-                14. statistics                     - View library statistics. \s
-                15. undo                           - Undo the last command (add/delete/borrow/return). \s
-                16. bye                            - Exit the program. \s
+                7. help                            - Show this help menu. \s
+                8. list                            - List all unique book titles. \s
+                9. list borrowed                   - List borrowed books. \s
+                10. list overdue                   - List overdue books. \s
+                11. list users                     - List users who have overdue books. \s
+                12. quantity / TITLE / AUTHOR      - Shows the quantity of the specified book. \s
+                13. return INDEX                   - Return a borrowed book (using 1-based index). \s
+                14. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (1-based number). \s
+                15. statistics                     - View library statistics. \s
+                16. undo                           - Undo the last command (add/delete/borrow/return). \s
+                17. bye                            - Exit the program. \s
                 ------------------------------- \s
                 Supported Genres: \s
                   > romance, adventure, action, horror, mystery, nonfiction, scifi \s

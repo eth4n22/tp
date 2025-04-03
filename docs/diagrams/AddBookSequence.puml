@@ -1,0 +1,40 @@
+@startuml
+hide footbox
+actor User as "User"
+participant Ui as ":Ui"
+participant LeBook as ":LeBook"
+participant Parser as ":Parser"
+participant AddCommand as ":AddCommand"
+participant Library as ":Library"
+participant BookManager as ":BookManager"
+participant Shelf as ":Shelf"
+
+
+User ->> Ui: readCommand()
+Ui ->> LeBook: pass user input ("Add <Book>")
+LeBook ->> Parser: parse("Add <Book>")
+Parser ->> Parser: parseAddCommand(Book details)
+Parser ->> AddCommand: create AddCommand
+Parser ->> LeBook: return AddCommand
+
+LeBook ->> AddCommand: execute(library, ui, storage, memberManager)
+AddCommand ->> Library: addNewBookToCatalogue(Book details)
+Library ->> BookManager: addNewBookToCatalogue(Book details)
+BookManager -->> Library
+
+AddCommand ->> Library: addNewBookToShelf(Book details)
+Library ->> Shelf: addBookToShelf(Book details)
+
+ShelfManager ->> ShelfManager: Check if shelf is full
+alt Shelf is full
+    ShelfManager ->> ShelfManager: Return "Shelf is full!"
+    ShelfManager -->> Library
+else Shelf is not full
+    ShelfManager ->> ShelfManager: getSuitableIndex()
+    ShelfManager ->> ShelfManager: Add book to shelf
+    ShelfManager -->> Library
+end
+Library ->> Ui: print result
+
+Ui ->> User: Display message that book is added
+@enduml
