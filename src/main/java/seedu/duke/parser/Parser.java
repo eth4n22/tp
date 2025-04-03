@@ -190,8 +190,8 @@ public class Parser {
     private static Command parseDeleteCommand(String userInput) throws LeBookException {
         String[] parts = userInput.split("/", SPLIT_INTO_TWO);
         if (parts.length < LENGTH_LIMIT_TWO) {
-            throw new LeBookException("Invalid format. It should be: delete b/BOOK_TITLE/AUTHOR_NAME "
-                    + "or delete i/BOOK_INDEX or delete id/GENRE-SHELFNUM-SLOTNUM");
+            throw new LeBookException("Invalid format. It should be: delete bk/BOOK_TITLE/AUTHOR_NAME "
+                    + "or delete num/BOOK_INDEX or delete id/GENRE-SHELFNUM-SLOTNUM");
         }
         String deleteCommandType = parts[0].trim();
         switch (deleteCommandType) {
@@ -201,7 +201,7 @@ public class Parser {
         case DELETE_BY_BOOK:
             String[] bookDetails = parts[1].split("/", SPLIT_INTO_TWO); //should split into title and author
             if (bookDetails.length < LENGTH_LIMIT_TWO) {
-                throw new LeBookException("Invalid format. It should be: delete b/BOOK_TITLE/AUTHOR_NAME");
+                throw new LeBookException("Invalid format. It should be: delete bk/BOOK_TITLE/AUTHOR_NAME");
             }
             String bookTitle = bookDetails[0].trim();
             String authorName = bookDetails[1].trim();
