@@ -1,0 +1,36 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide circle
+
+class Parser
+class Command
+class SearchCommand <<represents SearchByTitle, etc.>> extends Command {
+  + execute(...)
+  + undo()
+}
+class Library {
+ + getBookManager()
+ + getBooks()
+}
+class BookManager {
+ + getBooks()
+}
+class BookFinder {
+ + findBooksBy...(String)
+}
+class Book
+class Ui
+
+note right of SearchCommand : Handles specific search logic\n(e.g., by Title, Author, ID, Genre)
+
+Parser -> SearchCommand : <<creates>>
+SearchCommand --> Library : uses
+SearchCommand --> BookFinder : <<creates>> & uses
+SearchCommand --> Ui : displays results via
+
+Library o-> BookManager
+
+BookManager "1" *--> "*" Book : manages
+BookFinder ..> BookManager : gets book list via Command/Library
+BookFinder ..> Book : searches through
+@enduml
