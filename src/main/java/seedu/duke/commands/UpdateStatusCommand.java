@@ -1,6 +1,7 @@
 package seedu.duke.commands;
 
 import seedu.duke.book.Book;
+import seedu.duke.exception.LeBookException;
 import seedu.duke.library.Library;
 import seedu.duke.member.MemberManager;
 import seedu.duke.storage.Storage;
@@ -28,17 +29,20 @@ public class UpdateStatusCommand extends Command {
     }
 
     @Override
-    public void execute(Library library, Ui ui, Storage storage, MemberManager memberManager) {
+    public void execute(Library library, Ui ui, Storage storage, MemberManager memberManager) throws LeBookException {
         assert library != null : "BookManager should not be null";
         assert ui != null : "Ui should not be null";
         assert storage != null : "Storage should not be null";
         assert commandType != null : "Command type cannot be null";
 
-        //Save previous state before changes
-        Book book = library.getBooks().get(bookIndex);
-        previousStatus = book.isBorrowed();
-        previousBorrowerName = book.getBorrowerName();
-        previousDueDate = book.getReturnDueDate();
+        try {
+            Book book = library.getBooks().get(bookIndex);
+            previousStatus = book.isBorrowed();
+            previousBorrowerName = book.getBorrowerName();
+            previousDueDate = book.getReturnDueDate();
+        } catch (IndexOutOfBoundsException e) {
+            throw new LeBookException("Book index is out of bounds!");
+        }
 
         String response = library.updateBookStatus(commandType, bookIndex, borrowerName, memberManager);
         ui.printWithSeparator(response);
