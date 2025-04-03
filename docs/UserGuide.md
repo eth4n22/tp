@@ -85,7 +85,7 @@ ____________________________________________________________
 Here are the books in your library:
 1. [ ] To Kill a Mockingbird (by Harper Lee) (ID: NF-0-1)
 2. [ ] 1984 (by George Orwell) (ID: SCIF-0-0)
-3. [X] The Hobbit by J.R.R. Tolkien (ID: AD-0-0) | (Due: ...)
+3. [X] The Hobbit (by J.R.R. Tolkien) (ID: AD-0-0) | (Due: ...)
 Total books: 3
 ____________________________________________________________
 ```
@@ -190,7 +190,8 @@ find shelf AD-0-0
 ```
 ____________________________________________________________
 Found 1 book(s) with titles containing 'hobbit':
-1. [X] The Hobbit by J.R.R. Tolkien (Genre: adventure, ID: AD-0-0) | (Due: ...) Borrowed by: Alice
+1. [X] The Hobbit by J.R.R. Tolkien (Genre: adventure, Shelf: AD-0-0) 
+       Borrowed by: Alice (Due: ...)
 ____________________________________________________________
 ```
 
