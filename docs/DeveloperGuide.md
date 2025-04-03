@@ -73,12 +73,29 @@ How the parser component works:
 
 **Class Diagram(Library):**
 ![](images\Library.png)
+
 ### UI component
+**API:** [`Ui.java`](https://github.com/AY2425S2-CS2113-T13-3/tp/blob/master/src/main/java/seedu/duke/ui/Ui.java)
 
+1. **Overview**
 
+   - The `Ui`class in Lebook is responsible for all user interaction in the Command Line Interface (CLI).
+   - `Ui` handles:
+      - Displaying welcome, help and exit messages.
+      - Reading user input and returning the raw command string.
+      - Printing success and error messages in a standardized and formated way.
+      - Displaying book lists in formatted layout
+   - `Ui` class is designed as a Singleton to ensure only one instance manages all user interaction throughout application's cycle.
 
+2. **Design**
 
-
+   - Singleton pattern: `Ui` provides static instance via `Ui.getUiInstance()` and uses private constructor to prevent multiple instances.
+   - `readCommand()` -> Reads user input from terminal.
+   - `printWelcomeMessage()`, `printHelp()`, `printExitMessage()` -> Prints standardized success messages.
+   - `printSuccess(String message)` -> Prints standardized success message.
+   - `printError(String message)` -> Prints standardized error messages.
+   - `printWithSeparator(String message)` -> Prints message surrounded by separators.
+   - `showBookList(List<Book> books)` -> Displays formated list of books with their details.
 
 ## Implementation
 
@@ -490,20 +507,6 @@ Exiting the application
 1. Prerequisites: Application is running.
 2. Test case: `exit`
    - Expected: Application closes with a goodbye message.
-
-### User Interface Class
-
-1. Introduction
-   The `Ui` class in LeBook handles all interactions with the user. It is responsible for reading inputs and printing outputs including welcome messages, command results and error messages.
-   This class abstracts all system input/output logic to maintain separation of concerns in application.
-
-2. Design and Implementation
-   `Ui` class encapsulates a `Scanner` object to read inputs from `System.in`
-   The `readCommand()` method prompts users for inputs and returns trimmed string for parsing.
-   All output messages are standardized using `printWithSeparator(String message)`, which adds visual separators `=====` above and below messages for better readability.
-
-3. Future enhancements
-   Potentially add support for multi-lined inputs
 
 ### Handling missing/corrupted data files
 
