@@ -1,37 +1,38 @@
 @startuml
 
+hide footbox
 hide circle
 skinparam classAttributeIconSize 0
 
 actor User
 
-participant Ui
-participant Parser
-participant UndoCommand
-participant Library
-participant UndoManager
-participant Command
+participant ":Ui"
+participant ":Parser"
+participant ":UndoCommand"
+participant ":Library"
+participant ":UndoManager"
+participant ":Command"
 
-User -> Ui : Enters "undo"
-Ui -> Parser : parse("undo")
-Parser -> UndoCommand : «create»(undoCount)
-Parser -> UndoCommand : Returns command instance
+User -> ":Ui" : Enters "undo"
+":Ui" -> ":Parser" : parse("undo")
+":Parser" -> ":UndoCommand" : «create»(undoCount)
+":Parser" -> ":UndoCommand" : Returns command instance
 
-User -> Ui : Enters "undo"
-Ui -> Parser : parse("undo")
-Parser -> UndoCommand : «create»(undoCount)
-Parser -> UndoCommand : Returns command instance
+User -> ":Ui" : Enters "undo"
+":Ui" -> ":Parser" : parse("undo")
+":Parser" -> ":UndoCommand" : «create»(undoCount)
+":Parser" -> ":UndoCommand" : Returns command instance
 
-UndoCommand -> Library : getUndoManager()
-Library -> UndoManager : Returns instance
+":UndoCommand" -> ":Library" : getUndoManager()
+":Library" -> ":UndoManager" : Returns instance
 
-UndoCommand -> UndoManager : undoCommands(count, library, ui, storage, memberManager)
+":UndoCommand" -> ":UndoManager" : undoCommands(count, library, ui, storage, memberManager)
 
 alt [commandHistory is not empty]
-    UndoManager -> Command : undo(library, ui, storage, memberManager)
-    Command -> Ui : printSuccess("Successfully undone: CommandName")
+    ":UndoManager" -> ":Command" : undo(library, ui, storage, memberManager)
+    ":Command" -> ":Ui" : printSuccess("Successfully undone: CommandName")
 else [commandHistory is empty]
-    UndoManager -> Ui : printError("No commands to undo!")
+    ":UndoManager" -> ":Ui" : printError("No commands to undo!")
 end
 
 @enduml
