@@ -39,27 +39,35 @@ Remove books from your library. You can delete by the book's number in the list 
 
 **Format 1 (By Index):**
 ```
-delete i/BOOK_NUMBER
+delete num/BOOK_NUMBER
 ```
 **Example:**
 ```
-delete i/1
+delete num/1
 ```
 
 **Format 2 (By Title/Author):**
 ```
-delete b/TITLE / AUTHOR
+delete bk/TITLE/AUTHOR
 ```
 **Example:**
 ```
-delete b/The Great Gatsby / F. Scott Fitzgerald
+delete bk/The Great Gatsby/F. Scott Fitzgerald
+```
+**Format 3 (By BookID):**
+```
+delete id/BOOKID
+```
+**Example:**
+```
+delete id/R-0-0
 ```
 
 **Example Output:**
 ```
 ____________________________________________________________
 Book deleted:
-  [ ] The Great Gatsby by F. Scott Fitzgerald (Genre: nonfiction, ID: NF-0-0)
+  [ ] The Great Gatsby by F. Scott Fitzgerald (ID: NF-0-0)
 Now you have 0 books in the library
 ____________________________________________________________
 ```
@@ -75,9 +83,9 @@ list
 ```
 ____________________________________________________________
 Here are the books in your library:
-1. [ ] To Kill a Mockingbird by Harper Lee (Genre: nonfiction, ID: NF-0-1)
-2. [ ] 1984 by George Orwell (Genre: scifi, ID: SCIF-0-0)
-3. [X] The Hobbit by J.R.R. Tolkien (Genre: adventure, ID: AD-0-0) | (Due: ...) Borrowed by: Alice
+1. [ ] To Kill a Mockingbird (by Harper Lee) (ID: NF-0-1)
+2. [ ] 1984 (by George Orwell) (ID: SCIF-0-0)
+3. [X] The Hobbit by J.R.R. Tolkien (ID: AD-0-0) | (Due: ...)
 Total books: 3
 ____________________________________________________________
 ```
