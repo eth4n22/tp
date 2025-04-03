@@ -1,17 +1,18 @@
 @startuml
+hide footbox
 actor User as "User"
-participant Ui as "Ui"
-participant LeBook as "LeBook"
-participant Parser as "Parser"
-participant ListOverdueUsersCommand as "ListOverdueUsersCommand"
-participant MemberManager as "MemberManager"
+participant Ui as ":Ui"
+participant LeBook as ":LeBook"
+participant Parser as ":Parser"
+participant ListOverdueUsersCommand as ":ListOverdueUsersCommand"
+participant MemberManager as ":MemberManager"
 
 User ->> Ui: readCommand()
 Ui ->> LeBook: pass user input ("list users")
 LeBook ->> Parser: parse("list users")
 Parser ->> Parser: parseListCommand("users")
 Parser ->> ListOverdueUsersCommand: create ListOverdueUsersCommand
-Parser ->> LeBook: return ListOverdueUsersCommand
+Parser -->> LeBook: return ListOverdueUsersCommand
 
 LeBook ->> ListOverdueUsersCommand: execute(library, ui, storage, memberManager)
 ListOverdueUsersCommand ->> MemberManager: listMembersWithOverdueBooks()
@@ -25,7 +26,7 @@ loop Iterate through members
     end
 end
 
-MemberManager ->> ListOverdueUsersCommand: Return formatted list of members with overdue books
+MemberManager -->> ListOverdueUsersCommand: Return formatted list of members with overdue books
 
 ListOverdueUsersCommand ->> Ui: printWithSeparator(result)
 Ui ->> User: Display list of members with overdue books

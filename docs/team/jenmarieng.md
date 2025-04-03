@@ -9,9 +9,27 @@ add, borrow, return, and track books efficiently.
 
 ### Features implemented:
 
-- **Parser**: parse user input appropriately and calls the relevant commands so that the user can conveniently pass in one long string
+- **Parse user input appropriately**
+  - What it does: 
+    - Processes user input, extracts relevant information, and calls the corresponding command. This allows users to conveniently enter a single string.
+  - Justification:
+    - This feature significantly improves usability. It ensures that user inputs are interpreted correctly, reducing errors and making the system more responsive.
+  - Highlights:
+    - The implementation required designing a structured way to process various types of input. It was also necessary to handle edge cases such as invalid input formats and missing parameters.
 - **Listing of borrowed books**
+  - What it does:
+    - Allows users to view a list of all books currently borrowed by members, making it easier to track borrowed items.
+  - Justification:
+    - This feature improves book management by providing a quick and structured overview of borrowed books. It allows librarians to monitor the book statuses.
+  - Highlights:
+    - The implementation required iterating through the list of members and their borrowed books. Efficient data retrieval and formatting were key considerations to ensure that the listing remains clear and concise.
 - **Listing of users with overdue books**
+  - What it does:
+    - Lists members who have overdue books along with the details of the overdue items. This feature is implemented with the Member and MemberManager classes.
+  - Justification:
+    - This feature enhances the book management system by making it easier to track overdue books and follow up with users who need to return them.
+  - Highlights:
+    - The implementation required checking each member’s borrowed books for overdue status and formatting the output for readability.
 
 ### Code contributed:
 
@@ -20,6 +38,7 @@ add, borrow, return, and track books efficiently.
 ### Enhancements implemented:
 
 - Ensure user input parsing is more robust
+- Enhanced borrowing of books by allowing librarians to add who borrowed the book
 - Added unit tests for major commands
 
 ### Contributions to the UG:
@@ -29,9 +48,11 @@ add, borrow, return, and track books efficiently.
 ### Contributions to the DG:
 
 - Wrote the Developer Guide sections detailing the design and implementation of:
-    - **Member Manager** (`MemberManager`).
+    - **Parser**
+    - **List Users with Overdue Books** (`list users`)
 - Created/Updated the following UML diagrams for the Developer Guide:
-    - **Class Diagram** (focusing on `MemberManager`, and their relationships).
+    - **Class Diagram** (focusing on `Parser`, and its relationships)
+    - **Sequence Diagram** (focusing on List Users with Overdue Books Feature)
 
 ### Contributions to team-based tasks:
 
