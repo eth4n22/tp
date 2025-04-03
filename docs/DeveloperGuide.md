@@ -82,9 +82,30 @@ Each delete command also supports undo, restoring the last deleted book into the
    - Stored for undo
 
 #### Execution Flow
-*(to be updated)*
+Given below is an example usage scenario and how the delete mechanism behaves at each step
 
+Assuming the initial state of the library is that there's one book titled `Book1` by `AuthorA`
 
+Step 1. The user types in the string input `delete num/1` 
+to delete the 1st book in the catalogue (in this case, it's `Book1`)
+
+Step 2. The Parser class parses the input and creates a 
+`DeleteByIndexCommand`.
+
+Step 3. The `execute` method in this command class calls library's `deleteBook(Int bookIndex)` method
+
+Step 4. library calls upon `catalogueManager` `deleteBook(bookIndex)` to delete the book from the 
+catalogue. The response containing information about the bookDeletion is stored in `response`
+
+Step 5. library calls retrieves the `bookID` using the `bookIndex` and passes it to `shelvesManager`
+which deletes the book from the relevant shelf.
+
+Step 6. Book deletion is complete. 
+The response is finally returned back to Parser which prints out the `response`.
+`Storage` is also updated.
+
+**Sequence Diagram** (of this example)
+![](images\DeleteByIndexSequence.png)
 
 
 ### List Book Feature

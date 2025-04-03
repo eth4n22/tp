@@ -76,10 +76,10 @@ public class Library {
     public String deleteBook(int bookIndex) {
         try {
             String bookID = catalogueManager.getBookID(bookIndex);
-            String response1 = catalogueManager.deleteBook(bookIndex);
+            String response = catalogueManager.deleteBook(bookIndex);
             assert bookID != null;
             shelvesManager.deleteBook(bookID);
-            return response1;
+            return response;
         } catch (BookNotFoundException e) {
             return e.getMessage();
         }
@@ -129,7 +129,7 @@ public class Library {
         }
     }
 
-
+    //@@author
 
     public String updateBookStatus(String command, int bookIndex, String borrowerName, MemberManager memberManager) {
         return catalogueManager.updateBookStatus(command, bookIndex, borrowerName, memberManager);

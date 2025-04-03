@@ -1,3 +1,4 @@
+//@@author Deanson-Choo
 package seedu.duke.commands;
 
 import seedu.duke.library.Library;
@@ -18,7 +19,7 @@ public class ExitCommand extends Command {
     public boolean isExit() {
         return true;
     }
-
+    //@@author
     @Override
     public void undo(Library library, Ui ui, Storage storage, MemberManager memberManager) {
     }
