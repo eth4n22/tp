@@ -1,6 +1,5 @@
 package seedu.duke.commands;
 
-import seedu.duke.LeBook;
 import seedu.duke.book.Book;
 import seedu.duke.exception.LeBookException;
 import seedu.duke.library.Library;
