@@ -7,13 +7,37 @@ add, borrow, return, and track books efficiently.
 
 ## Summary of Contributions
 
-Features Contributed:
-Implemented adding to the shelf
-Implemented listing of a shelf
-Implemented Storage for loading and saving
-Implemented the help command
-Implemented the quantity command
-
+### Features implemented:
+- **Implemented listing of a shelf**
+  - What it does:
+    - Lists a specific shelf indicated by the librarian.
+  - Justification:
+    - This feature significantly improves convenience. It allows the librarian to view the catalogue of a subset of books in the Library, of the same genre.
+  - Highlights:
+- **Implementation of loading** 
+  - What it does:
+    - Loads the data from previous save.
+  - Justification:
+    - This feature significantly improves usability. It allows the librarian to keep the catalogue from the previous saves.
+  - Highlights:
+- **Implementation of saving**
+  - What it does:
+    - saves the data from current program run.
+  - Justification:
+    - This feature significantly improves usability. It allows the librarian to keep the catalogue of the current catalogue.
+  - Highlights:
+- **Implemented the help command**
+  - What it does:
+    - lists out the possible commands allowed.
+  - Justification:
+    - This feature significantly aids the librarian. It allows the librarian to know what commands there are.
+  - Highlights:
+- **Implemented the quantity command**
+  - What it does:
+    - lists out the quantity of a specific book.
+  - Justification:
+    - This feature significantly aids the librarian. It allows the librarian to keep track of the number of a specific book.
+  - Highlights:
 ### Code contributed:
 
 

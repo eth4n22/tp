@@ -3,10 +3,8 @@ hide circle
 skinparam classAttributeIconSize 0
 
 class Storage {
-    - final ShelvesManager shelvesManager
-
-    + List<Book> loadFileContents(MemberManager memberManager)
-    + void writeToFile(List<Book> bookList)
+    + loadFileContents(memberManager:MemberManager):List<Book>
+    + writeToFile(bookList:List<Book>)
 }
 
 class ShelvesManager {
@@ -18,7 +16,7 @@ class MemberManager {
 class Book {
 }
 
-Storage --> ShelvesManager : uses
-Storage --> MemberManager : uses
-Storage --> Book : instantiates
+Storage --> "1" ShelvesManager
+Storage --> "1" MemberManager
+Storage --> "*" Book
 @enduml
