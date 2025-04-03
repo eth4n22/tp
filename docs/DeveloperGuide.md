@@ -36,16 +36,12 @@ How the parser component works:
 
 ### Command Class
 
-1. Command Class Design:
-
+**Overview**
    - All commands extend the Command class, which is abstract and defines the execute() method.
    - The execute() method in each command class contains the logic to perform a specific action.
-   - Each command interacts with BookManager (to manage books), Ui (to print messages), and Storage (to save data to a file).
+   - Each command interacts with Library (to manage catalogue and shelves), Ui (to print messages), and Storage (to save data to a file).
 
-2. Commands Enum (Commands.java):
 
-   - The Commands enum defines all possible commands, like ADD, DELETE, LIST, BORROW, RETURN, etc.
-   - The enum makes it easier to map user input to the correct command type.
 
 ![UndoCommandClass](images/UndoCommandClass.png)
 
@@ -109,7 +105,33 @@ The response is finally returned back to Parser which prints out the `response`.
 
 
 ### List Book Feature
-*(to be updated)*
+The list book feature allows librarians to see the basic information of the 
+catalogue in their system. This includes the `BookTitle`, `Author`, `BookID`
+and the `DueDate` if the book was borrowed.
+
+#### Commands & Behavior
+
+1. ListCommand
+   - List all books in the global catalogue with their respective information
+   - Input: `list`
+   - Calls library.listBooks() which returns the list of books in String format
+   - UI prints the response
+   
+#### Execution Flow
+Given below is an example usage scenario and how the list mechanism behaves at each step
+
+Assuming the initial state of the library is that there's one book titled Book1 by AuthorA
+
+Step 1. The user types in the string input `list` to list all books in the catalogue
+
+Step 2. The Parser class parses the input and creates a ListCommand.
+
+Step 3. The execute method in this command class calls library's `listBooks()` method
+
+Step 4. library calls upon catalogueManager's `listBooks()` method, stores the response
+
+Step 5. The response is returned to the command class and printed out
+
 
 ### List Members with Overdue Books Feature
 The list members with overdue books feature allows librarians to view a list of members who currently have overdue books.
@@ -294,17 +316,18 @@ Adding a book while the library is empty
 Deleting a book while multiple books are listed
 
 1. Prerequisites: List all books using the `list` command. Multiple books in the list.
-2. Test case: `delete i/ 1`
+2. Test case: `delete num/ 1`
    - Expected: First book is deleted from the list. Details of the deleted book shown in the status message. Library now contains fewer books.
-3. Test case: `delete i/ 0`
+3. Test case: `delete num/ 0`
    - Expected: No book is deleted. Error details shown in the status message. Library remains unchanged.
-4. Test case: `delete b/ Harry Potter / J.K. Rowling` (assuming this book does not exist in the library)
+4. Test case: `delete bk/ Harry Potter / J.K. Rowling` (assuming this book does not exist in the library)
    - Expected: No book is deleted. Message shows that no such book is found.
-5. Other incorrect delete commands to try:
+5. Test case: `delete id/R-0-0` (assuming there's a book with this bookID)
+   - Expected: Book is deleted from the list. Details of the deleted book shown in the status message. Library now contains fewer books.
+6. Other incorrect delete commands to try:
    - `delete`
-   - `delete b/ ` (missing title)
-   - `delete b/ TITLE` (missing author)
-   - Expected: Similar to previous.
+   - `delete bk/ ` (missing title)
+   - `delete bk/ TITLE` (missing author)
 
 ### Listing books
 Listing books when the library is empty and when it contains multiple books
