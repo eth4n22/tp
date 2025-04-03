@@ -55,7 +55,37 @@ How the parser component works:
 *(to be updated)*
 
 ### Delete Book Feature
+The delete book feature allows librarians to delete irrelevant books
+from the library using their bookID, their unique title and author or
+their bookIndex. 
+
+Each delete command also supports undo, restoring the last deleted book into the system.
+
+##### Commands & Behavior
+1. DeleteByIndexCommand
+   - Deletes a book based on its index in the global catalog list.
+   - Input: delete num/0
+   - Calls library.deleteBook(index)
+   - Retrieves and stores the deleted book for undo
+   - Removes it from its corresponding shelf (replaces with a dummy book)
+
+2. DeleteByBookCommand
+   - Deletes a book based on the title and author
+   - Input: delete bk/The Hobbit/J.R.R. Tolkien
+   - Retrieves the book from the library using matching title + author
+   - Deletes and stores it for undo
+
+3. DeleteByIDCommand
+   - Deletes a book based on its unique book ID, e.g. AC-0-1.
+   - Input: delete id/AC-0-1
+   - Retrieves by ID → deletes from catalog and updates shelf
+   - Stored for undo
+
+#### Execution Flow
 *(to be updated)*
+
+
+
 
 ### List Book Feature
 *(to be updated)*
