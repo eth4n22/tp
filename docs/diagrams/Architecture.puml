@@ -1,0 +1,42 @@
+@startuml
+title LeBook
+
+skinparam componentStyle rectangle
+
+actor User #red
+
+
+[UI] #LightGreen
+
+
+[Parser] #LightBlue
+[Command] #LightBlue
+
+
+[Library] #Pink
+[MemberManager] #Pink
+
+
+
+[Storage] #LightYellow
+
+[Main] #Gray
+
+User --> [UI] : enters command
+
+[Main] --> [UI]
+[Main] --> [Library]
+[Main] --> [Storage]
+[Main] --> [MemberManager]
+
+[UI] --> [Parser]
+[Parser] --> [Command]
+[Command] --> [Library]
+[Command] --> [Storage]
+[Command] --> [UI]
+[Command] --> [MemberManager]
+
+
+
+
+@enduml

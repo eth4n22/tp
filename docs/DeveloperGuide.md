@@ -7,6 +7,19 @@ LeBook uses the following libraries:
 2. [Gradle](https://gradle.org/) - A build automation tool
 
 ## Design
+### Architecture
+
+![](images\Architecture-LeBook.png)
+
+#### Main Components of the architecture:
+- `UI`: The UI of the system
+- `Parser`: Process User Input
+- `Command`: Executes instructions based on commandType
+- `MemberManager`: Library members
+- `Storage`: Reads data from, and writes data to, the hard disk.
+Data includes book details and borrower.
+- `Library`: Manages global catalogue and shelves, as well as a `UndoManager`
+for undoing of a command
 
 ### Parser component
 **API:** [`Parser.java`](https://github.com/AY2425S2-CS2113-T13-3/tp/blob/master/src/main/java/seedu/duke/parser/Parser.java)
@@ -23,7 +36,14 @@ How the parser component works:
 3. Parses and extracts the remaining arguments (if any).
 4. Returns a corresponding Command object for execution.
 
-### Storage Class
+### Command component
+
+**Overview**
+- All commands extend the Command class, which is abstract and defines the execute() method.
+- The execute() method in each command class contains the logic to perform a specific action.
+- Each command interacts with Library (to manage catalogue and shelves), Ui (to print messages), and Storage (to save data to a file).
+
+### Storage component
 **API:** [`Storage.java`](https://github.com/AY2425S2-CS2113-T13-3/tp/blob/master/src/main/java/seedu/duke/storage/Storage.java)
 1. **Overview**
    - The `Storage` class in LeBook is responsible for saving the data after the user exits `LeBook`. To load the data when the user launches `LeBook`, it reads data from a file and loads it into a list. When exiting the program, it writes the Books back into the file in a specific format.
@@ -33,17 +53,32 @@ How the parser component works:
    - If the file to save the data does not exist, an empty list is returned. Exceptions are caught and logged.
 ![StorageClass](images/StorageClass.png)
 
+### Library component
+**API:** [`Library.java`](https://github.com/AY2425S2-CS2113-T13-3/tp/blob/master/src/main/java/seedu/duke/library/Library.java)
 
-### Command Class
+1. **Overview**
 
-**Overview**
-   - All commands extend the Command class, which is abstract and defines the execute() method.
-   - The execute() method in each command class contains the logic to perform a specific action.
-   - Each command interacts with Library (to manage catalogue and shelves), Ui (to print messages), and Storage (to save data to a file).
+   -  The `Library` class in LeBook handles the job of managing all book-related operations. It contains
+   a `BookManager` called catalogueManager, a `ShelvesManager` to manage the books on shelves, as well as a
+   `UndoManager` to faciliate undoing of past user interactions.
+   - Whenever a book-operation comes e.g `add`, both the global catalogue of books as well as the shelves will be modified.
+     (In this case, the book is added to the global catalogue and the relevant shelf based on its `Genre`)
+
+2. **Design**
+
+   -  `catalogueManager`: manages the global catalogue (e.g adding / deleting) ([catalogueManager](#catalogue-management-bookmanager))
+   -  `ShelvesManager`: manages shelves. The same book in the global catalogue is also stored in their respective
+   shelves.
+   -  `UndoManager`: undo certain user commands like `delete` and `add` when prompted.
+
+**Class Diagram(Library):**
+![](images\Library.png)
+### UI component
 
 
 
-![UndoCommandClass](images/UndoCommandClass.png)
+
+
 
 ## Implementation
 
@@ -101,7 +136,7 @@ The response is finally returned back to Parser which prints out the `response`.
 `Storage` is also updated.
 
 **Sequence Diagram** (of this example)
-![](images\DeleteByIndexSequence.png)
+![](images\DeleteByIndexSequence.png)(
 
 
 ### List Book Feature
@@ -166,7 +201,6 @@ The feature is facilitated by the following components:
 
 ### Catalogue Management (BookManager)
 The `BookManager` class acts as the central repository for the logical catalogue of books. 
-It is implemented as a Singleton to ensure a single source of truth for the book data throughout the application's lifecycle.
 
 Internally, `BookManager` maintains a `private static List<Book> books`. 
 This list holds all individual copies of books present in the library, including duplicates if multiple copies of the same title/author exist.
@@ -214,6 +248,7 @@ Implement search methods directly in `BookManager`
 
 
 ### Undo Feature
+![UndoCommandClass](images/UndoCommandClass.png)
 The Undo feature allows users to revert the effects of previous commands that modified the library's state (`add`, `delete`, `borrow`, `return`).
 It retrieves the command history from the `UndoManager` class which maintains a stack of executed commands and calls `undo()` method of the most recent undoable command.
 
