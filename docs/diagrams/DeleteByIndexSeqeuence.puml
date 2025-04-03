@@ -1,20 +1,21 @@
 @startuml
+hide footbox
 actor User
-participant Parser
-participant DeleteByIndexCommand
-participant Library
-participant CatalogueManager
-participant ShelvesManager
-participant Storage
+participant ":Parser"
+participant ":DeleteByIndexCommand"
+participant ":Library"
+participant ":CatalogueManager"
+participant ":ShelvesManager"
+participant ":Storage"
 
-User -> Parser : input "delete num/1"
-Parser -> DeleteByIndexCommand : create command
-DeleteByIndexCommand -> Library : execute(bookIndex)
-Library -> CatalogueManager : deleteBook(bookIndex)
-CatalogueManager -> Library : response (bookDeleted)
-Library -> ShelvesManager : deleteBook(bookID)
-Library -> DeleteByIndexCommand : return response
-DeleteByIndexCommand -> User : print response
-DeleteByIndexCommand -> Storage : update storage
+User -> ":Parser" : input "delete num/1"
+":Parser" -> ":DeleteByIndexCommand" : create command
+":DeleteByIndexCommand" -> ":Library" : execute(bookIndex)
+":Library" -> ":CatalogueManager" : deleteBook(bookIndex)
+":CatalogueManager" --> ":Library" : response (bookDeleted)
+":Library" -> ":ShelvesManager" : deleteBook(bookID)
+":Library" --> ":DeleteByIndexCommand" : return response
+":DeleteByIndexCommand" --> User : print response
+":DeleteByIndexCommand" -> ":Storage" : update storage
 
 @enduml

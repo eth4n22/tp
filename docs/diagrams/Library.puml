@@ -1,0 +1,19 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide circle
+hide method
+hide field
+
+
+Library -->"1" BookManager
+Library --> UndoManager
+Library -->"1" ShelvesManager
+
+ShelvesManager -->"7" Shelves
+Shelves --> "5" Shelf
+Shelf -->"     0..100" Book
+
+BookManager ----> "*" Book
+UndoManager --> "commandHistory: Stack"
+
+@enduml
