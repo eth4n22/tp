@@ -105,10 +105,12 @@ public class Shelf {
         int index = 0;
         for (Book book : shelfBooks) {
             if (book.getTitle().equals("duMmY")) {
+                this.shelfBooks.remove(index);
                 return index;
             }
             index++;
         }
+        System.out.println(booksCurrentlyOnShelf);
         return booksCurrentlyOnShelf;
     }
 
@@ -191,7 +193,7 @@ public class Shelf {
         int bookIndex = getSuitableIndex();
         String identifier = getShelfIdentifier(bookIndex);
         newBook.setBookID(identifier);
-        this.shelfBooks.add(newBook);
+        this.shelfBooks.add(bookIndex, newBook);
         booksCurrentlyOnShelf += 1;
 
         if (booksCurrentlyOnShelf == MAX_BOOKS_ON_SHELF) {
