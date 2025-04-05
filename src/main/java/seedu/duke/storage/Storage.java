@@ -66,6 +66,15 @@ public class Storage {
         return instance;
     }
 
+    public void clearFile() {
+        try {
+            new FileWriter(filePath, false).close();
+            System.out.println("[INFO] File cleared successfully.");
+        } catch (IOException e) {
+            System.out.println("[ERROR] Failed to clear file: " + e.getMessage());
+        }
+    }
+
     //@@author WayneCh0y
     public List<Book> loadFileContents(MemberManager memberManager) {
         assert filePath != null : "File path must be initialized before loading";
@@ -78,11 +87,13 @@ public class Storage {
                 return bookList;
             }
 
+            List<String> idList = new ArrayList<>();
+
             Scanner scanner = new Scanner(file);
             while (scanner.hasNext()) {
                 String details = scanner.nextLine();
                 try {
-                    Book book = getBookFromLoad(details, shelvesManager);
+                    Book book = getBookFromLoad(details, shelvesManager, idList);
 
                     if (book.isBorrowed()) {
                         String borrowerName = book.getBorrowerName();
@@ -95,8 +106,11 @@ public class Storage {
                     bookList.add(book);
                 } catch (IOException e) {
                     System.out.println("[ERROR] " + e.getMessage());
+                    return new ArrayList<>();
                 } catch (LeBookException leBookException) {
                     System.out.println(leBookException.getMessage());
+                    clearFile();
+                    return new ArrayList<>();
                 }
             }
 
@@ -106,13 +120,12 @@ public class Storage {
         } catch (FileNotFoundException e) {
             System.out.print("[ERROR] " + e.getMessage());
         }
-
         return new ArrayList<>();
     }
 
     //@@author WayneCh0y
-    private static Book getBookFromLoad(String details, ShelvesManager shelvesManager) throws IOException,
-            LeBookException {
+    private static Book getBookFromLoad(String details, ShelvesManager shelvesManager, List<String> idList)
+            throws IOException, LeBookException {
         String[] specifiers = details.split(SPLIT_REGEX);
 
         if (specifiers.length < MAX_SPLIT_NUMBER) {
@@ -126,6 +139,14 @@ public class Storage {
         String bookID = specifiers[BOOK_SHELF_INDEX].trim();
         String genre = getGenreFromFile(bookID);
         String borrowerName = specifiers[BORROWER_NAME_INDEX].trim();
+
+        for (String ids : idList) {
+            if (bookID.equals(ids)) {
+                throw new LeBookException("Stop messing with my storage text file!");
+            }
+        }
+
+        idList.add(bookID);
 
         if (bookTitle.trim().isEmpty()) {
             throw new LeBookException("Stop messing with my storage text file!");
