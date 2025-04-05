@@ -8,16 +8,18 @@ import seedu.duke.parser.Parser;
 import seedu.duke.storage.Storage;
 import seedu.duke.member.MemberManager;
 
+import java.io.IOException;
+
 /**
  * Lebook Class represents the main chatbot system
  * Initializes storage, UI, task handling, and command parsing
  */
 
 public class LeBook {
-    private final Library library;
     private final Storage storage;
     private final Ui ui;
     private final MemberManager memberManager;
+    private final Library library;
 
     public LeBook(String filePath) {
         assert filePath != null && !filePath.trim().isEmpty() : "File path cannot be null or empty";
@@ -25,6 +27,7 @@ public class LeBook {
         storage = Storage.getInstance(filePath);
         memberManager = MemberManager.getInstance();
         library = Library.getTheOneLibrary(storage.loadFileContents(memberManager));
+
 
         // Assertions to check if critical components are initialized
         assert ui != null : "UI instance should not be null";
@@ -52,9 +55,6 @@ public class LeBook {
 
                 isExit = command.isExit();
             } catch (LeBookException e) {
-                if (e.getMessage().equals("Stop messing with my storage text file!")) {
-                    storage.cleanup();
-                }
                 ui.printError(e.getMessage());
             }
         }

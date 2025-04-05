@@ -110,7 +110,6 @@ public class Shelf {
             }
             index++;
         }
-        System.out.println(booksCurrentlyOnShelf);
         return booksCurrentlyOnShelf;
     }
 
@@ -220,7 +219,13 @@ public class Shelf {
 
     //@@author WayneCh0y
     public String getBookId() {
-        int bookIndex = getSuitableIndex();
+        int bookIndex = 0;
+        for (Book book : shelfBooks) {
+            if (book.getTitle().equals("duMmY")) {
+                break;
+            }
+            bookIndex++;
+        }
         return getShelfIdentifier(bookIndex);
     }
 
