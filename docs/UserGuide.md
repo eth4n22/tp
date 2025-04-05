@@ -145,6 +145,7 @@ ____________________________________________________________
 
 ### 7. Undoing Previous Command(s)
 Undo the last registered command (Add, Delete, Return, Borrow)
+(`undo` function defaults to undoing only the most recent single undoable command if not number is stated)
 
 **Format:**
 ```
@@ -152,6 +153,7 @@ undo NUMBER_OF_COMMANDS_TO_UNDO
 ```
 **Example:**
 ```
+undo
 undo 2
 ```
 
