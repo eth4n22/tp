@@ -87,13 +87,13 @@ public class Storage {
                 return bookList;
             }
 
-            List<String> IDList = new ArrayList<>();
+            List<String> idList = new ArrayList<>();
 
             Scanner scanner = new Scanner(file);
             while (scanner.hasNext()) {
                 String details = scanner.nextLine();
                 try {
-                    Book book = getBookFromLoad(details, shelvesManager, IDList);
+                    Book book = getBookFromLoad(details, shelvesManager, idList);
 
                     if (book.isBorrowed()) {
                         String borrowerName = book.getBorrowerName();
@@ -124,7 +124,7 @@ public class Storage {
     }
 
     //@@author WayneCh0y
-    private static Book getBookFromLoad(String details, ShelvesManager shelvesManager, List<String> IDList)
+    private static Book getBookFromLoad(String details, ShelvesManager shelvesManager, List<String> idList)
             throws IOException, LeBookException {
         String[] specifiers = details.split(SPLIT_REGEX);
 
@@ -140,13 +140,13 @@ public class Storage {
         String genre = getGenreFromFile(bookID);
         String borrowerName = specifiers[BORROWER_NAME_INDEX].trim();
 
-        for (String IDs : IDList) {
-            if (bookID.equals(IDs)) {
+        for (String ids : idList) {
+            if (bookID.equals(ids)) {
                 throw new LeBookException("Stop messing with my storage text file!");
             }
         }
 
-        IDList.add(bookID);
+        idList.add(bookID);
 
         if (bookTitle.trim().isEmpty()) {
             throw new LeBookException("Stop messing with my storage text file!");

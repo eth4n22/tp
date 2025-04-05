@@ -8,8 +8,6 @@ import seedu.duke.parser.Parser;
 import seedu.duke.storage.Storage;
 import seedu.duke.member.MemberManager;
 
-import java.io.IOException;
-
 /**
  * Lebook Class represents the main chatbot system
  * Initializes storage, UI, task handling, and command parsing
