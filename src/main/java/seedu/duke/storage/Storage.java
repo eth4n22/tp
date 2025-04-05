@@ -108,6 +108,7 @@ public class Storage {
                     System.out.println("[ERROR] " + e.getMessage());
                     return new ArrayList<>();
                 } catch (LeBookException leBookException) {
+                    shelvesManager.cleanup();
                     System.out.println(leBookException.getMessage());
                     clearFile();
                     return new ArrayList<>();
