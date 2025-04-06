@@ -167,7 +167,7 @@ public class Shelf {
             return "No books on shelf";
         }
 
-        return "Here is the list of the books on shelf " + genreName + " " + (shelfIndex + 1) + ":\n" +
+        return "Here is the list of the books on shelf " + genreName + " " + shelfIndex + ":\n" +
                 IntStream.range(0, shelfBooks.size())
                         .filter(i -> !shelfBooks.get(i).getAuthor().equalsIgnoreCase(DUMMYNAME))
                         .mapToObj(i -> (i + 1) + ". " + shelfBooks.get(i).toString())
