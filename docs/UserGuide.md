@@ -95,7 +95,7 @@ ____________________________________________________________
 Here are the books in your library:
 1. [ ] To Kill a Mockingbird (by Harper Lee) (ID: NF-0-1)
 2. [ ] 1984 (by George Orwell) (ID: SCIF-0-0)
-3. [X] The Hobbit (by J.R.R. Tolkien) (ID: AD-0-0) | (Due: ...)
+3. [X] The Hobbit (by J.R.R. Tolkien) (ID: AD-0-0) | Due: Apr 04 2025
 Total books: 3
 ____________________________________________________________
 ```
@@ -113,7 +113,7 @@ list overdue
 ```
 ____________________________________________________________
 Overdue Books:
-1. harry potter by rowling (Borrowed by: deanson, Due: 2025-04-01)
+1. Harry Potter (by J.K. Rowling) (Borrowed by: deanson) | Due: Apr 05 2025
 ____________________________________________________________
 ```
 
@@ -290,7 +290,7 @@ help
 8. list                            - List all book titles.  
 9. list borrowed                   - List borrowed books.  
 10. list overdue                   - List overdue books.  
-11. list users                     - List users who have overdue books.  
+11. list overdue users             - List users who have overdue books.  
 12. quantity / TITLE / AUTHOR      - Shows the quantity of the specified book.  
 13. return INDEX                   - Return a borrowed book (using 1-based index).  
 14. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (1-based number).  
@@ -326,7 +326,8 @@ list borrowed
 ```
 ========================================
 Borrowed Books:
-1. Harry Potter (by J.K Rowling) (Borrowed by: Bob, Due: Apr 02 2025)
+1. Harry Potter (by J.K. Rowling) (Borrowed by: Bob) | Due: Apr 02 2025
+2. Hunger Games (by Suzanne) (Borrowed by: Bob) | Due: Apr 05 2025
 
 ========================================
 ```
@@ -336,13 +337,13 @@ View all the members who have overdue books, including the book title, book auth
 
 **Format:**
 ```
-list users
+list overdue users
 ```
 **Example Output:**
 ```
 ========================================
 Members with overdue books:
-1. Bob - Harry Potter (by: J.K. Rowling)
+1. Bob - Harry Potter (by J.K. Rowling), Hunger Games (by Suzanne)
 
 ========================================
 ```
@@ -425,7 +426,7 @@ e.g.
 | **List Books**                      | `list`                            | `list`                         |
 | **List Overdue Books**              | `list overdue`                    | `list overdue`                 |
 | **List Borrowed Books**             | `list borrowed`                   | `list borrowed`                |
-| **List Members with Overdue Books** | `list users`                      | `list users`                   |
+| **List Members with Overdue Books** | `list overdue users`              | `list overdue users`           |
 | **Borrow Book**                     | `borrow BOOK_NUMBER/MEMBER`       | `borrow 2/Eve`                 |
 | **Return Book**                     | `return BOOK_NUMBER`              | `return 3`                     |
 | **Undo Command**                    | `undo NUMBER_OF_COMMANDS_TO_UNDO` | `undo 3`                       |

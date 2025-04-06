@@ -101,7 +101,7 @@ How the parser component works:
    a `BookManager` called catalogueManager, a `ShelvesManager` to manage the books on shelves, as well as a
    `UndoManager` to faciliate undoing of past user interactions.
    - Whenever a book-operation comes e.g `add`, both the global catalogue of books as well as the shelves will be modified.
-     (In this case, the book is added to the global catalogue and the relevant shelf based on its `Genre`)
+     (In this case, the book is added to the global catalogue and the relevant shelf based on its `Genre`).
 
 2. **Design**
 
@@ -209,20 +209,20 @@ Each delete command also supports undo, restoring the last deleted book into the
    - Stored for undo
 
 #### Execution Flow
-Given below is an example usage scenario and how the delete mechanism behaves at each step
+Given below is an example usage scenario and how the delete mechanism behaves at each step.
 
-Assuming the initial state of the library is that there's one book titled `Book1` by `AuthorA`
+Assuming the initial state of the library is that there's one book titled `Book1` by `AuthorA`.
 
 Step 1. The user types in the string input `delete num/1` 
-to delete the 1st book in the catalogue (in this case, it's `Book1`)
+to delete the 1st book in the catalogue (in this case, it's `Book1`).
 
 Step 2. The Parser class parses the input and creates a 
 `DeleteByIndexCommand`.
 
-Step 3. The `execute` method in this command class calls library's `deleteBook(Int bookIndex)` method
+Step 3. The `execute` method in this command class calls library's `deleteBook(Int bookIndex)` method.
 
 Step 4. library calls upon `catalogueManager` `deleteBook(bookIndex)` to delete the book from the 
-catalogue. The response containing information about the bookDeletion is stored in `response`
+catalogue. The response containing information about the bookDeletion is stored in `response`.
 
 Step 5. library calls retrieves the `bookID` using the `bookIndex` and passes it to `shelvesManager`
 which deletes the book from the relevant shelf.
@@ -249,19 +249,19 @@ and the `DueDate` if the book was borrowed.
    - UI prints the response
    
 #### Execution Flow
-Given below is an example usage scenario and how the list mechanism behaves at each step
+Given below is an example usage scenario and how the list mechanism behaves at each step:
 
-Assuming the initial state of the library is that there's one book titled Book1 by AuthorA
+Assuming the initial state of the library is that there's one book titled Book1 by AuthorA.
 
-Step 1. The user types in the string input `list` to list all books in the catalogue
+Step 1. The user types in the string input `list` to list all books in the catalogue.
 
 Step 2. The Parser class parses the input and creates a ListCommand.
 
-Step 3. The execute method in this command class calls library's `listBooks()` method
+Step 3. The execute method in this command class calls library's `listBooks()` method.
 
-Step 4. library calls upon catalogueManager's `listBooks()` method, stores the response
+Step 4. library calls upon catalogueManager's `listBooks()` method, stores the response.
 
-Step 5. The response is returned to the command class and printed out
+Step 5. The response is returned to the command class and printed out.
 
 
 ### List Members with Overdue Books Feature
@@ -284,7 +284,7 @@ The feature is facilitated by the following components:
   - Returns a list of overdue books for a specific member.
 
 **Execution Flow**
-1. The librarian enters a string input `list users`.
+1. The librarian enters a string input `list overdue users`.
 2. The `Parser` class parses the input and creates a `ListOverdueUsersCommand`.
 3. The `execute` method in `ListOverdueUsersCommand` class calls MemberManager's `listMembersWithOverdueBooks()` method.
 4. The `MemberManager` iterates through its list of members, checks for overdue books, and builds a formatted string containing the results.
@@ -422,6 +422,7 @@ to manage inventory and track book availability quickly compared to a typical mo
 ## Glossary
 
 * *Member* - A person who visits the library to borrow or return a book(s).
+* *Mainstream OS* - Windows, Linux, Unix, MacOS.
 
 ## Instructions for manual testing
 
@@ -520,10 +521,10 @@ Listing books that are currently borrowed
 ### Listing members with overdue books
 Listing members who have overdue books, where the book title and author are also displayed
 
-1. Prerequisites: List all members with overdue books using the `list users` command. Initially, no members have overdue books.
-2. Test case: `list users` (with no members having overdue books)
+1. Prerequisites: List all members with overdue books using the `list overdue users` command. Initially, no members have overdue books.
+2. Test case: `list overdue users` (with no members having overdue books)
    - Expected: Message indicating that there are currently no members with overdue books.
-3. Test case: `list users` (after multiple members have overdue books)
+3. Test case: `list overdue users` (after multiple members have overdue books)
    - Expected: List displays all members with overdue books.
 
 ### Searching books

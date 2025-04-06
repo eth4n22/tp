@@ -8,9 +8,9 @@ participant ListOverdueUsersCommand as ":ListOverdueUsersCommand"
 participant MemberManager as ":MemberManager"
 
 User ->> Ui: readCommand()
-Ui ->> LeBook: pass user input ("list users")
-LeBook ->> Parser: parse("list users")
-Parser ->> Parser: parseListCommand("users")
+Ui ->> LeBook: pass user input ("list overdue users")
+LeBook ->> Parser: parse("list overdue users")
+Parser ->> Parser: parseListCommand("overdue users")
 Parser ->> ListOverdueUsersCommand: create ListOverdueUsersCommand
 Parser -->> LeBook: return ListOverdueUsersCommand
 
