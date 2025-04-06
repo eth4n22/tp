@@ -274,8 +274,11 @@ public class Parser {
         if (!undoDetails.isEmpty()) {
             try {
                 count = Integer.parseInt(undoDetails.trim());
+                if (count < 1) {
+                    throw new LeBookException("Invalid undo count. Must be at least 1.");
+                }
             } catch (NumberFormatException e) {
-                throw new LeBookException("Invalid format. It should be: undo");
+                throw new LeBookException("Invalid undo format. It should be: undo <INTEGER ≥ 1>");
             }
         }
         return new UndoCommand(count);
