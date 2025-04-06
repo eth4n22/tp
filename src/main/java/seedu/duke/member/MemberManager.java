@@ -48,7 +48,7 @@ public class MemberManager {
             String title = overdueBook.getTitle();
             String author = overdueBook.getAuthor();
 
-            bookListBuilder.append(String.format("%s (by: %s)", title, author));
+            bookListBuilder.append(String.format("%s (by %s)", title, author));
 
             if (i < overdueBooks.size() - 1) {
                 bookListBuilder.append(", ");

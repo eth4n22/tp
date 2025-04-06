@@ -249,24 +249,35 @@ public class BookManager {
                 borrowed.add(book);
             }
         }
-        // Alternative using streams (requires import):
-        // List<Book> borrowed = books.stream().filter(Book::isBorrowed).collect(Collectors.toList());
 
         if (borrowed.isEmpty()) {
             return "No books are currently borrowed.";
         }
 
         StringBuilder output = new StringBuilder("Borrowed Books:\n");
-        for (int i = 0; i < borrowed.size(); i++) {
+        return getListOfBooks(borrowed, output);
+    }
+
+    //@@author jenmarieng
+
+    /**
+     * Generates a formatted string listing all books in the given list, including their title, author,
+     * borrower name, and return due date (if available).
+     *
+     * @param typeOfBooks the list of books to be displayed
+     * @param output      a {@code StringBuilder} used to accumulate the formatted output
+     * @return a string representation of the list of books with their details
+     */
+    private static String getListOfBooks(List<Book> typeOfBooks, StringBuilder output) {
+        for (int i = 0; i < typeOfBooks.size(); i++) {
+            Book book = typeOfBooks.get(i);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
-            Book book = borrowed.get(i);
             String dueDateStr = (book.getReturnDueDate() != null) ? book.getReturnDueDate().format(formatter) : "N/A";
-            // Broke long line using append chaining
             output.append(i + 1).append(". ")
                     .append(book.getTitle()).append(" (by ").append(book.getAuthor())
                     .append(") (Borrowed by: ").append(book.getBorrowerName())
-                    .append(", Due: ").append(dueDateStr)
-                    .append(")\n");
+                    .append(") | Due: ").append(dueDateStr)
+                    .append("\n");
         }
         return output.toString();
     }
@@ -291,16 +302,7 @@ public class BookManager {
         }
 
         StringBuilder output = new StringBuilder("Overdue Books:\n");
-        for (int i = 0; i < overdue.size(); i++) {
-            Book book = overdue.get(i);
-            // Broke long line using append chaining
-            output.append(i + 1).append(". ")
-                    .append(book.getTitle()).append(" by ").append(book.getAuthor())
-                    .append(" (Borrowed by: ").append(book.getBorrowerName())
-                    .append(", Due: ").append(book.getReturnDueDate()) // Assured non-null by isOverdue()
-                    .append(")\n");
-        }
-        return output.toString();
+        return getListOfBooks(overdue, output);
     }
 
     /**
@@ -421,6 +423,7 @@ public class BookManager {
     }
 
     //@@author WayneCh0y
+
     /**
      * Clears the list of books, removing all entries.
      */

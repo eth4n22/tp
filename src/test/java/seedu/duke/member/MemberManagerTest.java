@@ -57,7 +57,7 @@ public class MemberManagerTest {
 
         String result = memberManager.listMembersWithOverdueBooks();
         assertTrue(result.startsWith("Members with overdue books:\n"));
-        assertTrue(result.contains("1. Charlie - Harry Potter (by: J.K. Rowling), Romeo and Juliet (by: Shakespeare)"));
+        assertTrue(result.contains("1. Charlie - Harry Potter (by J.K. Rowling), Romeo and Juliet (by Shakespeare)"));
     }
 
 }

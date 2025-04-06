@@ -44,7 +44,7 @@ public class Parser {
 
     private static final String LIST_OVERDUE = "overdue";
     private static final String LIST_BORROWED = "borrowed";
-    private static final String LIST_OVERDUE_USERS = "users";
+    private static final String LIST_OVERDUE_USERS = "overdue users";
     private static final String LIST_SHELF = "shelf";
     private static final String LIST_QUANTITY = "quantity";
 
@@ -179,7 +179,7 @@ public class Parser {
             return new ListOverdueUsersCommand();
         default:
             throw new LeBookException("Unknown list type: '" + listCommandType +
-                    "'. Valid options: list overdue, list borrowed, list users.");
+                    "'. Valid options: list overdue, list borrowed, list overdue users.");
         }
     }
 
