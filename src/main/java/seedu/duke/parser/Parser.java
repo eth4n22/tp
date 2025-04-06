@@ -217,7 +217,7 @@ public class Parser {
             String[] bookIDSplit = bookID.split("-");
             if (bookIDSplit.length < LENGTH_LIMIT_THREE) {
                 throw new LeBookException("Invalid format. It should be: delete id/GENRE-SHELFNUM-BOOKINDEX," + 
-                                          "e.g R-0-0");
+                                          " e.g R-0-0");
             }
             return new DeleteByIDCommand(bookID);
         default:
