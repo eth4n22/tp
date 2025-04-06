@@ -117,7 +117,7 @@ public class Ui {
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
             // Use getters for clarity and encapsulation
-            System.out.printf("%d. %s %s by %s (Genre: %s, Shelf: %s)%n",
+            System.out.printf("%d. %s %s by %s (Genre: %s, ID: %s)%n",
                     i + 1,                          // 1-based index for display
                     book.getStatusSymbol(),         // [ ] or [X]
 
