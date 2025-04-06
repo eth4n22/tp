@@ -22,6 +22,10 @@ import seedu.duke.commands.StatisticsCommand;
 import seedu.duke.commands.UndoCommand;
 import seedu.duke.exception.LeBookException;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 
 /**
  * Parses user input and returns the corresponding command.
@@ -58,6 +62,7 @@ public class Parser {
     private static final int LENGTH_LIMIT_THREE = 3;
     private static final int LENGTH_LIMIT_TWO = 2;
 
+    private static final Set<String> GENRES = new HashSet<>(Arrays.asList("R", "AC", "H", "MY", "NF", "R", "SCIF"));
     //@@author jenmarieng
 
     /**
@@ -216,7 +221,11 @@ public class Parser {
             String bookID = parts[1].trim();
             String[] bookIDSplit = bookID.split("-");
             if (bookIDSplit.length < LENGTH_LIMIT_THREE) {
-                throw new LeBookException("Invalid format. It should be: delete id/GENRE-SHELFNUM-BOOKINDEX, e.g R-0-0");
+                throw new LeBookException("Invalid format. It should be: delete id/GENRE-SHELFNUM-SLOTNUM e.g R-0-0");
+            }
+            String genre = bookIDSplit[0].trim();
+            if (!GENRES.contains(genre)) {
+                throw new LeBookException("Invalid Genre!");
             }
             return new DeleteByIDCommand(bookID);
         default:
@@ -224,6 +233,7 @@ public class Parser {
                     + "or delete num/BOOK_INDEX or delete id/GENRE-SHELFNUM-SLOTNUM");
         }
     }
+
 
 
     //@@author WayneCh0y
