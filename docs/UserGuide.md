@@ -62,6 +62,7 @@ delete id/BOOKID
 ```
 delete id/R-0-0
 ```
+[About Book ID](#book-id)
 
 **Example Output:**
 ```
@@ -177,6 +178,7 @@ find CRITERIA SEARCH_TERM
 - `author`: Finds books whose author contains the search term (case-insensitive).
 - `genre`: Finds books matching the specified genre (case-insensitive). Supported genres: romance, adventure, action, horror, mystery, nonfiction, scifi.
 - `shelf`: Finds the book with the exact unique Book ID (e.g., AD-0-1, case-insensitive).
+- [About Book ID](#book-id)
 
 **Examples:**
 ```
@@ -354,22 +356,45 @@ INDEX. [STATUS] TITLE by AUTHOR (Genre: GENRE, ID: BOOK_ID) | (Due: DUE_DATE) Bo
 [ ] Pride and Prejudice by Jane Austen (Genre: romance, ID: R-1-2) - Available book
 [X] The Lord of the Rings by J.R.R. Tolkien (Genre: adventure, ID: AD-0-5) | (Due: 2024-12-25) Borrowed by: Charlie - Borrowed book
 ```
+## Book ID
+A variable tied to a `Book` and is unique to every new `Book` added.
+
+**Format** 
+```
+[GENRE_CODE]-[SHELF_INDEX]-[BOOK_INDEX]
+```
+**Genre_Code**
+
+| Genre          | Genre_Code |
+|----------------|------------|
+| **Romance**    | `R`        |
+| **Action**     | `AC`       |
+| **Adventure**  | `AD`       |
+| **Horror**     | `H`        |
+| **Mystery**    | `MY`       |
+| **NonFiction** | `NF`       |
+| **Sci-fi**     | `SCIF`     |
+
+**Shelf_Index**
+
+- Ranges from `1 to 5`
 
 ## Command Summary
-| Command                             | Format                            | Example                            |
-|-------------------------------------|-----------------------------------|------------------------------------|
-| **Add Book**                        | `add TITLE / AUTHOR / GENRE`      | `add Dune / Frank Herbert / scifi` |
-| **Delete by Index**                 | `delete i/BOOK_NUMBER`            | `delete i/1`                       |
-| **Delete by Book**                  | `delete b/TITLE / AUTHOR`         | `delete b/Dune / Frank Herbert`    |
-| **List Books**                      | `list`                            | `list`                             |
-| **List Overdue Books**              | `list overdue`                    | `list overdue`                     |
-| **List Borrowed Books**             | `list borrowed`                   | `list borrowed`                    |
-| **List Members with Overdue Books** | `list users`                      | `list users`                       |
-| **Borrow Book**                     | `borrow BOOK_NUMBER / MEMBER`     | `borrow 2 / Eve`                   |
-| **Return Book**                     | `return BOOK_NUMBER`              | `return 3`                         |
-| **Undo Command**                    | `undo NUMBER_OF_COMMANDS_TO_UNDO` | `undo 3`                           |
-| **Find Book**                       | `find CRITERIA TERM`              | `find title dune`                  |
-| **Exit**                            | `bye`                             | `bye`                              |
+| Command                             | Format                            | Example                        |
+|-------------------------------------|-----------------------------------|--------------------------------|
+| **Add Book**                        | `add TITLE/AUTHOR/GENRE`          | `add Dune/Frank Herbert/scifi` |
+| **Delete by Index**                 | `delete num/BOOK_NUMBER`          | `delete num/1`                 |
+| **Delete by Book**                  | `delete bk/TITLE/AUTHOR`          | `delete bk/Dune/Frank Herbert` |
+| **Delete by ID**                    | `delete id/BOOK ID`               | `delete id/R-0-0`              |
+| **List Books**                      | `list`                            | `list`                         |
+| **List Overdue Books**              | `list overdue`                    | `list overdue`                 |
+| **List Borrowed Books**             | `list borrowed`                   | `list borrowed`                |
+| **List Members with Overdue Books** | `list users`                      | `list users`                   |
+| **Borrow Book**                     | `borrow BOOK_NUMBER/MEMBER`       | `borrow 2/Eve`                 |
+| **Return Book**                     | `return BOOK_NUMBER`              | `return 3`                     |
+| **Undo Command**                    | `undo NUMBER_OF_COMMANDS_TO_UNDO` | `undo 3`                       |
+| **Find Book**                       | `find CRITERIA TERM`              | `find title dune`              |
+| **Exit**                            | `bye`                             | `bye`                          |
 
 ---
 
