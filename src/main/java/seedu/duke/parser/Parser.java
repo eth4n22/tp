@@ -149,10 +149,14 @@ public class Parser {
         }
 
         String genre = shelfDetails[0].trim().toLowerCase();
-        String indexString = shelfDetails[1].trim();
-        String baseZeroIndex = Integer.toString(Integer.parseInt(indexString) + 1);
-        int shelfIndex = parseIndex(baseZeroIndex);
-        return new ListShelfCommand(genre, shelfIndex);
+        try {
+            String indexString = shelfDetails[1].trim();
+            String baseZeroIndex = Integer.toString(Integer.parseInt(indexString) + 1);
+            int shelfIndex = parseIndex(baseZeroIndex);
+            return new ListShelfCommand(genre, shelfIndex);
+        } catch (NumberFormatException e) {
+            throw new LeBookException("Invalid format. It should be: shelf / GENRE / INDEX");
+        }
     }
 
     //@@author jenmarieng
