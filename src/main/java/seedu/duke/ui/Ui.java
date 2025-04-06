@@ -135,4 +135,21 @@ public class Ui {
             }
         }
     }
+
+    public boolean confirmUndo(int count) {
+        while (true) {
+            System.out.print("Confirm undo " + count + " request? <y/n>: ");
+            String input = scanner.nextLine().trim().toLowerCase();
+
+            if (input.equals("y")) {
+                return true;
+            } else if (input.equals("n")) {
+                printMessage("Undo cancelled.");
+                return false;
+            } else {
+                printError("Invalid input. Please respond with y/n.");
+            }
+        }
+    }
+
 }

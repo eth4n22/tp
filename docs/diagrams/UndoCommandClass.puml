@@ -22,12 +22,11 @@ class UndoManager {
 }
 
 class Library {
-    -undoManager : UndoManager
     +getUndoManager() : UndoManager
 }
 
 Command <|-- UndoCommand
-Library "1" *-- "1" UndoManager
-UndoManager "1" *-- "*" Command
+Library "1" --> "1" UndoManager
+UndoManager "1" o-- "*" Command
 
 @enduml

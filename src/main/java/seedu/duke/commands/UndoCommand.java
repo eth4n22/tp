@@ -19,6 +19,10 @@ public class UndoCommand extends Command {
 
     @Override
     public void execute(Library library, Ui ui, Storage storage, MemberManager memberManager) {
+        boolean confirmed = ui.confirmUndo(undoCount);
+        if (!confirmed) {
+            return;
+        }
         library.getUndoManager().undoCommands(undoCount, library, ui, storage, memberManager);
     }
 

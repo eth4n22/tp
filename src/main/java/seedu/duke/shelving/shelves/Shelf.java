@@ -105,6 +105,7 @@ public class Shelf {
         int index = 0;
         for (Book book : shelfBooks) {
             if (book.getTitle().equals("duMmY")) {
+                this.shelfBooks.remove(index);
                 return index;
             }
             index++;
@@ -191,7 +192,7 @@ public class Shelf {
         int bookIndex = getSuitableIndex();
         String identifier = getShelfIdentifier(bookIndex);
         newBook.setBookID(identifier);
-        this.shelfBooks.add(newBook);
+        this.shelfBooks.add(bookIndex, newBook);
         booksCurrentlyOnShelf += 1;
 
         if (booksCurrentlyOnShelf == MAX_BOOKS_ON_SHELF) {
@@ -218,7 +219,13 @@ public class Shelf {
 
     //@@author WayneCh0y
     public String getBookId() {
-        int bookIndex = getSuitableIndex();
+        int bookIndex = 0;
+        for (Book book : shelfBooks) {
+            if (book.getTitle().equals("duMmY")) {
+                break;
+            }
+            bookIndex++;
+        }
         return getShelfIdentifier(bookIndex);
     }
 
