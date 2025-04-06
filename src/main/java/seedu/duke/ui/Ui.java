@@ -46,7 +46,7 @@ public class Ui {
                 8. list                            - List all book titles. \s
                 9. list borrowed                   - List borrowed books. \s
                 10. list overdue                   - List overdue books. \s
-                11. list users                     - List users who have overdue books. \s
+                11. list overdue users             - List users who have overdue books. \s
                 12. quantity / TITLE / AUTHOR      - Shows the quantity of the specified book. \s
                 13. return INDEX                   - Return a borrowed book (using 1-based index). \s
                 14. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (1-based number). \s
