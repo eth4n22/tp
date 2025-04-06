@@ -232,7 +232,7 @@ The response is finally returned back to Parser which prints out the `response`.
 `Storage` is also updated.
 
 **Sequence Diagram** (of this example)
-![](images/DeleteByIndexSequence.png)(
+![](images/DeleteByIndexSequence.png)
 
 
 ### List Book Feature
