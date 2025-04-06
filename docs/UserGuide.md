@@ -1,7 +1,7 @@
 # LeBook User Guide
 
 ## Introduction
-LeBook is a straightforward book management application that runs on the command line. With its clean interface and simple commands, LeBook helps you keep track of your personal book collection, including which books you've borrowed, lent out, or want to find quickly.
+LeBook is a straightforward book management application that runs on the command line. With its clean interface and simple commands, LeBook helps librarians keep track of their catalogue of books as well as the shelves they are on. Some functionalities include adding a new book or borrowing a book.
 
 ## Quick Start
 1. Ensure you have **Java 17 or later** installed.
@@ -13,6 +13,8 @@ LeBook is a straightforward book management application that runs on the command
    ```
 
 ## Features
+
+Note: Before continuing, you can refer to the format of book to understand what it is displaying [(Book Format)](#book-status-and-format)
 
 ### 1. Adding a Book
 Add new books to your library with title, author, and genre information.
@@ -35,9 +37,15 @@ ____________________________________________________________
 ```
 
 ### 2. Deleting a Book
-Remove books from your library. You can delete by the book's number in the list or by its title and author.
+Remove books from your library. You can delete a book using 3 methods:
+1. **Delete by the books's index**
+2. **Delete by the book's title and author**
+3. **Delete by the book's Book ID**
+
 
 **Format 1 (By Index):**
+
+_Simply use the command `list` to see the `BOOK_NUMBER` of the book that you want to delete_
 ```
 delete num/BOOK_NUMBER
 ```
@@ -55,6 +63,8 @@ delete bk/TITLE/AUTHOR
 delete bk/The Great Gatsby/F. Scott Fitzgerald
 ```
 **Format 3 (By BookID):**
+
+[About Book ID](#book-id)
 ```
 delete id/BOOKID
 ```
@@ -62,19 +72,18 @@ delete id/BOOKID
 ```
 delete id/R-0-0
 ```
-[About Book ID](#book-id)
 
 **Example Output:**
 ```
 ____________________________________________________________
 Book deleted:
-  [ ] The Great Gatsby by F. Scott Fitzgerald (ID: NF-0-0)
+  [ ] The Great Gatsby (by F. Scott Fitzgerald) (ID: NF-0-0)
 Now you have 0 books in the library
 ____________________________________________________________
 ```
 
 ### 3. Listing Books
-View all the books currently in your library, including their status, title, author, genre, and ID.
+   View all the books currently in your library, including their status, title, author, ID and dueDate.
 
 **Format:**
 ```
@@ -94,6 +103,8 @@ ____________________________________________________________
 ### 4. Listing Overdue Books
 View all the overdue books currently in your library, including their title, author, borrower name and due date.
 
+Note: Books are **'overdue'** once they are borrowed past their due date
+
 **Format:**
 ```
 list overdue
@@ -108,6 +119,8 @@ ____________________________________________________________
 
 ### 5. Borrowing a Book
 Mark a book as borrowed by a specific member.
+
+_Use the command `list` to see the `BOOK_NUMBER` of the book that you want to borrow_
 
 **Format:**
 ```
@@ -127,6 +140,8 @@ ____________________________________________________________
 
 ### 6. Returning a Book
 Mark a borrowed book as returned.
+
+_Use the command `list` to see the `BOOK_NUMBER` of the book that you want to return
 
 **Format:**
 ```
@@ -179,7 +194,7 @@ find CRITERIA SEARCH_TERM
 - `title`: Finds books whose title contains the search term (case-insensitive).
 - `author`: Finds books whose author contains the search term (case-insensitive).
 - `genre`: Finds books matching the specified genre (case-insensitive). Supported genres: romance, adventure, action, horror, mystery, nonfiction, scifi.
-- `shelf`: Finds the book with the exact unique Book ID (e.g., AD-0-1, case-insensitive).
+- `id`: Finds the book with the exact unique Book ID (e.g., AD-0-1, case-insensitive).
 - [About Book ID](#book-id)
 
 **Examples:**
@@ -187,7 +202,7 @@ find CRITERIA SEARCH_TERM
 find title hobbit
 find author Tolkien
 find genre adventure
-find shelf AD-0-0
+find id AD-0-0
 ```
 
 **Example Output (Found):**
@@ -222,12 +237,16 @@ quantity / Harry Potter / J.K. Rowling
 **Example Output:**
 ```
 ____________________________________________________________
-There are 3 copies of the book: Harry Potter by: J.K. Rowling
+There are 3 copies of the book: Harry Potter (by J.K. Rowling)
 ____________________________________________________________
 ```
 
 ### 10. Listing of a specific Shelf
 Allows for the viewing of what books are on a specified shelf.
+
+- Refer to [here](#genre--genre_code) to see the available `GENRES`
+- Refer to the [example](#shelves) to see how `SHELF_INDEX` works
+
 
 **Format:**
 ```
@@ -268,7 +287,7 @@ help
 6. find CRITERIA TERM              - Search books.  
    Criteria: title, author, genre, id  
 7. help                            - Show this help menu.  
-8. list                            - List all unique book titles.  
+8. list                            - List all book titles.  
 9. list borrowed                   - List borrowed books.  
 10. list overdue                   - List overdue books.  
 11. list users                     - List users who have overdue books.  
@@ -291,7 +310,7 @@ Example Usage:
   find genre adventure  
   find id AD-0-0  
   return 1  
-  delete i/1  
+  delete num/1  
   bye  
 
 ```
@@ -307,7 +326,7 @@ list borrowed
 ```
 ========================================
 Borrowed Books:
-1. Harry Potter by J.K Rowling (Borrowed by: Bob, Due: 2025-04-15)
+1. Harry Potter (by J.K Rowling) (Borrowed by: Bob, Due: Apr 02 2025)
 
 ========================================
 ```
@@ -363,9 +382,13 @@ A variable tied to a `Book` and is unique to every new `Book` added.
 
 **Format** 
 ```
-[GENRE_CODE]-[SHELF_INDEX]-[BOOK_INDEX]
+[GENRE_CODE]-[SHELF_INDEX]-[BOOK_INDEX] 
+Example: R-0-0
+- R refers to 'Romance'
+- '0' refers to Shelf 1
+- '0' refers to Book 1
 ```
-**Genre_Code**
+### Genre / Genre_Code
 
 | Genre          | Genre_Code |
 |----------------|------------|
@@ -377,9 +400,20 @@ A variable tied to a `Book` and is unique to every new `Book` added.
 | **NonFiction** | `NF`       |
 | **Sci-fi**     | `SCIF`     |
 
-**Shelf_Index**
+### Shelves
 
-- Ranges from `1 to 5`
+Every genre has a collection of 5 shelves indexed by a `SHELF_INDEX` of `1 to 5`
+
+```
+e.g.
+1. R-0-0
+- The 'R' refers to romance
+- The 1st '0' refers to Shelf 1
+
+2. AC-4-0
+- The 'AC' refers to action
+- The '4' refers to Shelf 5
+```
 
 ## Command Summary
 | Command                             | Format                            | Example                        |
@@ -397,6 +431,7 @@ A variable tied to a `Book` and is unique to every new `Book` added.
 | **Undo Command**                    | `undo NUMBER_OF_COMMANDS_TO_UNDO` | `undo 3`                       |
 | **Find Book**                       | `find CRITERIA TERM`              | `find title dune`              |
 | **Exit**                            | `bye`                             | `bye`                          |
+| **Help**                            | `help`                            | `help`                         |
 
 ---
 

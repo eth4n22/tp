@@ -4,6 +4,7 @@ import seedu.duke.exception.BookNotFoundException;
 
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -122,7 +123,7 @@ public class BookManager {
         books.add(newBook);
 
         // Broke long line
-        return "I've added: \"" + title + "\" by " + author + " (Genre: " + genre + ", ID: " + bookID + ").\n"
+        return "I've added: \"" + title + "\" (by " + author + ") (Genre: " + genre + ", ID: " + bookID + ").\n"
                 + "Total books in library: " + books.size();
     }
 
@@ -257,12 +258,13 @@ public class BookManager {
 
         StringBuilder output = new StringBuilder("Borrowed Books:\n");
         for (int i = 0; i < borrowed.size(); i++) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
             Book book = borrowed.get(i);
-            String dueDateStr = (book.getReturnDueDate() != null) ? book.getReturnDueDate().toString() : "N/A";
+            String dueDateStr = (book.getReturnDueDate() != null) ? book.getReturnDueDate().format(formatter) : "N/A";
             // Broke long line using append chaining
             output.append(i + 1).append(". ")
-                    .append(book.getTitle()).append(" by ").append(book.getAuthor())
-                    .append(" (Borrowed by: ").append(book.getBorrowerName())
+                    .append(book.getTitle()).append(" (by ").append(book.getAuthor())
+                    .append(") (Borrowed by: ").append(book.getBorrowerName())
                     .append(", Due: ").append(dueDateStr)
                     .append(")\n");
         }

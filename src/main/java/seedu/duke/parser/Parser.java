@@ -184,6 +184,7 @@ public class Parser {
     }
 
     //@@author Deanson-Choo
+
     /**
      * Parses details for the delete command.
      * Supports deletion by book index or book title and author or bookID.
@@ -233,7 +234,6 @@ public class Parser {
                     + "or delete num/BOOK_INDEX or delete id/GENRE-SHELFNUM-SLOTNUM");
         }
     }
-
 
 
     //@@author WayneCh0y
