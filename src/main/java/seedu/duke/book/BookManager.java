@@ -332,7 +332,7 @@ public class BookManager {
     public GroupReturns getBookID(String bookTitle, String author) throws BookNotFoundException {
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
-            if (book.getTitle().equalsIgnoreCase(bookTitle) && book.getAuthor().equalsIgnoreCase(author)) {
+            if (book.getTitle().equals(bookTitle) && book.getAuthor().equals(author)) {
                 if (book.getBookID() == null || book.getBookID().equals("NIL")) {
                     // Broke long line
                     throw new BookNotFoundException("Found book '" + bookTitle

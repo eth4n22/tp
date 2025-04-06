@@ -204,13 +204,19 @@ public class Parser {
                 throw new LeBookException("Invalid format. It should be: delete bk/BOOK_TITLE/AUTHOR_NAME");
             }
             String bookTitle = bookDetails[0].trim();
+            if (bookTitle.trim().isEmpty()) {
+                throw new LeBookException("Book title cannot be empty.");
+            }
             String authorName = bookDetails[1].trim();
+            if (authorName.trim().isEmpty()) {
+                throw new LeBookException("Author name cannot be empty.");
+            }
             return new DeleteByBookCommand(bookTitle, authorName);
         case DELETE_BY_ID:
             String bookID = parts[1].trim();
             String[] bookIDSplit = bookID.split("-");
             if (bookIDSplit.length < LENGTH_LIMIT_THREE) {
-                throw new LeBookException("Invalid format. It should be: delete id/GENRE-SHELFNUM-SLOTNUM, e.g R-0-0");
+                throw new LeBookException("Invalid format. It should be: delete id/GENRE-SHELFNUM-BOOKINDEX, e.g R-0-0");
             }
             return new DeleteByIDCommand(bookID);
         default:

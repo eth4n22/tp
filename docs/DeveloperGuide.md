@@ -1,5 +1,5 @@
 # Developer Guide
-- [Achknowledgements](#acknowledgements)
+- [Acknowledgements](#acknowledgements)
 - [Design](#design)
   - [Architecture](#architecture)
   - [Parser](#parser-component)
@@ -48,7 +48,7 @@ LeBook uses the following libraries:
 ## Design
 ### Architecture
 
-![](images\Architecture-LeBook.png)
+![](images/Architecture-LeBook.png)
 
 #### Main Components of the architecture:
 - `UI`: The UI of the system
@@ -111,7 +111,7 @@ How the parser component works:
    -  `UndoManager`: undo certain user commands like `delete` and `add` when prompted.
 
 **Class Diagram(Library):**
-![](images\Library.png)
+![](images/Library.png)
 
 ### UI component
 **API:** [`Ui.java`](https://github.com/AY2425S2-CS2113-T13-3/tp/blob/master/src/main/java/seedu/duke/ui/Ui.java)
@@ -220,7 +220,7 @@ The response is finally returned back to Parser which prints out the `response`.
 `Storage` is also updated.
 
 **Sequence Diagram** (of this example)
-![](images\DeleteByIndexSequence.png)(
+![](images/DeleteByIndexSequence.png)(
 
 
 ### List Book Feature
