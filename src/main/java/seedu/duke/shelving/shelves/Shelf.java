@@ -30,6 +30,7 @@ public class Shelf {
     private static final String SCIFI_ID = "SCIF";
     //@@author
     private static final int MAX_BOOKS_ON_SHELF = 100;
+    private static final String DUMMYNAME = "duMmY";
     private final List<Book> shelfBooks = new ArrayList<>();
 
     private final int shelfIndex;
@@ -104,7 +105,7 @@ public class Shelf {
     private int getSuitableIndex() {
         int index = 0;
         for (Book book : shelfBooks) {
-            if (book.getTitle().equals("duMmY")) {
+            if (book.getTitle().equals(DUMMYNAME)) {
                 this.shelfBooks.remove(index);
                 return index;
             }
@@ -168,7 +169,7 @@ public class Shelf {
 
         return "Here is the list of the books on shelf " + genreName + " " + (shelfIndex + 1) + ":\n" +
                 IntStream.range(0, shelfBooks.size())
-                        .filter(i -> !shelfBooks.get(i).getAuthor().equalsIgnoreCase("duMmY"))
+                        .filter(i -> !shelfBooks.get(i).getAuthor().equalsIgnoreCase(DUMMYNAME))
                         .mapToObj(i -> (i + 1) + ". " + shelfBooks.get(i).toString())
                         .collect(Collectors.joining("\n"));
     }
@@ -211,7 +212,7 @@ public class Shelf {
      * and decreases the count of books currently on the shelf.
      */
     public void deleteBookFromShelf(int slotNum) {
-        Book temp = new Book("duMmY", "duMmY");
+        Book temp = new Book(DUMMYNAME, DUMMYNAME);
         assert slotNum >= 0 && slotNum < booksCurrentlyOnShelf: "Invalid bookIndex!";
         shelfBooks.set(slotNum, temp);
         booksCurrentlyOnShelf -= 1;
@@ -221,7 +222,7 @@ public class Shelf {
     public String getBookId() {
         int bookIndex = 0;
         for (Book book : shelfBooks) {
-            if (book.getTitle().equals("duMmY")) {
+            if (book.getTitle().equals(DUMMYNAME)) {
                 break;
             }
             bookIndex++;
