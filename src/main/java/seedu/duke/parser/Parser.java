@@ -204,7 +204,13 @@ public class Parser {
                 throw new LeBookException("Invalid format. It should be: delete bk/BOOK_TITLE/AUTHOR_NAME");
             }
             String bookTitle = bookDetails[0].trim();
+            if (bookTitle.trim().isEmpty()) {
+                throw new LeBookException("Book title cannot be empty.");
+            }
             String authorName = bookDetails[1].trim();
+            if (authorName.trim().isEmpty()) {
+                throw new LeBookException("Author name cannot be empty.");
+            }
             return new DeleteByBookCommand(bookTitle, authorName);
         case DELETE_BY_ID:
             String bookID = parts[1].trim();
