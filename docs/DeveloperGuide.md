@@ -113,6 +113,18 @@ How the parser component works:
 **Class Diagram(Library):**
 ![](images/Library.png)
 
+### BookManager (catalogueManager)
+The `BookManager` class is responsible for managing the library's global catalogue of books. Within the `Library` class, it is referenced as `catalogueManager`.
+
+It handles core operations such as:
+1. Adding a book to the catalogue
+2. Deleting a book from the catalogue
+3. Listing all books in the catalogue
+4. Borrowing and returning books
+
+**Class Diagram(BookManager):**
+![](images/BookManager.png)
+
 ### UI component
 **API:** [`Ui.java`](https://github.com/AY2425S2-CS2113-T13-3/tp/blob/master/src/main/java/seedu/duke/ui/Ui.java)
 
