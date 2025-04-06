@@ -150,7 +150,8 @@ public class Parser {
 
         String genre = shelfDetails[0].trim().toLowerCase();
         String indexString = shelfDetails[1].trim();
-        int shelfIndex = parseIndex(indexString);
+        String baseZeroIndex = Integer.toString(Integer.parseInt(indexString) + 1);
+        int shelfIndex = parseIndex(baseZeroIndex);
         return new ListShelfCommand(genre, shelfIndex);
     }
 

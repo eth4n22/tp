@@ -47,17 +47,36 @@ public class Storage {
     private static final String MYSTERY_ID = "MY";
     private static final String NONFICTION_ID = "NF";
     private static final String SCIFI_ID = "SCIF";
+    private static final String CLEAR_FILE_MESSAGE = "[INFO] File cleared successfully.";
+    private static final String FILE_CLEAR_FAIL_MESSAGE = "[ERROR] Failed to clear file: ";
+    private static final String BORROWED_IDENTIFYER = "1";
+    private static final String NOT_BORROWED_IDENTIFYER = "0";
+    private static final String TAMPERED_FILE_MESSAGE = "Stop messing with my storage text file!";
+    private static final String DUPLICATE_BOOK_ID_MESSAGE = "Duplicate book ID found in storage!";
+    private static final String ERROR = "[ERROR] ";
+    private static final String BOOK_ID_SPLIT_REGEX = "-";
 
     private static Storage instance;
     private final ShelvesManager shelvesManager;
     private final String filePath;
 
+    /**
+     * Constructs a {@code Storage} object with the specified file path and initializes the {@code ShelvesManager}.
+     *
+     * @param path The path to the storage file.
+     */
     //@@author WayneCh0y
     private Storage(String path) {
         this.filePath = path;
         shelvesManager = ShelvesManager.getShelvesManagerInstance();
     }
 
+    /**
+     * Returns the singleton instance of {@code Storage}. If it does not exist, a new one is created.
+     *
+     * @param path The path to the storage file.
+     * @return The singleton instance of {@code Storage}.
+     */
     //@@author WayneCh0y
     public static Storage getInstance(String path) {
         if (instance == null) {
@@ -66,137 +85,169 @@ public class Storage {
         return instance;
     }
 
+    /**
+     * Clears the contents of the storage file.
+     * If the file cannot be cleared, an error message is printed to the console.
+     */
     public void clearFile() {
         try {
             new FileWriter(filePath, false).close();
-            System.out.println("[INFO] File cleared successfully.");
+            System.out.println(CLEAR_FILE_MESSAGE);
         } catch (IOException e) {
-            System.out.println("[ERROR] Failed to clear file: " + e.getMessage());
+            System.out.println(FILE_CLEAR_FAIL_MESSAGE + e.getMessage());
         }
     }
 
     //@@author WayneCh0y
+    /**
+     * Loads book data from the storage file into memory.
+     * If the file is corrupted or contains invalid data, the shelves are cleared and the file is wiped.
+     *
+     * @param memberManager The {@code MemberManager} used to assign books to their borrowers.
+     * @return A list of {@code Book} objects loaded from the file. Returns an empty list on failure.
+     */
     public List<Book> loadFileContents(MemberManager memberManager) {
         assert filePath != null : "File path must be initialized before loading";
 
-        try {
-            List<Book> bookList = new ArrayList<>();
-
-            File file = new File(filePath);
-            if (!file.exists()) {
-                return bookList;
-            }
-
-            List<String> idList = new ArrayList<>();
-
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNext()) {
-                String details = scanner.nextLine();
-                try {
-                    Book book = getBookFromLoad(details, shelvesManager, idList);
-
-                    if (book.isBorrowed()) {
-                        String borrowerName = book.getBorrowerName();
-                        if (borrowerName != null && !borrowerName.isEmpty()) {
-                            Member borrower = memberManager.getMemberByName(borrowerName);
-                            borrower.borrowBook(book);
-                        }
-                    }
-
-                    bookList.add(book);
-                } catch (IOException e) {
-                    System.out.println("[ERROR] " + e.getMessage());
-                    return new ArrayList<>();
-                } catch (LeBookException leBookException) {
-                    shelvesManager.cleanup();
-                    System.out.println(leBookException.getMessage());
-                    clearFile();
-                    return new ArrayList<>();
-                }
-            }
-
-            scanner.close();
-            return bookList;
-
-        } catch (FileNotFoundException e) {
-            System.out.print("[ERROR] " + e.getMessage());
+        File file = new File(filePath);
+        if (!file.exists()) {
+            return new ArrayList<>();
         }
-        return new ArrayList<>();
+
+        try (Scanner scanner = new Scanner(file)) {
+            return loadBooks(scanner, memberManager);
+        } catch (FileNotFoundException e) {
+            System.out.println(ERROR + e.getMessage());
+            return new ArrayList<>();
+        }
     }
 
-    //@@author WayneCh0y
-    private static Book getBookFromLoad(String details, ShelvesManager shelvesManager, List<String> idList)
-            throws IOException, LeBookException {
-        String[] specifiers = details.split(SPLIT_REGEX);
+    /**
+     * Reads book entries from the scanner and converts them into {@code Book} objects.
+     * If any entry is invalid or causes an exception, the shelves are reset and the file is cleared.
+     *
+     * @param scanner        The {@code Scanner} to read lines from the file.
+     * @param memberManager  The {@code MemberManager} used to link borrowed books to their borrowers.
+     * @return A list of valid {@code Book} objects parsed from the file.
+     */
+    private List<Book> loadBooks(Scanner scanner, MemberManager memberManager) {
+        List<Book> bookList = new ArrayList<>();
+        List<String> idList = new ArrayList<>();
 
-        if (specifiers.length < MAX_SPLIT_NUMBER) {
-            throw new IOException("Invalid data format in stored file: " + details);
-        }
+        while (scanner.hasNext()) {
+            String line = scanner.nextLine();
 
-        String bookTitle = specifiers[BOOK_TITLE_INDEX].trim();
-        String bookAuthor = specifiers[BOOK_AUTHOR_INDEX].trim();
-        String bookStatus = specifiers[BOOK_STATUS_INDEX].trim();
-        String bookDueDate = specifiers[BOOK_DUE_DATE_INDEX].trim();
-        String bookID = specifiers[BOOK_SHELF_INDEX].trim();
-        String genre = getGenreFromFile(bookID);
-        String borrowerName = specifiers[BORROWER_NAME_INDEX].trim();
-
-        for (String ids : idList) {
-            if (bookID.equals(ids)) {
-                throw new LeBookException("Stop messing with my storage text file!");
-            }
-        }
-
-        idList.add(bookID);
-
-        if (bookTitle.trim().isEmpty()) {
-            throw new LeBookException("Stop messing with my storage text file!");
-        }
-
-        if (bookAuthor.trim().isEmpty()) {
-            throw new LeBookException("Stop messing with my storage text file!");
-        }
-
-        if (bookStatus.trim().isEmpty()) {
-            throw new LeBookException("Stop messing with my storage text file!");
-        }
-
-        if (bookDueDate.trim().isEmpty()) {
-            throw new LeBookException("Stop messing with my storage text file!");
-        }
-
-        if (bookID.trim().isEmpty()) {
-            throw new LeBookException("Stop messing with my storage text file!");
-        }
-
-        if (borrowerName.trim().isEmpty()) {
-            throw new LeBookException("Stop messing with my storage text file!");
-        }
-
-        if (!bookStatus.trim().equals("1") && !bookStatus.trim().equals("0")) {
-            throw new LeBookException("Stop messing with my storage text file!");
-        }
-
-        boolean isBorrowed = bookStatus.equals("1");
-
-        LocalDate returnDueDate = null;
-
-        if (isBorrowed) {
             try {
-                returnDueDate = LocalDate.parse(bookDueDate);
-            } catch (Exception e) {
-                throw new LeBookException("Stop messing with my storage text file!");
+                Book book = parseBook(line, idList);
+                if (book.isBorrowed()) {
+                    attachBorrower(book, memberManager);
+                }
+                bookList.add(book);
+            } catch (IOException | LeBookException e) {
+                handleCorruptedFile(e);
+                return new ArrayList<>();
             }
         }
 
-        Book book = new Book(bookTitle, bookAuthor, isBorrowed, returnDueDate, bookID, borrowerName);
-        shelvesManager.addBook(bookTitle, bookAuthor, genre);
+        return bookList;
+    }
+
+    /**
+     * Parses a single line of book data from the file and constructs a {@code Book} object.
+     *
+     * @param line    The line of text containing book information.
+     * @param idList  A list of book IDs encountered so far, used to check for duplicates.
+     * @return A {@code Book} object constructed from the parsed line.
+     * @throws IOException       If the line format is invalid or incomplete.
+     * @throws LeBookException   If the book data is invalid or contains a duplicate ID.
+     */
+    private Book parseBook(String line, List<String> idList) throws IOException, LeBookException {
+        String[] parts = line.split(SPLIT_REGEX);
+        if (parts.length < MAX_SPLIT_NUMBER) {
+            throw new IOException("Invalid data format: " + line);
+        }
+
+        String title = parts[BOOK_TITLE_INDEX].trim();
+        String author = parts[BOOK_AUTHOR_INDEX].trim();
+        String status = parts[BOOK_STATUS_INDEX].trim();
+        String dueDateStr = parts[BOOK_DUE_DATE_INDEX].trim();
+        String shelfID = parts[BOOK_SHELF_INDEX].trim();
+        String borrower = parts[BORROWER_NAME_INDEX].trim();
+
+        validateBookData(title, author, status, dueDateStr, shelfID, borrower, idList);
+
+        boolean isBorrowed = status.equals(BORROWED_IDENTIFYER);
+        LocalDate dueDate = isBorrowed ? LocalDate.parse(dueDateStr) : null;
+        String genre = getGenreFromFile(shelfID);
+
+        Book book = new Book(title, author, isBorrowed, dueDate, shelfID, borrower);
+        shelvesManager.addBook(title, author, genre);
         return book;
     }
 
+    /**
+     * Validates individual fields of book data for correctness and duplication.
+     *
+     * @param title     The title of the book.
+     * @param author    The author of the book.
+     * @param status    The borrowing status of the book.
+     * @param dueDate   The due date (if borrowed).
+     * @param id        The shelf ID of the book.
+     * @param borrower  The name of the borrower (if borrowed).
+     * @param idList    The list of existing book IDs to check for duplicates.
+     * @throws LeBookException If any field is invalid or the ID is a duplicate.
+     */
+    private void validateBookData(String title, String author, String status, String dueDate,
+                                  String id, String borrower, List<String> idList) throws LeBookException {
+        if (title.isEmpty() || author.isEmpty() || 
+                status.isEmpty() || dueDate.isEmpty() ||
+                id.isEmpty() || borrower.isEmpty() || 
+                (!status.equals(BORROWED_IDENTIFYER) && !status.equals(NOT_BORROWED_IDENTIFYER))) {
+            throw new LeBookException(TAMPERED_FILE_MESSAGE);
+        }
+
+        if (idList.contains(id)) {
+            throw new LeBookException(DUPLICATE_BOOK_ID_MESSAGE);
+        }
+
+        idList.add(id);
+    }
+
+    /**
+     * Assigns the specified {@code Book} to its borrower using the {@code MemberManager}.
+     *
+     * @param book           The book that is borrowed.
+     * @param memberManager  The manager used to locate the borrower.
+     */
+    private void attachBorrower(Book book, MemberManager memberManager) {
+        String borrowerName = book.getBorrowerName();
+        if (borrowerName != null && !borrowerName.isEmpty()) {
+            Member borrower = memberManager.getMemberByName(borrowerName);
+            borrower.borrowBook(book);
+        }
+    }
+
+    /**
+     * Handles the case of a corrupted file by logging the error, cleaning up shelves,
+     * and clearing the file contents.
+     *
+     * @param e The exception that occurred during file parsing.
+     */
+    private void handleCorruptedFile(Exception e) {
+        System.out.println(ERROR + e.getMessage());
+        shelvesManager.cleanup();
+        clearFile();
+    }
+
     //@@author WayneCh0y
+    /**
+     * Determines the genre of a book from its shelf ID.
+     *
+     * @param bookID The ID of the book, where the prefix indicates its genre.
+     * @return The genre name as a string, or an empty string if the genre is unknown.
+     */
     private static String getGenreFromFile(String bookID) {
-        String identifier = bookID.split("-", 2)[0];
+        String identifier = bookID.split(BOOK_ID_SPLIT_REGEX, 2)[0];
         switch (identifier) {
         case ROMANCE_ID:
             return ROMANCE;
@@ -232,7 +283,7 @@ public class Storage {
                 writer.newLine();
             }
         } catch (IOException e) {
-            System.out.print("ERROR:" + e.getMessage());
+            System.out.print(ERROR + e.getMessage());
         }
     }
 
