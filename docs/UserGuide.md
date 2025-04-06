@@ -347,7 +347,26 @@ Members with overdue books:
 ========================================
 ```
 
-### 14. Exiting the Application
+### 14. Statistics
+Provides an overview of the quantities of books in the library.
+
+**Format:**
+```
+statistics
+```
+**Example Output:**
+```
+========== Library Statistics ==========
+Total books copies: 0
+Unique titles: 0
+Total books borrowed: 0
+Total books overdue: 0
+List of unique titles: []
+
+========================================
+```
+
+### 15. Exiting the Application
 Close the application and save the current state of your library.
 
 **Format:**
@@ -432,6 +451,7 @@ e.g.
 | **Find Book**                       | `find CRITERIA TERM`              | `find title dune`              |
 | **Exit**                            | `bye`                             | `bye`                          |
 | **Help**                            | `help`                            | `help`                         |
+| **Statistics**                      | `statistics`                      | `statistics`                   |
 
 ---
 

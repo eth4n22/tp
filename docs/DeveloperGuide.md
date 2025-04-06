@@ -14,6 +14,7 @@
   - [List Members With Overdue Books Feature](#list-members-with-overdue-books-feature)
   - [Searching Feature](#searching-feature)
   - [Undo Feature](#undo-feature)
+  - [Statistics Feature](#statistics-feature)
 - [Appendix](#appendix)
   - [Product Scope](#product-scope)
   - [Target User Profile](#target-user-profile)
@@ -99,7 +100,7 @@ How the parser component works:
 
    -  The `Library` class in LeBook handles the job of managing all book-related operations. It contains
    a `BookManager` called catalogueManager, a `ShelvesManager` to manage the books on shelves, as well as a
-   `UndoManager` to faciliate undoing of past user interactions.
+   `UndoManager` to facilitate undoing of past user interactions.
    - Whenever a book-operation comes e.g `add`, both the global catalogue of books as well as the shelves will be modified.
      (In this case, the book is added to the global catalogue and the relevant shelf based on its `Genre`)
 
@@ -377,6 +378,39 @@ The feature is facilitated by the following components:
 ![Undo Command Sequence Diagram](images/UndoCommandSequence.png)
 
 
+### Statistics Feature
+The Statistics feature allows librarians to get a quick overview of the library’s current status.
+
+Statistics includes:
+- Total number of books copies
+- Total number of unique titles
+- Total number of borrowed books
+- Total number of books overdue
+- List of unique book titles
+
+The feature is facilitated by the following components:
+- StatisticsCommand: Command object encapsulating the logic for computing and displaying statistics.
+- BookManager: Provides access to the full list of books and contains helper methods to compute statistics.
+- Ui: Displays formatted statistics in a user-friendly format.
+
+**Key Methods**
+- `getStatistics()` in BookManager class:
+    - Calculates total book copies, number of unique titles and number of borrowed and overdue books.
+    - Returns a formatted string with all statistics included.
+- `getUniqueTitleSize()` and `getUniqueTitles()` in BookManager class:
+    - Compute count and set of unique book titles.
+
+**Execution Flow**
+1. User inputs the command `statistics`.
+2. Parser parses the input and creates a StatisticsCommand instance.
+3. `execute()` in StatisticsCommand calls `library.getBookManager().getStatistics()`.
+4. BookManager computes and returns the formatted statistics string.
+5. Ui prints the statistics for the user to view.
+
+**Sequence Diagram**
+
+![Statistics Command Sequence Diagram](images/StatisticsCommandSequence.png)
+
 ## Appendix
 ### Product scope
 
@@ -412,7 +446,7 @@ to manage inventory and track book availability quickly compared to a typical mo
 | v2.0    | librarian | view a list of overdue books                  | follow up with contacting the appropriate member.                                                         |
 | v2.0    | librarian | search for a book through keywords            | find the appropriate book.                                                                                |
 | v2.0    | librarian | see the overall statistics of the library     | know the total number of books, overdue books and borrowed books.                                         |
-| v2.0    | librarian | undo the last command                         | correct my actions if it was a wrong commnd                                                               |
+| v2.0    | librarian | undo the last command                         | correct my actions if it was a wrong command                                                              |
 
 ## Non-Functional Requirements
 
