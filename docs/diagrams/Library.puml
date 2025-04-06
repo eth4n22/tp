@@ -1,19 +1,22 @@
 @startuml
 skinparam classAttributeIconSize 0
 hide circle
-hide method
-hide field
 
+class UndoManager {
+- commandHistory: Stack<Command>
++ pushCommand(command: Command)
++ undoCommands(count: Integer, library: Library, ui: Ui, storage: Storage, memberManager: MemberManager)
+}
 
-Library -->"1" BookManager
-Library --> UndoManager
-Library -->"1" ShelvesManager
+Library  "1"-left-> "1" BookManager
+Library "1"-->"1" UndoManager
+Library "1"->"1" ShelvesManager
 
-ShelvesManager -->"7" Shelves
-Shelves --> "5" Shelf
-Shelf -->"     0..100" Book
+ShelvesManager "1"-->"   7" Shelves
+Shelves "1"----> "5" Shelf
+Shelf "1"--->"       0..100" Book
 
-BookManager ----> "*" Book
-UndoManager --> "commandHistory: Stack"
+BookManager "1"----->"       *" Book
+
 
 @enduml

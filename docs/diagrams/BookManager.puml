@@ -1,0 +1,27 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide circle
+class Library {
+
+}
+
+class BookManager {
+    +addNewBookToCatalogue(title: String, author: String, genre: String, bookID: String): String
+    +deleteBook(bookIndex: int): String
+    +listBooks(): String
+    +updateBookStatus(command: String, bookIndex: int, borrowerName: String, memberManager: MemberManager): String
+}
+
+class Book {
+    - title: String
+    - author: String
+    - isBorrowed: boolean
+    - returnDueDate: LocalDate
+    - bookID: String
+    - borrowerName: String
+}
+
+Library "1"-->"1" BookManager
+BookManager "1"--> "*" Book : manages
+
+@enduml
