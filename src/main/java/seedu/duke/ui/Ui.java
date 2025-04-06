@@ -43,7 +43,7 @@ public class Ui {
                 6. find CRITERIA TERM              - Search books. \s
                    Criteria: title, author, genre, id \s
                 7. help                            - Show this help menu. \s
-                8. list                            - List all unique book titles. \s
+                8. list                            - List all book titles. \s
                 9. list borrowed                   - List borrowed books. \s
                 10. list overdue                   - List overdue books. \s
                 11. list users                     - List users who have overdue books. \s
@@ -69,7 +69,7 @@ public class Ui {
                   shelf romance / 1 \s
                   statistics \s
                   undo 3 \s
-                  delete i/1 \s
+                  delete num/1 \s
                   bye \s
                 """;
         printSeparator();

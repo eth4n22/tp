@@ -184,6 +184,7 @@ public class Parser {
     }
 
     //@@author Deanson-Choo
+
     /**
      * Parses details for the delete command.
      * Supports deletion by book index or book title and author or bookID.
@@ -221,7 +222,7 @@ public class Parser {
             String bookID = parts[1].trim();
             String[] bookIDSplit = bookID.split("-");
             if (bookIDSplit.length < LENGTH_LIMIT_THREE) {
-                throw new LeBookException("Invalid format. It should be: delete id/GENRE-SHELFNUM-SLOTNUM e.g R-0-0");
+                throw new LeBookException("Invalid format. It should be: delete id/GENRE-SHELFNUM-SLOTNUM, e.g R-0-0");
             }
             String genre = bookIDSplit[0].trim();
             if (!GENRES.contains(genre)) {
@@ -233,7 +234,6 @@ public class Parser {
                     + "or delete num/BOOK_INDEX or delete id/GENRE-SHELFNUM-SLOTNUM");
         }
     }
-
 
 
     //@@author WayneCh0y
