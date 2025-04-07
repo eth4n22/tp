@@ -23,6 +23,7 @@ add, borrow, return, and track books efficiently.
     - This feature improves book management by providing a quick and structured overview of borrowed books. It allows librarians to monitor the book statuses.
   - Highlights:
     - The implementation required iterating through the list of members and their borrowed books. Efficient data retrieval and formatting were key considerations to ensure that the listing remains clear and concise.
+<div style="page-break-after: always;"></div>
 - **Listing of users with overdue books**
   - What it does:
     - Lists members who have overdue books along with the details of the overdue items. This feature is implemented with the Member and MemberManager classes.
@@ -73,6 +74,6 @@ add, borrow, return, and track books efficiently.
 
 ### Contributions beyond the Project Team:
 
-- Reported 6 bugs for another team's product during the PE dry run: https://github.com/jenmarieng/ped
+- Reported 6 bugs for another team's product during the PE dry run: (https://github.com/jenmarieng/ped)
 
 ---
