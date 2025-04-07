@@ -2,7 +2,6 @@ package seedu.duke.book;
 
 import seedu.duke.exception.BookNotFoundException;
 
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import seedu.duke.member.Member;
 import seedu.duke.member.MemberManager;
 import seedu.duke.utility.GroupReturns;
-
 
 /**
  * Manages the collection of books: adding, deleting, listing, updating status,
@@ -101,7 +99,6 @@ public class BookManager {
         assert author != null : "Author cannot be null";
         assert genre != null : "Genre cannot be null";
 
-        // Moved checks to separate lines for clarity
         if (title.isEmpty()) {
             return "Book title cannot be empty!";
         }
@@ -112,17 +109,14 @@ public class BookManager {
             return "Book genre cannot be empty!";
         }
         if (!isValidGenre(genre)) {
-            // Broke long line
             return "This Library does not support this Genre! Valid genres are: "
                     + String.join(", ", VALID_GENRES);
         }
 
-        // Add new book if not found
         Book newBook = new Book(title, author);
         newBook.setBookID(bookID);
         books.add(newBook);
 
-        // Broke long line
         return "I've added: \"" + title + "\" (by " + author + ") (Genre: " + genre + ", ID: " + bookID + ").\n"
                 + "Total books in library: " + books.size();
     }
@@ -195,7 +189,7 @@ public class BookManager {
         }
 
         Book book = books.get(bookIndex);
-        Member borrower; // Declare borrower outside the blocks
+        Member borrower;
 
         if (command.equals(BORROW)) {
             if (borrowerName == null || borrowerName.trim().isEmpty()) {
@@ -203,7 +197,6 @@ public class BookManager {
             }
             borrower = memberManager.getMemberByName(borrowerName);
             if (book.isBorrowed()) {
-                // Broke long line
                 return "\"" + book.getTitle() + "\" is already borrowed by "
                         + book.getBorrowerName() + ".";
             }
@@ -211,7 +204,6 @@ public class BookManager {
             book.setReturnDueDate(LocalDate.now().plusWeeks(2));
             book.setBorrowerName(borrowerName);
             borrower.borrowBook(book);
-            // Broke long line
             return borrowerName + " has borrowed: \"" + book.getTitle() + "\" (Due: "
                     + book.getReturnDueDate() + ")";
 
@@ -220,23 +212,22 @@ public class BookManager {
                 return "\"" + book.getTitle() + "\" is not currently borrowed.";
             }
             String originalBorrowerName = book.getBorrowerName();
-            // Ensure borrower name from book record is valid before looking up member
             if (originalBorrowerName != null && !originalBorrowerName.equals("null")
                     && !originalBorrowerName.trim().isEmpty()) {
                 borrower = memberManager.getMemberByName(originalBorrowerName);
-                borrower.returnBook(book); // Update member's borrowed list
+                borrower.returnBook(book); //update member's borrowed list
             }
             book.setStatus(false);
             book.setReturnDueDate(null);
-            book.setBorrowerName(null); // Clear borrower info on the book
+            book.setBorrowerName(null); //clear borrower info on the book
             return "Returned: \"" + book.getTitle() + "\"";
 
         } else {
-            // This case should ideally not be reached if parser validates commands
             return "Invalid update command!";
         }
     }
 
+    //@@author jenmarieng
     /**
      * Generates a string listing all currently borrowed books.
      *
@@ -259,7 +250,6 @@ public class BookManager {
     }
 
     //@@author jenmarieng
-
     /**
      * Generates a formatted string listing all books in the given list, including their title, author,
      * borrower name, and return due date (if available).
@@ -282,6 +272,7 @@ public class BookManager {
         return output.toString();
     }
 
+    //@@author eth4n22
     /**
      * Generates a string listing all currently overdue books.
      *
@@ -294,8 +285,6 @@ public class BookManager {
                 overdue.add(book);
             }
         }
-        // Alternative using streams (requires import):
-        // List<Book> overdue = books.stream().filter(Book::isOverdue).collect(Collectors.toList());
 
         if (overdue.isEmpty()) {
             return "No books are currently overdue.";
@@ -305,6 +294,7 @@ public class BookManager {
         return getListOfBooks(overdue, output);
     }
 
+    //@@author Deanson-Choo
     /**
      * Retrieves the shelf ID of a book given its 0-based index.
      *
@@ -325,6 +315,7 @@ public class BookManager {
         return book.getBookID();
     }
 
+    //@@author Deanson-Choo
     /**
      * Retrieves the 0-based index and shelf ID of a book given its title and author (case-insensitive).
      *

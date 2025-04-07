@@ -26,10 +26,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-
 /**
  * Parses user input and returns the corresponding command.
- * Adheres to Checkstyle rules for formatting and structure.
  */
 public class Parser {
 
@@ -62,7 +60,8 @@ public class Parser {
     private static final int LENGTH_LIMIT_THREE = 3;
     private static final int LENGTH_LIMIT_TWO = 2;
 
-    private static final Set<String> GENRES = new HashSet<>(Arrays.asList("R", "AC", "H", "MY", "NF", "R", "SCIF"));
+    private static final Set<String> GENRES = new HashSet<>(Arrays.asList("R", "AC", "H", "MY", "NF", "AD", "SCIF"));
+
     //@@author jenmarieng
 
     /**
