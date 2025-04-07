@@ -13,7 +13,7 @@ add, borrow, return, and track books efficiently.
 
   - **What does it do**: allows the user to delete a book from the global catalog as well as its
   respective shelf (#137). It does this by calling appropriate methods in `ShelvesManager` and `BookManager`
-  - **Justification: Introduces a clear and flexible way for users to manage and organize the library collection**
+  - **Justification**: Introduces a clear and flexible way for users to manage and organize the library collection
   and supports the implementation of the shelves feature (#102)
   - **Highlights**: For deleting a book from the shelf, designed the method `deleteBookFromShelf` in `Shelf` such that it
         replaces the book to be deleted with a dummy book allowing for easier iteration of the book ID. Wrote thorough test cases
