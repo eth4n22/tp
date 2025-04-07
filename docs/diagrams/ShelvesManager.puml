@@ -1,0 +1,53 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide circle
+
+class ShelvesManager {
+}
+
+class RomanceShelves {
+}
+
+class AdventureShelves {
+}
+
+class ActionShelves {
+}
+
+class HorrorShelves {
+}
+
+class MysteryShelves {
+}
+
+class NonFictionShelves {
+}
+
+class SciFiShelves {
+}
+
+
+ShelvesManager "1" *-- "1" RomanceShelves
+ShelvesManager "1" *-- "1" AdventureShelves
+ShelvesManager "1" *-- "1" ActionShelves
+ShelvesManager "1" *-- "1" HorrorShelves
+ShelvesManager "1" *-- "1" MysteryShelves
+ShelvesManager "1" *-- "1" NonFictionShelves
+ShelvesManager "1" *-- "1" SciFiShelves
+
+RomanceShelves "1" --> "5" Shelves
+AdventureShelves "1" --> "5" Shelves
+ActionShelves "1" --> "5" Shelves
+HorrorShelves "1" --> "5" Shelves
+MysteryShelves "1" --> "5" Shelves
+NonFictionShelves "1" --> "5" Shelves
+SciFiShelves "1" --> "5" Shelves
+
+Shelves "1" --> "100" Book
+
+
+note left of ShelvesManager::getShelvesManagerInstance
+  Singleton pattern implementation
+end note
+
+@enduml

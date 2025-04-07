@@ -27,8 +27,7 @@ Library ->> Shelf: addBookToShelf(Book details)
 
 ShelfManager ->> ShelfManager: Check if shelf is full
 alt Shelf is full
-    ShelfManager ->> ShelfManager: Return "Shelf is full!"
-    ShelfManager -->> Library
+    ShelfManager ->> Library: Return "Shelf is full!"
 else Shelf is not full
     ShelfManager ->> ShelfManager: getSuitableIndex()
     ShelfManager ->> ShelfManager: Add book to shelf
