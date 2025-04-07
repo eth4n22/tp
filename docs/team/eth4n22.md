@@ -70,6 +70,8 @@ add, borrow, return, and track books efficiently.
 - Wrote JUnit tests for key components and logic classes.
 - Added validation logic for undo command.
 
+<div style="page-break-after: always;"></div>
+
 ### Contributions to the UG:
 
 - Documented command formats, usage, and examples for:
@@ -95,4 +97,5 @@ add, borrow, return, and track books efficiently.
 - Provided reviews for several Pull Requests.
 - Reviewed PRs [PR#207, #206, etc].
 - Assisted group members in debugging process and understanding implementation concepts.
+
 ---
