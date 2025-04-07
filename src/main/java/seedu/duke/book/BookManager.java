@@ -296,10 +296,10 @@ public class BookManager {
 
     //@@author Deanson-Choo
     /**
-     * Retrieves the shelf ID of a book given its 0-based index.
+     * Retrieves the book ID of a book given its 0-based index.
      *
      * @param bookIndex The 0-based index.
-     * @return The book's shelf ID.
+     * @return The book's book ID.
      * @throws BookNotFoundException If the index is invalid or the book has no valid ID.
      */
     public String getBookID(int bookIndex) throws BookNotFoundException {
@@ -317,7 +317,7 @@ public class BookManager {
 
     //@@author Deanson-Choo
     /**
-     * Retrieves the 0-based index and shelf ID of a book given its title and author (case-insensitive).
+     * Retrieves the 0-based index and shelf ID of a book given its title and author
      *
      * @param bookTitle The title to search for.
      * @param author    The author to search for.

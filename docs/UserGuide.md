@@ -501,7 +501,7 @@ A variable tied to a `Book` and is unique to every new `Book` added.
 **Format**
 
 ```
-[GENRE_CODE]-[SHELF_INDEX]-[BOOK_INDEX] 
+[GENRE_CODE]-[SHELF_INDEX]-[SLOT-NUM] 
 Example: R-0-1
 - R refers to 'Romance'
 - '0' refers to Shelf 0
