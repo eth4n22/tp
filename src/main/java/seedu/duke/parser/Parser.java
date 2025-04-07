@@ -58,8 +58,6 @@ public class Parser {
     private static final int SPLIT_INTO_THREE = 3;
     private static final int MIN_PARTS_TWO = 2;
     private static final int MIN_PARTS_THREE = 3;
-    private static final int LENGTH_LIMIT_THREE = 3;
-    private static final int LENGTH_LIMIT_TWO = 2;
 
     private static final Set<String> GENRES = new HashSet<>(Arrays.asList("R", "AC", "H", "MY", "NF", "AD", "SCIF"));
 
@@ -139,12 +137,12 @@ public class Parser {
      */
     private static Command parseListShelfCommand(String bookDetails) throws LeBookException {
         String[] parts = bookDetails.split("/", SPLIT_INTO_TWO);
-        if (parts.length < LENGTH_LIMIT_TWO) {
+        if (parts.length < MIN_PARTS_TWO) {
             throw new LeBookException("Invalid format. It should be: shelf / GENRE / INDEX");
         }
 
         String[] shelfDetails = parts[1].split("/", SPLIT_INTO_TWO);
-        if (shelfDetails.length < LENGTH_LIMIT_TWO) {
+        if (shelfDetails.length < MIN_PARTS_TWO) {
             throw new LeBookException("Invalid format. It should be: shelf / GENRE / INDEX");
         }
 
@@ -200,7 +198,7 @@ public class Parser {
      */
     private static Command parseDeleteCommand(String userInput) throws LeBookException {
         String[] parts = userInput.split("/", SPLIT_INTO_TWO);
-        if (parts.length < LENGTH_LIMIT_TWO) {
+        if (parts.length < MIN_PARTS_TWO) {
             throw new LeBookException("Invalid format. It should be: delete bk/BOOK_TITLE/AUTHOR_NAME "
                     + "or delete num/BOOK_INDEX or delete id/GENRE-SHELFNUM-SLOTNUM");
         }
@@ -211,7 +209,7 @@ public class Parser {
             return new DeleteByIndexCommand(bookIndex);
         case DELETE_BY_BOOK:
             String[] bookDetails = parts[1].split("/", SPLIT_INTO_TWO); //should split into title and author
-            if (bookDetails.length < LENGTH_LIMIT_TWO) {
+            if (bookDetails.length < MIN_PARTS_TWO) {
                 throw new LeBookException("Invalid format. It should be: delete bk/BOOK_TITLE/AUTHOR_NAME");
             }
             String bookTitle = bookDetails[0].trim();
@@ -226,7 +224,7 @@ public class Parser {
         case DELETE_BY_ID:
             String bookID = parts[1].trim();
             String[] bookIDSplit = bookID.split("-");
-            if (bookIDSplit.length < LENGTH_LIMIT_THREE) {
+            if (bookIDSplit.length < MIN_PARTS_THREE) {
                 throw new LeBookException("Invalid format. It should be: delete id/GENRE-SHELFNUM-SLOTNUM, e.g R-0-0");
             }
             String genre = bookIDSplit[0].trim();
@@ -244,7 +242,7 @@ public class Parser {
     //@@author WayneCh0y
     private static Command parseListQuantityCommand(String inputDetails) throws LeBookException {
         String[] parts = inputDetails.split("/", SPLIT_INTO_THREE);
-        if (parts.length < LENGTH_LIMIT_THREE) {
+        if (parts.length < MIN_PARTS_THREE) {
             throw new LeBookException("Invalid format. It should be: quantity / BOOK_TITLE / AUTHOR_NAME");
         }
         String title = parts[1].trim();
