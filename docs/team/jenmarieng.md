@@ -74,6 +74,6 @@ add, borrow, return, and track books efficiently.
 
 ### Contributions beyond the Project Team:
 
-- Reported 6 bugs for another team's product during the PE dry run: (https://github.com/jenmarieng/ped)
+- Reported 6 bugs for another team's product during the PE dry run: [Repo](https://github.com/jenmarieng/ped)
 
 ---
