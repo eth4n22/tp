@@ -91,6 +91,7 @@ How the parser component works:
    - Each `Book` is stored in structured text using a `|` delimiter.
    - Each time the user exits the program, the file is overwritten, ensuring that the content is up to date.
    - If the file to save the data does not exist, an empty list is returned. Exceptions are caught and logged.
+   - If the file is tampered with, the program is notified, and it automatically deletes all existing data written in the file.
 ![StorageClass](images/StorageClass.png)
 
 ### Library component
@@ -127,6 +128,18 @@ It handles core operations such as:
 **Class Diagram (BookManager):**
 ![](images/BookManager.png)
 
+### ShelvesManager
+The `ShelvesManager` class is responsible for managing the `Shelves`. `ShelvesManager` contains sections, divided based on the genre of the book added. In each section, there are 5 `Shelf` objects, and each `Shelf` contains 100 `Books`.
+
+It handles core operations such as:
+1. Adding a book to the Shelf
+2. Deleting a book from the Shelf
+3. Listing a specific Shelf
+
+**Class Diagram(ShelvesManager):**
+![](images/ShelvesManager.png)
+
+### UI component
 **Design:**
 
 *   **Singleton Pattern:** `BookManager` is implemented using the Singleton pattern to ensure only one instance manages the shared book catalogue throughout the application's lifecycle. 
@@ -426,6 +439,43 @@ The feature is facilitated by the following components:
 
 ![Undo Command Sequence Diagram](images/UndoCommandSequence.png)
 
+### Load Book from File Feature
+The Load Book from File Feature allows the user to keep and store the catalogue of books that are already present in the library.
+It achieves this by scanning the `LeBook_data.txt` file.
+
+**Key Methods**
+- `handleCorruptedFile()` in `Storage`: 
+    - When a file is tampered with, `Storage` will call `handleCorruptedFile()`, which will clear out the text file through a method called `clearFile()`.
+    - It then displays an error message stating that the file is tampered with.
+    - Further, it displays that the file is cleared.
+
+**Execution Flow**
+1. User runs the program.
+2. The library gets populated with books through the use of `loadFileContents()`.
+3. The corresponding `Shelf` gets populated in the process as well.
+
+**Sequence Diagram**
+
+![Load Book Sequence Diagram](images/LoadBookSequenceDiagram.png)
+
+### Save Book to File Feature
+The Save Book from File Feature is the counterpart to the [Load Book from File](#load-book-from-file-feature). It allows the user to write to a text file as he/she executes commands.
+
+**Key Methods**
+- `toFileFormat` in `Book`:
+    - Converts the `Book` object to a suitable String format to be saved as.
+- `writeToFile()` in `Storage`:
+    - Write to the .txt file for future use.
+
+**Execution Flow**
+1. User inputs a command.
+2. The `Command` object calls the `writeToFile()` method in `Storage`.
+3. The `writeToFile()` method calls a method in the `Book` class to convert the object into an appropriate format to be saved.
+
+**Sequence Diagram**
+
+![Save Book Sequence Diagram](images/SaveBookSequence.png)
+_Here, the `newCommand()` invocation represents a new command that the user has input to the system._
 
 ### Statistics Feature
 The Statistics feature allows librarians to get a quick overview of the library’s current status.
@@ -675,7 +725,7 @@ Displays a help menu listing commands for the user to refer to.
 Exiting the application
 
 1. Prerequisites: Application is running.
-2. Test case: `exit`
+2. Test case: `bye`
    - Expected: Application closes with a goodbye message.
 
 ### Additional test cases

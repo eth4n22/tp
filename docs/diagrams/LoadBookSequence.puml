@@ -1,0 +1,45 @@
+@startuml LoadBookSequenceDiagram
+hide footbox
+
+actor User
+participant ":Storage" as Storage
+participant ":Scanner" as Scanner
+participant ":MemberManager" as MemberManager
+participant ":ShelvesManager" as ShelvesManager
+participant ":List<Book>" as BookList
+participant ":Book" as Book
+
+User -> Storage: loadFileContents(memberManager)
+
+loop scanner.hasNext()
+    Storage -> Scanner: nextLine()
+    Scanner --> Storage: line
+
+    alt line parsing fails
+        Storage -> Storage: clearFile()
+        Storage --> User: return empty list
+        break
+    end
+    else line valid
+        Storage -> Storage: parseBook()
+        Storage -> Storage: validateBookData()
+        Storage -> Book: new Book(Book details)
+        Book --> Storage: book
+
+        Storage -> ShelvesManager: addBook(Book details)
+        ShelvesManager --> Storage:
+
+        alt book is borrowed
+            Storage -> MemberManager: getMemberByName(borrowerName)
+            MemberManager --> Storage: borrower
+        end
+
+        Storage -> BookList: add(book)
+    end
+end
+
+BookList --> Storage: return bookList
+Storage --> User: return bookList
+deactivate Storage
+
+@enduml

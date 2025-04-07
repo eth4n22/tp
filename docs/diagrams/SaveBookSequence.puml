@@ -1,0 +1,30 @@
+@startuml
+hide footbox
+actor User
+participant ":Command" as Command
+participant ":Storage" as Storage
+participant ":File" as Directory
+participant "bookList:List<Book>" as BookList
+participant ":Book" as Book
+
+User -> Command: newCommand()
+Command -> Storage: writeToFile()
+
+Storage -> Directory: new File(path)
+
+alt directory does not exist
+    Directory -> Directory: mkdirs()
+end
+
+loop for each book in bookList
+    Storage -> BookList: get next book
+    BookList --> Storage: book
+
+    Storage -> Book: toFileFormat()
+    Book --> Storage: formattedString
+
+    Storage -> Directory: write(formattedString)
+end
+
+Directory --> User
+@enduml
