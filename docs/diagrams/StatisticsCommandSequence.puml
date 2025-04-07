@@ -1,0 +1,32 @@
+@startuml
+
+hide footbox
+skinparam classAttributeIconSize 0
+
+actor User
+
+participant ":Ui"
+participant ":LeBook"
+participant ":Parser"
+participant ":StatisticsCommand"
+participant ":Library"
+participant ":BookManager"
+
+User -> ":Ui" : Enters "statistics"
+":Ui" -> ":LeBook" : readCommand()
+
+":LeBook" -> ":Parser" : parse("statistics")
+":Parser" -> ":StatisticsCommand" : new StatisticsCommand()
+":StatisticsCommand" --> ":Parser" : return instance
+
+":Parser" --> ":LeBook" : return StatisticsCommand
+
+":LeBook" -> ":StatisticsCommand" : execute(library, ui, storage, memberManager)
+":StatisticsCommand" -> ":Library" : getBookManager()
+":Library" -> ":BookManager" : getStatistics()
+":BookManager" --> ":Library" : formatted statistics
+":Library" --> ":StatisticsCommand" : statistics
+
+":StatisticsCommand" -> ":Ui" : printWithSeparator(statistics)
+
+@enduml

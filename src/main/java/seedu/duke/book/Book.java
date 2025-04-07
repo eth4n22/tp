@@ -39,7 +39,6 @@ public class Book {
      * @param isBorrowed    Borrowing status.
      * @param returnDueDate Due date if borrowed, null otherwise.
      * @param bookID        Unique identifier (e.g., "AD-0-1").
-     * @param quantity      Number of copies.
      * @param borrowerName  Name of the borrower if borrowed, null otherwise.
      */
     // Line 52 broken down
@@ -145,7 +144,7 @@ public class Book {
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
         String status = isBorrowed ? "[X]" : "[ ]";
-        String dueDateStr = (returnDueDate != null) ? " | (Due: " + returnDueDate.format(formatter) + ") " : "";
+        String dueDateStr = (returnDueDate != null) ? " | Due: " + returnDueDate.format(formatter) : "";
         return status + " " + title + " (by " + author + ") " + "(ID: " + bookID + ")" + dueDateStr;
     }
 

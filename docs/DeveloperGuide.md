@@ -14,6 +14,7 @@
   - [List Members With Overdue Books Feature](#list-members-with-overdue-books-feature)
   - [Searching Feature](#searching-feature)
   - [Undo Feature](#undo-feature)
+  - [Statistics Feature](#statistics-feature)
 - [Appendix](#appendix)
   - [Product Scope](#product-scope)
   - [Target User Profile](#target-user-profile)
@@ -51,14 +52,14 @@ LeBook uses the following libraries:
 ![](images/Architecture-LeBook.png)
 
 #### Main Components of the architecture:
-- `UI`: The UI of the system
-- `Parser`: Process User Input
-- `Command`: Executes instructions based on commandType
-- `MemberManager`: Library members
+- `Ui`: The Ui of the system.
+- `Parser`: Process User Input.
+- `Command`: Executes instructions based on commandType.
+- `MemberManager`: Library members.
 - `Storage`: Reads data from, and writes data to, the hard disk.
 Data includes book details and borrower.
 - `Library`: Manages global catalogue and shelves, as well as a `UndoManager`
-for undoing of a command
+for undoing of a command.
 
 ### Parser component
 **API:** [`Parser.java`](https://github.com/AY2425S2-CS2113-T13-3/tp/blob/master/src/main/java/seedu/duke/parser/Parser.java)
@@ -100,21 +101,21 @@ How the parser component works:
 
    -  The `Library` class in LeBook handles the job of managing all book-related operations. It contains
    a `BookManager` called catalogueManager, a `ShelvesManager` to manage the books on shelves, as well as a
-   `UndoManager` to faciliate undoing of past user interactions.
-   - Whenever a book-operation comes e.g `add`, both the global catalogue of books as well as the shelves will be modified.
-     (In this case, the book is added to the global catalogue and the relevant shelf based on its `Genre`)
+   `UndoManager` to facilitate undoing of past user interactions.
+   - Whenever a book-operation comes e.g `add`, both the global catalogue of books and the shelves will be modified.
+     (In this case, the book is added to the global catalogue and the relevant shelf based on its `Genre`).
 
 2. **Design**
 
-   -  `catalogueManager`: manages the global catalogue (e.g adding / deleting) ([catalogueManager](#catalogue-management-bookmanager))
-   -  `ShelvesManager`: manages shelves. The same book in the global catalogue is also stored in their respective
+   -  `catalogueManager`: manages the global catalogue (e.g adding / deleting).
+   -  `ShelvesManager`: manages shelves of different genres. The same book in the global catalogue is also stored in their respective
    shelves.
    -  `UndoManager`: undo certain user commands like `delete` and `add` when prompted.
 
-**Class Diagram(Library):**
+**Class Diagram (Library):**
 ![](images/Library.png)
 
-### BookManager (catalogueManager)
+### BookManager 
 The `BookManager` class is responsible for managing the library's global catalogue of books. Within the `Library` class, it is referenced as `catalogueManager`.
 
 It handles core operations such as:
@@ -122,8 +123,9 @@ It handles core operations such as:
 2. Deleting a book from the catalogue
 3. Listing all books in the catalogue
 4. Borrowing and returning books
+5. Providing data for statistics and search functionalities.
 
-**Class Diagram(BookManager):**
+**Class Diagram (BookManager):**
 ![](images/BookManager.png)
 
 ### ShelvesManager
@@ -138,16 +140,28 @@ It handles core operations such as:
 ![](images/ShelvesManager.png)
 
 ### UI component
+**Design:**
+
+*   **Singleton Pattern:** `BookManager` is implemented using the Singleton pattern to ensure only one instance manages the shared book catalogue throughout the application's lifecycle. 
+Access is controlled via the static `BookManager.getBookManagerInstance(List<Book> books)` method, which initializes the instance with the loaded book data on the first call.
+
+*   **Genre Validation:** `BookManager` enforces genre constraints internally using the `isValidGenre(String genre)` method, which checks against a predefined `static final List<String> VALID_GENRES`. 
+This validation is applied during the `addNewBookToCatalogue` process.
+
+*    **Error Handling:** `BookManager` employs a mixed strategy for error communication:
+     *   **Exceptions:** For critical lookup failures where an operation cannot proceed (e.g., finding a book by index/ID/title+author fails), it throws specific exceptions like `BookNotFoundException`.
+
+### Ui component
 **API:** [`Ui.java`](https://github.com/AY2425S2-CS2113-T13-3/tp/blob/master/src/main/java/seedu/duke/ui/Ui.java)
 
 1. **Overview**
 
-   - The `Ui`class in Lebook is responsible for all user interaction in the Command Line Interface (CLI).
+   - The `Ui`class in LeBook is responsible for all user interaction in the Command Line Interface (CLI).
    - `Ui` handles:
       - Displaying welcome, help and exit messages.
       - Reading user input and returning the raw command string.
       - Printing success and error messages in a standardized and formated way.
-      - Displaying book lists in formatted layout
+      - Displaying book lists in formatted layout.
    - `Ui` class is designed as a Singleton to ensure only one instance manages all user interaction throughout application's cycle.
 
 2. **Design**
@@ -200,47 +214,58 @@ their bookIndex.
 
 Each delete command also supports undo, restoring the last deleted book into the system.
 
-##### Commands & Behavior
-1. DeleteByIndexCommand
-   - Deletes a book based on its index in the global catalog list.
-   - Input: delete num/0
-   - Calls library.deleteBook(index)
-   - Retrieves and stores the deleted book for undo
-   - Removes it from its corresponding shelf (replaces with a dummy book)
+**Key Methods**
+1. `deleteBook(int bookIndex)` in `Library`
 
-2. DeleteByBookCommand
-   - Deletes a book based on the title and author
-   - Input: delete bk/The Hobbit/J.R.R. Tolkien
-   - Retrieves the book from the library using matching title + author
-   - Deletes and stores it for undo
+   _Deletes a book based on its index in the global catalog list._
+   - Input by user: `delete num / 0`
+   - Retrieves the book ID using the bookIndex
+   - Delete book from global catalog using bookIndex
+   - Removes book from its corresponding shelf using the book ID (replaces with a dummy book).
+   - Returns a String to indicate book deletion.
 
-3. DeleteByIDCommand
-   - Deletes a book based on its unique book ID, e.g. AC-0-1.
-   - Input: delete id/AC-0-1
-   - Retrieves by ID → deletes from catalog and updates shelf
-   - Stored for undo
+2. `deleteBook(String bookTitle, String author)` in `Library`
 
-#### Execution Flow
-Given below is an example usage scenario and how the delete mechanism behaves at each step
+   _Deletes a book based on its title and author in the global catalog list._
+   - Input by user: `delete bk / The Hobbit / J.R.R. Tolkien`
+   - Retrieves bookIndex and bookID using title and author
+   - Delete book from global catalog using bookIndex
+   - Removes book from its corresponding shelf using book ID(replaces with a dummy book).
+   - Returns a String to indicate book deletion.
 
-Assuming the initial state of the library is that there's one book titled `Book1` by `AuthorA`
+3. `deleteBook(String bookID)` in `Library`
 
-Step 1. The user types in the string input `delete num/1` 
-to delete the 1st book in the catalogue (in this case, it's `Book1`)
+   _Deletes a book based on its book ID._
+   - Input by user: `delete id / AC-0-1`
+   - Refer to [here](#bookid) for information about the formatting of book ID.
+   - Retrieves bookIndex using book ID
+   - Delete book from global catalog using bookIndex
+   - Removes book from its corresponding shelf using book ID(replaces with a dummy book).
+   - Returns a String to indicate book deletion.
 
-Step 2. The Parser class parses the input and creates a 
+
+**Execution Flow**
+
+Given below is an example usage scenario and how the delete mechanism behaves at each step.
+
+Assuming the initial state of the library is that there's one book titled `Book1` by `AuthorA`.
+
+Step 1. The user types in the string input `delete num / 1` 
+to delete the 1st book in the catalogue (in this case, it's `Book1`).
+
+Step 2. The `Parser` class parses the input and creates a 
 `DeleteByIndexCommand`.
 
-Step 3. The `execute` method in this command class calls library's `deleteBook(Int bookIndex)` method
+Step 3. The `execute` method in this command class calls library's `deleteBook(Int bookIndex)` method.
 
 Step 4. library calls upon `catalogueManager` `deleteBook(bookIndex)` to delete the book from the 
-catalogue. The response containing information about the bookDeletion is stored in `response`
+catalogue. The response containing information about the bookDeletion is stored in `response`.
 
 Step 5. library calls retrieves the `bookID` using the `bookIndex` and passes it to `shelvesManager`
 which deletes the book from the relevant shelf.
 
 Step 6. Book deletion is complete. 
-The response is finally returned back to Parser which prints out the `response`.
+The response is finally returned back to `DeleteByIndexCommand` which calls `Ui` to print out the response.
 `Storage` is also updated.
 
 **Sequence Diagram** (of this example)
@@ -252,28 +277,28 @@ The list book feature allows librarians to see the basic information of the
 catalogue in their system. This includes the `BookTitle`, `Author`, `BookID`
 and the `DueDate` if the book was borrowed.
 
-#### Commands & Behavior
+**Key Methods**
 
-1. ListCommand
-   - List all books in the global catalogue with their respective information
-   - Input: `list`
-   - Calls library.listBooks() which returns the list of books in String format
-   - UI prints the response
-   
-#### Execution Flow
-Given below is an example usage scenario and how the list mechanism behaves at each step
+1. `listBooks()` in `BookManager`
+   - List all books in the global catalogue with their respective information including their status, title, author, bookID and due date.
+   - Input by user: `list`
 
-Assuming the initial state of the library is that there's one book titled Book1 by AuthorA
 
-Step 1. The user types in the string input `list` to list all books in the catalogue
+**Execution Flow**
 
-Step 2. The Parser class parses the input and creates a ListCommand.
+Given below is an example usage scenario and how the list mechanism behaves at each step:
 
-Step 3. The execute method in this command class calls library's `listBooks()` method
+Assuming the initial state of the library is that there's one book titled Book1 by AuthorA.
 
-Step 4. library calls upon catalogueManager's `listBooks()` method, stores the response
+Step 1. The user types in the string input `list` to list all books in the catalogue.
 
-Step 5. The response is returned to the command class and printed out
+Step 2. The `Parser` class parses the input and creates a ListCommand.
+
+Step 3. The execute method in this command class calls library's `listBooks()` method.
+
+Step 4. library calls upon catalogueManager's `listBooks()` method, stores the response.
+
+Step 5. The response is returned to the command class and printed out by `Ui`.
 
 
 ### List Members with Overdue Books Feature
@@ -296,7 +321,7 @@ The feature is facilitated by the following components:
   - Returns a list of overdue books for a specific member.
 
 **Execution Flow**
-1. The librarian enters a string input `list users`.
+1. The librarian enters a string input `list overdue users`.
 2. The `Parser` class parses the input and creates a `ListOverdueUsersCommand`.
 3. The `execute` method in `ListOverdueUsersCommand` class calls MemberManager's `listMembersWithOverdueBooks()` method.
 4. The `MemberManager` iterates through its list of members, checks for overdue books, and builds a formatted string containing the results.
@@ -311,9 +336,39 @@ The feature is facilitated by the following components:
 The search functionality is encapsulated within the BookFinder utility class and initiated by specific SearchBy...Command objects (`SearchByTitleCommand`, `SearchByAuthorCommand`, `SearchByGenreCommand`, `SearchByIDCommand`).
 Delegation: Search logic is intentionally separated from `BookManager` into `BookFinder`. This promotes Separation of Concerns, making `BookManager` focused on catalogue management and `BookFinder` specialized in searching.
 
-Workflow:
-1. The user enters a find command (e.g., find title Lord of the Rings or find id AD-0-0).
-2. The Parser interprets this and creates the appropriate SearchBy...Command object (e.g., `SearchByTitleCommand` with the search term).
+#### Commands & Behavior
+1. SearchByTitleCommand
+- Searches for books where the title contains the specified query (case-insensitive).  
+**Input**: `find title <title_query>` (e.g., `find title Lord of the Rings`)
+- Retrieves book list from `BookManager` via `Library`
+- Uses `BookFinder.findBooksByTitle(titleQuery)`
+- Displays matching books via `Ui`
+
+2. SearchByAuthorCommand
+- Searches for books where the author's name contains the specified query (case-insensitive).  
+**Input**: `find author <author_query>` (e.g., `find author Tolkien`)
+- Retrieves book list from `BookManager` via `Library`
+- Uses `BookFinder.findBooksByAuthor(authorQuery)`
+- Displays matching books via `Ui`
+
+3. SearchByGenreCommand
+- Searches for books matching the specified genre exactly (case-insensitive).  
+**Input**: `find genre <genre_query>` (e.g., `find genre adventure`)
+- Retrieves book list from `BookManager` via `Library`
+- Uses `BookFinder.findBooksByGenre(genreQuery)`
+- Displays matching books via `Ui`
+
+4. SearchByIDCommand
+- Searches for a book using the unique Book ID (case-insensitive).  
+**Input**: `find id <book_id>` (e.g., `find id AD-0-0`)
+- Retrieves book list from `BookManager` via `Library`
+- Uses `BookFinder.findBooksByShelfId(bookId)`
+- Displays result via `Ui`
+
+
+#### Workflow:
+1. The user enters a find command (e.g., `find title Lord of the Rings` or `find id AD-0-0`).
+2. The `Parser` interprets this and creates the appropriate SearchBy...Command object (e.g., `SearchByTitleCommand` with the search term).
 3. During execution (execute method), the SearchCommand:
 4. Retrieves the `BookManager` instance via the `Library`.
 5. Gets the current `List<Book>` from `BookManager`.
@@ -321,7 +376,7 @@ Workflow:
 7. Calls the relevant search method on the `BookFinder` instance (e.g., `finder.findBooksByTitle(searchTerm)` or `finder.findBooksByShelfId(searchTerm)`).
 8. BookFinder iterates through the provided bookList (using Java Streams and filtering) to find matching books. Searches are generally case-insensitive for user-friendliness.
 9. The SearchCommand receives the list of results from `BookFinder`.
-10. It then uses the Ui component to display the findings or a "not found" message to the user.
+10. It then uses the `Ui` component to display the findings or a "not found" message to the user.
 
 BookFinder provides specific methods for each search criterion (`findBooksByTitle`, `findBooksByAuthor`, `findBooksByGenre`, `findBooksByShelfId`). The user interacts with these via the find command using criteria: title, author, genre, or id.
 
@@ -346,43 +401,39 @@ Implement search methods directly in `BookManager`
 
 Design considerations:
 
-Separate `BookFinder` class. (Current Choice)
-1. Pros: Adheres to the Single Responsibility Principle. `BookManager` stays focused on catalogue state, while `BookFinder` handles search algorithms. `BookFinder` can be tested independently. Easy to add new search types without modifying `BookManager`.
-
-2. Cons: Requires passing the book list reference from `BookManager` to `BookFinder` upon creation. Introduces a small amount of indirection.
-
-Implement search methods directly in `BookManager`
-1. Pros: Reduces the number of classes. Search methods have direct access to the internal books list.
-
-2. Cons: Bloats the `BookManager` class, mixing management and query responsibilities. Makes `BookManager` harder to test and potentially violates SRP.
-
 
 ### Undo Feature
 ![UndoCommandClass](images/UndoCommandClass.png)
+
 The Undo feature allows users to revert the effects of previous commands that modified the library's state (`add`, `delete`, `borrow`, `return`).
 It retrieves the command history from the `UndoManager` class which maintains a stack of executed commands and calls `undo()` method of the most recent undoable command.
 
 The feature is facilitated by the following components:
-- UndoCommand: Command object encapsulating logic for performing undo operation.
-- UndoManager: Responsible for storing and managing history of executed commands.
-- Command: Abstract class that defines `undo()` method of all commands.
-- Ui: Displays `SUCCESS` or `ERROR` messages after an undo operation is made.
+- `UndoCommand`: Command object encapsulating logic for performing undo operation.
+- `UndoManager`: Responsible for storing and managing history of executed commands.
+- `Command`: Abstract class that defines `undo()` method of all commands.
+- `Ui`: Displays `SUCCESS` or `ERROR` messages after an undo operation is made.
 
 **Key Methods**
-- `undoCommands()` in UndoManager class:
+- `undoCommands()` in `UndoManager`:
    - Pops and undoes the specified number of undoable commands from the history stack.
    - Displays error message in the event there are no undoable commands.
-- `undo()` in Command class:
+- `undo()` in `Command`:
    - Reverts changes made by command.
    - Implemented by undoable commands, empty for non-undoable commands.
+- `confirmUndo()` in `Ui`:
+    - Prompts user for confirmation before undoing. Accepts only `y`, `Y`, `n`, `N` as inputs.
+- `execute()` in `Command`:
+    - Returns `boolean` to indicate whether a command has been executed successfully.
+    - Only successful commands are pushed onto the undo stack.
 
 **Execution Flow**
 1. User inputs string input `undo`.
-2. Parser class parses input and creates UndoCommand instance.
-3. Execute method in UndoCommand calls `Library`'s `getUndoManager() method.
-4. UndoManager invokes `undoCommands()` and checks command history.
+2. `Parser` class parses input and creates UndoCommand instance.
+3. Execute method in UndoCommand calls `Library`'s `getUndoManager()` method.
+4. `UndoManager` invokes `undoCommands()` and checks command history.
 5. `undo()` method called for each undoable command to revert operation.
-6. Ui displays success message if command was undone successfully or error message if no commands to undo.
+6. `Ui` displays success message if command was undone successfully or error message if no commands to undo.
 
 **Sequence Diagram**
 
@@ -426,6 +477,39 @@ The Save Book from File Feature is the counterpart to the [Load Book from File](
 ![Save Book Sequence Diagram](images/SaveBookSequence.png)
 _Here, the `newCommand()` invocation represents a new command that the user has input to the system._
 
+### Statistics Feature
+The Statistics feature allows librarians to get a quick overview of the library’s current status.
+
+Statistics includes:
+- Total number of books copies
+- Total number of unique titles
+- Total number of borrowed books
+- Total number of books overdue
+- List of unique book titles
+
+The feature is facilitated by the following components:
+- `StatisticsCommand`: Command object encapsulating the logic for computing and displaying statistics.
+- `BookManager`: Provides access to the full list of books and contains helper methods to compute statistics.
+- `Ui`: Displays formatted statistics in a user-friendly format.
+
+**Key Methods**
+- `getStatistics()` in `BookManager` class:
+    - Calculates total book copies, number of unique titles and number of borrowed and overdue books.
+    - Returns a formatted string with all statistics included.
+- `getUniqueTitleSize()` and `getUniqueTitles()` in `BookManager` class:
+    - Compute count and set of unique book titles.
+
+**Execution Flow**
+1. User inputs the command `statistics`.
+2. Parser parses the input and creates a StatisticsCommand instance.
+3. `execute()` in StatisticsCommand calls `library.getBookManager().getStatistics()`.
+4. BookManager computes and returns the formatted statistics string.
+5. Ui prints the statistics for the user to view.
+
+**Sequence Diagram**
+
+![Statistics Command Sequence Diagram](images/StatisticsCommandSequence.png)
+
 ## Appendix
 ### Product scope
 
@@ -434,12 +518,12 @@ books, streamlining inventory management and tracking book availabilities.
 
 ### Target user profile
 
-Library staff who wish to efficiently manage book collections
+Library staff who wish to efficiently manage book collections.
 
 ### Value proposition
 
 Enables efficient cataloging, borrowing, and returning of books through a command-line interface, allowing librarians 
-to manage inventory and track book availability quickly compared to a typical mouse/GUI driven app
+to manage inventory and track book availability quickly compared to a typical mouse/GUI driven app.
 
 ### User Stories
 
@@ -461,7 +545,7 @@ to manage inventory and track book availability quickly compared to a typical mo
 | v2.0    | librarian | view a list of overdue books                  | follow up with contacting the appropriate member.                                                         |
 | v2.0    | librarian | search for a book through keywords            | find the appropriate book.                                                                                |
 | v2.0    | librarian | see the overall statistics of the library     | know the total number of books, overdue books and borrowed books.                                         |
-| v2.0    | librarian | undo the last command                         | correct my actions if it was a wrong commnd                                                               |
+| v2.0    | librarian | undo the last command                         | correct my actions if it was a wrong command.                                                             |
 
 ## Non-Functional Requirements
 
@@ -471,13 +555,14 @@ to manage inventory and track book availability quickly compared to a typical mo
 ## Glossary
 
 * *Member* - A person who visits the library to borrow or return a book(s).
+* *Mainstream OS* - Windows, Linux, Unix, MacOS.
 
 ## Instructions for manual testing
 
 ### Initial Launch
 
 1. Download the LeBook JAR file and copy it into an empty folder.
-2. Start the application by using java -jar LeBook.jar in the terminal.
+2. Start the application by using `java -jar LeBook.jar` in the terminal.
 
 ### Adding a book
 Adding a book while the library is empty
@@ -569,10 +654,10 @@ Listing books that are currently borrowed
 ### Listing members with overdue books
 Listing members who have overdue books, where the book title and author are also displayed
 
-1. Prerequisites: List all members with overdue books using the `list users` command. Initially, no members have overdue books.
-2. Test case: `list users` (with no members having overdue books)
+1. Prerequisites: List all members with overdue books using the `list overdue users` command. Initially, no members have overdue books.
+2. Test case: `list overdue users` (with no members having overdue books)
    - Expected: Message indicating that there are currently no members with overdue books.
-3. Test case: `list users` (after multiple members have overdue books)
+3. Test case: `list overdue users` (after multiple members have overdue books)
    - Expected: List displays all members with overdue books.
 
 ### Searching books
@@ -612,7 +697,7 @@ Listing books on a specific shelf
 2. Test case: `shelf ` (missing genre and shelf number)
    - Expected: Error details shown in the status message.
 3. Other incorrect shelf commands to try:
-   - `shelf GENRE`
+   - `shelf / GENRE`
    - `shelf / SHELF_NUMBER`
    - Expected: Similar to previous.
 
@@ -631,6 +716,11 @@ Undoing the last command
 3. Test case: `undo` (other commands)
    - Expected: No command is undone. Error details shown in the status message.
 
+### Help command
+Displays a help menu listing commands for the user to refer to.
+1. Test case: `help`
+    - Expected: Help menu of available commands is shown.
+
 ### Exiting the application
 Exiting the application
 
@@ -648,6 +738,19 @@ Exiting the application
 To simulate a missing or corrupted data file:
 1. Delete or rename the data file used by LeBook.
 2. Run LeBook and attempt to perform operations.
+
+## BookID
+A variable tied to a `Book` and is unique to every new `Book` added.
+
+**Format**
+
+```
+[GENRE_CODE]-[SHELF_INDEX]-[BOOK_INDEX] 
+Example: R-0-1
+- R refers to 'Romance'
+- '0' refers to Shelf 0
+- '1' refers to Book 2
+```
 
 Expected behavior:
 - LeBook should handle the absence or corruption of the data file gracefully.

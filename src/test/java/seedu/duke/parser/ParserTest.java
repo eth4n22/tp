@@ -160,7 +160,7 @@ public class ParserTest {
 
     @Test
     void testParseValidCommand_listOverdueUsersCommand() throws LeBookException {
-        Command result = Parser.parse("list users");
+        Command result = Parser.parse("list overdue users");
         assertNotNull(result);
         assertInstanceOf(ListOverdueUsersCommand.class, result);
     }
@@ -168,8 +168,8 @@ public class ParserTest {
     @Test
     void testParseInvalidCommand_listOverdueUsersCommand() throws LeBookException {
         Exception exception = assertThrows(LeBookException.class, () -> Parser.parse("list users hi"));
-        assertEquals("Unknown list type: 'users hi'. Valid options: list overdue, list borrowed, list users.",
-                exception.getMessage());
+        assertEquals("Unknown list type: 'users hi'. Valid options: list overdue, list borrowed, " +
+                        "list overdue users.", exception.getMessage());
     }
 
     @Test
@@ -177,7 +177,7 @@ public class ParserTest {
         assertInstanceOf(ListCommand.class, Parser.parse("list"));
         assertInstanceOf(ListOverdueCommand.class, Parser.parse("list overdue"));
         assertInstanceOf(ListBorrowedCommand.class, Parser.parse("list borrowed"));
-        assertInstanceOf(ListOverdueUsersCommand.class, Parser.parse("list users"));
+        assertInstanceOf(ListOverdueUsersCommand.class, Parser.parse("list overdue users"));
     }
 
     @Test
