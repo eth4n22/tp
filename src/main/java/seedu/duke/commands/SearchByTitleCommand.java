@@ -46,7 +46,7 @@ public class SearchByTitleCommand extends Command {
      * @throws LeBookException If the search term is empty or if any other error occurs.
      */
     @Override
-    public void execute(Library library, Ui ui, Storage storage, MemberManager memberManager) throws LeBookException {
+    public boolean execute(Library library, Ui ui, Storage storage, MemberManager memberManager) throws LeBookException {
         // Shouldn't happen if Parser validates, but as a safeguard:
         if (searchTerm.isEmpty()) {
             throw new LeBookException("Please provide a title to search for.");
@@ -62,6 +62,7 @@ public class SearchByTitleCommand extends Command {
             ui.printMessage("Found " + results.size() + " book(s) with titles containing '" + searchTerm + "':");
             ui.showBookList(results);
         }
+        return true;
     }
 
     @Override

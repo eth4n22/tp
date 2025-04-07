@@ -44,7 +44,7 @@ public class SearchByIDCommand extends Command {
      * @throws LeBookException If the search term is empty or if any other error occurs.
      */
     @Override
-    public void execute(Library library, Ui ui, Storage storage, MemberManager memberManager) throws LeBookException {
+    public boolean execute(Library library, Ui ui, Storage storage, MemberManager memberManager) throws LeBookException {
         if (searchTerm.isEmpty()) {
             throw new LeBookException("Please provide a shelf ID to search for (e.g., AD-0-1).");
         }
@@ -60,6 +60,7 @@ public class SearchByIDCommand extends Command {
             ui.printMessage("Found " + results.size() + " book(s) with the shelf ID '" + searchTerm + "':");
             ui.showBookList(results);
         }
+        return true;
     }
 
     @Override

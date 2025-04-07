@@ -44,7 +44,7 @@ public class SearchByAuthorCommand extends Command {
      * @throws LeBookException If the search term is empty or if any other error occurs.
      */
     @Override
-    public void execute(Library library, Ui ui, Storage storage, MemberManager memberManager) throws LeBookException {
+    public boolean execute(Library library, Ui ui, Storage storage, MemberManager memberManager) throws LeBookException {
         if (searchTerm.isEmpty()) {
             throw new LeBookException("Please provide an author name to search for.");
         }
@@ -59,6 +59,7 @@ public class SearchByAuthorCommand extends Command {
             ui.printMessage("Found " + results.size() + " book(s) with authors containing '" + searchTerm + "':");
             ui.showBookList(results);
         }
+        return true;
     }
 
     @Override

@@ -19,7 +19,7 @@ public class ListBookQuantityCommand extends Command{
 
     //@@author eth4n22
     @Override
-    public void execute(Library library, Ui ui, Storage storage, MemberManager memberManager) throws LeBookException {
+    public boolean execute(Library library, Ui ui, Storage storage, MemberManager memberManager) throws LeBookException {
         assert library != null : "Library should not be null";
         assert ui != null : "Ui should not be null";
         assert storage != null : "Storage should not be null";
@@ -32,6 +32,8 @@ public class ListBookQuantityCommand extends Command{
         String areOrIs = (response == 1) ? " is " : " are ";
         ui.printWithSeparator("There" + areOrIs + message + copyOrCopies
                 + "of the book: " + title + " by " + author + " ");
+
+        return true;
     }
     @Override
     public void undo(Library library, Ui ui, Storage storage, MemberManager memberManager) {

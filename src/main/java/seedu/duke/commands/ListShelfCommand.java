@@ -16,12 +16,13 @@ public class ListShelfCommand extends Command{
     }
 
     @Override
-    public void execute(Library library, Ui ui, Storage storage, MemberManager memberManager) throws LeBookException {
+    public boolean execute(Library library, Ui ui, Storage storage, MemberManager memberManager) throws LeBookException {
         assert library != null : "BookManager should not be null";
         assert ui != null : "Ui should not be null";
         assert storage != null : "Storage should not be null";
         String response = library.listShelves(shelfGenre, shelfIndex);
         ui.printWithSeparator(response);
+        return true;
     }
 
     @Override
