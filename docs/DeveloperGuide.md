@@ -312,7 +312,37 @@ The feature is facilitated by the following components:
 The search functionality is encapsulated within the BookFinder utility class and initiated by specific SearchBy...Command objects (`SearchByTitleCommand`, `SearchByAuthorCommand`, `SearchByGenreCommand`, `SearchByIDCommand`).
 Delegation: Search logic is intentionally separated from `BookManager` into `BookFinder`. This promotes Separation of Concerns, making `BookManager` focused on catalogue management and `BookFinder` specialized in searching.
 
-Workflow:
+#### Commands & Behavior
+1. SearchByTitleCommand
+- Searches for books where the title contains the specified query (case-insensitive).  
+**Input**: `find title <title_query>` (e.g., `find title Lord of the Rings`)
+- Retrieves book list from `BookManager` via `Library`
+- Uses `BookFinder.findBooksByTitle(titleQuery)`
+- Displays matching books via `Ui`
+
+2. SearchByAuthorCommand
+- Searches for books where the author's name contains the specified query (case-insensitive).  
+**Input**: `find author <author_query>` (e.g., `find author Tolkien`)
+- Retrieves book list from `BookManager` via `Library`
+- Uses `BookFinder.findBooksByAuthor(authorQuery)`
+- Displays matching books via `Ui`
+
+3. SearchByGenreCommand
+- Searches for books matching the specified genre exactly (case-insensitive).  
+**Input**: `find genre <genre_query>` (e.g., `find genre adventure`)
+- Retrieves book list from `BookManager` via `Library`
+- Uses `BookFinder.findBooksByGenre(genreQuery)`
+- Displays matching books via `Ui`
+
+4. SearchByIDCommand
+- Searches for a book using the unique Book ID (case-insensitive).  
+**Input**: `find id <book_id>` (e.g., `find id AD-0-0`)
+- Retrieves book list from `BookManager` via `Library`
+- Uses `BookFinder.findBooksByShelfId(bookId)`
+- Displays result via `Ui`
+
+
+#### Workflow:
 1. The user enters a find command (e.g., `find title Lord of the Rings` or `find id AD-0-0`).
 2. The `Parser` interprets this and creates the appropriate SearchBy...Command object (e.g., `SearchByTitleCommand` with the search term).
 3. During execution (execute method), the SearchCommand:
@@ -361,12 +391,17 @@ The feature is facilitated by the following components:
 - `Ui`: Displays `SUCCESS` or `ERROR` messages after an undo operation is made.
 
 **Key Methods**
-- `undoCommands()` in UndoManager class:
+- `undoCommands()` in `UndoManager`:
    - Pops and undoes the specified number of undoable commands from the history stack.
    - Displays error message in the event there are no undoable commands.
-- `undo()` in Command class:
+- `undo()` in `Command`:
    - Reverts changes made by command.
    - Implemented by undoable commands, empty for non-undoable commands.
+- `confirmUndo()` in `Ui`:
+    - Prompts user for confirmation before undoing. Accepts only `y`, `Y`, `n`, `N` as inputs.
+- `execute()` in `Command`:
+    - Returns `boolean` to indicate whether a command has been executed successfully.
+    - Only successful commands are pushed onto the undo stack.
 
 **Execution Flow**
 1. User inputs string input `undo`.
