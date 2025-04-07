@@ -312,7 +312,37 @@ The feature is facilitated by the following components:
 The search functionality is encapsulated within the BookFinder utility class and initiated by specific SearchBy...Command objects (`SearchByTitleCommand`, `SearchByAuthorCommand`, `SearchByGenreCommand`, `SearchByIDCommand`).
 Delegation: Search logic is intentionally separated from `BookManager` into `BookFinder`. This promotes Separation of Concerns, making `BookManager` focused on catalogue management and `BookFinder` specialized in searching.
 
-Workflow:
+#### Commands & Behavior
+1. SearchByTitleCommand
+- Searches for books where the title contains the specified query (case-insensitive).  
+**Input**: `find title <title_query>` (e.g., `find title Lord of the Rings`)
+- Retrieves book list from `BookManager` via `Library`
+- Uses `BookFinder.findBooksByTitle(titleQuery)`
+- Displays matching books via `Ui`
+
+2. SearchByAuthorCommand
+- Searches for books where the author's name contains the specified query (case-insensitive).  
+**Input**: `find author <author_query>` (e.g., `find author Tolkien`)
+- Retrieves book list from `BookManager` via `Library`
+- Uses `BookFinder.findBooksByAuthor(authorQuery)`
+- Displays matching books via `Ui`
+
+3. SearchByGenreCommand
+- Searches for books matching the specified genre exactly (case-insensitive).  
+**Input**: `find genre <genre_query>` (e.g., `find genre adventure`)
+- Retrieves book list from `BookManager` via `Library`
+- Uses `BookFinder.findBooksByGenre(genreQuery)`
+- Displays matching books via `Ui`
+
+4. SearchByIDCommand
+- Searches for a book using the unique Book ID (case-insensitive).  
+**Input**: `find id <book_id>` (e.g., `find id AD-0-0`)
+- Retrieves book list from `BookManager` via `Library`
+- Uses `BookFinder.findBooksByShelfId(bookId)`
+- Displays result via `Ui`
+
+
+#### Workflow:
 1. The user enters a find command (e.g., find title Lord of the Rings or find id AD-0-0).
 2. The Parser interprets this and creates the appropriate SearchBy...Command object (e.g., `SearchByTitleCommand` with the search term).
 3. During execution (execute method), the SearchCommand:

@@ -54,9 +54,9 @@ public class SearchByAuthorCommand extends Command {
         List<Book> results = finder.findBooksByAuthor(searchTerm);
 
         if (results.isEmpty()) {
-            ui.printMessage("Sorry, no books found with authors containing '" + searchTerm + "'.");
+            ui.printMessage("Sorry, no books found with author '" + searchTerm + "'.");
         } else {
-            ui.printMessage("Found " + results.size() + " book(s) with authors containing '" + searchTerm + "':");
+            ui.printMessage("Found " + results.size() + " book(s) with author '" + searchTerm + "':");
             ui.showBookList(results);
         }
     }
