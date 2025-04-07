@@ -13,6 +13,12 @@ import java.util.List;
 
 /**
  * Command to search for books by their author.
+ * This command allows users to search for books where the author name contains
+ * the provided search term (case-insensitive). It delegates the actual searching
+ * to the BookFinder utility class.
+ * Usage: find author AUTHOR_NAME
+ * Example: find author tolkien
+ *
  */
 public class SearchByAuthorCommand extends Command {
 
@@ -26,6 +32,17 @@ public class SearchByAuthorCommand extends Command {
         }
     }
 
+    /**
+     * Executes the author search operation.
+     * This method validates the search term, retrieves the book collection,
+     * performs the search using BookFinder, and displays the results using the UI.
+     *
+     * @param library        The library instance containing book data.
+     * @param ui             The UI to display output to the user.
+     * @param storage        The storage component for data persistence.
+     * @param memberManager  The manager for library member operations.
+     * @throws LeBookException If the search term is empty or if any other error occurs.
+     */
     @Override
     public void execute(Library library, Ui ui, Storage storage, MemberManager memberManager) throws LeBookException {
         if (searchTerm.isEmpty()) {

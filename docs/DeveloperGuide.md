@@ -114,7 +114,7 @@ How the parser component works:
 **Class Diagram(Library):**
 ![](images/Library.png)
 
-### BookManager (catalogueManager)
+### BookManager 
 The `BookManager` class is responsible for managing the library's global catalogue of books. Within the `Library` class, it is referenced as `catalogueManager`.
 
 It handles core operations such as:
@@ -122,9 +122,21 @@ It handles core operations such as:
 2. Deleting a book from the catalogue
 3. Listing all books in the catalogue
 4. Borrowing and returning books
+5. Providing data for statistics and search functionalities.
 
 **Class Diagram(BookManager):**
 ![](images/BookManager.png)
+
+**Design:**
+
+*   **Singleton Pattern:** `BookManager` is implemented using the Singleton pattern to ensure only one instance manages the shared book catalogue throughout the application's lifecycle. 
+Access is controlled via the static `BookManager.getBookManagerInstance(List<Book> books)` method, which initializes the instance with the loaded book data on the first call.
+
+*   **Genre Validation:** `BookManager` enforces genre constraints internally using the `isValidGenre(String genre)` method, which checks against a predefined `static final List<String> VALID_GENRES`. 
+This validation is applied during the `addNewBookToCatalogue` process.
+
+*    **Error Handling:** `BookManager` employs a mixed strategy for error communication:
+     *   **Exceptions:** For critical lookup failures where an operation cannot proceed (e.g., finding a book by index/ID/title+author fails), it throws specific exceptions like `BookNotFoundException`.
 
 ### UI component
 **API:** [`Ui.java`](https://github.com/AY2425S2-CS2113-T13-3/tp/blob/master/src/main/java/seedu/duke/ui/Ui.java)
@@ -334,16 +346,6 @@ Implement search methods directly in `BookManager`
 2. Cons: Bloats the `BookManager` class, mixing management and query responsibilities. Makes `BookManager` harder to test and potentially violates SRP.
 
 Design considerations:
-
-Separate `BookFinder` class. (Current Choice)
-1. Pros: Adheres to the Single Responsibility Principle. `BookManager` stays focused on catalogue state, while `BookFinder` handles search algorithms. `BookFinder` can be tested independently. Easy to add new search types without modifying `BookManager`.
-
-2. Cons: Requires passing the book list reference from `BookManager` to `BookFinder` upon creation. Introduces a small amount of indirection.
-
-Implement search methods directly in `BookManager`
-1. Pros: Reduces the number of classes. Search methods have direct access to the internal books list.
-
-2. Cons: Bloats the `BookManager` class, mixing management and query responsibilities. Makes `BookManager` harder to test and potentially violates SRP.
 
 
 ### Undo Feature

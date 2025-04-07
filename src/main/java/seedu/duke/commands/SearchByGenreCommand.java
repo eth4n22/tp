@@ -13,6 +13,12 @@ import java.util.List;
 
 /**
  * Command to search for books by their genre.
+ * This command allows users to search for books that exactly match the specified genre
+ * (case-insensitive). It validates the genre before searching and delegates the actual
+ * searching to the BookFinder utility class.
+ * Usage: find genre GENRE_NAME
+ * Example: find genre adventure
+ * Supported genres are: romance, adventure, action, horror, mystery, nonfiction, and scifi.
  */
 public class SearchByGenreCommand extends Command {
     public static final String MESSAGE_INVALID_GENRE = "Invalid genre provided. " +
@@ -30,6 +36,17 @@ public class SearchByGenreCommand extends Command {
         }
     }
 
+    /**
+     * Executes the genre search operation.
+     * This method validates the search term, checks if the genre is valid,
+     * performs the search using BookFinder, and displays the results using the UI.
+     *
+     * @param library        The library instance containing book data.
+     * @param ui             The UI to display output to the user.
+     * @param storage        The storage component for data persistence.
+     * @param memberManager  The manager for library member operations.
+     * @throws LeBookException If the search term is empty, the genre is invalid, or if any other error occurs.
+     */
     @Override
     public void execute(Library library, Ui ui, Storage storage, MemberManager memberManager) throws LeBookException {
         if (searchTerm.isEmpty()) {
