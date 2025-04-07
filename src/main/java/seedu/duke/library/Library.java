@@ -100,10 +100,10 @@ public class Library {
             GroupReturns bookIndexBookID = catalogueManager.getBookID(bookTitle, author);
             int bookIndex = bookIndexBookID.number;
             String bookID = bookIndexBookID.text;
-            String response1 = catalogueManager.deleteBook(bookIndex);
+            String response = catalogueManager.deleteBook(bookIndex);
             assert bookID != null;
             shelvesManager.deleteBook(bookID);
-            return response1;
+            return response;
         } catch (BookNotFoundException e) {
             return e.getMessage();
         }
@@ -120,10 +120,10 @@ public class Library {
     public String deleteBook(String bookID) {
         try {
             int bookIndex = catalogueManager.getBookIndex(bookID);
-            String response1 = catalogueManager.deleteBook(bookIndex);
+            String response = catalogueManager.deleteBook(bookIndex);
             assert bookID != null;
             shelvesManager.deleteBook(bookID);
-            return response1;
+            return response;
         } catch (BookNotFoundException e) {
             return e.getMessage();
         }

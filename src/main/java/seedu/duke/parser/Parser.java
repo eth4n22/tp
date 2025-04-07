@@ -215,11 +215,11 @@ public class Parser {
                 throw new LeBookException("Invalid format. It should be: delete bk/BOOK_TITLE/AUTHOR_NAME");
             }
             String bookTitle = bookDetails[0].trim();
-            if (bookTitle.trim().isEmpty()) {
+            if (bookTitle.isEmpty()) {
                 throw new LeBookException("Book title cannot be empty.");
             }
             String authorName = bookDetails[1].trim();
-            if (authorName.trim().isEmpty()) {
+            if (authorName.isEmpty()) {
                 throw new LeBookException("Author name cannot be empty.");
             }
             return new DeleteByBookCommand(bookTitle, authorName);
@@ -231,7 +231,7 @@ public class Parser {
             }
             String genre = bookIDSplit[0].trim();
             if (!GENRES.contains(genre)) {
-                throw new LeBookException("Invalid Genre!");
+                throw new LeBookException("Invalid genre. Supported genres: R, AC, H, MY, NF, AD, SCIF.");
             }
             return new DeleteByIDCommand(bookID);
         default:

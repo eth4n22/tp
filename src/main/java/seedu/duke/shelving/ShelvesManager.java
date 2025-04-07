@@ -14,6 +14,8 @@ import seedu.duke.exception.SectionFullException;
 public class ShelvesManager {
     private static ShelvesManager shelvesManagerInstance;
 
+    private static final int MAX_SHELVES_PER_GENRE = 5;
+
     private static final String ROMANCE = "romance";
     private static final String ADVENTURE = "adventure";
     private static final String ACTION = "action";
@@ -38,6 +40,7 @@ public class ShelvesManager {
     private final MysteryShelves mysteryShelves;
     private final NonFictionShelves nonFictionShelves;
     private final SciFiShelves sciFiShelves;
+
 
 
     //@@author WayneCh0y
@@ -160,7 +163,7 @@ public class ShelvesManager {
         String shelfID = parts[0];
         assert shelfID != null;
         int shelfNum = Integer.parseInt(parts[1]);
-        assert shelfNum >= 0 && shelfNum < 5;
+        assert shelfNum >= 0 && shelfNum < MAX_SHELVES_PER_GENRE;
         int slotNum = Integer.parseInt(parts[2]);
         assert slotNum >= 0;
         switch (shelfID) {

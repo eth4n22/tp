@@ -583,18 +583,18 @@ Adding a book while the library is empty
 Deleting a book while multiple books are listed
 
 1. Prerequisites: List all books using the `list` command. Multiple books in the list.
-2. Test case: `delete num/ 1`
+2. Test case: `delete num / 1`
    - Expected: First book is deleted from the list. Details of the deleted book shown in the status message. Library now contains fewer books.
-3. Test case: `delete num/ 0`
+3. Test case: `delete num / 0`
    - Expected: No book is deleted. Error details shown in the status message. Library remains unchanged.
-4. Test case: `delete bk/ Harry Potter / J.K. Rowling` (assuming this book does not exist in the library)
+4. Test case: `delete bk / Harry Potter / J.K. Rowling` (assuming this book does not exist in the library)
    - Expected: No book is deleted. Message shows that no such book is found.
-5. Test case: `delete id/R-0-0` (assuming there's a book with this bookID)
+5. Test case: `delete id / R-0-0` (assuming there's a book with this bookID)
    - Expected: Book is deleted from the list. Details of the deleted book shown in the status message. Library now contains fewer books.
 6. Other incorrect delete commands to try:
    - `delete`
-   - `delete bk/ ` (missing title)
-   - `delete bk/ TITLE` (missing author)
+   - `delete bk / ` (missing title)
+   - `delete bk / TITLE` (missing author)
 
 ### Listing books
 Listing books when the library is empty and when it contains multiple books
@@ -745,7 +745,7 @@ A variable tied to a `Book` and is unique to every new `Book` added.
 **Format**
 
 ```
-[GENRE_CODE]-[SHELF_INDEX]-[BOOK_INDEX] 
+[GENRE_CODE]-[SHELF_INDEX]-[SLOT_NUM] 
 Example: R-0-1
 - R refers to 'Romance'
 - '0' refers to Shelf 0
