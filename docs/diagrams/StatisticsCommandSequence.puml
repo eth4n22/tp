@@ -17,9 +17,7 @@ User -> ":Ui" : Enters "statistics"
 
 ":LeBook" -> ":Parser" : parse("statistics")
 ":Parser" -> ":StatisticsCommand" : new StatisticsCommand()
-activate ":StatisticsCommand"
 ":StatisticsCommand" --> ":Parser" : return instance
-deactivate ":StatisticsCommand"
 
 ":Parser" --> ":LeBook" : return StatisticsCommand
 
