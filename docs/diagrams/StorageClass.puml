@@ -16,7 +16,7 @@ class MemberManager {
 class Book {
 }
 
-Storage --> "1" ShelvesManager
-Storage --> "1" MemberManager
-Storage --> "*" Book
+Storage "1" --> "1" ShelvesManager
+Storage "1"--> "1" MemberManager
+Storage "1"--> "*" Book
 @enduml
