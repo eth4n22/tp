@@ -18,12 +18,18 @@ functionalities include adding a new book or borrowing a book.
 
 ## Features
 
-Note: Before continuing, you can refer to the format of book to understand what it is
+Note: 
+- Before continuing, you can refer to the format of book to understand what it is
 displaying [(Book Format)](#book-status-and-format).
+- All command keywords are **case-insensitive**, e.g `add` and `aDD`, `delete` and `deLete` will still allow for proper
+functionality.
+
 
 ### 1. Adding a Book
 
 Add new books to your library with title, author, and genre information.
+
+Refer to [here](#genre--genre_code) for list of possible genres (case-insensitive).
 
 **Format:**
 
@@ -41,7 +47,7 @@ add The Great Gatsby / F. Scott Fitzgerald / nonfiction
 
 ```
 ____________________________________________________________
-I've added: "The Great Gatsby" by F. Scott Fitzgerald (Genre: nonfiction, ID: NF-0-0).
+I've added: "The Great Gatsby" (by F. Scott Fitzgerald) (Genre: nonfiction, ID: NF-0-0).
 Total books in library: 9
 Now you have 1 books on the Shelf: NF-0
 ____________________________________________________________
@@ -57,42 +63,44 @@ Remove books from your library. You can delete a book using 3 methods:
 
 **Format 1 (By Index):**
 
-_Simply use the command `list` to see the `BOOK_NUMBER` of the book that you want to delete_
+_Simply use the command `list` to see the `BOOK_INDEX` of the book that you want to delete_.
 
 ```
-delete num/BOOK_NUMBER
+delete num / BOOK_INDEX
 ```
 
 **Example:**
 
 ```
-delete num/1
+delete num / 1
 ```
 
 **Format 2 (By Title/Author):**
 
+Note: `Title` and `Author` are **case-sensitive**
 ```
-delete bk/TITLE/AUTHOR
+delete bk / TITLE / AUTHOR
 ```
 
 **Example:**
 
 ```
-delete bk/The Great Gatsby/F. Scott Fitzgerald
+delete bk / The Great Gatsby / F. Scott Fitzgerald
 ```
 
 **Format 3 (By bookID):**
 
-To better understand the format of the bookID, please refer to: [About bookID](#bookid).
+- To better understand the format of the bookID, please refer to [here](#bookid).
+- Note: `bookID` is **case-sensitive** 
 
 ```
-delete id/BOOK_ID
+delete id / BOOK_ID
 ```
 
 **Example:**
 
 ```
-delete id/R-0-0
+delete id / R-0-0
 ```
 
 **Example Output:**
@@ -179,7 +187,7 @@ ____________________________________________________________
 
 Mark a borrowed book as returned.
 
-_Use the command `list` to see the `INDEX` of the book that you want to return.
+Use the command `list` to see the `INDEX` of the book that you want to return.
 
 **Format:**
 
@@ -203,9 +211,9 @@ ____________________________________________________________
 
 ### 7. Undoing Previous Command(s)
 
+
 Undo the last registered command (Add, Delete, Return, Borrow).
 If no number is specified, the `undo` function defaults to undoing only the most recent single undoable command.
-
 
 
 **Format:**
@@ -254,11 +262,11 @@ find CRITERIA SEARCH_TERM
 
 **Valid Criteria:**
 
-- `title`: Finds books whose title contains the search term (case-insensitive).
-- `author`: Finds books whose author contains the search term (case-insensitive).
-- `genre`: Finds books matching the specified genre (case-insensitive). Supported genres: romance, adventure, action,
+- `title`: Finds books whose title contains the (search term - **case-insensitive**).
+- `author`: Finds books whose author contains the (search term - **case-insensitive**).
+- `genre`: Finds books matching the (specified genre - **case-insensitive**). Supported genres: romance, adventure, action,
   horror, mystery, nonfiction, scifi.
-- `id`: Finds the book with the exact unique Book ID (e.g., AD-0-1, case-insensitive).
+- `id`: Finds the book with the exact unique Book ID (e.g., AD-0-1, **case-insensitive**).
 - [About bookID](#bookid)
 
 **Examples:**
@@ -292,6 +300,8 @@ ____________________________________________________________
 
 Search for number of copies of a specific book in your library.
 
+Note: `Title` and `Author` are case-sensitive
+
 **Format:**
 
 ```
@@ -318,6 +328,7 @@ Allows for the viewing of what books are on a specified shelf.
 
 - Refer to [here](#genre--genre_code) to see the available `GENRES`.
 - Refer to the [example](#shelves) to see how `SHELF_INDEX` works.
+- `GENRE` is **case-insensitive**
 
 **Format:**
 
@@ -359,8 +370,8 @@ help
 1. add TITLE / AUTHOR / GENRE      - Add a new book.  
 2. borrow INDEX / MEMBER_NAME      - Borrow a book (using 1-based index).  
 3. delete bk / TITLE / AUTHOR      - Remove book by title and author.  
-4. delete num/INDEX                - Remove book by list index (1-based).  
-5. delete id/ID                    - Remove book by book ID.  
+4. delete num / INDEX              - Remove book by list index (1-based).  
+5. delete id / ID                  - Remove book by book ID.  
 6. find CRITERIA TERM              - Search books.  
    Criteria: title, author, genre, id  
 7. help                            - Show this help menu.  
@@ -370,7 +381,7 @@ help
 11. list overdue users             - List users who have overdue books.  
 12. quantity / TITLE / AUTHOR      - Shows the quantity of the specified book.  
 13. return INDEX                   - Return a borrowed book (using 1-based index).  
-14. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (1-based number).  
+14. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (0-based number).  
 15. statistics                     - View library statistics.  
 16. undo                           - Undo the last command (add/delete/borrow/return).  
 17. bye                            - Exit the program.  
@@ -387,7 +398,7 @@ Example Usage:
   find genre adventure  
   find id AD-0-0  
   return 1  
-  delete num/1  
+  delete num / 1  
   bye  
 
 ```
@@ -490,13 +501,15 @@ INDEX. [STATUS] TITLE (by AUTHOR) (ID: BOOK_ID) | Due: DUE_DATE
 **Examples:**
 
 ```
-[ ] Pride and Prejudice (by Jane Austen) (ID: R-1-2)
-[X] The Lord of the Rings (by J.R.R. Tolkien) (ID: AD-0-1) | Due: Apr 21 2025
+1. [ ] Pride and Prejudice (by Jane Austen) (ID: R-1-2)
+2. [X] The Lord of the Rings (by J.R.R. Tolkien) (ID: AD-0-1) | Due: Apr 21 2025
 ```
 
 ## BookID
 
 A variable tied to a `Book` and is unique to every new `Book` added.
+
+**BookID is case-sensitive**
 
 **Format**
 
@@ -510,15 +523,15 @@ Example: R-0-1
 
 ### Genre / Genre_Code
 
-| Genre          | Genre_Code |
-|----------------|------------|
-| **Romance**    | `R`        |
-| **Action**     | `AC`       |
-| **Adventure**  | `AD`       |
-| **Horror**     | `H`        |
-| **Mystery**    | `MY`       |
-| **NonFiction** | `NF`       |
-| **Sci-fi**     | `SCIF`     |
+| Genre            | Genre_Code |
+|------------------|------------|
+| **`romance`**    | `R`        |
+| **`action`**     | `AC`       |
+| **`adventure`**  | `AD`       |
+| **`horror`**     | `H`        |
+| **`mystery`**    | `MY`       |
+| **`nonfiction`** | `NF`       |
+| **`scifi`**      | `SCIF`     |
 
 ### Shelves
 
@@ -539,17 +552,17 @@ e.g.
 
 | Command                             | Format                                | Example                                  |
 |-------------------------------------|---------------------------------------|------------------------------------------|
-| **Add Book**                        | `add TITLE/AUTHOR/GENRE`              | `add Dune/Frank Herbert/scifi`           |
-| **Delete by Index**                 | `delete num/BOOK_NUMBER`              | `delete num/1`                           |
-| **Delete by Book**                  | `delete bk/TITLE/AUTHOR`              | `delete bk/Dune/Frank Herbert`           |
-| **Delete by BookID**                | `delete id/BOOK_ID`                   | `delete id/R-0-0`                        |
+| **Add Book**                        | `add TITLE / AUTHOR / GENRE`          | `add Dune / Frank Herbert / scifi`       |
+| **Delete by Index**                 | `delete num / BOOK_INDEX`             | `delete num / 1`                         |
+| **Delete by Book**                  | `delete bk / TITLE / AUTHOR`          | `delete bk / Dune / Frank Herbert`       |
+| **Delete by BookID**                | `delete id / BOOK_ID`                 | `delete id / R-0-0`                      |
 | **List Books**                      | `list`                                | `list`                                   |
 | **List Overdue Books**              | `list overdue`                        | `list overdue`                           |
 | **List Borrowed Books**             | `list borrowed`                       | `list borrowed`                          |
 | **List Members with Overdue Books** | `list overdue users`                  | `list overdue users`                     |
 | **List a Specific Shelf**           | `shelf / GENRE / SHELF_INDEX`         | `shelf / romance / 1`                    |
 | **Find Quantity of a Book**         | `quantity / BOOK_TITLE / BOOK_AUTHOR` | `quantity / Harry Potter / J.K. Rowling` |
-| **Borrow Book**                     | `borrow BOOK_NUMBER/MEMBER`           | `borrow 2/Eve`                           |
+| **Borrow Book**                     | `borrow BOOK_NUMBER / MEMBER`         | `borrow 2 / Eve`                         |
 | **Return Book**                     | `return BOOK_NUMBER`                  | `return 3`                               |
 | **Undo Command**                    | `undo NUMBER_OF_COMMANDS_TO_UNDO`     | `undo 3`                                 |
 | **Find Book**                       | `find CRITERIA TERM`                  | `find title dune`                        |
