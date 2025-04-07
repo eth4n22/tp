@@ -19,7 +19,8 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public boolean execute(Library library, Ui ui, Storage storage, MemberManager memberManager) throws LeBookException {
+    public boolean execute(Library library, Ui ui, Storage storage, MemberManager memberManager)
+            throws LeBookException {
         assert library != null : "Library should not be null";
         assert ui != null : "Ui should not be null";
         assert storage != null : "Storage should not be null";

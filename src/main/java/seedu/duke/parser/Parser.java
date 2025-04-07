@@ -308,7 +308,8 @@ public class Parser {
                 BigInteger bigNum = new BigInteger(undoDetails.trim());
 
                 if (bigNum.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0) {
-                    throw new LeBookException("Undo count is too large. Maximum allowed is: " + Integer.MAX_VALUE + ".");
+                    throw new LeBookException("Undo count is too large. Maximum allowed is: "
+                            + Integer.MAX_VALUE + ".");
                 }
 
                 if (bigNum.compareTo(BigInteger.ONE) < 0) {
