@@ -27,6 +27,8 @@ add, borrow, return, and track books efficiently.
     - Integrates with due date tracking.
     - Displays borrower name and the respective due dates of overdue books.
 
+<div style="page-break-after: always;"></div>
+
 - **Implemented Undo functionality with multi-level support**
   - What it does:
     - Allows librarians to undo the effects of previously made commands.
@@ -84,13 +86,13 @@ add, borrow, return, and track books efficiently.
 
 ### Contributions to team-based tasks:
 
-- Actively reviewed PRs submitted by Team members
-- Helped in the resolution of Git merge conflicts
-- Engaged in discussions regarding project work flow
+- Actively reviewed PRs submitted by Team members.
+- Helped in the resolution of Git merge conflicts.
+- Engaged in discussions regarding project work flow.
 
 ### Review/Mentoring Contributions:
 
-- Provided reviews for several Pull Requests
-- Reviewed PRs [PR#207, #206, etc]
+- Provided reviews for several Pull Requests.
+- Reviewed PRs [PR#207, #206, etc].
 - Assisted group members in debugging process and understanding implementation concepts.
 ---
