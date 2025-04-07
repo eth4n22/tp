@@ -22,6 +22,9 @@ Given below are my contributions to the project.
     - This feature significantly improves usability. It allows the librarian to keep the catalogue from the previous saves.
   - Highlights: 
     - This feature is continuously evolving based on other new features the team has implemented, as new data will need to be saved for new features. The handling of file tampering was particularly tricky.
+
+<div style="page-break-after:always;"></div>
+
 - **Implementation of saving**
   - What it does:
     - saves the data from current program run.
@@ -29,6 +32,7 @@ Given below are my contributions to the project.
     - This feature significantly improves usability. It allows the librarian to keep the catalogue of the current catalogue, when they input a new command. Thus, the user does not need to manually save data, and all changes persist automatically.
   - Highlights:
     - This feature is continuously evolving based on other new features the team has implemented, as more data will need to be written, formatted and saved. Ensuring that the directory is made properly, and data is saved in the correct format, as particularly tricky.
+
 ### Code contributed:
 
 
@@ -55,6 +59,8 @@ Given below are my contributions to the project.
 ### Contributions to the UG:
 
 - Authored usage instruction for features implemented such as `quantity`, `shelf` and `help`.
+
+<div style="page-break-after:always;"></div>
 
 ### Contributions to the DG:
 
