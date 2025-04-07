@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Ui {
     private static final Ui uiInstance = new Ui();
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
     private final Scanner scanner;
 
