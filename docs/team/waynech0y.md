@@ -23,8 +23,6 @@ Given below are my contributions to the project.
   - Highlights: 
     - This feature is continuously evolving based on other new features the team has implemented, as new data will need to be saved for new features. The handling of file tampering was particularly tricky.
 
-<div style="page-break-after:always;"></div>
-
 - **Implementation of saving**
   - What it does:
     - saves the data from current program run.
@@ -57,8 +55,6 @@ Given below are my contributions to the project.
 ### Contributions to the UG:
 
 - Authored usage instruction for features implemented such as `quantity`, `shelf` and `help`.
-
-<div style="page-break-after:always;"></div>
 
 ### Contributions to the DG:
 
