@@ -52,14 +52,14 @@ LeBook uses the following libraries:
 ![](images/Architecture-LeBook.png)
 
 #### Main Components of the architecture:
-- `UI`: The UI of the system
-- `Parser`: Process User Input
-- `Command`: Executes instructions based on commandType
-- `MemberManager`: Library members
+- `UI`: The UI of the system.
+- `Parser`: Process User Input.
+- `Command`: Executes instructions based on commandType.
+- `MemberManager`: Library members.
 - `Storage`: Reads data from, and writes data to, the hard disk.
 Data includes book details and borrower.
 - `Library`: Manages global catalogue and shelves, as well as a `UndoManager`
-for undoing of a command
+for undoing of a command.
 
 ### Parser component
 **API:** [`Parser.java`](https://github.com/AY2425S2-CS2113-T13-3/tp/blob/master/src/main/java/seedu/duke/parser/Parser.java)
@@ -101,17 +101,17 @@ How the parser component works:
    -  The `Library` class in LeBook handles the job of managing all book-related operations. It contains
    a `BookManager` called catalogueManager, a `ShelvesManager` to manage the books on shelves, as well as a
    `UndoManager` to facilitate undoing of past user interactions.
-   - Whenever a book-operation comes e.g `add`, both the global catalogue of books as well as the shelves will be modified.
+   - Whenever a book-operation comes e.g `add`, both the global catalogue of books and the shelves will be modified.
      (In this case, the book is added to the global catalogue and the relevant shelf based on its `Genre`).
 
 2. **Design**
 
-   -  `catalogueManager`: manages the global catalogue (e.g adding / deleting) ([catalogueManager](#catalogue-management-bookmanager))
+   -  `catalogueManager`: manages the global catalogue (e.g adding / deleting).
    -  `ShelvesManager`: manages shelves. The same book in the global catalogue is also stored in their respective
    shelves.
    -  `UndoManager`: undo certain user commands like `delete` and `add` when prompted.
 
-**Class Diagram(Library):**
+**Class Diagram (Library):**
 ![](images/Library.png)
 
 ### BookManager 
@@ -124,7 +124,7 @@ It handles core operations such as:
 4. Borrowing and returning books
 5. Providing data for statistics and search functionalities.
 
-**Class Diagram(BookManager):**
+**Class Diagram (BookManager):**
 ![](images/BookManager.png)
 
 **Design:**
@@ -138,17 +138,17 @@ This validation is applied during the `addNewBookToCatalogue` process.
 *    **Error Handling:** `BookManager` employs a mixed strategy for error communication:
      *   **Exceptions:** For critical lookup failures where an operation cannot proceed (e.g., finding a book by index/ID/title+author fails), it throws specific exceptions like `BookNotFoundException`.
 
-### UI component
+### Ui component
 **API:** [`Ui.java`](https://github.com/AY2425S2-CS2113-T13-3/tp/blob/master/src/main/java/seedu/duke/ui/Ui.java)
 
 1. **Overview**
 
-   - The `Ui`class in Lebook is responsible for all user interaction in the Command Line Interface (CLI).
+   - The `Ui`class in LeBook is responsible for all user interaction in the Command Line Interface (CLI).
    - `Ui` handles:
       - Displaying welcome, help and exit messages.
       - Reading user input and returning the raw command string.
       - Printing success and error messages in a standardized and formated way.
-      - Displaying book lists in formatted layout
+      - Displaying book lists in formatted layout.
    - `Ui` class is designed as a Singleton to ensure only one instance manages all user interaction throughout application's cycle.
 
 2. **Design**
@@ -204,20 +204,20 @@ Each delete command also supports undo, restoring the last deleted book into the
 ##### Commands & Behavior
 1. DeleteByIndexCommand
    - Deletes a book based on its index in the global catalog list.
-   - Input: delete num/0
+   - Input: `delete num/0`
    - Calls library.deleteBook(index)
    - Retrieves and stores the deleted book for undo
    - Removes it from its corresponding shelf (replaces with a dummy book)
 
 2. DeleteByBookCommand
    - Deletes a book based on the title and author
-   - Input: delete bk/The Hobbit/J.R.R. Tolkien
+   - Input: `delete bk/The Hobbit/J.R.R. Tolkien`
    - Retrieves the book from the library using matching title + author
    - Deletes and stores it for undo
 
 3. DeleteByIDCommand
    - Deletes a book based on its unique book ID, e.g. AC-0-1.
-   - Input: delete id/AC-0-1
+   - Input: `delete id/AC-0-1`
    - Retrieves by ID → deletes from catalog and updates shelf
    - Stored for undo
 
@@ -256,10 +256,10 @@ and the `DueDate` if the book was borrowed.
 #### Commands & Behavior
 
 1. ListCommand
-   - List all books in the global catalogue with their respective information
+   - List all books in the global catalogue with their respective information.
    - Input: `list`
-   - Calls library.listBooks() which returns the list of books in String format
-   - UI prints the response
+   - Calls library.listBooks() which returns the list of books in String format.
+   - Ui prints the response.
    
 #### Execution Flow
 Given below is an example usage scenario and how the list mechanism behaves at each step:
@@ -350,6 +350,7 @@ Design considerations:
 
 ### Undo Feature
 ![UndoCommandClass](images/UndoCommandClass.png)
+
 The Undo feature allows users to revert the effects of previous commands that modified the library's state (`add`, `delete`, `borrow`, `return`).
 It retrieves the command history from the `UndoManager` class which maintains a stack of executed commands and calls `undo()` method of the most recent undoable command.
 
@@ -426,12 +427,12 @@ books, streamlining inventory management and tracking book availabilities.
 
 ### Target user profile
 
-Library staff who wish to efficiently manage book collections
+Library staff who wish to efficiently manage book collections.
 
 ### Value proposition
 
 Enables efficient cataloging, borrowing, and returning of books through a command-line interface, allowing librarians 
-to manage inventory and track book availability quickly compared to a typical mouse/GUI driven app
+to manage inventory and track book availability quickly compared to a typical mouse/GUI driven app.
 
 ### User Stories
 
@@ -453,7 +454,7 @@ to manage inventory and track book availability quickly compared to a typical mo
 | v2.0    | librarian | view a list of overdue books                  | follow up with contacting the appropriate member.                                                         |
 | v2.0    | librarian | search for a book through keywords            | find the appropriate book.                                                                                |
 | v2.0    | librarian | see the overall statistics of the library     | know the total number of books, overdue books and borrowed books.                                         |
-| v2.0    | librarian | undo the last command                         | correct my actions if it was a wrong command                                                              |
+| v2.0    | librarian | undo the last command                         | correct my actions if it was a wrong command.                                                             |
 
 ## Non-Functional Requirements
 

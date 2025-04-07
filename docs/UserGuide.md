@@ -1,9 +1,13 @@
 # LeBook User Guide
 
 ## Introduction
-LeBook is a straightforward book management application that runs on the command line. With its clean interface and simple commands, LeBook helps librarians keep track of their catalogue of books as well as the shelves they are on. Some functionalities include adding a new book or borrowing a book.
+
+LeBook is a straightforward book management application that runs on the command line. With its clean interface and
+simple commands, LeBook helps librarians keep track of their catalogue of books as well as the shelves they are on. Some
+functionalities include adding a new book or borrowing a book.
 
 ## Quick Start
+
 1. Ensure you have **Java 17 or later** installed.
 2. Download the latest **LeBook.jar** from the releases page.
 3. Place the `.jar` file in an empty folder (it will create a `data` subfolder for storage).
@@ -14,20 +18,27 @@ LeBook is a straightforward book management application that runs on the command
 
 ## Features
 
-Note: Before continuing, you can refer to the format of book to understand what it is displaying [(Book Format)](#book-status-and-format)
+Note: Before continuing, you can refer to the format of book to understand what it is
+displaying [(Book Format)](#book-status-and-format).
 
 ### 1. Adding a Book
+
 Add new books to your library with title, author, and genre information.
 
 **Format:**
+
 ```
 add TITLE / AUTHOR / GENRE
 ```
+
 **Example:**
+
 ```
 add The Great Gatsby / F. Scott Fitzgerald / nonfiction
 ```
+
 **Example Output:**
+
 ```
 ____________________________________________________________
 I've added: "The Great Gatsby" by F. Scott Fitzgerald (Genre: nonfiction, ID: NF-0-0).
@@ -37,43 +48,55 @@ ____________________________________________________________
 ```
 
 ### 2. Deleting a Book
-Remove books from your library. You can delete a book using 3 methods:
-1. **Delete by the books's index**
-2. **Delete by the book's title and author**
-3. **Delete by the book's Book ID**
 
+Remove books from your library. You can delete a book using 3 methods:
+
+1. **Delete by the book's index**
+2. **Delete by the book's title and author**
+3. **Delete by the book's bookID**
 
 **Format 1 (By Index):**
 
 _Simply use the command `list` to see the `BOOK_NUMBER` of the book that you want to delete_
+
 ```
 delete num/BOOK_NUMBER
 ```
+
 **Example:**
+
 ```
 delete num/1
 ```
 
 **Format 2 (By Title/Author):**
+
 ```
 delete bk/TITLE/AUTHOR
 ```
+
 **Example:**
+
 ```
 delete bk/The Great Gatsby/F. Scott Fitzgerald
 ```
-**Format 3 (By BookID):**
 
-[About Book ID](#book-id)
+**Format 3 (By bookID):**
+
+To better understand the format of the bookID, please refer to: [About bookID](#bookid).
+
 ```
-delete id/BOOKID
+delete id/BOOK_ID
 ```
+
 **Example:**
+
 ```
 delete id/R-0-0
 ```
 
 **Example Output:**
+
 ```
 ____________________________________________________________
 Book deleted:
@@ -83,76 +106,95 @@ ____________________________________________________________
 ```
 
 ### 3. Listing Books
-   View all the books currently in your library, including their status, title, author, ID and dueDate.
+
+View all the books currently in your library, including their status, title, author, bookID and due date.
 
 **Format:**
+
 ```
 list
 ```
+
 **Example Output:**
+
 ```
 ____________________________________________________________
 Here are the books in your library:
-1. [ ] To Kill a Mockingbird (by Harper Lee) (ID: NF-0-1)
+1. [ ] To Kill a Mockingbird (by Harper Lee) (ID: AD-0-0)
 2. [ ] 1984 (by George Orwell) (ID: SCIF-0-0)
-3. [X] The Hobbit (by J.R.R. Tolkien) (ID: AD-0-0) | Due: Apr 04 2025
+3. [X] The Hobbit (by J.R.R. Tolkien) (ID: AD-0-1) | Due: Apr 04 2025
 Total books: 3
 ____________________________________________________________
 ```
 
 ### 4. Listing Overdue Books
+
 View all the overdue books currently in your library, including their title, author, borrower name and due date.
 
-Note: Books are **'overdue'** once they are borrowed past their due date
+Note: Books are **'overdue'** if they remain borrowed past their due date.
 
 **Format:**
+
 ```
 list overdue
 ```
+
 **Example Output:**
+
 ```
 ____________________________________________________________
 Overdue Books:
 1. Harry Potter (by J.K. Rowling) (Borrowed by: deanson) | Due: Apr 05 2025
+
 ____________________________________________________________
 ```
 
 ### 5. Borrowing a Book
+
 Mark a book as borrowed by a specific member.
 
-_Use the command `list` to see the `BOOK_NUMBER` of the book that you want to borrow_
+_Use the command `list` to see the `INDEX` of the book that you want to borrow._
 
 **Format:**
+
 ```
-borrow BOOK_NUMBER / MEMBER_NAME
+borrow INDEX / MEMBER_NAME
 ```
+
 **Example:**
+
 ```
 borrow 2 / Bob
 ```
 
 **Example Output:**
+
 ```
 ____________________________________________________________
-Bob has borrowed: "1984" (Due: ...)
+Bob has borrowed: "1984" (Due: Apr 21 2025)
 ____________________________________________________________
 ```
 
 ### 6. Returning a Book
+
 Mark a borrowed book as returned.
 
-_Use the command `list` to see the `BOOK_NUMBER` of the book that you want to return
+_Use the command `list` to see the `INDEX` of the book that you want to return.
 
 **Format:**
+
 ```
-return BOOK_NUMBER
+return INDEX
 ```
+
 **Example:**
+
 ```
 return 3
 ```
 
 **Example Output:**
+
 ```
 ____________________________________________________________
 Returned: "The Hobbit"
@@ -160,14 +202,20 @@ ____________________________________________________________
 ```
 
 ### 7. Undoing Previous Command(s)
+
 Undo the last registered command (Add, Delete, Return, Borrow).
 If no number is specified, the `undo` function defaults to undoing only the most recent single undoable command.
 
+
+
 **Format:**
+
 ```
 undo NUMBER_OF_COMMANDS_TO_UNDO
 ```
+
 **Example:**
+
 ```
 undo
 undo 2
@@ -184,6 +232,7 @@ Invalid responses will show: `[ERROR] Please respond with 'y' or 'n'.`
 - Input > number of undoable commands: `[ERROR] You only have 0 undoable command(s).`
 
 **Example Output:**
+
 ```
 ____________________________________________________________
 [SUCCESS] Successfully undone: Delete a book by its index
@@ -194,20 +243,26 @@ ____________________________________________________________
 ```
 
 ### 8. Finding Books
+
 Search for specific books in your library based on different criteria.
 
 **Format:**
+
 ```
 find CRITERIA SEARCH_TERM
 ```
+
 **Valid Criteria:**
+
 - `title`: Finds books whose title contains the search term (case-insensitive).
 - `author`: Finds books whose author contains the search term (case-insensitive).
-- `genre`: Finds books matching the specified genre (case-insensitive). Supported genres: romance, adventure, action, horror, mystery, nonfiction, scifi.
+- `genre`: Finds books matching the specified genre (case-insensitive). Supported genres: romance, adventure, action,
+  horror, mystery, nonfiction, scifi.
 - `id`: Finds the book with the exact unique Book ID (e.g., AD-0-1, case-insensitive).
-- [About Book ID](#book-id)
+- [About bookID](#bookid)
 
 **Examples:**
+
 ```
 find title hobbit
 find author Tolkien
@@ -216,15 +271,17 @@ find id AD-0-0
 ```
 
 **Example Output (Found):**
+
 ```
 ____________________________________________________________
 Found 1 book(s) with titles containing 'hobbit':
-1. [X] The Hobbit by J.R.R. Tolkien (Genre: adventure, Shelf: AD-0-0) 
+1. [X] The Hobbit by J.R.R. Tolkien (Genre: adventure, ID: AD-0-0) 
        Borrowed by: Alice (Due: ...)
 ____________________________________________________________
 ```
 
 **Example Output (Not Found):**
+
 ```
 ____________________________________________________________
 Sorry, no books found with titles containing 'rings'.
@@ -232,19 +289,23 @@ ____________________________________________________________
 ```
 
 ### 9. Finding Quantity of a book
+
 Search for number of copies of a specific book in your library.
 
 **Format:**
+
 ```
 quantity / BOOK_TITLE / BOOK_AUTHOR
 ```
 
 **Examples:**
+
 ```
 quantity / Harry Potter / J.K. Rowling
 ```
 
 **Example Output:**
+
 ```
 ____________________________________________________________
 There are 3 copies of the book: Harry Potter (by J.K. Rowling)
@@ -252,39 +313,45 @@ ____________________________________________________________
 ```
 
 ### 10. Listing of a specific Shelf
+
 Allows for the viewing of what books are on a specified shelf.
 
-- Refer to [here](#genre--genre_code) to see the available `GENRES`
-- Refer to the [example](#shelves) to see how `SHELF_INDEX` works
-
+- Refer to [here](#genre--genre_code) to see the available `GENRES`.
+- Refer to the [example](#shelves) to see how `SHELF_INDEX` works.
 
 **Format:**
+
 ```
 shelf / GENRE / SHELF_INDEX
 ```
 
 **Examples:**
+
 ```
 shelf / romance / 1
 ```
 
 **Example Output:**
+
 ```
 ____________________________________________________________
 Here is the list of the books on shelf romance 1:
-1. [ ] Romeo and Juliet (by Shakespeare)
+1. [ ] Romeo and Juliet (by Shakespeare) (ID: R-1-0)
 ____________________________________________________________
 ```
 
 ### 11. Help
+
 Brings up the help menu for the user to refer to.
 
 **Format:**
+
 ```
 help
 ```
 
 **Example Output:**
+
 ```
 -------------------------------  
  Available Commands:  
@@ -326,13 +393,17 @@ Example Usage:
 ```
 
 ### 12. Listing Borrowed Books
+
 View all the books in your library that are borrowed, including their title, author, borrower name and due date.
 
 **Format:**
+
 ```
 list borrowed
 ```
+
 **Example Output:**
+
 ```
 ========================================
 Borrowed Books:
@@ -343,13 +414,17 @@ Borrowed Books:
 ```
 
 ### 13. Listing Library Members with Overdue Books
+
 View all the members who have overdue books, including the book title, book author and borrower name.
 
 **Format:**
+
 ```
 list overdue users
 ```
+
 **Example Output:**
+
 ```
 ========================================
 Members with overdue books:
@@ -359,13 +434,17 @@ Members with overdue books:
 ```
 
 ### 14. Statistics
+
 Provides an overview of the quantities of books in the library.
 
 **Format:**
+
 ```
 statistics
 ```
+
 **Example Output:**
+
 ```
 ========== Library Statistics ==========
 Total books copies: 0
@@ -378,13 +457,17 @@ List of unique titles: []
 ```
 
 ### 15. Exiting the Application
+
 Close the application and save the current state of your library.
 
 **Format:**
+
 ```
 bye
 ```
+
 **Example Output:**
+
 ```
 ____________________________________________________________
 Goodbye! Hope to see you again soon!
@@ -392,32 +475,39 @@ ____________________________________________________________
 ```
 
 ## Book Status and Format
+
 In the list and search results, books are displayed with their status and details:
+
 - `[ ]` indicates an **available** book.
 - `[X]` indicates a **borrowed** book.
 
 **Example format:**
+
 ```
-INDEX. [STATUS] TITLE by AUTHOR (Genre: GENRE, ID: BOOK_ID) | (Due: DUE_DATE) Borrowed by: BORROWER_NAME
+INDEX. [STATUS] TITLE (by AUTHOR) (ID: BOOK_ID) | Due: DUE_DATE
 ```
-(Borrower info only shown if borrowed.)
 
 **Examples:**
+
 ```
-[ ] Pride and Prejudice by Jane Austen (Genre: romance, ID: R-1-2) - Available book
-[X] The Lord of the Rings by J.R.R. Tolkien (Genre: adventure, ID: AD-0-5) | (Due: 2024-12-25) Borrowed by: Charlie - Borrowed book
+[ ] Pride and Prejudice (by Jane Austen) (ID: R-1-2)
+[X] The Lord of the Rings (by J.R.R. Tolkien) (ID: AD-0-1) | Due: Apr 21 2025
 ```
-## Book ID
+
+## BookID
+
 A variable tied to a `Book` and is unique to every new `Book` added.
 
-**Format** 
+**Format**
+
 ```
 [GENRE_CODE]-[SHELF_INDEX]-[BOOK_INDEX] 
-Example: R-0-0
+Example: R-0-1
 - R refers to 'Romance'
-- '0' refers to Shelf 1
-- '0' refers to Book 1
+- '0' refers to Shelf 0
+- '1' refers to Book 2
 ```
+
 ### Genre / Genre_Code
 
 | Genre          | Genre_Code |
@@ -432,37 +522,40 @@ Example: R-0-0
 
 ### Shelves
 
-Every genre has a collection of 5 shelves indexed by a `SHELF_INDEX` of `1 to 5`
+Every genre has a collection of 5 shelves indexed by a `SHELF_INDEX` of `0 to 4`
 
 ```
 e.g.
 1. R-0-0
 - The 'R' refers to romance
-- The 1st '0' refers to Shelf 1
+- The 1st '0' refers to Shelf 0
 
 2. AC-4-0
 - The 'AC' refers to action
-- The '4' refers to Shelf 5
+- The '4' refers to Shelf 4
 ```
 
 ## Command Summary
-| Command                             | Format                            | Example                        |
-|-------------------------------------|-----------------------------------|--------------------------------|
-| **Add Book**                        | `add TITLE/AUTHOR/GENRE`          | `add Dune/Frank Herbert/scifi` |
-| **Delete by Index**                 | `delete num/BOOK_NUMBER`          | `delete num/1`                 |
-| **Delete by Book**                  | `delete bk/TITLE/AUTHOR`          | `delete bk/Dune/Frank Herbert` |
-| **Delete by ID**                    | `delete id/BOOK ID`               | `delete id/R-0-0`              |
-| **List Books**                      | `list`                            | `list`                         |
-| **List Overdue Books**              | `list overdue`                    | `list overdue`                 |
-| **List Borrowed Books**             | `list borrowed`                   | `list borrowed`                |
-| **List Members with Overdue Books** | `list overdue users`              | `list overdue users`           |
-| **Borrow Book**                     | `borrow BOOK_NUMBER/MEMBER`       | `borrow 2/Eve`                 |
-| **Return Book**                     | `return BOOK_NUMBER`              | `return 3`                     |
-| **Undo Command**                    | `undo NUMBER_OF_COMMANDS_TO_UNDO` | `undo 3`                       |
-| **Find Book**                       | `find CRITERIA TERM`              | `find title dune`              |
-| **Exit**                            | `bye`                             | `bye`                          |
-| **Help**                            | `help`                            | `help`                         |
-| **Statistics**                      | `statistics`                      | `statistics`                   |
+
+| Command                             | Format                                | Example                                  |
+|-------------------------------------|---------------------------------------|------------------------------------------|
+| **Add Book**                        | `add TITLE/AUTHOR/GENRE`              | `add Dune/Frank Herbert/scifi`           |
+| **Delete by Index**                 | `delete num/BOOK_NUMBER`              | `delete num/1`                           |
+| **Delete by Book**                  | `delete bk/TITLE/AUTHOR`              | `delete bk/Dune/Frank Herbert`           |
+| **Delete by BookID**                | `delete id/BOOK_ID`                   | `delete id/R-0-0`                        |
+| **List Books**                      | `list`                                | `list`                                   |
+| **List Overdue Books**              | `list overdue`                        | `list overdue`                           |
+| **List Borrowed Books**             | `list borrowed`                       | `list borrowed`                          |
+| **List Members with Overdue Books** | `list overdue users`                  | `list overdue users`                     |
+| **List a Specific Shelf**           | `shelf / GENRE / SHELF_INDEX`         | `shelf / romance / 1`                    |
+| **Find Quantity of a Book**         | `quantity / BOOK_TITLE / BOOK_AUTHOR` | `quantity / Harry Potter / J.K. Rowling` |
+| **Borrow Book**                     | `borrow BOOK_NUMBER/MEMBER`           | `borrow 2/Eve`                           |
+| **Return Book**                     | `return BOOK_NUMBER`                  | `return 3`                               |
+| **Undo Command**                    | `undo NUMBER_OF_COMMANDS_TO_UNDO`     | `undo 3`                                 |
+| **Find Book**                       | `find CRITERIA TERM`                  | `find title dune`                        |
+| **Exit**                            | `bye`                                 | `bye`                                    |
+| **Help**                            | `help`                                | `help`                                   |
+| **Statistics**                      | `statistics`                          | `statistics`                             |
 
 ---
 
