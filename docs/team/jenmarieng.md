@@ -45,13 +45,13 @@ add, borrow, return, and track books efficiently.
 
 ### Contributions to the UG:
 
-- Authored usage instruction for features implemented such as parser, `list borrowed` and `list users`.
+- Authored usage instruction for features implemented such as parser, `list borrowed` and `list overdue users`.
 
 ### Contributions to the DG:
 
 - Wrote the Developer Guide sections detailing the design and implementation of:
     - **Parser**
-    - **List Users with Overdue Books** (`list users`)
+    - **List Users with Overdue Books** (`list overdue users`)
 - Created/Updated the following UML diagrams for the Developer Guide:
     - **Class Diagram** (focusing on `Parser`, and its relationships)
     - **Sequence Diagram** (focusing on List Users with Overdue Books Feature)
