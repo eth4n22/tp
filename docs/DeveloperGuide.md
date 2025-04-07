@@ -52,7 +52,7 @@ LeBook uses the following libraries:
 ![](images/Architecture-LeBook.png)
 
 #### Main Components of the architecture:
-- `UI`: The UI of the system.
+- `Ui`: The Ui of the system.
 - `Parser`: Process User Input.
 - `Command`: Executes instructions based on commandType.
 - `MemberManager`: Library members.
@@ -229,7 +229,7 @@ Assuming the initial state of the library is that there's one book titled `Book1
 Step 1. The user types in the string input `delete num/1` 
 to delete the 1st book in the catalogue (in this case, it's `Book1`).
 
-Step 2. The Parser class parses the input and creates a 
+Step 2. The `Parser` class parses the input and creates a 
 `DeleteByIndexCommand`.
 
 Step 3. The `execute` method in this command class calls library's `deleteBook(Int bookIndex)` method.
@@ -268,7 +268,7 @@ Assuming the initial state of the library is that there's one book titled Book1 
 
 Step 1. The user types in the string input `list` to list all books in the catalogue.
 
-Step 2. The Parser class parses the input and creates a ListCommand.
+Step 2. The `Parser` class parses the input and creates a ListCommand.
 
 Step 3. The execute method in this command class calls library's `listBooks()` method.
 
@@ -313,8 +313,8 @@ The search functionality is encapsulated within the BookFinder utility class and
 Delegation: Search logic is intentionally separated from `BookManager` into `BookFinder`. This promotes Separation of Concerns, making `BookManager` focused on catalogue management and `BookFinder` specialized in searching.
 
 Workflow:
-1. The user enters a find command (e.g., find title Lord of the Rings or find id AD-0-0).
-2. The Parser interprets this and creates the appropriate SearchBy...Command object (e.g., `SearchByTitleCommand` with the search term).
+1. The user enters a find command (e.g., `find title Lord of the Rings` or `find id AD-0-0`).
+2. The `Parser` interprets this and creates the appropriate SearchBy...Command object (e.g., `SearchByTitleCommand` with the search term).
 3. During execution (execute method), the SearchCommand:
 4. Retrieves the `BookManager` instance via the `Library`.
 5. Gets the current `List<Book>` from `BookManager`.
@@ -322,7 +322,7 @@ Workflow:
 7. Calls the relevant search method on the `BookFinder` instance (e.g., `finder.findBooksByTitle(searchTerm)` or `finder.findBooksByShelfId(searchTerm)`).
 8. BookFinder iterates through the provided bookList (using Java Streams and filtering) to find matching books. Searches are generally case-insensitive for user-friendliness.
 9. The SearchCommand receives the list of results from `BookFinder`.
-10. It then uses the Ui component to display the findings or a "not found" message to the user.
+10. It then uses the `Ui` component to display the findings or a "not found" message to the user.
 
 BookFinder provides specific methods for each search criterion (`findBooksByTitle`, `findBooksByAuthor`, `findBooksByGenre`, `findBooksByShelfId`). The user interacts with these via the find command using criteria: title, author, genre, or id.
 
@@ -355,10 +355,10 @@ The Undo feature allows users to revert the effects of previous commands that mo
 It retrieves the command history from the `UndoManager` class which maintains a stack of executed commands and calls `undo()` method of the most recent undoable command.
 
 The feature is facilitated by the following components:
-- UndoCommand: Command object encapsulating logic for performing undo operation.
-- UndoManager: Responsible for storing and managing history of executed commands.
-- Command: Abstract class that defines `undo()` method of all commands.
-- Ui: Displays `SUCCESS` or `ERROR` messages after an undo operation is made.
+- `UndoCommand`: Command object encapsulating logic for performing undo operation.
+- `UndoManager`: Responsible for storing and managing history of executed commands.
+- `Command`: Abstract class that defines `undo()` method of all commands.
+- `Ui`: Displays `SUCCESS` or `ERROR` messages after an undo operation is made.
 
 **Key Methods**
 - `undoCommands()` in UndoManager class:
@@ -370,11 +370,11 @@ The feature is facilitated by the following components:
 
 **Execution Flow**
 1. User inputs string input `undo`.
-2. Parser class parses input and creates UndoCommand instance.
-3. Execute method in UndoCommand calls `Library`'s `getUndoManager() method.
-4. UndoManager invokes `undoCommands()` and checks command history.
+2. `Parser` class parses input and creates UndoCommand instance.
+3. Execute method in UndoCommand calls `Library`'s `getUndoManager()` method.
+4. `UndoManager` invokes `undoCommands()` and checks command history.
 5. `undo()` method called for each undoable command to revert operation.
-6. Ui displays success message if command was undone successfully or error message if no commands to undo.
+6. `Ui` displays success message if command was undone successfully or error message if no commands to undo.
 
 **Sequence Diagram**
 
@@ -392,15 +392,15 @@ Statistics includes:
 - List of unique book titles
 
 The feature is facilitated by the following components:
-- StatisticsCommand: Command object encapsulating the logic for computing and displaying statistics.
-- BookManager: Provides access to the full list of books and contains helper methods to compute statistics.
-- Ui: Displays formatted statistics in a user-friendly format.
+- `StatisticsCommand`: Command object encapsulating the logic for computing and displaying statistics.
+- `BookManager`: Provides access to the full list of books and contains helper methods to compute statistics.
+- `Ui`: Displays formatted statistics in a user-friendly format.
 
 **Key Methods**
-- `getStatistics()` in BookManager class:
+- `getStatistics()` in `BookManager` class:
     - Calculates total book copies, number of unique titles and number of borrowed and overdue books.
     - Returns a formatted string with all statistics included.
-- `getUniqueTitleSize()` and `getUniqueTitles()` in BookManager class:
+- `getUniqueTitleSize()` and `getUniqueTitles()` in `BookManager` class:
     - Compute count and set of unique book titles.
 
 **Execution Flow**
@@ -466,7 +466,7 @@ to manage inventory and track book availability quickly compared to a typical mo
 ### Initial Launch
 
 1. Download the LeBook JAR file and copy it into an empty folder.
-2. Start the application by using java -jar LeBook.jar in the terminal.
+2. Start the application by using `java -jar LeBook.jar` in the terminal.
 
 ### Adding a book
 Adding a book while the library is empty
@@ -596,12 +596,12 @@ Viewing the quantity of a specific book
 ### Listing books on a shelf
 Listing books on a specific shelf
 
-1. Test case: `shelf romance / 1`
+1. Test case: `shelf / romance / 1`
    - Expected: List displays books on the specified shelf.
 2. Test case: `shelf ` (missing genre and shelf number)
    - Expected: Error details shown in the status message.
 3. Other incorrect shelf commands to try:
-   - `shelf GENRE`
+   - `shelf / GENRE`
    - `shelf / SHELF_NUMBER`
    - Expected: Similar to previous.
 
@@ -619,6 +619,11 @@ Undoing the last command
    - Expected: Last command is undone. Library state reverts to before the last command.
 3. Test case: `undo` (other commands)
    - Expected: No command is undone. Error details shown in the status message.
+
+### Help command
+Displays a help menu listing commands for the user to refer to.
+1. Test case: `help`
+    - Expected: Help menu of available commands is shown.
 
 ### Exiting the application
 Exiting the application
