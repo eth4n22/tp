@@ -12,7 +12,7 @@ Given below are my contributions to the project.
   - What it does:
     - Lists a specific shelf indicated by the librarian.
   - Justification:
-    - This feature improves the product significantly as it compartmentalises the listing to just the shelf itself, making it easier for the user to view the list of a smaller subset of the global catalogue.
+    - This feature improves the product significantly as it compartmentalises the listing to just the shelf itself, making it easier for the user to view a subset of the global catalogue.
   - Highlights:
     - Implementation was particularly tricky as there was a need to deal with empty slots in between each entry of the shelf. 
 - **Implementation of loading** 
@@ -29,9 +29,9 @@ Given below are my contributions to the project.
   - What it does:
     - saves the data from current program run.
   - Justification:
-    - This feature significantly improves usability. It allows the librarian to keep the catalogue of the current catalogue, when they input a new command. Thus, the user does not need to manually save data, and all changes persist automatically.
+    - This feature significantly improves usability. It allows the librarian to save the current catalogue when they input a new command. All changes persist automatically.
   - Highlights:
-    - This feature is continuously evolving based on other new features the team has implemented, as more data will need to be written, formatted and saved. Ensuring that the directory is made properly, and data is saved in the correct format, as particularly tricky.
+    - This feature is continuously evolving based on other new features the team has implemented.
 
 ### Code contributed:
 
@@ -39,7 +39,7 @@ Given below are my contributions to the project.
 **Code contributed:** [TP Dashboard](https://nus-cs2113-ay2425s2.github.io/tp-dashboard/?search=&sort=groupTitle&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code~other&since=2025-02-21&tabOpen=true&tabType=authorship&tabAuthor=WayneCh0y&tabRepo=AY2425S2-CS2113-T13-3%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code&authorshipIsBinaryFileTypeChecked=false&authorshipIsIgnoredFilesChecked=false)
 
 
-- Implemented the core logic for Shelf, Storage, QuantityManager, HelpCommand`.
+- Implemented the core logic for Shelf, Storage, QuantityManager, HelpCommand.
 - Implemented the following commands:
     - `shelf / {genre} / {shelf index}`
     - `quantity / {title} / {author}`
@@ -47,7 +47,6 @@ Given below are my contributions to the project.
 
 ### Enhancements implemented:
 
-- Improved the book categorisation and organisation from a global catalogue to just within a shelf.
 - Tagged a book with a specific book ID for easier identification.
 - Improved the UI when adding books, making the messages clearer and more user-friendly.
 - Separation of books into sections based on their genre, for better organisation.
@@ -78,12 +77,10 @@ Given below are my contributions to the project.
 - Maintain the issue tracker
 - Actively reviewed PRs submitted by Team members
 - Helped in the resolution of Git merge conflicts
-- Engaged in discussions regarding project work flow
 - Solve bugs
 
 ### Review/Mentoring Contributions:
 
-- Provided reviews for several Pull Requests
 - Reviewed PRs [PR#209, #192, etc]
 - Resolved Merge Conflicts [PR#200]
 - Assisted group members in debugging process for exception handling and understanding implementation concepts.
