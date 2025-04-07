@@ -32,7 +32,7 @@ public class ListBookQuantityCommand extends Command {
         String copyOrCopies = (response == 1) ? " copy " : " copies ";
         String areOrIs = (response == 1) ? " is " : " are ";
         ui.printWithSeparator("There" + areOrIs + message + copyOrCopies
-                + "of the book: " + title + " by " + author + " ");
+                + "of the book: " + title + " (by " + author + ")");
 
         return true;
     }

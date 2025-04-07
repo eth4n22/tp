@@ -204,9 +204,10 @@ public class BookManager {
             book.setReturnDueDate(LocalDate.now().plusWeeks(2));
             book.setBorrowerName(borrowerName);
             borrower.borrowBook(book);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
+            String dueDateStr = (book.getReturnDueDate() != null) ? book.getReturnDueDate().format(formatter) : "N/A";
             return borrowerName + " has borrowed: \"" + book.getTitle() + "\" (Due: "
-                    + book.getReturnDueDate() + ")";
-
+                    + dueDateStr+ ")";
         } else if (command.equals(RETURN)) {
             if (!book.isBorrowed()) {
                 return "\"" + book.getTitle() + "\" is not currently borrowed.";
