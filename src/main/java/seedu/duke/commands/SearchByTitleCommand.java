@@ -57,9 +57,9 @@ public class SearchByTitleCommand extends Command {
         List<Book> results = finder.findBooksByTitle(searchTerm);
 
         if (results.isEmpty()) {
-            ui.printMessage("Sorry, no books found with titles containing '" + searchTerm + "'.");
+            ui.printMessage("Sorry, no books found with title '" + searchTerm + "'.");
         } else {
-            ui.printMessage("Found " + results.size() + " book(s) with titles containing '" + searchTerm + "':");
+            ui.printMessage("Found " + results.size() + " book with relevant title '" + searchTerm + "':");
             ui.showBookList(results);
         }
     }
