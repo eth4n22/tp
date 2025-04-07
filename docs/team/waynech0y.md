@@ -48,7 +48,6 @@ Given below are my contributions to the project.
 ### Enhancements implemented:
 
 - Improved the book categorisation and organisation from a global catalogue to just within a shelf.
-- Enhanced the help command with detailed descriptions and examples.
 - Tagged a book with a specific book ID for easier identification.
 - Improved the UI when adding books, making the messages clearer and more user-friendly.
 - Separation of books into sections based on their genre, for better organisation.
@@ -70,11 +69,8 @@ Given below are my contributions to the project.
     - **Loading of the file feature** (`loadFileContents`).
     - **Saving of book data** (`writeToFile`).
 - Created/Updated the following UML diagrams for the Developer Guide:
-    - **Class Diagram** (focusing on `Storage`, and their relationships).
-    - **Class Diagram** (focusing on `ShelvesManager`, and their relationships).
-  
-    - **Sequence Diagram** (showing the flow of loading of contents from the text file).
-    - **Sequence Diagram** (showing the flow of saving of contents to the text file).
+    - **Class Diagram** (focusing on `Storage`, `ShelvesManager`, and their relationships)
+    - **Sequence Diagram** (showing the flow of loading and saving of contents from the text file).
 
 ### Contributions to team-based tasks:
 
