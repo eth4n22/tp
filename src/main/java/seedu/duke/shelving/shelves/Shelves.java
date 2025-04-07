@@ -11,10 +11,11 @@ import seedu.duke.exception.SectionFullException;
 public class Shelves {
     private static final String NO_SECTION_AVAILABLE = "There is no section available";
 
+    private static final int MAX_SHELVES_PER_GENRE = 5;
     private final Shelf[] shelves;
     private boolean isFull = false;
     private String identifier;
-    private static final int MAX_SHELVES_PER_GENRE = 5;
+
 
     //@@author WayneCh0y
     /**
