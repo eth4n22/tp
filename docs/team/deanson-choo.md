@@ -18,8 +18,8 @@ add, borrow, return, and track books efficiently.
   - **Highlights**: For deleting a book from the shelf, designed the method `deleteBookFromShelf` in `Shelf` such that it
         replaces the book to be deleted with a dummy book allowing for easier iteration of the book ID. Wrote thorough test cases
   to ensure correct catalog and shelf synchronization
-  - **Credits: Reused `deleteBook(int BookIndex)` in `BookManager` implemented by `xavierleejrui`
-  to delete a book from the global catalogue.**
+  - **Credits**: Reused `deleteBook(int BookIndex)` in `BookManager` implemented by `xavierleejrui`
+  to delete a book from the global catalogue.
   
 - **Implemented base command classes (v1.0)**
   - **What does it do**: Provides an abstract structure (Command class) to support all future user commands. Also wrote the command classes
@@ -31,9 +31,11 @@ add, borrow, return, and track books efficiently.
 - **Wrote the base LeBook code (v1.0)**
   - **What does it do**: Sets up the main program structure and startup logic
   - **Justification**: Provides the foundational framework and flow for integrating all future features and supporting modules.
+  
 ### Code contributed:
 
 **Code contributed:** [TP Dashboard](https://nus-cs2113-ay2425s2.github.io/tp-dashboard/?search=&sort=totalCommits%20dsc&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code~other&since=2025-02-21&tabOpen=true&tabType=authorship&tabAuthor=Deanson-Choo&tabRepo=AY2425S2-CS2113-T13-3%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code&authorshipIsBinaryFileTypeChecked=false&authorshipIsIgnoredFilesChecked=false)
+
 ### Enhancements implemented:
 
 - Allow a user to delete a book by its bookID
