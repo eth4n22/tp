@@ -36,6 +36,8 @@
   - [Listing books on a shelf](#listing-books-on-a-shelf)
   - [Viewing library statistics](#viewing-library-statistics)
   - [Undo last valid command](#undo-last-valid-command)
+  - [Load](#load-book-from-file-feature)
+  - [Save](#save-book-to-file-feature)
   - [Exiting the application](#exiting-the-application)
   - [Additional test cases](#additional-test-cases)
 - [Handling missing/corrupted data files](#handling-missingcorrupted-data-files)

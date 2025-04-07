@@ -6,38 +6,29 @@ LeBook is a CLI-based library book management system that allows users to
 add, borrow, return, and track books efficiently.
 
 ## Summary of Contributions
-
+Given below are my contributions to the project.
 ### Features implemented:
 - **Implemented listing of a shelf**
   - What it does:
     - Lists a specific shelf indicated by the librarian.
   - Justification:
-    - This feature significantly improves convenience. It allows the librarian to view the catalogue of a subset of books in the Library, of the same genre.
+    - This feature improves the product significantly as it compartmentalises the listing to just the shelf itself, making it easier for the user to view the list of a smaller subset of the global catalogue.
   - Highlights:
+    - Implementation was particularly tricky as there was a need to deal with empty slots in between each entry of the shelf. 
 - **Implementation of loading** 
   - What it does:
     - Loads the data from previous save.
   - Justification:
     - This feature significantly improves usability. It allows the librarian to keep the catalogue from the previous saves.
-  - Highlights:
+  - Highlights: 
+    - This feature is continuously evolving based on other new features the team has implemented, as new data will need to be saved for new features. The handling of file tampering was particularly tricky.
 - **Implementation of saving**
   - What it does:
     - saves the data from current program run.
   - Justification:
-    - This feature significantly improves usability. It allows the librarian to keep the catalogue of the current catalogue.
+    - This feature significantly improves usability. It allows the librarian to keep the catalogue of the current catalogue, when they input a new command. Thus, the user does not need to manually save data, and all changes persist automatically.
   - Highlights:
-- **Implemented the help command**
-  - What it does:
-    - lists out the possible commands allowed.
-  - Justification:
-    - This feature significantly aids the librarian. It allows the librarian to know what commands there are.
-  - Highlights:
-- **Implemented the quantity command**
-  - What it does:
-    - lists out the quantity of a specific book.
-  - Justification:
-    - This feature significantly aids the librarian. It allows the librarian to keep track of the number of a specific book.
-  - Highlights:
+    - This feature is continuously evolving based on other new features the team has implemented, as more data will need to be written, formatted and saved. Ensuring that the directory is made properly, and data is saved in the correct format, as particularly tricky.
 ### Code contributed:
 
 
@@ -56,8 +47,10 @@ add, borrow, return, and track books efficiently.
 - Enhanced the help command with detailed descriptions and examples.
 - Tagged a book with a specific book ID for easier identification.
 - Improved the UI when adding books, making the messages clearer and more user-friendly.
-- Implemented the separation of books into sections based on their genre, for better organisation.
-- Implemented shelf-specific listing to prevent information overload.
+- Separation of books into sections based on their genre, for better organisation.
+- Shelf-specific listing to prevent information overload.
+- Made objects such as `BookManager`, `Library`, etc. as Singletons, making these objects more centralised.
+- Prevention and elegant failing when storage text file has been tampered with.
 
 ### Contributions to the UG:
 
@@ -66,9 +59,16 @@ add, borrow, return, and track books efficiently.
 ### Contributions to the DG:
 
 - Wrote the Developer Guide sections detailing the design and implementation of:
-    - **ShelvesManager** (`ShelvesManager`).
+    - **Book Storage** (`Storage`).
+    - **Shelving and Sections** (`ShelvesManager`).
+    - **Loading of the file feature** (`loadFileContents`).
+    - **Saving of book data** (`writeToFile`).
 - Created/Updated the following UML diagrams for the Developer Guide:
+    - **Class Diagram** (focusing on `Storage`, and their relationships).
     - **Class Diagram** (focusing on `ShelvesManager`, and their relationships).
+  
+    - **Sequence Diagram** (showing the flow of loading of contents from the text file).
+    - **Sequence Diagram** (showing the flow of saving of contents to the text file).
 
 ### Contributions to team-based tasks:
 
@@ -85,5 +85,5 @@ add, borrow, return, and track books efficiently.
 - Reviewed PRs [PR#209, #192, etc]
 - Resolved Merge Conflicts [PR#200]
 
-- Assisted group members in debugging process and understanding implementation concepts.
+- Assisted group members in debugging process for exception handling and understanding implementation concepts.
 ---
