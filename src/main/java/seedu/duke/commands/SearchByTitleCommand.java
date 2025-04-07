@@ -13,6 +13,11 @@ import java.util.List;
 
 /**
  * Command to search for books by their title.
+ * This command allows users to search for books where the title contains
+ * the provided search term (case-insensitive). It delegates the actual searching
+ * to the BookFinder utility class.
+ * Usage: find title BOOK_TITLE
+ * Example: find title hobbit
  */
 public class SearchByTitleCommand extends Command {
 
@@ -27,6 +32,19 @@ public class SearchByTitleCommand extends Command {
         }
     }
 
+    /**
+     * Executes the title search operation.
+     * This method validates the search term, retrieves the book collection,
+     * performs the search using BookFinder, and displays the results using the UI.
+     * The search results include all books whose titles contain the search term,
+     * regardless of where in the title it appears.
+     *
+     * @param library        The library instance containing book data.
+     * @param ui             The UI to display output to the user.
+     * @param storage        The storage component for data persistence.
+     * @param memberManager  The manager for library member operations.
+     * @throws LeBookException If the search term is empty or if any other error occurs.
+     */
     @Override
     public void execute(Library library, Ui ui, Storage storage, MemberManager memberManager) throws LeBookException {
         // Shouldn't happen if Parser validates, but as a safeguard:
