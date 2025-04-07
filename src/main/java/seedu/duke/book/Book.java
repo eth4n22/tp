@@ -39,7 +39,6 @@ public class Book {
      * @param isBorrowed    Borrowing status.
      * @param returnDueDate Due date if borrowed, null otherwise.
      * @param bookID        Unique identifier (e.g., "AD-0-1").
-     * @param quantity      Number of copies.
      * @param borrowerName  Name of the borrower if borrowed, null otherwise.
      */
     // Line 52 broken down

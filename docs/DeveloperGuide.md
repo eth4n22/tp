@@ -107,7 +107,7 @@ How the parser component works:
 2. **Design**
 
    -  `catalogueManager`: manages the global catalogue (e.g adding / deleting).
-   -  `ShelvesManager`: manages shelves. The same book in the global catalogue is also stored in their respective
+   -  `ShelvesManager`: manages shelves of different genres. The same book in the global catalogue is also stored in their respective
    shelves.
    -  `UndoManager`: undo certain user commands like `delete` and `add` when prompted.
 
@@ -201,32 +201,43 @@ their bookIndex.
 
 Each delete command also supports undo, restoring the last deleted book into the system.
 
-##### Commands & Behavior
-1. DeleteByIndexCommand
-   - Deletes a book based on its index in the global catalog list.
-   - Input: `delete num/0`
-   - Calls library.deleteBook(index)
-   - Retrieves and stores the deleted book for undo
-   - Removes it from its corresponding shelf (replaces with a dummy book)
+**Key Methods**
+1. `deleteBook(int bookIndex)` in `Library`
 
-2. DeleteByBookCommand
-   - Deletes a book based on the title and author
-   - Input: `delete bk/The Hobbit/J.R.R. Tolkien`
-   - Retrieves the book from the library using matching title + author
-   - Deletes and stores it for undo
+   _Deletes a book based on its index in the global catalog list._
+   - Input by user: `delete num / 0`
+   - Retrieves the book ID using the bookIndex
+   - Delete book from global catalog using bookIndex
+   - Removes book from its corresponding shelf using the book ID (replaces with a dummy book).
+   - Returns a String to indicate book deletion.
 
-3. DeleteByIDCommand
-   - Deletes a book based on its unique book ID, e.g. AC-0-1.
-   - Input: `delete id/AC-0-1`
-   - Retrieves by ID → deletes from catalog and updates shelf
-   - Stored for undo
+2. `deleteBook(String bookTitle, String author)` in `Library`
 
-#### Execution Flow
+   _Deletes a book based on its title and author in the global catalog list._
+   - Input by user: `delete bk / The Hobbit / J.R.R. Tolkien`
+   - Retrieves bookIndex and bookID using title and author
+   - Delete book from global catalog using bookIndex
+   - Removes book from its corresponding shelf using book ID(replaces with a dummy book).
+   - Returns a String to indicate book deletion.
+
+3. `deleteBook(String bookID)` in `Library`
+
+   _Deletes a book based on its book ID._
+   - Input by user: `delete id / AC-0-1`
+   - Refer to [here](#bookid) for information about the formatting of book ID.
+   - Retrieves bookIndex using book ID
+   - Delete book from global catalog using bookIndex
+   - Removes book from its corresponding shelf using book ID(replaces with a dummy book).
+   - Returns a String to indicate book deletion.
+
+
+**Execution Flow**
+
 Given below is an example usage scenario and how the delete mechanism behaves at each step.
 
 Assuming the initial state of the library is that there's one book titled `Book1` by `AuthorA`.
 
-Step 1. The user types in the string input `delete num/1` 
+Step 1. The user types in the string input `delete num / 1` 
 to delete the 1st book in the catalogue (in this case, it's `Book1`).
 
 Step 2. The `Parser` class parses the input and creates a 
@@ -241,7 +252,7 @@ Step 5. library calls retrieves the `bookID` using the `bookIndex` and passes it
 which deletes the book from the relevant shelf.
 
 Step 6. Book deletion is complete. 
-The response is finally returned back to Parser which prints out the `response`.
+The response is finally returned back to `DeleteByIndexCommand` which calls `Ui` to print out the response.
 `Storage` is also updated.
 
 **Sequence Diagram** (of this example)
@@ -253,15 +264,15 @@ The list book feature allows librarians to see the basic information of the
 catalogue in their system. This includes the `BookTitle`, `Author`, `BookID`
 and the `DueDate` if the book was borrowed.
 
-#### Commands & Behavior
+**Key Methods**
 
-1. ListCommand
-   - List all books in the global catalogue with their respective information.
-   - Input: `list`
-   - Calls library.listBooks() which returns the list of books in String format.
-   - Ui prints the response.
-   
-#### Execution Flow
+1. `listBooks()` in `BookManager`
+   - List all books in the global catalogue with their respective information including their status, title, author, bookID and due date.
+   - Input by user: `list`
+
+
+**Execution Flow**
+
 Given below is an example usage scenario and how the list mechanism behaves at each step:
 
 Assuming the initial state of the library is that there's one book titled Book1 by AuthorA.
@@ -274,7 +285,7 @@ Step 3. The execute method in this command class calls library's `listBooks()` m
 
 Step 4. library calls upon catalogueManager's `listBooks()` method, stores the response.
 
-Step 5. The response is returned to the command class and printed out.
+Step 5. The response is returned to the command class and printed out by `Ui`.
 
 
 ### List Members with Overdue Books Feature
@@ -677,6 +688,19 @@ Exiting the application
 To simulate a missing or corrupted data file:
 1. Delete or rename the data file used by LeBook.
 2. Run LeBook and attempt to perform operations.
+
+## BookID
+A variable tied to a `Book` and is unique to every new `Book` added.
+
+**Format**
+
+```
+[GENRE_CODE]-[SHELF_INDEX]-[BOOK_INDEX] 
+Example: R-0-1
+- R refers to 'Romance'
+- '0' refers to Shelf 0
+- '1' refers to Book 2
+```
 
 Expected behavior:
 - LeBook should handle the absence or corruption of the data file gracefully.
