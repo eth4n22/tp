@@ -387,23 +387,28 @@ It retrieves the command history from the `UndoManager` class which maintains a 
 The feature is facilitated by the following components:
 - UndoCommand: Command object encapsulating logic for performing undo operation.
 - UndoManager: Responsible for storing and managing history of executed commands.
-- Command: Abstract class that defines `undo()` method of all commands.
+- Command: Abstract class that defines `undo()` and `isUndoable()` methods.
 - Ui: Displays `SUCCESS` or `ERROR` messages after an undo operation is made.
 
 **Key Methods**
-- `undoCommands()` in UndoManager class:
+- `undoCommands()` in `UndoManager`:
    - Pops and undoes the specified number of undoable commands from the history stack.
    - Displays error message in the event there are no undoable commands.
-- `undo()` in Command class:
+- `undo()` in `Command`:
    - Reverts changes made by command.
    - Implemented by undoable commands, empty for non-undoable commands.
+- `confirmUndo()` in `Ui`:
+    - Prompts user for confirmation before undoing. Accepts only `y`, `Y`, `n`, `N` as inputs.
+- `execute()` in `Command`:
+    - Returns `boolean` to indicate whether a command has been executed successfully.
+    - Only successful commands are pushed onto the undo stack.
 
 **Execution Flow**
-1. User inputs string input `undo`.
-2. Parser class parses input and creates UndoCommand instance.
-3. Execute method in UndoCommand calls `Library`'s `getUndoManager() method.
-4. UndoManager invokes `undoCommands()` and checks command history.
-5. `undo()` method called for each undoable command to revert operation.
+1. User inputs string input like `undo` or `undo 3`.
+2. `Parser` class parses input and creates `UndoCommand` instance.
+3. `UndoCommand.execute()` checks if requested count exceeds number of undoable commands.
+4. If valid, the system prompts user to confirm.
+5. If confirmed, `UndoManager.undoCommands()` pops and calls `undo()` for each valid command.
 6. Ui displays success message if command was undone successfully or error message if no commands to undo.
 
 **Sequence Diagram**

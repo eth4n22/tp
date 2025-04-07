@@ -42,7 +42,7 @@ add, borrow, return, and track books efficiently.
   - What it does:
     - Asks users to confirm their undo request with `y/n` after entering an `undo` command.
   - Justification:
-    - Prevents accidental undos such as inputting `20` instead of `2`.
+    - Prevents accidental undoes such as inputting `20` instead of `2`.
     - Gives users a chance to reconsider undo action.
   - Highlights:
     - Accepts only `y`, `Y`, `n` or `N` as valid responses.
@@ -71,21 +71,29 @@ add, borrow, return, and track books efficiently.
 
 ### Enhancements implemented:
 
-- Developed multi-level undo support using a stack-based approach in `UndoManager`.
-- Validated undo command inputs and added confirmation logic for undoing multiple commands.
-- Extended borrowing feature to auto-generate a return due date.
-- Wrote JUnit tests for multiple classes.
+- Introduced multi-level undo using a stack-based system in `UndoManager`.
+- Validated undo inputs and implemented confirmation prompts for safety.
+- Extended the borrow feature to include auto-generated return due dates.
+- Wrote JUnit tests for key components and logic classes.
+- Added validation logic for undo command:
+  - Prevents undoing more commands than available.
+  - Checks if input exceeds `Integer.MAX_VALUE` and provides a clear error message.
+  - Rejects invalid inputs like negative or zero.
+  - Ensures only successful commands are pushed to the undo stack.
 
 ### Contributions to the UG:
 
-- Documented usage and examples for `list overdue, `statistics`, `undo` and `undo {number}`
-- Ensured clarity in command formats.
+- Documented command formats, usage, and examples for:
+  - `list overdue`
+  - `statistics`
+  - `undo`, `undo {number}`
+- Ensured clarity and alignment with application behavior.
 
 ### Contributions to the DG:
 
-- Authored DG sections for UndoCommand and UndoManager.
-- Created UML Diagrams for Undo feature (Class and Sequence diagram) and Statistics (Sequence Diagram).
-- Ensured consistency and standardization of command formats across diagrams and documentation.
+- Authored sections explaining `UndoCommand`, `UndoManager`, and the `StatisticsCommand`.
+- Created UML class and sequence diagrams for Undo and Statistics features.
+- Maintained consistency and clarity in formatting across the DG.
 
 ### Contributions to team-based tasks:
 
@@ -97,6 +105,6 @@ add, borrow, return, and track books efficiently.
 
 - Provided reviews for several Pull Requests
 - Reviewed PRs [PR#207, #206, etc]
-
 - Assisted group members in debugging process and understanding implementation concepts.
+- 
 ---
