@@ -23,6 +23,7 @@ Note:
 displaying [(Book Format)](#book-status-and-format).
 - All command keywords are **case-insensitive**, e.g `add` and `aDD`, `delete` and `deLete` will still allow for proper
 functionality.
+- All command should be written in english, otherwise there might be unexpected behaviour.
 
 
 ### 1. Adding a Book

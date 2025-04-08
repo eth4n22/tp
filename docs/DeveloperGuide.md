@@ -272,7 +272,7 @@ The response is finally returned back to `DeleteByIndexCommand` which calls `Ui`
 `Storage` is also updated.
 
 **Sequence Diagram** (of this example)
-![](images/DeleteByIndexSequence.png)
+![DeleteByIndexSequence](images/DeleteByIndexSequence.png)
 
 
 ### List Book Feature
@@ -340,37 +340,37 @@ The feature is facilitated by the following components:
 The search functionality is encapsulated within the BookFinder utility class and initiated by specific SearchBy...Command objects (`SearchByTitleCommand`, `SearchByAuthorCommand`, `SearchByGenreCommand`, `SearchByIDCommand`).
 Delegation: Search logic is intentionally separated from `BookManager` into `BookFinder`. This promotes Separation of Concerns, making `BookManager` focused on catalogue management and `BookFinder` specialized in searching.
 
-#### Commands & Behavior
+**Commands & Behavior**
 1. SearchByTitleCommand
-- Searches for books where the title contains the specified query (case-insensitive).  
-**Input**: `find title <title_query>` (e.g., `find title Lord of the Rings`)
-- Retrieves book list from `BookManager` via `Library`
-- Uses `BookFinder.findBooksByTitle(titleQuery)`
-- Displays matching books via `Ui`
+   - Searches for books where the title contains the specified query (case-insensitive).  
+   **Input**: `find title <title_query>` (e.g., `find title Lord of the Rings`)
+   - Retrieves book list from `BookManager` via `Library`
+   - Uses `BookFinder.findBooksByTitle(titleQuery)`
+   - Displays matching books via `Ui`
 
 2. SearchByAuthorCommand
-- Searches for books where the author's name contains the specified query (case-insensitive).  
-**Input**: `find author <author_query>` (e.g., `find author Tolkien`)
-- Retrieves book list from `BookManager` via `Library`
-- Uses `BookFinder.findBooksByAuthor(authorQuery)`
-- Displays matching books via `Ui`
+   - Searches for books where the author's name contains the specified query (case-insensitive).  
+   **Input**: `find author <author_query>` (e.g., `find author Tolkien`)
+   - Retrieves book list from `BookManager` via `Library`
+   - Uses `BookFinder.findBooksByAuthor(authorQuery)`
+   - Displays matching books via `Ui`
 
 3. SearchByGenreCommand
-- Searches for books matching the specified genre exactly (case-insensitive).  
-**Input**: `find genre <genre_query>` (e.g., `find genre adventure`)
-- Retrieves book list from `BookManager` via `Library`
-- Uses `BookFinder.findBooksByGenre(genreQuery)`
-- Displays matching books via `Ui`
+   - Searches for books matching the specified genre exactly (case-insensitive).  
+   **Input**: `find genre <genre_query>` (e.g., `find genre adventure`)
+   - Retrieves book list from `BookManager` via `Library`
+   - Uses `BookFinder.findBooksByGenre(genreQuery)`
+   - Displays matching books via `Ui`
 
 4. SearchByIDCommand
-- Searches for a book using the unique Book ID (case-insensitive).  
-**Input**: `find id <book_id>` (e.g., `find id AD-0-0`)
-- Retrieves book list from `BookManager` via `Library`
-- Uses `BookFinder.findBooksByShelfId(bookId)`
-- Displays result via `Ui`
+   - Searches for a book using the unique Book ID (case-insensitive).  
+   **Input**: `find id <book_id>` (e.g., `find id AD-0-0`)
+   - Retrieves book list from `BookManager` via `Library`
+   - Uses `BookFinder.findBooksByShelfId(bookId)`
+   - Displays result via `Ui`
 
 
-#### Workflow:
+**Execution flow:**
 1. The user enters a find command (e.g., `find title Lord of the Rings` or `find id AD-0-0`).
 2. The `Parser` interprets this and creates the appropriate SearchBy...Command object (e.g., `SearchByTitleCommand` with the search term).
 3. During execution (execute method), the SearchCommand:
@@ -571,7 +571,7 @@ to manage inventory and track book availability quickly compared to a typical mo
 ## Glossary
 
 * *Member* - A person who visits the library to borrow or return a book(s).
-* *Mainstream OS* - Windows, Linux, Unix, MacOS.
+* *Mainstream OS* - Windows, Linux, Unix, macOS.
 
 ## Instructions for manual testing
 
@@ -727,7 +727,7 @@ Viewing the total number of book copies, unique titles, borrowed and overdue boo
 Undoing the last command
 
 1. Prerequisites: There was a command executed previously.
-2. Test case: `undo` (when the previous command was add, delete, borrow, return)
+2. Test case: `undo` (when the previous command was `add`, `delete`, `borrow`, `return`)
    - Expected: Last command is undone. Library state reverts to before the last command.
 3. Test case: `undo` (other commands)
    - Expected: No command is undone. Error details shown in the status message.
