@@ -236,6 +236,7 @@ public class Storage {
     private void handleCorruptedFile(Exception e) {
         System.out.println(ERROR + e.getMessage());
         shelvesManager.cleanup();
+        MemberManager.getInstance().cleanup();
         clearFile();
     }
 
