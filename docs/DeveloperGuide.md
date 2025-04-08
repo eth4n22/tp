@@ -14,6 +14,8 @@
   - [List Members With Overdue Books Feature](#list-members-with-overdue-books-feature)
   - [Searching Feature](#searching-feature)
   - [Undo Feature](#undo-feature)
+  - [Load](#load-book-from-file-feature)
+  - [Save](#save-book-to-file-feature)
 - [Appendix](#appendix)
   - [Product Scope](#product-scope)
   - [Target User Profile](#target-user-profile)
@@ -36,16 +38,18 @@
   - [Listing books on a shelf](#listing-books-on-a-shelf)
   - [Viewing library statistics](#viewing-library-statistics)
   - [Undo last valid command](#undo-last-valid-command)
-  - [Load](#load-book-from-file-feature)
-  - [Save](#save-book-to-file-feature)
   - [Exiting the application](#exiting-the-application)
   - [Additional test cases](#additional-test-cases)
 - [Handling missing/corrupted data files](#handling-missingcorrupted-data-files)
+
+<div style="page-break-after: always;"></div>
+
 ## Acknowledgements
 
 LeBook uses the following libraries:
 1. [JUnit](https://junit.org/junit5/) - For writing and executing automated tests
 2. [Gradle](https://gradle.org/) - A build automation tool
+
 
 ## Design
 ### Architecture
@@ -116,6 +120,8 @@ How the parser component works:
 **Class Diagram(Library):**
 ![](images/Library.png)
 
+<div style="page-break-after: always;"></div>
+
 ### BookManager (catalogueManager)
 The `BookManager` class is responsible for managing the library's global catalogue of books. Within the `Library` class, it is referenced as `catalogueManager`.
 
@@ -128,6 +134,8 @@ It handles core operations such as:
 **Class Diagram(BookManager):**
 ![](images/BookManager.png)
 
+<div style="page-break-after: always;"></div>
+
 ### ShelvesManager
 The `ShelvesManager` class is responsible for managing the `Shelves`. `ShelvesManager` contains sections, divided based on the genre of the book added. In each section, there are 5 `Shelf` objects, and each `Shelf` contains 100 `Books`.
 
@@ -138,6 +146,8 @@ It handles core operations such as:
 
 **Class Diagram(ShelvesManager):**
 ![](images/ShelvesManager.png)
+
+<div style="page-break-after: always;"></div>
 
 ### UI component
 **API:** [`Ui.java`](https://github.com/AY2425S2-CS2113-T13-3/tp/blob/master/src/main/java/seedu/duke/ui/Ui.java)
@@ -161,6 +171,8 @@ It handles core operations such as:
    - `printError(String message)` -> Prints standardized error messages.
    - `printWithSeparator(String message)` -> Prints message surrounded by separators.
    - `showBookList(List<Book> books)` -> Displays formated list of books with their details.
+
+<div style="page-break-after: always;"></div>
 
 ## Implementation
 
@@ -277,6 +289,7 @@ Step 4. library calls upon catalogueManager's `listBooks()` method, stores the r
 
 Step 5. The response is returned to the command class and printed out
 
+<div style="page-break-after: always;"></div>
 
 ### List Members with Overdue Books Feature
 The list members with overdue books feature allows librarians to view a list of members who currently have overdue books.
@@ -358,6 +371,7 @@ Implement search methods directly in `BookManager`
 
 2. Cons: Bloats the `BookManager` class, mixing management and query responsibilities. Makes `BookManager` harder to test and potentially violates SRP.
 
+<div style="page-break-after: always;"></div>
 
 ### Undo Feature
 ![UndoCommandClass](images/UndoCommandClass.png)
