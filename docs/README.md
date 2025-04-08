@@ -53,18 +53,7 @@ On the first run, LeBook will create a data directory for storing your book coll
 
 ## Usage
 
-LeBook supports the following commands:
-
-| Command     | Format                               | Description                        |
-|-------------|--------------------------------------|------------------------------------|
-| Add Book    | `add TITLE / AUTHOR`                 | Adds a new book to your library    |
-| Delete Book | `delete BOOK_NUMBER`                 | Removes a book from your library   |
-| List Books  | `list`                               | Displays all books in your library |
-| Borrow Book | `borrow BOOK_NUMBER / BORROWER_NAME` | Marks a book as borrowed           |
-| Return Book | `return BOOK_NUMBER`                 | Marks a book as returned           |
-| Exit        | `bye`                                | Exits the application              |
-
-For a more detailed guide as well as the other commands, please refer to the [User Guide](UserGuide.md).
+Please refer to the [User Guide](UserGuide.md).
 
 ## Development
 
