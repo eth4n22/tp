@@ -571,7 +571,7 @@ to manage inventory and track book availability quickly compared to a typical mo
 ## Glossary
 
 * *Member* - A person who visits the library to borrow or return a book(s).
-* *Mainstream OS* - Windows, Linux, Unix, MacOS.
+* *Mainstream OS* - Windows, Linux, Unix, macOS.
 
 ## Instructions for manual testing
 
