@@ -477,6 +477,7 @@ The Save Book from File Feature is the counterpart to the [Load Book from File](
 **Sequence Diagram**
 
 ![Save Book Sequence Diagram](images/SaveBookSequence.png)
+
 _Here, the `newCommand()` invocation represents a new command that the user has input to the system._
 
 ### Statistics Feature
