@@ -158,7 +158,7 @@ public class Shelf {
         }
 
         if (booksCurrentlyOnShelf == 0) {
-            return "There are no books on this shelf! LEBRON";
+            return "There are no books on this shelf!";
         }
 
         String genreName = getBackGenre();
