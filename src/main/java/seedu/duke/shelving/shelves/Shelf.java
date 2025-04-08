@@ -167,10 +167,17 @@ public class Shelf {
             return "No books on shelf";
         }
 
+        List<Book> validBooks = shelfBooks.stream()
+                .filter(book -> !book.getAuthor().equalsIgnoreCase(DUMMYNAME))
+                .toList();
+
+        if (validBooks.isEmpty()) {
+            return "No books on shelf";
+        }
+
         return "Here is the list of the books on shelf " + genreName + " " + shelfIndex + ":\n" +
-                IntStream.range(0, shelfBooks.size())
-                        .filter(i -> !shelfBooks.get(i).getAuthor().equalsIgnoreCase(DUMMYNAME))
-                        .mapToObj(i -> (i + 1) + ". " + shelfBooks.get(i).toString())
+                IntStream.range(0, validBooks.size())
+                        .mapToObj(i -> (i + 1) + ". " + validBooks.get(i).toString())
                         .collect(Collectors.joining("\n"));
     }
 
