@@ -65,6 +65,10 @@ public class UpdateStatusCommand extends Command {
         book.setBorrowerName(previousBorrowerName);
         book.setReturnDueDate(previousDueDate);
 
+        if (previousBorrowerName != null && !previousBorrowerName.trim().isEmpty()) {
+            memberManager.getMemberByName(previousBorrowerName).syncBorrowedBooks(library.getBooks());
+        }
+
         storage.writeToFile(library.getBooks());
     }
 

@@ -60,6 +60,15 @@ public class Member {
         return overdueBooks;
     }
 
+    public void syncBorrowedBooks(List<Book> allBooks) {
+        borrowedBooks.clear();
+        for (Book book : allBooks) {
+            if (book.isBorrowed() && this.name.equalsIgnoreCase(book.getBorrowerName())) {
+                borrowedBooks.add(book);
+            }
+        }
+    }
+
     @Override
     public String toString() {
         return name;

@@ -43,6 +43,7 @@ public class UndoManager {
             Command lastCommand = commandHistory.pop();
             if (lastCommand.isUndoable()) {
                 lastCommand.undo(library, ui, storage, memberManager);
+                storage.writeToFile(library.getBooks());
                 ui.printSuccess("Successfully undone: " + lastCommand.getCommandDescription());
                 undoneCount++;
             } else {
