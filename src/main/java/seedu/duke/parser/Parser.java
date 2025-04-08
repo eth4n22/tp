@@ -25,11 +25,10 @@ import seedu.duke.exception.LeBookException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
+import java.math.BigInteger;
 
 /**
  * Parses user input and returns the corresponding command.
- * Adheres to Checkstyle rules for formatting and structure.
  */
 public class Parser {
 
@@ -44,7 +43,7 @@ public class Parser {
 
     private static final String LIST_OVERDUE = "overdue";
     private static final String LIST_BORROWED = "borrowed";
-    private static final String LIST_OVERDUE_USERS = "users";
+    private static final String LIST_OVERDUE_USERS = "overdue users";
     private static final String LIST_SHELF = "shelf";
     private static final String LIST_QUANTITY = "quantity";
 
@@ -59,10 +58,9 @@ public class Parser {
     private static final int SPLIT_INTO_THREE = 3;
     private static final int MIN_PARTS_TWO = 2;
     private static final int MIN_PARTS_THREE = 3;
-    private static final int LENGTH_LIMIT_THREE = 3;
-    private static final int LENGTH_LIMIT_TWO = 2;
 
-    private static final Set<String> GENRES = new HashSet<>(Arrays.asList("R", "AC", "H", "MY", "NF", "R", "SCIF"));
+    private static final Set<String> GENRES = new HashSet<>(Arrays.asList("R", "AC", "H", "MY", "NF", "AD", "SCIF"));
+
     //@@author jenmarieng
 
     /**
@@ -139,20 +137,24 @@ public class Parser {
      */
     private static Command parseListShelfCommand(String bookDetails) throws LeBookException {
         String[] parts = bookDetails.split("/", SPLIT_INTO_TWO);
-        if (parts.length < LENGTH_LIMIT_TWO) {
+        if (parts.length < MIN_PARTS_TWO) {
             throw new LeBookException("Invalid format. It should be: shelf / GENRE / INDEX");
         }
 
         String[] shelfDetails = parts[1].split("/", SPLIT_INTO_TWO);
-        if (shelfDetails.length < LENGTH_LIMIT_TWO) {
+        if (shelfDetails.length < MIN_PARTS_TWO) {
             throw new LeBookException("Invalid format. It should be: shelf / GENRE / INDEX");
         }
 
         String genre = shelfDetails[0].trim().toLowerCase();
-        String indexString = shelfDetails[1].trim();
-        String baseZeroIndex = Integer.toString(Integer.parseInt(indexString) + 1);
-        int shelfIndex = parseIndex(baseZeroIndex);
-        return new ListShelfCommand(genre, shelfIndex);
+        try {
+            String indexString = shelfDetails[1].trim();
+            String baseZeroIndex = Integer.toString(Integer.parseInt(indexString) + 1);
+            int shelfIndex = parseIndex(baseZeroIndex);
+            return new ListShelfCommand(genre, shelfIndex);
+        } catch (NumberFormatException e) {
+            throw new LeBookException("Invalid format. It should be: shelf / GENRE / INDEX");
+        }
     }
 
     //@@author jenmarieng
@@ -180,7 +182,7 @@ public class Parser {
             return new ListOverdueUsersCommand();
         default:
             throw new LeBookException("Unknown list type: '" + listCommandType +
-                    "'. Valid options: list overdue, list borrowed, list users.");
+                    "'. Valid options: list overdue, list borrowed, list overdue users.");
         }
     }
 
@@ -196,7 +198,7 @@ public class Parser {
      */
     private static Command parseDeleteCommand(String userInput) throws LeBookException {
         String[] parts = userInput.split("/", SPLIT_INTO_TWO);
-        if (parts.length < LENGTH_LIMIT_TWO) {
+        if (parts.length < MIN_PARTS_TWO) {
             throw new LeBookException("Invalid format. It should be: delete bk/BOOK_TITLE/AUTHOR_NAME "
                     + "or delete num/BOOK_INDEX or delete id/GENRE-SHELFNUM-SLOTNUM");
         }
@@ -207,27 +209,27 @@ public class Parser {
             return new DeleteByIndexCommand(bookIndex);
         case DELETE_BY_BOOK:
             String[] bookDetails = parts[1].split("/", SPLIT_INTO_TWO); //should split into title and author
-            if (bookDetails.length < LENGTH_LIMIT_TWO) {
+            if (bookDetails.length < MIN_PARTS_TWO) {
                 throw new LeBookException("Invalid format. It should be: delete bk/BOOK_TITLE/AUTHOR_NAME");
             }
             String bookTitle = bookDetails[0].trim();
-            if (bookTitle.trim().isEmpty()) {
+            if (bookTitle.isEmpty()) {
                 throw new LeBookException("Book title cannot be empty.");
             }
             String authorName = bookDetails[1].trim();
-            if (authorName.trim().isEmpty()) {
+            if (authorName.isEmpty()) {
                 throw new LeBookException("Author name cannot be empty.");
             }
             return new DeleteByBookCommand(bookTitle, authorName);
         case DELETE_BY_ID:
             String bookID = parts[1].trim();
             String[] bookIDSplit = bookID.split("-");
-            if (bookIDSplit.length < LENGTH_LIMIT_THREE) {
+            if (bookIDSplit.length < MIN_PARTS_THREE) {
                 throw new LeBookException("Invalid format. It should be: delete id/GENRE-SHELFNUM-SLOTNUM, e.g R-0-0");
             }
             String genre = bookIDSplit[0].trim();
             if (!GENRES.contains(genre)) {
-                throw new LeBookException("Invalid Genre!");
+                throw new LeBookException("Invalid genre. Supported genres: R, AC, H, MY, NF, AD, SCIF.");
             }
             return new DeleteByIDCommand(bookID);
         default:
@@ -240,7 +242,7 @@ public class Parser {
     //@@author WayneCh0y
     private static Command parseListQuantityCommand(String inputDetails) throws LeBookException {
         String[] parts = inputDetails.split("/", SPLIT_INTO_THREE);
-        if (parts.length < LENGTH_LIMIT_THREE) {
+        if (parts.length < MIN_PARTS_THREE) {
             throw new LeBookException("Invalid format. It should be: quantity / BOOK_TITLE / AUTHOR_NAME");
         }
         String title = parts[1].trim();
@@ -286,14 +288,34 @@ public class Parser {
     }
 
     //@@author eth4n22
+
+    /**
+     * Parses the input details for the undo command.
+     * Determines the number of commands to undo and validates that the value is a positive integer.
+     * If no number is specified, defaults to undoing the most recent command (count = 1).
+     *
+     * @param undoDetails The user input following the "undo" command.
+     * @return A new UndoCommand object with the parsed undo count.
+     * @throws LeBookException If the format is invalid, the number is non-positive,
+     *                         or the value exceeds the maximum allowed integer.
+     */
     private static Command parseUndoCommand(String undoDetails) throws LeBookException {
         int count = 1;
         if (!undoDetails.isEmpty()) {
             try {
-                count = Integer.parseInt(undoDetails.trim());
-                if (count < 1) {
+                BigInteger bigNum = new BigInteger(undoDetails.trim());
+
+                if (bigNum.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0) {
+                    throw new LeBookException("Undo count is too large. Maximum allowed is: "
+                            + Integer.MAX_VALUE + ".");
+                }
+
+                if (bigNum.compareTo(BigInteger.ONE) < 0) {
                     throw new LeBookException("Invalid undo count. Must be at least 1.");
                 }
+
+                count = bigNum.intValue(); // only convert to int after the check
+
             } catch (NumberFormatException e) {
                 throw new LeBookException("Invalid undo format. It should be: undo <INTEGER ≥ 1>");
             }

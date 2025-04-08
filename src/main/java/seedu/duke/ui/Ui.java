@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Ui {
     private static final Ui uiInstance = new Ui();
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
     private final Scanner scanner;
 
@@ -37,19 +37,19 @@ public class Ui {
                 ------------------------------- \s
                 1. add TITLE / AUTHOR / GENRE      - Add a new book. \s
                 2. borrow INDEX / MEMBER_NAME      - Borrow a book (using 1-based index). \s
-                3. delete bk /TITLE / AUTHOR       - Remove book by title and author. \s
-                4. delete num/INDEX                - Remove book by list index (1-based). \s
-                5. delete id/ID                    - Remove book by book ID. \s
+                3. delete bk / TITLE / AUTHOR      - Remove book by title and author. \s
+                4. delete num / INDEX              - Remove book by list index (1-based). \s
+                5. delete id / ID                  - Remove book by book ID. \s
                 6. find CRITERIA TERM              - Search books. \s
                    Criteria: title, author, genre, id \s
                 7. help                            - Show this help menu. \s
                 8. list                            - List all book titles. \s
                 9. list borrowed                   - List borrowed books. \s
                 10. list overdue                   - List overdue books. \s
-                11. list users                     - List users who have overdue books. \s
+                11. list overdue users             - List users who have overdue books. \s
                 12. quantity / TITLE / AUTHOR      - Shows the quantity of the specified book. \s
                 13. return INDEX                   - Return a borrowed book (using 1-based index). \s
-                14. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (1-based number). \s
+                14. shelf GENRE / SHELF_NUMBER     - List books on a specific shelf (0-based number). \s
                 15. statistics                     - View library statistics. \s
                 16. undo                           - Undo the last command (add/delete/borrow/return). \s
                 17. bye                            - Exit the program. \s
@@ -69,7 +69,7 @@ public class Ui {
                   shelf romance / 1 \s
                   statistics \s
                   undo 3 \s
-                  delete num/1 \s
+                  delete num / 1 \s
                   bye \s
                 """;
         printSeparator();
@@ -137,19 +137,13 @@ public class Ui {
     }
 
     public boolean confirmUndo(int count) {
-        while (true) {
+        System.out.print("Confirm undo " + count + " request? <y/n>: ");
+        String response = scanner.nextLine().trim().toLowerCase();
+        while (!response.equals("y") && !response.equals("n")) {
+            printError("Please respond with 'y' or 'n'.");
             System.out.print("Confirm undo " + count + " request? <y/n>: ");
-            String input = scanner.nextLine().trim().toLowerCase();
-
-            if (input.equals("y")) {
-                return true;
-            } else if (input.equals("n")) {
-                printMessage("Undo cancelled.");
-                return false;
-            } else {
-                printError("Invalid input. Please respond with y/n.");
-            }
+            response = scanner.nextLine().trim().toLowerCase();
         }
+        return response.equals("y");
     }
-
 }

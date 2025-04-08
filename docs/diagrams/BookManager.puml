@@ -22,6 +22,6 @@ class Book {
 }
 
 Library "1"-->"1" BookManager
-BookManager "1"--> "*" Book : manages
+BookManager "1"--> "*" Book
 
 @enduml

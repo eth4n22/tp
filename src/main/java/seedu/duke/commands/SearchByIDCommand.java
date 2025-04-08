@@ -13,6 +13,11 @@ import java.util.List;
 
 /**
  * Command to search for books by their exact shelf ID.
+ * This command allows users to search for books using their unique shelf ID
+ * (e.g., "AD-0-1"). The search is handled by the BookFinder utility class.
+ * BookIDs typically follow the format "GENRE_PREFIX-SHELF_NUMBER-POSITION".
+ * Usage: find id SHELF_ID
+ * Example: find id AD-0-1
  */
 public class SearchByIDCommand extends Command {
 
@@ -27,8 +32,20 @@ public class SearchByIDCommand extends Command {
         }
     }
 
+    /**
+     * Executes the shelf ID search operation.
+     * This method validates the search term, retrieves the book collection,
+     * performs the search using BookFinder, and displays the results using the UI.
+     *
+     * @param library       The library instance containing book data.
+     * @param ui            The UI to display output to the user.
+     * @param storage       The storage component for data persistence.
+     * @param memberManager The manager for library member operations.
+     * @throws LeBookException If the search term is empty or if any other error occurs.
+     */
     @Override
-    public void execute(Library library, Ui ui, Storage storage, MemberManager memberManager) throws LeBookException {
+    public boolean execute(Library library, Ui ui, Storage storage, MemberManager memberManager)
+            throws LeBookException {
         if (searchTerm.isEmpty()) {
             throw new LeBookException("Please provide a shelf ID to search for (e.g., AD-0-1).");
         }
@@ -44,6 +61,7 @@ public class SearchByIDCommand extends Command {
             ui.printMessage("Found " + results.size() + " book(s) with the shelf ID '" + searchTerm + "':");
             ui.showBookList(results);
         }
+        return true;
     }
 
     @Override

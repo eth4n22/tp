@@ -11,9 +11,11 @@ import seedu.duke.exception.SectionFullException;
 public class Shelves {
     private static final String NO_SECTION_AVAILABLE = "There is no section available";
 
+    private static final int MAX_SHELVES_PER_GENRE = 5;
     private final Shelf[] shelves;
     private boolean isFull = false;
     private String identifier;
+
 
     //@@author WayneCh0y
     /**
@@ -128,7 +130,7 @@ public class Shelves {
      * @param slotNum the index of the book in the list of books in the shelf
      */
     public void deleteBookFromSection(int shelfNum, int slotNum) {
-        assert shelfNum >= 0 && shelfNum < 5: "Invalid Shelf Number!";
+        assert shelfNum >= 0 && shelfNum < MAX_SHELVES_PER_GENRE: "Invalid Shelf Number!";
         assert slotNum >= 0: "Invalid bookIndex!";
         shelves[shelfNum].deleteBookFromShelf(slotNum);
     }

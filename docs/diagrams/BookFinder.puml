@@ -1,0 +1,41 @@
+@startuml BookFinder
+skinparam classAttributeIconSize 0
+hide circle
+
+  class BookFinder {
+    - booksToSearch: List<Book>
+    + BookFinder(booksToSearch: List<Book>)
+    + findBooksByTitle(titleQuery: String): List<Book>
+    + findBooksByAuthor(authorQuery: String): List<Book>
+    + findBooksByGenre(genreQuery: String): List<Book>
+    + findBooksByShelfId(shelfIdQuery: String): List<Book>
+  }
+
+class Book {
+  -title: String
+  -author: String
+  -isBorrowed: boolean
+  -returnDueDate: LocalDate
+  -bookID: String
+  -borrowerName: String
+
+  +getTitle(): String
+  +getAuthor(): String
+  +isBorrowed(): boolean
+  +getReturnDueDate(): LocalDate
+  +getBookID(): String
+  +getGenre(): String
+}
+
+note top of BookFinder
+  Responsible for searching books within a provided list based on various criteria.
+  This class operates on a list of books managed elsewhere (e.g., by BookManager).
+endnote
+
+BookFinder "1" --> "many" Book : searches >
+
+note right of BookFinder::booksToSearch
+  Reference to the list managed by BookManager
+endnote
+
+@enduml

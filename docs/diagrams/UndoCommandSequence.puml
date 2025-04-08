@@ -18,9 +18,7 @@ User -> ":Ui" : Enters "undo"
 
 ":LeBook" -> ":Parser" : parse("undo")
 ":Parser" -> ":UndoCommand" : new UndoCommand(undoCount)
-activate ":UndoCommand"
 ":UndoCommand" --> ":Parser" : created instance
-deactivate ":UndoCommand"
 ":Parser" --> ":LeBook" : return UndoCommand
 
 ":LeBook" -> ":UndoCommand" : execute(library, ui, storage, memberManager)
