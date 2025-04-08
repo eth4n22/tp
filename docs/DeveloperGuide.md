@@ -152,18 +152,6 @@ It handles core operations such as:
 
 <div style="page-break-after: always;"></div>
 
-### UI component
-**Design:**
-
-*   **Singleton Pattern:** `BookManager` is implemented using the Singleton pattern to ensure only one instance manages the shared book catalogue throughout the application's lifecycle. 
-Access is controlled via the static `BookManager.getBookManagerInstance(List<Book> books)` method, which initializes the instance with the loaded book data on the first call.
-
-*   **Genre Validation:** `BookManager` enforces genre constraints internally using the `isValidGenre(String genre)` method, which checks against a predefined `static final List<String> VALID_GENRES`. 
-This validation is applied during the `addNewBookToCatalogue` process.
-
-*    **Error Handling:** `BookManager` employs a mixed strategy for error communication:
-     *   **Exceptions:** For critical lookup failures where an operation cannot proceed (e.g., finding a book by index/ID/title+author fails), it throws specific exceptions like `BookNotFoundException`.
-
 ### Ui component
 **API:** [`Ui.java`](https://github.com/AY2425S2-CS2113-T13-3/tp/blob/master/src/main/java/seedu/duke/ui/Ui.java)
 
