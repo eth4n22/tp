@@ -101,7 +101,7 @@ public class ShelvesManager {
             case SCIFI:
                 return sciFiShelves.listShelf(index);
             default:
-                return "";
+                return "Invalid command! try <shelf> / <genre> / <shelf number>";
             }
         } catch (SectionFullException | NoSuchSectionException e) {
             return e.getMessage();
